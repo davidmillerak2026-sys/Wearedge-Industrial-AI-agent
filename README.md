@@ -26,6 +26,8 @@ This project is prepared for the Siemens Xcelerator Industrial Agent challenge u
 - Business model: deployable agent service plus workflow templates, PoC integration, scenario customization, and recurring support for plant rollout.
 - Compliance: project materials should include independent IP ownership, open-source dependency boundaries, and no-dispute/no-adverse-record declarations before submission.
 
+Submission-ready co-creation one-pager: [`docs/siemens-xcelerator-co-creation-onepager.md`](docs/siemens-xcelerator-co-creation-onepager.md).
+
 ## Runtime
 
 The migrated runtime comes from WearEdge Pro and includes:

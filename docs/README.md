@@ -7,6 +7,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | Topic | Document |
 | --- | --- |
 | Current project status | [`project-status.md`](project-status.md) |
+| Siemens Xcelerator co-creation one-pager | [`siemens-xcelerator-co-creation-onepager.md`](siemens-xcelerator-co-creation-onepager.md) |
 | Technical architecture | [`technical_architecture.md`](technical_architecture.md) |
 | Sensing and compute architecture | [`sensing_compute_architecture.md`](sensing_compute_architecture.md) |
 | Jetson Gemma 4 E2B deployment | [`e2b-deployment-runbook.md`](e2b-deployment-runbook.md) |
