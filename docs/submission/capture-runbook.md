@@ -11,6 +11,8 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/run_competition_eval.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/smoke_workflow_canvas_decision.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/build_submission_evidence.py
+& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/verify_submission_package.py --write-manifest
+& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/capture_dashboard_mock.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" -m pytest --basetemp "C:\tmp\wearedge-industrial-ai-agent-pytest" tests industrial-rag-agent/tests
 ```
 
@@ -39,6 +41,12 @@ Suggested screenshot name:
 
 ```text
 submission-assets/screenshots/06-dashboard-mock.png
+```
+
+Automated capture command:
+
+```powershell
+python scripts/capture_dashboard_mock.py
 ```
 
 ## Video Flow

@@ -14,6 +14,8 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`run_competition_eval.py`](run_competition_eval.py) | Run offline competition-target evaluation and generate the Markdown report. |
 | [`smoke_workflow_canvas_decision.py`](smoke_workflow_canvas_decision.py) | Smoke test the Workflow Canvas decision payload in-process or against a running gateway. |
 | [`build_submission_evidence.py`](build_submission_evidence.py) | Generate JSON and Markdown evidence snapshots for the submission package. |
+| [`verify_submission_package.py`](verify_submission_package.py) | Check Phase A-E repository deliverables, generated evidence, registration fields, and deadline markers. |
+| [`capture_dashboard_mock.py`](capture_dashboard_mock.py) | Capture the Dashboard mock to a local ignored screenshot under `submission-assets/screenshots/`. |
 | [`network_diagnostics.sh`](network_diagnostics.sh) | Capture router, DNS, GitHub, Hugging Face, and mirror connectivity diagnostics. |
 | [`run_maintenance_session_poc.sh`](run_maintenance_session_poc.sh) | Exercise multi-evidence lao-shi-fu maintenance session flow. |
 

@@ -1,0 +1,43 @@
+from __future__ import annotations
+
+import importlib.util
+import sys
+from pathlib import Path
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+SCRIPT_PATH = REPO_ROOT / "scripts" / "verify_submission_package.py"
+
+
+def _load_verify_module():
+    spec = importlib.util.spec_from_file_location("verify_submission_package", SCRIPT_PATH)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    return module
+
+
+def test_submission_package_repo_controlled_items_are_ready() -> None:
+    module = _load_verify_module()
+
+    result = module.verify_package(REPO_ROOT)
+
+    assert result["repo_ready"] is True
+    assert result["repo_failures"] == []
+    assert len(result["phases"]) == 5
+    assert result["registration_fields"]["status"] == "ready"
+    assert result["evidence"]["status"] == "ready"
+
+
+def test_submission_manifest_marks_external_pending_without_repo_failure() -> None:
+    module = _load_verify_module()
+    result = module.verify_package(REPO_ROOT)
+
+    manifest = module.render_manifest(result)
+
+    assert "Repository-controlled package ready: True" in manifest
+    assert "真实工易魔方 / Xcelerator 平台截图" in manifest
+    assert "Repository Failures" in manifest
+    assert "- None." in manifest

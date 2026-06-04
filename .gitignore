@@ -29,6 +29,7 @@ runs/
 logs/
 runtime/
 outputs/
+submission-assets/
 *.log
 *.pid
 *.tmp

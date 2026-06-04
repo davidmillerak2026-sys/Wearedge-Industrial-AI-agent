@@ -10,6 +10,16 @@
 
 Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同决策系统。系统通过工易魔方读取 MES、设备信号、质量数据、能源数据和工作流上下文，调用 Wearedge Agent Service 进行多方向评估，输出主方向、优先级、建议动作、确认项、残余风险和 Dashboard 数据表更新内容。
 
+## 总体框架
+
+```text
+MES / QMS / EMS / CMMS / 设备信号 / released checklist
+  -> 工易魔方资源块和 Python Function Block
+  -> Wearedge Agent Service
+  -> 多智能体评估与确定性守卫
+  -> 协同决策、Dashboard、全局数据表、HumanApprovalGate
+```
+
 ## 智能体划分
 
 | Agent | Role |
@@ -19,6 +29,18 @@ Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同
 | 能源管理智能体 | 能耗预测、空转识别、节能窗口建议 |
 | 柔性生产智能体 | 换型、目标 SKU、released checklist 和首件验证 |
 | Workflow Canvas 智能体 | 资源块、功能块、数据表、Dashboard 和人工确认编排 |
+
+## 算法设计与模型选择
+
+- 规则和指标层：维护 F1、预警提前时间、根因 Top3、能源预测准确率、节能率、质量提升、调度效率和延迟由确定性 evaluator 计算。
+- 智能体层：模型负责把症状、证据和上下文转成可读解释、行动建议和协同摘要。
+- 知识层：RAG/KB 保存设备手册、released checklist、维护记录、质量计划和现场校准知识。
+- 安全层：高风险动作由确定性守卫标记责任人、确认项和残余风险，进入人工审批。
+- 模型选择：PoC 阶段支持本地/边缘大模型或 OpenAI-compatible API；报名材料不绑定不可获得的专有模型权重。
+
+## 工作流定义
+
+工易魔方侧定义 `Wearedge Agent Service` 自定义资源块，配置 `agentHost`、`agentPort`、`apiKeyRef`、`plantId`、`lineId`。`CallWearedgeDecisionApi` Python Function Block 将上下文 POST 到 `/v1/workflow-canvas/decision`，返回值写入全局数据表和 Dashboard。涉及停机、放行、能耗策略切换等高风险动作时，工作流进入 `HumanApprovalGate`。
 
 ## 技术优势
 
@@ -38,6 +60,15 @@ Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同
 | 提高换型效率 | 调度效率提升、组件复用率 |
 | 降低人工协调成本 | 决策路径可视化、人工确认闭环 |
 
+## 成果截图与证据
+
+当前截图和视频录制清单见 `docs/submission/screenshots-checklist.md` 和 `docs/submission/demo-shot-list.md`。可提交证据索引见 `docs/submission/poc-evidence-index.md`，生成证据快照位于 `docs/submission/evidence/`。真实工易魔方平台截图待平台环境开通后补齐。
+
+## 开发投入
+
+- 已完成：Agent Service、Workflow Canvas decision endpoint、离线评估数据集、赛事 evaluator、工易魔方 PoC runbook、Dashboard mock、smoke test 和 pytest 基线。
+- 待投入：真实工易魔方环境复现、平台截图和演示视频、真实或仿真 SPIDR/IPC 日志接入、客户场景联合 PoC。
+
 ## 当前进度
 
 已完成可运行 Agent Service、Workflow Canvas decision endpoint、赛事指标 evaluator、离线数据集、评估脚本、PoC runbook 和共创 one-pager。真实工易魔方平台截图和客户现场数据仍待平台环境和 PoC 合作推进。
@@ -45,3 +76,7 @@ Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同
 ## 商业模式
 
 联合 PoC 服务、场景模板授权、边缘部署集成和持续运营支持。首批客户建议选择多 SKU 包装、电子装配或汽车零部件产线。
+
+## 团队、企业与知识产权
+
+团队和企业真实信息由负责人在 `docs/submission/team-and-company-info-template.md` 中补齐。知识产权和合规口径见 `docs/submission/ip-and-compliance-statement.md`，最终提交前需由企业负责人确认自主知识产权、无产权纠纷和无不良记录。
