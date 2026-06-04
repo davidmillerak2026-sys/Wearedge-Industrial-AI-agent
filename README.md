@@ -50,6 +50,8 @@ python -m pip install pytest httpx
 python -m pip install -r jetson/requirements.txt
 python -m pip install -e industrial-rag-agent
 python -m pytest tests industrial-rag-agent/tests
+python scripts/run_competition_eval.py
+python scripts/smoke_workflow_canvas_decision.py
 ```
 
 Run the API locally after configuring `.env` from `.env.example`:

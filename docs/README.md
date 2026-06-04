@@ -8,6 +8,8 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | --- | --- |
 | Current project status | [`project-status.md`](project-status.md) |
 | Siemens Xcelerator co-creation one-pager | [`siemens-xcelerator-co-creation-onepager.md`](siemens-xcelerator-co-creation-onepager.md) |
+| Workflow Canvas PoC runbook | [`workflow-canvas-poc-runbook.md`](workflow-canvas-poc-runbook.md) |
+| Workflow Canvas API schema | [`workflow-canvas-api-schema.md`](workflow-canvas-api-schema.md) |
 | Technical architecture | [`technical_architecture.md`](technical_architecture.md) |
 | Sensing and compute architecture | [`sensing_compute_architecture.md`](sensing_compute_architecture.md) |
 | Jetson Gemma 4 E2B deployment | [`e2b-deployment-runbook.md`](e2b-deployment-runbook.md) |
@@ -20,6 +22,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | Evidence Area | Document |
 | --- | --- |
 | End-to-end technical evidence | [`technical-evidence.md`](technical-evidence.md) |
+| Competition offline eval report | [`competition-offline-eval-report.md`](competition-offline-eval-report.md) |
 | Gemma 4 E2B PoC summary | [`gemma4-e2b-poc-summary.md`](gemma4-e2b-poc-summary.md) |
 | Five-agent validation | [`five-agent-poc-validation.md`](five-agent-poc-validation.md) |
 | M400 inference contract | [`m400-inference-contract.md`](m400-inference-contract.md) |
@@ -34,6 +37,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | --- | --- |
 | [`assets/`](assets/) | Small curated images used by demos, tests, and evidence documents. |
 | [`poc-results/`](poc-results/) | Reproducible PoC outputs, screenshots, logs, summaries, and field-test traces. |
+| [`submission/`](submission/) | Competition submission drafts, demo scripts, screenshots checklist, registration fields, and final checklist. |
 | [`submissions/`](submissions/) | Optional external submission deliverables. Large generated videos are ignored unless intentionally forced into Git. |
 
 ## Curation Rule

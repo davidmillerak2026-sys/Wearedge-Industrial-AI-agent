@@ -11,6 +11,8 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`run_fastapi.sh`](run_fastapi.sh) | Start the WearEdge FastAPI gateway. |
 | [`smoke_test.sh`](smoke_test.sh) | Verify gateway health, llama text path, image upload, output contract, audit, and agent runs. |
 | [`validate_agent_pocs.py`](validate_agent_pocs.py) | Run golden five-agent validation scenarios. |
+| [`run_competition_eval.py`](run_competition_eval.py) | Run offline competition-target evaluation and generate the Markdown report. |
+| [`smoke_workflow_canvas_decision.py`](smoke_workflow_canvas_decision.py) | Smoke test the Workflow Canvas decision payload in-process or against a running gateway. |
 | [`network_diagnostics.sh`](network_diagnostics.sh) | Capture router, DNS, GitHub, Hugging Face, and mirror connectivity diagnostics. |
 | [`run_maintenance_session_poc.sh`](run_maintenance_session_poc.sh) | Exercise multi-evidence lao-shi-fu maintenance session flow. |
 

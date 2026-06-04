@@ -1,0 +1,39 @@
+# Final Submission Checklist
+
+更新日期：2026-06-04
+
+## Timeline
+
+| Date | Action |
+| --- | --- |
+| 2026-06-09 | 离线评估报告完成 |
+| 2026-06-15 | 工易魔方 PoC 接入包完成 |
+| 2026-06-22 | Demo 证据包完成 |
+| 2026-06-30 | 商业计划书和技术方案草稿完成 |
+| 2026-07-05 | 报名字段包完成 |
+| 2026-07-08 | 内部目标：完成正式提交 |
+| 2026-07-10 | 官方报名截止 |
+
+## Attachments
+
+| Attachment | Path | Status |
+| --- | --- | --- |
+| Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
+| Offline eval report | `docs/competition-offline-eval-report.md` | ready |
+| Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
+| API schema | `docs/workflow-canvas-api-schema.md` | ready |
+| Business plan | `docs/submission/business-plan.md` | draft |
+| Technical solution | `docs/submission/technical-solution.md` | draft |
+| Demo script | `docs/submission/demo-script.md` | draft |
+| Screenshots | external submission assets | pending |
+| Video | external submission assets | pending |
+| IP statement | `docs/submission/ip-and-compliance-statement.md` | draft |
+
+## Human-Owned Fields
+
+- Enterprise name and unified social credit code.
+- Project leader name, phone, email.
+- Team members and roles.
+- IP ownership declaration.
+- No adverse record declaration.
+- Final platform contact notes with Siemens / Gongyi Mofang.

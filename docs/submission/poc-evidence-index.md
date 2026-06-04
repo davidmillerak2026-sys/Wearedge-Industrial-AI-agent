@@ -1,0 +1,24 @@
+# PoC Evidence Index
+
+更新日期：2026-06-04
+
+## 当前可提交证据
+
+| Evidence | Path | Status |
+| --- | --- | --- |
+| Siemens co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
+| Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
+| Workflow Canvas API schema | `docs/workflow-canvas-api-schema.md` | ready |
+| Workflow Canvas PoC runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
+| Workflow Canvas payload | `workflows/wearedge_wfc_poc_payload.json` | ready |
+| Offline evaluation dataset | `evals/competition_offline_dataset.jsonl` | ready |
+| Offline evaluation script | `scripts/run_competition_eval.py` | ready |
+| Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
+| Technical architecture | `docs/technical_architecture.md` | ready |
+| Technical evidence | `docs/technical-evidence.md` | ready |
+
+## Evidence Boundaries
+
+- Current offline evaluation is simulated and repository-local.
+- Current WFC integration is API-ready and runbook-ready; real platform screenshots remain pending until access is available.
+- High-risk actions are routed through human confirmation, not direct OT control.
