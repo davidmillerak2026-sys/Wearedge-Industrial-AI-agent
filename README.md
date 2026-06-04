@@ -15,6 +15,17 @@ Wearedge is positioned as a multi-agent industrial decision and execution system
 5. Execute or simulate the approved action through Workflow Canvas.
 6. Write results back to dashboards, logs, and work orders.
 
+## Registration Fit
+
+This project is prepared for the Siemens Xcelerator Industrial Agent challenge under the 11th "Maker China" Industrial Agent competition.
+
+- Platform fit: Wearedge is exposed as an agent service for Siemens Xcelerator / Workflow Canvas / Gongyi Mofang integration, including a `POST /v1/workflow-canvas/decision` endpoint for Python Function Blocks.
+- Co-creation idea: build a joint industrial multi-agent product for flexible production lines, combining maintenance, quality, energy, production-change, and Workflow Canvas agents.
+- Target customers: discrete manufacturers running multi-SKU production lines, especially factories with maintenance downtime, quality containment, energy optimization, and changeover pressure.
+- Product advantage: low-latency edge runtime, evidence-first industrial RAG, deterministic action guards, human approval gates, and data-table/dashboard writeback.
+- Business model: deployable agent service plus workflow templates, PoC integration, scenario customization, and recurring support for plant rollout.
+- Compliance: project materials should include independent IP ownership, open-source dependency boundaries, and no-dispute/no-adverse-record declarations before submission.
+
 ## Runtime
 
 The migrated runtime comes from WearEdge Pro and includes:
