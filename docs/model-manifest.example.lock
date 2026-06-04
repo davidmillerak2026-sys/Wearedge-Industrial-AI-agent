@@ -1,0 +1,7 @@
+# Template for the E2B deployment manifest.
+# Regenerate on the Jetson with scripts/download_models.sh and keep the generated
+# /mnt/nvme/models/gemma4-e2b/manifest.lock with your deployment notes.
+#
+# Example format:
+# <sha256>  /mnt/nvme/models/gemma4-e2b/<downloaded-text-model>.gguf
+# <sha256>  /mnt/nvme/models/gemma4-e2b/<downloaded-mmproj>.gguf

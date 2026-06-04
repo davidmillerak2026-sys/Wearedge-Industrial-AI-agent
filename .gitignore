@@ -1,0 +1,56 @@
+# Local reference materials copied from downloads or temporary archives.
+source_materials/
+extracted_texts/
+
+# Python
+__pycache__/
+*.py[cod]
+.pytest_cache/
+.mypy_cache/
+.ruff_cache/
+.venv/
+venv/
+
+# Node / frontend tooling
+node_modules/
+dist/
+build/
+.next/
+
+# Runtime secrets and local configuration
+.env
+.env.*
+!.env.example
+
+# Generated artifacts
+artifacts/
+reports/generated/
+runs/
+logs/
+runtime/
+outputs/
+*.log
+*.pid
+*.tmp
+
+# Deployment packages, local archives, and model weights
+.deploy-wearedge-pro-latest.tar
+wearedge-pro-latest.tar
+*.tar
+*.tar.gz
+*.zip
+models/
+*.gguf
+*.safetensors
+*.onnx
+*.engine
+
+# Local RAG indexes and mutable app settings
+.rag_index/
+SETTINGS.json
+*.local.json
+
+# Generated media deliverables
+*.mp4
+*.mov
+*.wav

@@ -1,0 +1,4 @@
+interface:
+  display_name: "老师傅"
+  short_description: "把老师傅经验转成工业维护 agent 工作流助手"
+  default_prompt: "Use $lao-shi-fu to turn plant manuals, operator know-how, and live signals into a lao-shi-fu maintenance agent workflow."

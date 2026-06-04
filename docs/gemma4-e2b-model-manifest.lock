@@ -1,0 +1,15 @@
+# Gemma 4 E2B PoC model manifest
+#
+# These model binaries are intentionally not committed to the normal Git history.
+# GitHub rejects regular Git files above 100MB, and Git LFS limits depend on the
+# account plan and storage quota. Keep the files in the Jetson model directory or
+# publish them to a model artifact host such as Hugging Face Hub / Git LFS.
+#
+# Validated Jetson path:
+# /home/ryn/WearEdge-Pro/models/gemma4-e2b
+#
+# Format:
+# sha256  bytes  filename
+
+0a2fac16f388b4839f075dedb681357aec3e73a96bd66b413e462b6853550c99  3043932288  gemma-4-E2B-it-Q4_K_S.gguf
+140be8d7849741f88c50757d529b84373ee8e27052cc2236855b537f4a8215fa  985654080  mmproj-F16.gguf

@@ -1,0 +1,46 @@
+{
+  "mode": "wi",
+  "source_id": "WI-CARTONER-ST2",
+  "title": "Cartoner Station 2 Released Work Instruction",
+  "revision": "WI-2026.05-demo",
+  "released": true,
+  "machine_id": "CARTONER-ST2",
+  "machine_aliases": [
+    "cartoner station two",
+    "cartoner station 2",
+    "cartoner st2",
+    "cartoner-st2",
+    "infeed guide cartoner"
+  ],
+  "authority": {
+    "document_owner": "manufacturing_engineering",
+    "release_authority": "line_lead",
+    "system_of_record": "released_wi_repository"
+  },
+  "required_confirmations": [
+    "machine identity",
+    "current WI revision",
+    "guard closed",
+    "line lead confirmation for alarms"
+  ],
+  "sections": [
+    {
+      "id": "WI-CARTONER-ST2-START",
+      "title": "Safe Start And Guard Check",
+      "keywords": ["guard", "start", "operator panel", "infeed", "guide"],
+      "content": "Before operation, confirm the machine is CARTONER-ST2, close all guard doors, clear the infeed, and verify no active alarm is present."
+    },
+    {
+      "id": "WI-CARTONER-ST2-GUIDE",
+      "title": "Product Guide Alignment",
+      "keywords": ["guide alignment", "rail", "carton", "jam", "orientation"],
+      "content": "Adjust only the released guide rail reference marks for the running carton family; stop and ask the line lead if cartons skew or jam repeatedly."
+    },
+    {
+      "id": "WI-CARTONER-ST2-RISK",
+      "title": "Risk Control And Escalation",
+      "keywords": ["risk", "quality", "tooling", "energy", "escalation"],
+      "content": "Keep hands outside guarded transfer areas, do not bypass interlocks, and escalate abnormal noise, vibration, tooling contact, or repeated rejects."
+    }
+  ]
+}

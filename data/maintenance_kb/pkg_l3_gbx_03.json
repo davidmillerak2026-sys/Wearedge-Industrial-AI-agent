@@ -1,0 +1,41 @@
+{
+  "asset_id": "PKG-L3-GBX-03",
+  "title": "PKG-L3-GBX-03 Predictive Maintenance Knowledge Base",
+  "revision": "PM-KB-2026.05-demo",
+  "equipment": "Packaging line three gearbox drive station",
+  "authority": "Demo maintenance engineering knowledge base; verify against released plant manual before dispatch.",
+  "thresholds": {
+    "vibration_rms_high_mm_s": 6.5,
+    "gearbox_temperature_high_c": 75,
+    "bearing_temperature_high_c": 70,
+    "yellow_alarm_codes": ["GBX-VIB-HI"],
+    "yellow_alarm_colors": ["yellow", "amber"],
+    "lubrication_max_interval_days": 7
+  },
+  "sections": [
+    {
+      "id": "GBX-VIB-01",
+      "title": "Gearbox vibration RMS escalation",
+      "keywords": ["vibration", "rms", "gbx-vib-hi", "yellow", "alarm", "bearing", "gearbox"],
+      "content": "For PKG-L3-GBX-03, gearbox vibration RMS above 6.5 mm/s is treated as a high condition when paired with yellow PLC alarm GBX-VIB-HI. Recommended response is to avoid speed increase, inspect bearing condition, coupling alignment, gear mesh, mounting looseness, and lubrication state, then report to maintenance engineering."
+    },
+    {
+      "id": "GBX-TEMP-01",
+      "title": "Gearbox and bearing temperature confirmation",
+      "keywords": ["temperature", "temp", "gearbox", "bearing", "motor", "heat", "warm"],
+      "content": "Gearbox housing temperature at or above 75 C, or bearing temperature at or above 70 C, requires manual-threshold comparison and near-term inspection when vibration is also elevated. Do not issue restart permission from temperature alone; compare against released threshold and trend."
+    },
+    {
+      "id": "GBX-LUBE-01",
+      "title": "Lubrication record and oil smell cross-check",
+      "keywords": ["lubrication", "oil", "smell", "leak", "grease", "lube", "stain"],
+      "content": "If oil smell, oil staining, or delayed lubrication record appears with high vibration, inspect lubricant level, oil condition, gearbox seals, lubrication point GBX-03, and last service date. Treat operator sensory observations as evidence, but require maintenance confirmation before assigning final root cause."
+    },
+    {
+      "id": "GBX-HUMAN-01",
+      "title": "Operator sensory observation handling",
+      "keywords": ["operator", "noise", "rumble", "shaking", "vibration", "started", "speed"],
+      "content": "Low-frequency rumble, stronger guard vibration after speed increase, warm housing, and oil smell should be attached to the same maintenance session. These observations support maintenance_report escalation, but they do not prove bearing failure without manual, telemetry trend, or technician inspection evidence."
+    }
+  ]
+}

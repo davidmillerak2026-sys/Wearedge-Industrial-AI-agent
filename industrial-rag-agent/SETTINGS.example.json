@@ -1,0 +1,14 @@
+{
+  "index_dir": ".rag_index",
+  "chunk_size": 1200,
+  "chunk_overlap": 180,
+  "top_k": 5,
+  "provider": "extractive",
+  "model": "qwen2.5:7b",
+  "response_language": "English",
+  "prompt_path": "prompts/industrial_rag_answer.md",
+  "ollama_base_url": "${ENV.OLLAMA_BASE_URL}",
+  "openai_compatible_base_url": "${ENV.OPENAI_COMPATIBLE_BASE_URL}",
+  "openai_compatible_api_key": "${ENV.OPENAI_COMPATIBLE_API_KEY}"
+}
+

@@ -1,0 +1,16 @@
+[Unit]
+Description=WearEdge Pro FastAPI Gateway
+After=network-online.target wearedge-llama.service
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=jetson
+WorkingDirectory=/home/jetson/WearEdge-Pro
+EnvironmentFile=/home/jetson/WearEdge-Pro/.env
+ExecStart=/home/jetson/WearEdge-Pro/.venv/bin/python -m uvicorn jetson.app:app --host 0.0.0.0 --port 8081
+Restart=on-failure
+RestartSec=5
+
+[Install]
+WantedBy=multi-user.target

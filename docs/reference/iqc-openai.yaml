@@ -1,0 +1,4 @@
+interface:
+  display_name: "IQC"
+  short_description: "Turn in-process quality checks into an auditable line-side agent workflow"
+  default_prompt: "Use $iqc to design or review an in-process quality check workflow for manufacturing quality gates, inspection plans, measurements, defects, CAPA, and operator evidence."

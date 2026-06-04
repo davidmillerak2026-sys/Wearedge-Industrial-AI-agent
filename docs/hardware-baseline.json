@@ -1,0 +1,434 @@
+{
+  "project": "WearEdge Pro",
+  "baseline_id": "wearable-edge-prototype-jetson-nano-8gb",
+  "updated_at": "2026-05-15",
+  "architecture_pattern": "external sensing endpoints plus wearable compute box",
+  "edge_compute": {
+    "role": "wearable_edge_brain",
+    "platform": "Jetson Orin Nano 8GB Developer Kit",
+    "project_alias": "Jetson Nano 8GB",
+    "memory_gb": 8,
+    "os_observed": "Ubuntu 22.04.5 LTS / Linux 5.15.148-tegra",
+    "os_target": "JetPack 6.2.1 / L4T R36.4.4",
+    "power_mode_observed": "25W",
+    "network_observed": {
+      "hostname": "wearedge-pro",
+      "lan_ip": "192.168.0.155",
+      "gateway_url": "http://192.168.0.155:8081"
+    }
+  },
+  "storage_policy": {
+    "principle": "The system disk boots and controls the device; the NVMe SSD carries model and runtime workloads.",
+    "system_disk_role": "boot_and_control_plane",
+    "nvme_role": "workload_and_data_plane",
+    "decision": "Use the SD card for OS, code, Python venv, systemd units, and recovery. Use the 2TB NVMe SSD for GGUF models, mmproj, uploads, event logs, RAG indexes, benchmarks, and field data."
+  },
+  "boot_storage": {
+    "id": "jetson-system-sdcard",
+    "component": "microSD / system disk",
+    "device_observed": "/dev/mmcblk0p1",
+    "capacity_observed_gb": 114.7,
+    "mount_point": "/",
+    "filesystem": "ext4",
+    "usage": [
+      "Ubuntu and JetPack runtime",
+      "WearEdge-Pro Git checkout",
+      "Python virtual environment",
+      "systemd service definitions",
+      "small system logs and recovery assets"
+    ],
+    "avoid": [
+      "large GGUF model files",
+      "runtime image uploads",
+      "long-running inference event logs",
+      "RAG vector indexes",
+      "benchmark datasets"
+    ],
+    "status": "active_boot_storage"
+  },
+  "workload_storage": {
+    "id": "edge-nvme-2tb",
+    "component": "NVMe SSD",
+    "model_observed": "WD_BLACK SN7100 2TB",
+    "device_observed": "/dev/nvme0n1p1",
+    "capacity_observed_tb": 1.8,
+    "interface": "M.2 NVMe",
+    "filesystem": "ext4",
+    "label": "WEAREDGE_NVME",
+    "uuid": "b64b7d4e-aaec-4690-a0ce-457dd9d9d75c",
+    "mount_point": "/mnt/nvme",
+    "fstab": "UUID=b64b7d4e-aaec-4690-a0ce-457dd9d9d75c /mnt/nvme ext4 defaults,nofail,x-systemd.device-timeout=10 0 2",
+    "measured_write_smoke_test": {
+      "command": "dd if=/dev/zero of=/mnt/nvme/wearedge/power-test/test.bin bs=1M count=512 conv=fsync",
+      "size_mib": 512,
+      "throughput_mbps": 576
+    },
+    "usage": [
+      "Gemma 4 E2B GGUF model artifacts",
+      "Gemma 4 mmproj-F16 visual projector",
+      "WearEdge runtime uploads",
+      "privacy-preserving inference audit logs",
+      "RAG indexes and source snapshots",
+      "local deployment artifacts and benchmark data"
+    ],
+    "status": "active_runtime_storage"
+  },
+  "deployment_paths": {
+    "repo": "/home/ryn/WearEdge-Pro",
+    "models": "/mnt/nvme/models/gemma4-e2b",
+    "uploads": "/mnt/nvme/wearedge/uploads",
+    "event_log": "/mnt/nvme/wearedge/events/inference-events.jsonl",
+    "rag_indexes": "/mnt/nvme/wearedge/rag",
+    "benchmarks": "/mnt/nvme/wearedge/benchmarks"
+  },
+  "model_assets_observed": [
+    {
+      "path": "/mnt/nvme/models/gemma4-e2b/gemma-4-E2B-it-Q4_K_S.gguf",
+      "size_observed": "2.9G"
+    },
+    {
+      "path": "/mnt/nvme/models/gemma4-e2b/mmproj-F16.gguf",
+      "size_observed": "940M"
+    }
+  ],
+  "power_supply": {
+    "id": "wearable-pd-power-bank-pb551",
+    "component": "wearable USB-C PD power bank",
+    "model_observed": "PB551",
+    "part_number_observed": "55992",
+    "rated_energy_wh": 72,
+    "cell_capacity_mah": 20000,
+    "recommended_output": "USB-C OUT 3, 20V/5A, 100W Max",
+    "adapter": "USB-C PD 20V trigger to 5.5x2.5mm DC barrel plug",
+    "polarity_requirement": "center positive",
+    "role": "wearable power source for Jetson compute box",
+    "runtime_estimate_hours": {
+      "20w_average": 3.0,
+      "25w_average": 2.4,
+      "30w_average": 2.0,
+      "45w_average": 1.3
+    },
+    "validation_required_before_model_load": [
+      "Confirm the barrel plug outputs about 20V with a multimeter.",
+      "Confirm the adapter is a PD trigger, not a passive USB-C to DC cable.",
+      "Run an idle tegrastats baseline before model stress.",
+      "Watch for reboot, undervoltage, NVMe reset, thermal throttle, and service restart events."
+    ],
+    "safety_note": "This power bank is not an intrinsically safe hazardous-area power source; place the compute box and battery outside hazardous zones unless a compliant enclosure and site approval are available."
+  },
+  "external_sensing_endpoints": [
+    {
+      "id": "vuzix-m400",
+      "role": "first-person image capture and lightweight display",
+      "status": "android_client_mvp_ready"
+    },
+    {
+      "id": "honeywell-realwear-hmt",
+      "role": "hands-free industrial capture and display candidate",
+      "status": "architecture_candidate"
+    },
+    {
+      "id": "bone-conduction-headset",
+      "role": "voice command and audio feedback candidate",
+      "status": "architecture_candidate"
+    }
+  ],
+  "services_observed": {
+    "llama_server": {
+      "service": "wearedge-llama.service",
+      "port": 8080,
+      "status": "active",
+      "evidence": "main: model loaded; server is listening on http://0.0.0.0:8080"
+    },
+    "gateway": {
+      "service": "wearedge-gateway.service",
+      "port": 8081,
+      "status": "active",
+      "evidence": "GET /healthz returns ok=true with upload_persistence=true and event_log_enabled=true"
+    }
+  },
+  "power_baseline_results": [
+    {
+      "label": "original-power",
+      "timestamp_cst": "2026-05-15 15:00",
+      "power_source": "original DC power adapter",
+      "nvpmodel": "25W",
+      "idle_duration_seconds": 120,
+      "idle_temperature_c": "about 49.0-50.5",
+      "idle_vdd_in_mw": "about 4366-4447",
+      "nvme_write_pulse": {
+        "size_mib": 256,
+        "throughput_mbps": 557
+      },
+      "services_after": {
+        "wearedge-llama.service": "active",
+        "wearedge-gateway.service": "active",
+        "healthz": "ok"
+      },
+      "kernel_log_result": "no undervoltage, NVMe reset, thermal throttle, OOM, or abnormal shutdown observed",
+      "result": "PASS"
+    },
+    {
+      "label": "pb551-100w-pd",
+      "timestamp_cst": "2026-05-15 15:10",
+      "power_source": "PB551 USB-C OUT 3 via 20V PD trigger to 5.5x2.5mm DC barrel",
+      "nvpmodel": "25W",
+      "idle_duration_seconds": 120,
+      "idle_temperature_c": "about 46.6-48.3",
+      "idle_vdd_in_mw": "steady about 4360-4440 after startup; short service warmup peaks about 6288",
+      "nvme_write_pulse": {
+        "size_mib": 256,
+        "throughput_mbps": 661
+      },
+      "services_after": {
+        "wearedge-llama.service": "active",
+        "wearedge-gateway.service": "active",
+        "healthz": "ok"
+      },
+      "kernel_log_result": "no undervoltage, NVMe reset, thermal throttle, OOM, or abnormal shutdown observed",
+      "result": "PASS"
+    }
+  ],
+  "pb551_staged_inference_results": {
+    "timestamp_cst": "2026-05-15 15:19",
+    "power_source": "PB551 USB-C OUT 3 via 20V PD trigger to 5.5x2.5mm DC barrel",
+    "sequence": [
+      "one text health inference against llama-server",
+      "single-image gateway requests",
+      "three maintenance image requests with 300 second spacing"
+    ],
+    "text_health": {
+      "status": "PASS",
+      "http_status": 200,
+      "total_tokens": 29,
+      "prompt_tokens": 18,
+      "completion_tokens": 11,
+      "prompt_tokens_per_second": 14.44,
+      "completion_tokens_per_second": 15.18
+    },
+    "interval_image_requests": [
+      {
+        "request_id": "ab17558dd14f417798cb0ba46fee4de5",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 45.318590,
+        "contract_ok": true,
+        "audit_logged": true,
+        "channel": "maintenance_identification_required",
+        "priority": "medium"
+      },
+      {
+        "request_id": "d3b068e81b44413381435e04e251e344",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 5.779664,
+        "contract_ok": true,
+        "audit_logged": true,
+        "channel": "maintenance_identification_required",
+        "priority": "medium"
+      },
+      {
+        "request_id": "e8277ac8ec8048ca84e5b0be4c404bb5",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 5.962647,
+        "contract_ok": true,
+        "audit_logged": true,
+        "channel": "maintenance_identification_required",
+        "priority": "medium"
+      }
+    ],
+    "services_after": {
+      "wearedge-llama.service": "active",
+      "wearedge-gateway.service": "active",
+      "healthz": "ok"
+    },
+    "kernel_log_result": "no undervoltage, NVMe reset, thermal throttle, OOM, or abnormal shutdown observed",
+    "note": "The jq parse warning came from appending HTTP_STATUS text to the captured response file, not from a gateway or model failure.",
+    "result": "PASS"
+  },
+  "pb551_patrol_stress_results": {
+    "timestamp_cst": "2026-05-15 15:55",
+    "run_id": "pb551-patrol-20min-20260515-155544",
+    "run_dir": "/home/ryn/wearedge-patrol-stress/pb551-patrol-20min-20260515-155544",
+    "power_source": "PB551 USB-C OUT 3 via 20V PD trigger to 5.5x2.5mm DC barrel",
+    "interval_seconds": 180,
+    "rounds": 6,
+    "requests": [
+      {
+        "label": "text-health",
+        "http_status": 200,
+        "time_seconds": 0.783908
+      },
+      {
+        "label": "warm-maintenance",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 6.041125
+      },
+      {
+        "label": "warm-iqc",
+        "analysis_mode": "iqc",
+        "http_status": 200,
+        "time_seconds": 4.251634
+      },
+      {
+        "label": "patrol-1-maintenance",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 6.054592
+      },
+      {
+        "label": "patrol-2-wi",
+        "analysis_mode": "wi",
+        "http_status": 200,
+        "time_seconds": 4.516546
+      },
+      {
+        "label": "patrol-3-iqc",
+        "analysis_mode": "iqc",
+        "http_status": 200,
+        "time_seconds": 4.059800
+      },
+      {
+        "label": "patrol-4-maintenance",
+        "analysis_mode": "maintenance",
+        "http_status": 200,
+        "time_seconds": 5.570994
+      },
+      {
+        "label": "patrol-5-wi",
+        "analysis_mode": "wi",
+        "http_status": 200,
+        "time_seconds": 4.344082
+      },
+      {
+        "label": "patrol-6-iqc",
+        "analysis_mode": "iqc",
+        "http_status": 200,
+        "time_seconds": 4.297324
+      }
+    ],
+    "services_after": {
+      "wearedge-llama.service": "active",
+      "wearedge-gateway.service": "active",
+      "healthz": "ok"
+    },
+    "kernel_log_result": "no undervoltage, NVMe reset, thermal throttle, OOM, or abnormal shutdown observed",
+    "tooling_notes": [
+      "The first script revision emitted jq syntax errors because jq treats bare label as a keyword; the response HTTP status and model calls still succeeded.",
+      "The first script revision could block at sudo dmesg after a long patrol when the sudo timestamp expired; the script now uses non-interactive sudo and skips dmesg instead of waiting."
+    ],
+    "result": "PASS"
+  },
+  "pb551_low_battery_patrol_results": {
+    "timestamp_cst": "2026-05-15 19:50",
+    "run_id": "pb551-patrol-60min-lowbat36-20260515-195048",
+    "run_dir": "/home/ryn/wearedge-patrol-stress/pb551-patrol-60min-lowbat36-20260515-195048",
+    "power_source": "PB551 USB-C OUT 3 via 20V PD trigger to 5.5x2.5mm DC barrel",
+    "start_battery_percent": 36,
+    "end_battery_percent": 24,
+    "battery_delta_percent_points": 12,
+    "estimated_energy_used_wh": 8.64,
+    "estimated_average_power_w": 9.0,
+    "duration": {
+      "started_at_cst": "2026-05-15 19:50:48",
+      "completed_at_cst": "2026-05-15 20:48:27",
+      "elapsed_minutes": 57.65
+    },
+    "interval_seconds": 300,
+    "rounds": 12,
+    "summary_jsonl_lines": 15,
+    "sequence": [
+      "one text health request",
+      "two warm-up image requests",
+      "twelve patrol image requests rotating maintenance, wi, and iqc"
+    ],
+    "latency_seconds": {
+      "text_health": 0.742181,
+      "warm_maintenance": 5.506354,
+      "warm_iqc": 4.336464,
+      "patrol_requests": [
+        5.815130,
+        4.186925,
+        4.037890,
+        5.817018,
+        4.304393,
+        4.279957,
+        5.747631,
+        4.397508,
+        3.938032,
+        5.734920,
+        4.477951,
+        4.001697
+      ],
+      "maintenance_range": "about 5.5-5.8",
+      "wi_range": "about 4.2-4.5",
+      "iqc_range": "about 3.9-4.3"
+    },
+    "request_result": {
+      "http_status": 200,
+      "all_requests_completed": true,
+      "contract_ok": true,
+      "audit_logged": true
+    },
+    "services_after": {
+      "wearedge-llama.service": "active",
+      "wearedge-gateway.service": "active",
+      "healthz": "ok"
+    },
+    "thermal_and_power_observation": {
+      "temperature_c": "about 47-50.6",
+      "idle_vdd_in_mw": "about 4392-4472",
+      "post_inference_vdd_in_mw": "about 5713-5793"
+    },
+    "kernel_log_result": "manual dmesg check showed no undervoltage, NVMe reset, thermal throttle, OOM, or abnormal shutdown after the run",
+    "reboot_result": "last -x reboot showed the 2026-05-15 15:06 boot still running at 21:03 CST",
+    "result": "PASS"
+  },
+  "pb551_m400_debug_day_runtime_observation": {
+    "timestamp_cst": "2026-05-18 16:02",
+    "power_source": "PB551 USB-C OUT 3 via 20V PD trigger to 5.5x2.5mm DC barrel",
+    "workload": [
+      "Jetson boot and service recovery",
+      "model restore from NVMe backup",
+      "M400 real-device Camera2 upload and maintenance inference",
+      "Gateway and audit validation",
+      "mixed idle/debug/network troubleshooting"
+    ],
+    "observed_remaining_battery_percent": 34,
+    "assumed_start_battery_percent": 100,
+    "battery_delta_percent_points": 66,
+    "rated_energy_wh": 72,
+    "estimated_energy_used_wh": 47.52,
+    "duration": {
+      "boot_estimate_cst": "2026-05-18 10:25",
+      "observation_cst": "2026-05-18 16:02",
+      "elapsed_minutes": 337,
+      "elapsed_hours": 5.62
+    },
+    "estimated_average_power_w": 8.46,
+    "estimated_remaining_energy_wh": 24.48,
+    "estimated_remaining_runtime_hours_at_same_average_power": 2.89,
+    "result": "OBSERVED_RUNTIME_CONTINUES",
+    "evidence_notes": [
+      "At 2026-05-18 10:41:41 CST the Jetson reported up 16 min, which places the boot around 10:25 CST.",
+      "The 16:02 CST remaining battery reading was reported by the operator from the PB551 display.",
+      "A router power interruption broke Windows-to-Jetson LAN reachability; this is a network infrastructure interruption, not evidence of Jetson shutdown.",
+      "Power is estimated from PB551 percentage and rated energy; the percentage curve may be nonlinear."
+    ],
+    "follow_up_needed": [
+      "After Jetson reconnects to Wi-Fi, capture uptime, last -x reboot, dmesg power/thermal logs, and service status."
+    ],
+    "follow_up_completed": [
+      "Pulled the raw uploaded M400 JPEG from /mnt/nvme/wearedge/uploads/1779077307340.jpg into docs/poc-results/m400-real-device-full-chain-2026-05-18/m400-captured-frame-1779077307340.jpg."
+    ]
+  },
+  "engineering_notes": [
+    "Keep large model binaries out of Git and store them on the NVMe SSD.",
+    "Keep the SD card recoverable: OS, code, venv, and service units only.",
+    "Use a thermal pad or heatsink on the SSD for sustained model serving and write-heavy debugging.",
+    "Verify the SSD with lsblk, findmnt /mnt/nvme, df -h /mnt/nvme, and a short write/read smoke test before demos.",
+    "Before running model stress from the wearable power bank, establish a power baseline with nvpmodel -q, tegrastats, service status, healthz, and kernel logs."
+  ]
+}

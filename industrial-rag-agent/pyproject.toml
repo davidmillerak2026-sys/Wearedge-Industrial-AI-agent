@@ -1,0 +1,22 @@
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "wear-edge-rag"
+version = "0.1.0"
+description = "Local-first industrial RAG agent for WearEdge Pro."
+requires-python = ">=3.10"
+dependencies = []
+
+[project.optional-dependencies]
+dev = ["pytest>=8.0"]
+ollama = []
+openai-compatible = []
+
+[project.scripts]
+wear-edge-rag = "wear_edge_rag.cli:main"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+

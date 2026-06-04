@@ -1,0 +1,4 @@
+# The default sparse RAG path uses only the Python standard library.
+# Optional development dependency:
+# pytest>=8.0
+

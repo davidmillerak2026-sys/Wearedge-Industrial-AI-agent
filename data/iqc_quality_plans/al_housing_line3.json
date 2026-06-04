@@ -1,0 +1,74 @@
+{
+  "plan_id": "QP-AL-HOUSING-L3",
+  "product_id": "AL-HOUSING-L3",
+  "product_name": "Machined aluminum housing",
+  "line_id": "line-3",
+  "station_id": "machining-output",
+  "revision": "QP-2026.05-demo",
+  "released": true,
+  "sampling_rule": {
+    "frequency": "first-piece plus every 30 minutes",
+    "scope": "station lot and shift",
+    "release_authority": "quality_engineer"
+  },
+  "aliases": [
+    "al-housing-l3",
+    "aluminum housing",
+    "machined aluminum housing",
+    "machined housing",
+    "housing lot"
+  ],
+  "detector": {
+    "required_for_pass": true,
+    "minimum_confidence": 0.62,
+    "classes": [
+      "edge_burr",
+      "sealing_face_scratch",
+      "contamination",
+      "label_mismatch",
+      "missing_feature"
+    ]
+  },
+  "defect_rules": [
+    {
+      "id": "ALH-BURR-01",
+      "defect_class": "edge_burr",
+      "severity": "major",
+      "keywords": ["burr", "sharp edge", "edge burr"],
+      "reaction_plan": "expand_inspection",
+      "content": "Any visible burr on sealing or assembly edges requires adjacent-unit inspection and quality engineer review before release."
+    },
+    {
+      "id": "ALH-SEAL-02",
+      "defect_class": "sealing_face_scratch",
+      "severity": "major",
+      "keywords": ["scratch", "sealing face", "surface mark", "surface marks"],
+      "reaction_plan": "quality_hold",
+      "content": "Scratch or uneven mark on the sealing face requires product hold because leakage escape risk is customer-facing."
+    },
+    {
+      "id": "ALH-CONTAM-03",
+      "defect_class": "contamination",
+      "severity": "major",
+      "keywords": ["contamination", "oil", "dirty", "foreign material"],
+      "reaction_plan": "quality_hold",
+      "content": "Foreign material or handling contamination near the sealing surface requires containment until cleaning and reinspection evidence is recorded."
+    },
+    {
+      "id": "ALH-MIX-04",
+      "defect_class": "label_mismatch",
+      "severity": "critical",
+      "keywords": ["label mismatch", "wrong label", "mixed sku", "mix-up"],
+      "reaction_plan": "stop_production",
+      "content": "Label mismatch or suspected SKU mix-up requires stopping station output and containing the affected time window."
+    },
+    {
+      "id": "ALH-FEATURE-05",
+      "defect_class": "missing_feature",
+      "severity": "critical",
+      "keywords": ["missing hole", "missing fastener", "missing feature", "missing bore"],
+      "reaction_plan": "stop_production",
+      "content": "Missing machined feature is a critical defect that blocks downstream assembly and requires production stop review."
+    }
+  ]
+}

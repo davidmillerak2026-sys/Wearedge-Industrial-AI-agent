@@ -1,0 +1,5 @@
+timestamp,station,event,severity,notes
+2026-04-20T08:10:00+08:00,A3,E-07,warning,Alarm cleared after inlet filter cleaning
+2026-04-21T14:35:00+08:00,A3,E-07,critical,Alarm returned after 18 minutes; maintenance replaced cooling fan
+2026-04-22T09:05:00+08:00,B1,IQC_HOLD,warning,Surface scratch confirmed by operator and quality engineer
+

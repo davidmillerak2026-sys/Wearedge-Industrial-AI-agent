@@ -1,0 +1,16 @@
+[Unit]
+Description=WearEdge Pro llama.cpp Server
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=jetson
+WorkingDirectory=/home/jetson/WearEdge-Pro
+EnvironmentFile=/home/jetson/WearEdge-Pro/.env
+ExecStart=/home/jetson/WearEdge-Pro/scripts/run_llama_server.sh
+Restart=on-failure
+RestartSec=10
+
+[Install]
+WantedBy=multi-user.target
