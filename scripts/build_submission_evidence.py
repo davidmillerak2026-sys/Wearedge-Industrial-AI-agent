@@ -1,0 +1,112 @@
+from __future__ import annotations
+
+import argparse
+import json
+import sys
+from pathlib import Path
+from typing import Any
+
+
+REPO_ROOT = Path(__file__).resolve().parents[1]
+if str(REPO_ROOT) not in sys.path:
+    sys.path.insert(0, str(REPO_ROOT))
+
+import run_competition_eval
+import smoke_workflow_canvas_decision
+
+
+DEFAULT_OUTPUT_DIR = REPO_ROOT / "docs" / "submission" / "evidence"
+DEFAULT_DATASET = REPO_ROOT / "evals" / "competition_offline_dataset.jsonl"
+DEFAULT_PAYLOAD = REPO_ROOT / "workflows" / "wearedge_wfc_poc_payload.json"
+
+
+def build_evidence(output_dir: Path, dataset_path: Path, payload_path: Path) -> dict[str, Any]:
+    output_dir.mkdir(parents=True, exist_ok=True)
+
+    cases = run_competition_eval.load_dataset(dataset_path)
+    eval_results, summary = run_competition_eval.evaluate_cases(cases)
+    report = run_competition_eval.render_report(eval_results, summary)
+
+    payload = smoke_workflow_canvas_decision.load_payload(payload_path)
+    decision = smoke_workflow_canvas_decision.call_in_process(payload)
+    failures = smoke_workflow_canvas_decision.validate_decision(decision)
+
+    summary_path = output_dir / "competition-eval-summary.json"
+    decision_path = output_dir / "workflow-canvas-decision.json"
+    report_path = output_dir / "competition-offline-eval-report.snapshot.md"
+    readme_path = output_dir / "README.md"
+
+    summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    decision_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    report_path.write_text(report, encoding="utf-8")
+    readme_path.write_text(_render_readme(summary, decision, failures), encoding="utf-8")
+
+    return {
+        "output_dir": str(output_dir),
+        "summary_path": str(summary_path),
+        "decision_path": str(decision_path),
+        "report_path": str(report_path),
+        "readme_path": str(readme_path),
+        "all_target_checks_passed": bool(summary["all_target_checks_passed"]),
+        "smoke_failures": failures,
+    }
+
+
+def main(argv: list[str] | None = None) -> int:
+    parser = argparse.ArgumentParser(description="Build submission evidence snapshots.")
+    parser.add_argument("--output-dir", type=Path, default=DEFAULT_OUTPUT_DIR)
+    parser.add_argument("--dataset", type=Path, default=DEFAULT_DATASET)
+    parser.add_argument("--payload", type=Path, default=DEFAULT_PAYLOAD)
+    args = parser.parse_args(argv)
+
+    result = build_evidence(args.output_dir, args.dataset, args.payload)
+    print(json.dumps(result, ensure_ascii=False, indent=2))
+    if not result["all_target_checks_passed"] or result["smoke_failures"]:
+        return 1
+    return 0
+
+
+def _render_readme(summary: dict[str, Any], decision: dict[str, Any], failures: list[str]) -> str:
+    collaborative = _object(decision.get("collaborative_decision"))
+    metrics = _object(decision.get("competition_metrics"))
+    workflow = _object(decision.get("workflow_canvas"))
+    return "\n".join(
+        [
+            "# Submission Evidence Snapshot",
+            "",
+            "Generated for the Wearedge Siemens Xcelerator / Gongyi Mofang competition package.",
+            "",
+            "## Offline Evaluation",
+            "",
+            f"- Cases: {summary['case_passed']} / {summary['case_count']} passed",
+            f"- Decision accuracy estimate min: {summary['decision_accuracy_pct_min']}%",
+            f"- Latency max: {summary['latency_ms_max']} ms",
+            f"- All target checks passed: {summary['all_target_checks_passed']}",
+            "",
+            "Boundary: this is simulated/offline validation, not customer production data.",
+            "",
+            "## Workflow Canvas Smoke Decision",
+            "",
+            f"- Primary direction: {collaborative.get('primary_direction')}",
+            f"- Priority: {collaborative.get('priority')}",
+            f"- Requires human confirmation: {collaborative.get('requires_human_confirmation')}",
+            f"- Accuracy estimate: {metrics.get('decision_accuracy_pct_estimate')}%",
+            f"- Function blocks: {len(workflow.get('function_blocks', []))}",
+            f"- Smoke failures: {failures if failures else 'none'}",
+            "",
+            "## Files",
+            "",
+            "- `competition-eval-summary.json`",
+            "- `workflow-canvas-decision.json`",
+            "- `competition-offline-eval-report.snapshot.md`",
+            "",
+        ]
+    )
+
+
+def _object(value: object) -> dict[str, Any]:
+    return value if isinstance(value, dict) else {}
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

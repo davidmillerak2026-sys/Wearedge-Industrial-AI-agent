@@ -1,0 +1,280 @@
+{
+  "ok": true,
+  "version": "wearedge-competition-decision.v1",
+  "stage": "final",
+  "selected_directions": [
+    "maintenance",
+    "quality",
+    "energy",
+    "flexible_production",
+    "workflow_canvas"
+  ],
+  "direction_count": 5,
+  "latency_ms": 1,
+  "competition_targets": {
+    "latency_ms_max": 500,
+    "decision_accuracy_pct_min": 90.0,
+    "maintenance_f1_pct_min": 85.0,
+    "maintenance_warning_lead_hours_min": 24.0,
+    "root_cause_top3_pct_min": 90.0,
+    "energy_forecast_accuracy_pct_min": 95.0,
+    "energy_saving_pct_min": 10.0,
+    "quality_relative_improvement_pct_min": 5.0,
+    "schedule_efficiency_gain_pct_min": 20.0,
+    "final_min_agent_directions": 3
+  },
+  "competition_metrics": {
+    "decision_accuracy_pct_estimate": 97.0,
+    "latency_target_met": true,
+    "final_min_agent_directions_met": true
+  },
+  "compliance": {
+    "initial_round": {
+      "single_agent_core_supported": true,
+      "offline_dataset_validation_supported": true,
+      "workflow_canvas_submission_supported": true
+    },
+    "final_round": {
+      "at_least_three_directions": true,
+      "workflow_execution_validation_supported": true,
+      "natural_language_and_visualization_supported": true,
+      "missing_recommended_directions": []
+    },
+    "runtime_targets": {
+      "latency_ms": 1,
+      "latency_target_met": true,
+      "decision_accuracy_pct_estimate": 97.0,
+      "decision_accuracy_target_met": true
+    },
+    "stage": "final"
+  },
+  "evaluations": [
+    {
+      "direction": "maintenance",
+      "status": "target_met",
+      "priority": "high",
+      "score": 1.0,
+      "metrics": {
+        "f1_pct": 88.0,
+        "warning_lead_time_hours": 30.0,
+        "root_cause_top3_pct": 92.0,
+        "vibration_rms_mm_s": 7.2,
+        "target_f1_pct": 85.0,
+        "target_warning_lead_time_hours": 24.0,
+        "target_root_cause_top3_pct": 90.0
+      },
+      "evidence": {
+        "source": "workflow_canvas_equipment_signal_table",
+        "has_threshold_evidence": true
+      },
+      "recommendation": "Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.",
+      "required_confirmations": [
+        "machine identity",
+        "manual or signal evidence",
+        "maintenance engineer approval"
+      ],
+      "workflow_blocks": [
+        "ReadEquipmentSignals",
+        "EvaluateMaintenanceThresholds",
+        "GenerateWorkOrder"
+      ]
+    },
+    {
+      "direction": "quality",
+      "status": "target_met",
+      "priority": "high",
+      "score": 1.0,
+      "metrics": {
+        "defect_rate_pct": 3.4,
+        "detection_confidence_pct": 93.0,
+        "relative_improvement_pct": 6.0,
+        "target_relative_improvement_pct": 5.0
+      },
+      "evidence": {
+        "source": "workflow_canvas_quality_table",
+        "has_detector_evidence": true
+      },
+      "recommendation": "Hold suspect lots for quality engineer review and expand inspection around the station with visible or detector-supported defects.",
+      "required_confirmations": [
+        "product identity",
+        "lot or batch",
+        "quality authority"
+      ],
+      "workflow_blocks": [
+        "ReadQualityData",
+        "EvaluateQualityRisk",
+        "UpdateQmsEvent"
+      ]
+    },
+    {
+      "direction": "energy",
+      "status": "target_met",
+      "priority": "high",
+      "score": 1.0,
+      "metrics": {
+        "forecast_accuracy_pct": 96.0,
+        "saving_pct": 12.0,
+        "idle_kw": 5.8,
+        "target_forecast_accuracy_pct": 95.0,
+        "target_saving_pct": 10.0
+      },
+      "evidence": {
+        "source": "workflow_canvas_energy_meter_table",
+        "has_meter_baseline": true
+      },
+      "recommendation": "Schedule energy optimization only after meter baseline, production plan, and line lead approval confirm the idle or peak-load window.",
+      "required_confirmations": [
+        "asset identity",
+        "meter baseline",
+        "production schedule",
+        "energy manager approval"
+      ],
+      "workflow_blocks": [
+        "ReadEnergyMeter",
+        "ForecastEnergyLoad",
+        "OptimizeEnergySchedule"
+      ]
+    },
+    {
+      "direction": "flexible_production",
+      "status": "target_met",
+      "priority": "high",
+      "score": 1.0,
+      "metrics": {
+        "schedule_efficiency_gain_pct": 22.0,
+        "component_reuse_pct": 76.0,
+        "target_schedule_efficiency_gain_pct": 20.0
+      },
+      "evidence": {
+        "source": "workflow_canvas_mes_order_table",
+        "target_sku": "SKU-C500",
+        "has_released_checklist": true
+      },
+      "recommendation": "Use reusable Workflow Canvas changeover blocks to verify target SKU, released checklist, line clearance, and first-piece quality gate.",
+      "required_confirmations": [
+        "target SKU",
+        "released checklist",
+        "line clearance",
+        "first-piece verification"
+      ],
+      "workflow_blocks": [
+        "ReadMesOrder",
+        "SelectReleasedChangeoverChecklist",
+        "VerifyFirstPiece"
+      ]
+    },
+    {
+      "direction": "workflow_canvas",
+      "status": "target_met",
+      "priority": "medium",
+      "score": 1.0,
+      "metrics": {
+        "existing_component_use_pct": 72.0,
+        "new_component_reuse_potential_pct": 80.0
+      },
+      "evidence": {
+        "source": "workflow_canvas_resource_and_function_blocks",
+        "resource_block": "Wearedge Agent Service"
+      },
+      "recommendation": "Expose Wearedge as a Workflow Canvas resource and call bounded decision blocks from Python function blocks.",
+      "required_confirmations": [
+        "resource binding",
+        "data table mapping",
+        "human approval block"
+      ],
+      "workflow_blocks": [
+        "WearedgeAgentServiceResource",
+        "CallWearedgeDecisionApi",
+        "UpdateDataTable",
+        "HumanApprovalGate"
+      ]
+    }
+  ],
+  "collaborative_decision": {
+    "primary_direction": "maintenance",
+    "priority": "high",
+    "recommendation": "Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.",
+    "requires_human_confirmation": true,
+    "required_confirmations": [
+      "machine identity",
+      "manual or signal evidence",
+      "maintenance engineer approval",
+      "product identity",
+      "lot or batch",
+      "quality authority",
+      "asset identity",
+      "meter baseline",
+      "production schedule",
+      "energy manager approval",
+      "target SKU",
+      "released checklist",
+      "line clearance",
+      "first-piece verification",
+      "resource binding",
+      "data table mapping",
+      "human approval block"
+    ],
+    "residual_risk": "human_confirmation_required_before_ot_control"
+  },
+  "workflow_canvas": {
+    "resource_block": {
+      "name": "Wearedge Agent Service",
+      "parameters": [
+        "agentHost",
+        "agentPort",
+        "apiKeyRef",
+        "plantId",
+        "lineId"
+      ]
+    },
+    "function_blocks": [
+      "ReadEquipmentSignals",
+      "EvaluateMaintenanceThresholds",
+      "GenerateWorkOrder",
+      "ReadQualityData",
+      "EvaluateQualityRisk",
+      "UpdateQmsEvent",
+      "ReadEnergyMeter",
+      "ForecastEnergyLoad",
+      "OptimizeEnergySchedule",
+      "ReadMesOrder",
+      "SelectReleasedChangeoverChecklist",
+      "VerifyFirstPiece",
+      "WearedgeAgentServiceResource",
+      "CallWearedgeDecisionApi",
+      "UpdateDataTable",
+      "HumanApprovalGate",
+      "CollaborativeDecisionGate",
+      "UpdateDashboardDataTable"
+    ],
+    "data_table_update": {
+      "primary_direction": "maintenance",
+      "priority": "high",
+      "recommendation": "Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.",
+      "required_confirmations": [
+        "machine identity",
+        "manual or signal evidence",
+        "maintenance engineer approval",
+        "product identity",
+        "lot or batch",
+        "quality authority",
+        "asset identity",
+        "meter baseline",
+        "production schedule",
+        "energy manager approval",
+        "target SKU",
+        "released checklist",
+        "line clearance",
+        "first-piece verification",
+        "resource binding",
+        "data table mapping",
+        "human approval block"
+      ]
+    },
+    "python_function_block": {
+      "method": "POST",
+      "path": "/v1/workflow-canvas/decision",
+      "request_body": "JSON object containing selected_directions and context tables"
+    }
+  }
+}

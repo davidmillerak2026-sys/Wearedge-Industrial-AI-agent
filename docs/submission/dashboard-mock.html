@@ -1,0 +1,290 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wearedge Workflow Canvas Decision Dashboard Mock</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --ink: #17202a;
+      --muted: #5a6573;
+      --line: #d9e0e7;
+      --panel: #ffffff;
+      --bg: #eef3f7;
+      --good: #147d58;
+      --warn: #a35c00;
+      --blue: #1d5f9f;
+      --red: #b42318;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      color: var(--ink);
+      background: var(--bg);
+    }
+    header {
+      padding: 20px 28px;
+      background: #102a43;
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 20px;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 { font-size: 24px; font-weight: 700; }
+    .sub { color: #c9d6e2; font-size: 13px; margin-top: 5px; }
+    .badge {
+      display: inline-flex;
+      align-items: center;
+      min-height: 30px;
+      padding: 0 10px;
+      border: 1px solid rgba(255,255,255,.35);
+      border-radius: 4px;
+      color: #e7f4ff;
+      font-size: 13px;
+      white-space: nowrap;
+    }
+    main {
+      width: min(1180px, calc(100vw - 36px));
+      margin: 22px auto 36px;
+      display: grid;
+      gap: 18px;
+    }
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+    .metrics {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .two {
+      grid-template-columns: 1.4fr .9fr;
+      align-items: start;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      padding: 16px;
+      box-shadow: 0 1px 2px rgba(16, 42, 67, .06);
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: 12px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    .metric-value {
+      margin-top: 8px;
+      font-size: 30px;
+      font-weight: 750;
+    }
+    .metric-note {
+      margin-top: 6px;
+      color: var(--good);
+      font-size: 13px;
+      font-weight: 600;
+    }
+    .section-title {
+      font-size: 16px;
+      margin-bottom: 12px;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      text-align: left;
+      padding: 9px 8px;
+      border-bottom: 1px solid var(--line);
+      vertical-align: top;
+    }
+    th {
+      color: var(--muted);
+      font-size: 12px;
+      font-weight: 650;
+      background: #f7fafc;
+    }
+    .status {
+      display: inline-flex;
+      min-width: 78px;
+      justify-content: center;
+      padding: 3px 8px;
+      border-radius: 4px;
+      background: #e8f5ef;
+      color: var(--good);
+      font-weight: 700;
+      font-size: 12px;
+    }
+    .priority-high { color: var(--red); font-weight: 700; }
+    .priority-medium { color: var(--warn); font-weight: 700; }
+    .callout {
+      border-left: 4px solid var(--blue);
+      background: #f3f8fd;
+      padding: 12px;
+      border-radius: 6px;
+      display: grid;
+      gap: 8px;
+      font-size: 14px;
+    }
+    .confirm-list {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    .chip {
+      border: 1px solid #c8d7e5;
+      background: #f9fbfd;
+      color: #24445f;
+      padding: 6px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      font-weight: 600;
+    }
+    .flow {
+      display: grid;
+      gap: 8px;
+    }
+    .block {
+      padding: 9px 10px;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      background: #fafcfe;
+      font-size: 13px;
+      display: flex;
+      justify-content: space-between;
+      gap: 12px;
+    }
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    @media (max-width: 860px) {
+      .metrics, .two { grid-template-columns: 1fr; }
+      header { align-items: flex-start; flex-direction: column; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Wearedge Workflow Canvas Decision Dashboard</h1>
+      <p class="sub">Submission mock based on offline/simulated validation, pending real Gongyi Mofang platform screenshots.</p>
+    </div>
+    <div class="badge">Internal target submit by 2026-07-08</div>
+  </header>
+  <main>
+    <section class="grid metrics">
+      <div class="panel">
+        <div class="metric-label">Decision Accuracy Estimate</div>
+        <div class="metric-value">97.0%</div>
+        <div class="metric-note">target >= 90%</div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">Latency</div>
+        <div class="metric-value">1 ms</div>
+        <div class="metric-note">target <= 500 ms</div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">Directions</div>
+        <div class="metric-value">5</div>
+        <div class="metric-note">final target >= 3</div>
+      </div>
+      <div class="panel">
+        <div class="metric-label">Human Gate</div>
+        <div class="metric-value">On</div>
+        <div class="metric-note">OT control protected</div>
+      </div>
+    </section>
+
+    <section class="grid two">
+      <div class="panel">
+        <h2 class="section-title">Collaborative Decision</h2>
+        <div class="callout">
+          <strong>Primary direction: maintenance</strong>
+          <span>Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.</span>
+          <span class="small">Residual risk: human_confirmation_required_before_ot_control</span>
+        </div>
+        <div class="confirm-list">
+          <span class="chip">machine identity</span>
+          <span class="chip">manual or signal evidence</span>
+          <span class="chip">maintenance engineer approval</span>
+          <span class="chip">quality authority</span>
+          <span class="chip">meter baseline</span>
+          <span class="chip">production schedule</span>
+          <span class="chip">first-piece verification</span>
+          <span class="chip">human approval block</span>
+        </div>
+      </div>
+      <div class="panel">
+        <h2 class="section-title">Workflow Blocks</h2>
+        <div class="flow">
+          <div class="block"><span>WearedgeAgentServiceResource</span><span class="small">resource</span></div>
+          <div class="block"><span>CallWearedgeDecisionApi</span><span class="small">python</span></div>
+          <div class="block"><span>CollaborativeDecisionGate</span><span class="small">decision</span></div>
+          <div class="block"><span>HumanApprovalGate</span><span class="small">approval</span></div>
+          <div class="block"><span>UpdateDashboardDataTable</span><span class="small">writeback</span></div>
+        </div>
+      </div>
+    </section>
+
+    <section class="panel">
+      <h2 class="section-title">Direction Evaluations</h2>
+      <table>
+        <thead>
+          <tr>
+            <th>Direction</th>
+            <th>Status</th>
+            <th>Priority</th>
+            <th>Key Metric</th>
+            <th>Evidence Source</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Maintenance</td>
+            <td><span class="status">target_met</span></td>
+            <td class="priority-high">high</td>
+            <td>F1 88.0%, lead 30h, Top3 92.0%</td>
+            <td>workflow_canvas_equipment_signal_table</td>
+          </tr>
+          <tr>
+            <td>Quality</td>
+            <td><span class="status">target_met</span></td>
+            <td class="priority-high">high</td>
+            <td>relative improvement 6.0%</td>
+            <td>workflow_canvas_quality_table</td>
+          </tr>
+          <tr>
+            <td>Energy</td>
+            <td><span class="status">target_met</span></td>
+            <td class="priority-high">high</td>
+            <td>forecast 96.0%, saving 12.0%</td>
+            <td>workflow_canvas_energy_meter_table</td>
+          </tr>
+          <tr>
+            <td>Flexible Production</td>
+            <td><span class="status">target_met</span></td>
+            <td class="priority-high">high</td>
+            <td>schedule efficiency gain 22.0%</td>
+            <td>workflow_canvas_mes_order_table</td>
+          </tr>
+          <tr>
+            <td>Workflow Canvas</td>
+            <td><span class="status">target_met</span></td>
+            <td class="priority-medium">medium</td>
+            <td>existing component use 72.0%</td>
+            <td>workflow_canvas_resource_and_function_blocks</td>
+          </tr>
+        </tbody>
+      </table>
+    </section>
+  </main>
+</body>
+</html>

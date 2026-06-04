@@ -1,0 +1,66 @@
+{
+  "case_count": 5,
+  "case_passed": 5,
+  "case_pass_rate_pct": 100.0,
+  "all_cases_passed": true,
+  "decision_accuracy_pct_min": 95.0,
+  "decision_accuracy_pct_avg": 96.3,
+  "latency_ms_max": 1,
+  "latency_ms_avg": 1.0,
+  "metrics": {
+    "maintenance_f1_pct": {
+      "count": 4.0,
+      "min": 87.0,
+      "avg": 88.125,
+      "max": 89.0
+    },
+    "maintenance_warning_lead_time_hours": {
+      "count": 4.0,
+      "min": 25.0,
+      "avg": 27.25,
+      "max": 30.0
+    },
+    "root_cause_top3_pct": {
+      "count": 4.0,
+      "min": 91.0,
+      "avg": 91.875,
+      "max": 93.0
+    },
+    "energy_forecast_accuracy_pct": {
+      "count": 3.0,
+      "min": 95.5,
+      "avg": 96.167,
+      "max": 97.0
+    },
+    "energy_saving_pct": {
+      "count": 3.0,
+      "min": 10.5,
+      "avg": 11.833,
+      "max": 13.0
+    },
+    "quality_relative_improvement_pct": {
+      "count": 5.0,
+      "min": 5.5,
+      "avg": 5.86,
+      "max": 6.4
+    },
+    "schedule_efficiency_gain_pct": {
+      "count": 3.0,
+      "min": 21.0,
+      "avg": 22.333,
+      "max": 24.0
+    }
+  },
+  "target_checks": {
+    "decision_accuracy": true,
+    "latency": true,
+    "maintenance_f1": true,
+    "maintenance_warning_lead_time": true,
+    "root_cause_top3": true,
+    "energy_forecast_accuracy": true,
+    "energy_saving": true,
+    "quality_relative_improvement": true,
+    "schedule_efficiency_gain": true
+  },
+  "all_target_checks_passed": true
+}

@@ -14,6 +14,9 @@
 | Offline evaluation dataset | `evals/competition_offline_dataset.jsonl` | ready |
 | Offline evaluation script | `scripts/run_competition_eval.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
+| Submission evidence snapshots | `docs/submission/evidence/` | ready |
+| Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
+| Capture runbook | `docs/submission/capture-runbook.md` | ready |
 | Technical architecture | `docs/technical_architecture.md` | ready |
 | Technical evidence | `docs/technical-evidence.md` | ready |
 

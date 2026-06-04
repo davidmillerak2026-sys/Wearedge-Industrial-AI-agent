@@ -25,6 +25,8 @@
 | Business plan | `docs/submission/business-plan.md` | draft |
 | Technical solution | `docs/submission/technical-solution.md` | draft |
 | Demo script | `docs/submission/demo-script.md` | draft |
+| Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
+| Submission evidence snapshots | `docs/submission/evidence/` | ready |
 | Screenshots | external submission assets | pending |
 | Video | external submission assets | pending |
 | IP statement | `docs/submission/ip-and-compliance-statement.md` | draft |

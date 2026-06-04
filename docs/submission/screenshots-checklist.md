@@ -12,6 +12,7 @@
 | `/healthz` JSON | recommended | pending | 展示 gateway readiness 和 competition metadata。 |
 | 工易魔方资源块截图 | when available | pending | 真实平台环境接入后补。 |
 | 工易魔方 Python Function Block 截图 | when available | pending | 真实平台环境接入后补。 |
+| Dashboard mock 截图 | yes | ready to capture | 使用 `docs/submission/dashboard-mock.html`，标注为 submission mock。 |
 | 工易魔方 Dashboard 截图 | when available | pending | 真实平台环境接入后补。 |
 | CI green run | recommended | pending | 展示 GitHub Actions 通过。 |
 
