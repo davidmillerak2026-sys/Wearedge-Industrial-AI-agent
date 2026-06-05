@@ -12,7 +12,7 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/smoke_workflow_canvas_decision.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/build_submission_evidence.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/verify_submission_package.py --write-manifest
-& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/capture_dashboard_mock.py
+& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/capture_submission_screenshots.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" -m pytest --basetemp "C:\tmp\wearedge-industrial-ai-agent-pytest" tests industrial-rag-agent/tests
 ```
 
@@ -28,6 +28,8 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 | 6 | Dashboard mock | `docs/submission/dashboard-mock.html` |
 | 7 | API schema | `docs/workflow-canvas-api-schema.md` |
 | 8 | pytest output | terminal or CI |
+| 9 | Registration fields | `docs/submission/registration-fields.md` |
+| 10 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` |
 
 ## Dashboard Mock
 
@@ -46,7 +48,23 @@ submission-assets/screenshots/06-dashboard-mock.png
 Automated capture command:
 
 ```powershell
-python scripts/capture_dashboard_mock.py
+python scripts/capture_submission_screenshots.py
+```
+
+Generated local paths:
+
+```text
+submission-assets/screenshots/01-local-readme.png
+submission-assets/screenshots/02-competition-eval-cli.png
+submission-assets/screenshots/03-offline-eval-report.png
+submission-assets/screenshots/04-wfc-smoke.png
+submission-assets/screenshots/05-wfc-payload.png
+submission-assets/screenshots/06-dashboard-mock.png
+submission-assets/screenshots/07-api-schema.png
+submission-assets/screenshots/08-submission-verifier.png
+submission-assets/screenshots/09-pytest-output.png
+submission-assets/screenshots/10-registration-fields.png
+submission-assets/screenshots/11-co-creation-onepager.png
 ```
 
 ## Video Flow

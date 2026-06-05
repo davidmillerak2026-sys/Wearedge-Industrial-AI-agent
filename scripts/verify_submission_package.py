@@ -40,6 +40,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/submission/dashboard-mock.html", "Dashboard mock"),
         Artifact("docs/submission/capture-runbook.md", "Capture runbook"),
         Artifact("docs/submission/evidence/README.md", "Generated evidence summary"),
+        Artifact("scripts/capture_submission_screenshots.py", "Batch screenshot capture script"),
     ],
     "Phase D - Business and technical package": [
         Artifact("docs/submission/business-plan.md", "Business plan draft"),

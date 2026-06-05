@@ -16,6 +16,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`build_submission_evidence.py`](build_submission_evidence.py) | Generate JSON and Markdown evidence snapshots for the submission package. |
 | [`verify_submission_package.py`](verify_submission_package.py) | Check Phase A-E repository deliverables, generated evidence, registration fields, and deadline markers. |
 | [`capture_dashboard_mock.py`](capture_dashboard_mock.py) | Capture the Dashboard mock to a local ignored screenshot under `submission-assets/screenshots/`. |
+| [`capture_submission_screenshots.py`](capture_submission_screenshots.py) | Batch-render README, reports, payloads, CLI outputs, and the Dashboard mock into local ignored screenshots. |
 | [`network_diagnostics.sh`](network_diagnostics.sh) | Capture router, DNS, GitHub, Hugging Face, and mirror connectivity diagnostics. |
 | [`run_maintenance_session_poc.sh`](run_maintenance_session_poc.sh) | Exercise multi-evidence lao-shi-fu maintenance session flow. |
 
