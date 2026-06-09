@@ -20,6 +20,10 @@
 | Gongyi Mofang WFC 项目 | 已创建 | `Wearedge WFC PoC` 项目已创建并进入编辑器。 |
 | WFC 资源配置/工作流入口 | 已截图 | 已保存资源配置页、工作流主画布、编程库和右侧属性/数据表入口截图。 |
 | `Wearedge Agent Service` 自定义资源 | 部分完成 | 已拖入 `自定义资源`、命名为 `Wearedge Agent Service`，并添加 `agentHost / Agent Host` 参数；其他参数待补。 |
+| WFC Python 程序块定位 | 部分完成 | 已在 `编程` 库搜索 `Python`，确认 `编程语言` 分类下的 Python 程序块入口可见；拖入画布尚未形成稳定新增块证据。 |
+| WFC 数据表入口 | 部分完成 | 已切换右侧 `数据表` tab，DOM 显示 `点击这里，选择数据`；尚未创建 Wearedge 决策字段表。 |
+| WFC Dashboard 入口 | 部分完成 | 已进入 `https://wfc.bd-iiot.com/dashboard-explorer`；尚未创建 Wearedge 决策 Dashboard。 |
+| WFC 运行/日志入口 | 尝试未完成 | 已尝试点击工作流顶部运行区，当前只回到属性面板 `请选择一个功能块`，没有真实 ok 日志。 |
 
 已导入接口：
 
@@ -61,6 +65,11 @@
 | `13-wfc-general-category-expanded.png` | `通用` 分类展开，显示可拖拽通用块。 |
 | `14-wfc-general-category-scrolled.png` | 通用块列表滚动，显示 `调用子工作流`、`组`、`注释`、`嵌入图片`、`更新数据表` 等块。 |
 | `17-wfc-function-block-properties.png` | 右侧属性面板/大纲视图/数据表入口可见。 |
+| `59-wfc-python-search.png` | `编程` 库搜索 `Python`，显示 `编程语言` 分类和 Python 程序块入口。 |
+| `67-wfc-python-drag-attempt.png` | Python 程序块拖入画布尝试；未形成可确认的 `CallWearedgeDecisionApi` 新块。 |
+| `70-wfc-data-table-entry-attempt-native.png` | 右侧数据表入口原生截图尝试；最终字段表截图仍未完成。 |
+| `71-wfc-dashboard-explorer-entry-native.png` | Dashboard Explorer 入口原生截图尝试；最终 Dashboard 截图仍未完成。 |
+| `69-wfc-run-control-attempt-properties.png` | 运行入口点击尝试；没有真实运行日志，不能作为 ok=true 证据。 |
 
 ## 安全边界
 
@@ -74,9 +83,12 @@
 
 | 缺口 | 下一步 |
 | --- | --- |
-| `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。 |
-| `CallWearedgeDecisionApi` Python Function Block 截图 | 下一步按文档从 `编程语言` -> Python 程序块创建，而不是盲找 `自定义功能块`。 |
-| 全局数据表 / Dashboard / 运行日志 / 人工确认截图 | 下一步按 `docs/gongyi-mofang-workflow-canvas-memory-202604.md` 的操作级记忆继续。 |
+| `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
+| `CallWearedgeDecisionApi` Python Function Block 截图 | 已定位 Python 程序块入口；下一步需要在 WFC 画布稳定拖入并命名为 `CallWearedgeDecisionApi`。 |
+| 全局数据表字段截图 | 已确认右侧 `数据表` 入口；下一步创建/选择 Wearedge 决策字段：主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态。 |
+| Dashboard 截图 | 已进入 Dashboard Explorer；下一步创建 Wearedge 决策 Dashboard，展示指标卡、决策路径、确认项、工作流状态。 |
+| 运行日志截图 | 当前没有真实运行日志；需要先完成 Python Function Block、数据表写回和可访问的 Wearedge Agent Service。 |
+| 人工确认截图 | 当前没有平台内 HumanApprovalGate 截图；需要在工作流中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 部署公网 HTTPS 或评审可访问的临时 PoC 网关，再替换服务地址。 |
 | Xcelerator 调试调用截图 | 服务地址可访问后，在 Console / API World 中调试 `POST /v1/workflow-canvas/decision` 并截图。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |

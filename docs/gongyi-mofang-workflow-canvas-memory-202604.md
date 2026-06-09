@@ -344,6 +344,22 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 5. 本项目不得保存 WFC 密码、token、真实 API key。
 6. 不发布上架，不向真实 OT 输出写控制指令。
 
+### 2026-06-09 live WFC 实操状态
+
+本节记录已经在真实 WFC 项目中发生的状态，用于后续继续补证据：
+
+| 项目 | 当前状态 | 证据/备注 |
+| --- | --- | --- |
+| 项目 | `Wearedge WFC PoC` 已创建并进入编辑器 | `00`、`07`、`08`、`09` 系列截图。 |
+| 自定义资源 | `Wearedge Agent Service` 已创建，已保存 `agentHost / Agent Host` 参数 | `01-resource-block-wearedge-agent-service.png`、`47-wfc-agent-host-param-confirmed.png`。 |
+| 资源参数缺口 | `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId` 尚未稳定补入平台参数编辑器 | 不能在材料里写成已完成。 |
+| Python 程序块 | `编程` 库搜索 `Python` 成功，能看到 `编程语言` 分类和 Python 程序块入口 | `59-wfc-python-search.png`、`64-wfc-browser-native-1280.png`。 |
+| Python 拖拽 | 已尝试拖入画布，但没有形成可确认的新块/命名截图 | `67-wfc-python-drag-attempt.png` 只能作为尝试记录。 |
+| 数据表 | 右侧 `数据表` tab 可进入，DOM 提示 `点击这里，选择数据` | `70-wfc-data-table-entry-attempt-native.png` 只是入口图，不是字段表完成图。 |
+| Dashboard | 已进入 `/dashboard-explorer` | `71-wfc-dashboard-explorer-entry-native.png` 只是入口图，不是 Wearedge Dashboard 完成图。 |
+| 运行日志 | 已尝试点击运行区，但未触发真实运行日志 | `69-wfc-run-control-attempt-properties.png` 不能命名为 `ok=true` 证据。 |
+| 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时；临时设置 viewport 后原生截图可用但画幅较窄，Windows 屏幕截图可作为辅助 | 最终材料优先使用清晰平台图；不足图只进入 attempt 记录。 |
+
 ### 夺冠叙事对应
 
 工易魔方材料强调低代码、IT/OT 融合、Spider/IPC 边缘执行器、AI/算法封装、Dashboard、柔性生产和生态共创。Wearedge 的最佳表达应固定为：

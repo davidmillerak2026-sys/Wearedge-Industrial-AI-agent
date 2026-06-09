@@ -14,10 +14,13 @@
 | WFC resource block prototype | yes | captured locally | `submission-assets/screenshots/13-wfc-resource-block-prototype.png`，展示 `deploymentMode` 和资源参数。 |
 | Xcelerator API World 服务截图 | when available | pending | 保存到 `submission-assets/live-evidence/xcelerator/`，按 live evidence runbook 命名。 |
 | 工易魔方项目/画布基础截图 | when available | captured live | 已保存 `submission-assets/live-evidence/gongyi-mofang/07-18*.png` 辅助截图，含项目创建、项目卡、编辑器、资源配置、工作流画布、编程库和右侧面板入口。 |
-| 工易魔方资源块截图 | when available | partial | `01-resource-block-wearedge-agent-service.png` 已替换为真实 `Wearedge Agent Service` 自定义资源属性面板，并显示 `Agent Host` 参数；仍需补全其余参数。 |
-| 工易魔方 Python Function Block 截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/02-python-function-block-call-api.png`；按文档从 `编程语言` 拖入 Python 程序块。 |
+| 工易魔方资源块截图 | when available | partial | `01-resource-block-wearedge-agent-service.png` 已替换为真实 `Wearedge Agent Service` 自定义资源属性面板，并显示 `Agent Host` 参数；`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId` 仍需补全。 |
+| 工易魔方 Python Function Block 截图 | when available | partial | `59-wfc-python-search.png` 已确认 `编程语言` 下可定位 Python 程序块；`02-python-function-block-call-api.png` 仍需在拖入画布并命名后补齐。 |
 | Dashboard mock 截图 | yes | captured locally | 使用 `docs/submission/dashboard-mock.html`，本地素材路径 `submission-assets/screenshots/06-dashboard-mock.png`。 |
-| 工易魔方 Dashboard 截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/04-dashboard-decision-view.png`。 |
+| 工易魔方数据表字段截图 | when available | partial | `70-wfc-data-table-entry-attempt-native.png` 仅为数据表入口尝试；最终 `03-global-data-table-decision-fields.png` 仍需包含 Wearedge 决策字段。 |
+| 工易魔方 Dashboard 截图 | when available | partial | `71-wfc-dashboard-explorer-entry-native.png` 仅为 Dashboard Explorer 入口；最终 `04-dashboard-decision-view.png` 仍需展示 Wearedge 指标卡、决策路径和人工确认项。 |
+| 工易魔方运行日志截图 | when available | pending | `69-wfc-run-control-attempt-properties.png` 只是运行入口尝试，不能作为 `ok=true` 日志；最终 `05-run-log-ok-true.png` 仍待真实运行生成。 |
+| 工易魔方人工确认截图 | when available | pending | 最终 `06-human-approval-gate.png` 需展示高风险 OT 动作进入人工确认。 |
 | API schema | yes | captured locally | `submission-assets/screenshots/07-api-schema.png`，展示工易魔方 Python Function Block 调用方式。 |
 | Submission verifier | yes | captured locally | `submission-assets/screenshots/08-submission-verifier.png`，展示仓库侧 ready。 |
 | pytest output | yes | captured locally | `submission-assets/screenshots/09-pytest-output.png`，展示完整测试通过。 |
