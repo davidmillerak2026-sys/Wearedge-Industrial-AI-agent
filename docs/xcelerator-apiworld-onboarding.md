@@ -102,6 +102,7 @@ openapi/wearedge-xcelerator-apiworld.openapi.json
 
 - 服务路径和接口代理路径是否与平台自动生成值冲突。
 - `POST /v1/workflow-canvas/decision` 是否展示请求体 schema。
+- `GET /v1/edge/runtime-profile` 是否可作为端侧算力能力展示接口。
 - Header 中是否显示 `X-TOKEN`。
 - 返回示例是否包含 `competition_metrics`、`collaborative_decision`、`workflow_canvas`。
 

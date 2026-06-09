@@ -12,6 +12,7 @@ if str(REPO_ROOT) not in sys.path:
     sys.path.insert(0, str(REPO_ROOT))
 
 import run_competition_eval
+import smoke_edge_runtime_profile
 import smoke_workflow_canvas_decision
 
 
@@ -30,25 +31,31 @@ def build_evidence(output_dir: Path, dataset_path: Path, payload_path: Path) -> 
     payload = smoke_workflow_canvas_decision.load_payload(payload_path)
     decision = smoke_workflow_canvas_decision.call_in_process(payload)
     failures = smoke_workflow_canvas_decision.validate_decision(decision)
+    edge_profile = smoke_edge_runtime_profile._fetch_profile(None)
+    edge_failures = smoke_edge_runtime_profile._validate_profile(edge_profile)
 
     summary_path = output_dir / "competition-eval-summary.json"
     decision_path = output_dir / "workflow-canvas-decision.json"
+    edge_profile_path = output_dir / "edge-runtime-profile.json"
     report_path = output_dir / "competition-offline-eval-report.snapshot.md"
     readme_path = output_dir / "README.md"
 
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     decision_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    edge_profile_path.write_text(json.dumps(edge_profile, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     report_path.write_text(report, encoding="utf-8")
-    readme_path.write_text(_render_readme(summary, decision, failures), encoding="utf-8")
+    readme_path.write_text(_render_readme(summary, decision, failures, edge_profile, edge_failures), encoding="utf-8")
 
     return {
         "output_dir": str(output_dir),
         "summary_path": str(summary_path),
         "decision_path": str(decision_path),
+        "edge_profile_path": str(edge_profile_path),
         "report_path": str(report_path),
         "readme_path": str(readme_path),
         "all_target_checks_passed": bool(summary["all_target_checks_passed"]),
         "smoke_failures": failures,
+        "edge_profile_failures": edge_failures,
     }
 
 
@@ -61,15 +68,23 @@ def main(argv: list[str] | None = None) -> int:
 
     result = build_evidence(args.output_dir, args.dataset, args.payload)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    if not result["all_target_checks_passed"] or result["smoke_failures"]:
+    if not result["all_target_checks_passed"] or result["smoke_failures"] or result["edge_profile_failures"]:
         return 1
     return 0
 
 
-def _render_readme(summary: dict[str, Any], decision: dict[str, Any], failures: list[str]) -> str:
+def _render_readme(
+    summary: dict[str, Any],
+    decision: dict[str, Any],
+    failures: list[str],
+    edge_profile: dict[str, Any],
+    edge_failures: list[str],
+) -> str:
     collaborative = _object(decision.get("collaborative_decision"))
     metrics = _object(decision.get("competition_metrics"))
     workflow = _object(decision.get("workflow_canvas"))
+    edge_node = _object(edge_profile.get("edge_node"))
+    capabilities = _object(edge_profile.get("edge_capabilities"))
     return "\n".join(
         [
             "# Submission Evidence Snapshot",
@@ -94,10 +109,18 @@ def _render_readme(summary: dict[str, Any], decision: dict[str, Any], failures: 
             f"- Function blocks: {len(workflow.get('function_blocks', []))}",
             f"- Smoke failures: {failures if failures else 'none'}",
             "",
+            "## Edge Runtime Profile",
+            "",
+            f"- Deployment mode: {edge_node.get('deployment_mode')}",
+            f"- Local multimodal inference: {capabilities.get('local_multimodal_inference')}",
+            f"- Workflow Canvas ready: {capabilities.get('workflow_canvas_ready')}",
+            f"- Edge profile failures: {edge_failures if edge_failures else 'none'}",
+            "",
             "## Files",
             "",
             "- `competition-eval-summary.json`",
             "- `workflow-canvas-decision.json`",
+            "- `edge-runtime-profile.json`",
             "- `competition-offline-eval-report.snapshot.md`",
             "",
         ]

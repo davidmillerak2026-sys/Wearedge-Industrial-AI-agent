@@ -1,21 +1,21 @@
 # Business Plan Draft
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## 项目背景
 
-多 SKU 离散制造现场正在从单一自动化向柔性、可重构、数据驱动生产转型。换型、设备健康、质量风险和能耗优化往往由不同系统和人员分别处理，导致异常响应慢、证据链断裂、人工协调成本高。西门子 Xcelerator 和工易魔方提供了低代码 IT/OT 工作流底座，适合将工业智能体能力转化为可执行、可验证、可回写的联合解决方案。
+多 SKU 离散制造现场正在从单一自动化向柔性、可重构、数据驱动生产转型。换型、设备健康、质量风险和能耗优化往往由不同系统和人员分别处理，导致异常响应慢、证据链断裂、人工协调成本高。西门子 Xcelerator 和工易魔方提供了低代码 IT/OT 工作流底座，适合将工业智能体能力转化为可执行、可验证、可回写的联合解决方案。Wearedge 的企业组差异化是把智能体运行时放到 Jetson、IPC、本地工控机或边缘服务器，贴近产线数据运行，再由平台完成编排和审批。
 
 ## 项目方案
 
-Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同决策系统。系统通过工易魔方读取 MES、设备信号、质量数据、能源数据和工作流上下文，调用 Wearedge Agent Service 进行多方向评估，输出主方向、优先级、建议动作、确认项、残余风险和 Dashboard 数据表更新内容。
+Wearedge Industrial AI Agent 是面向柔性可重构产线的多智能体协同决策系统。系统通过工易魔方读取 MES、设备信号、质量数据、能源数据和工作流上下文，调用部署在端侧算力上的 Wearedge Agent Service 进行多方向评估，输出主方向、优先级、建议动作、确认项、残余风险和 Dashboard 数据表更新内容。
 
 ## 总体框架
 
 ```text
-MES / QMS / EMS / CMMS / 设备信号 / released checklist
+M400 / Camera / OPC UA / MES / QMS / EMS / CMMS / released checklist
+  -> Wearedge Edge Agent Runtime on Jetson / IPC / local server
   -> 工易魔方资源块和 Python Function Block
-  -> Wearedge Agent Service
   -> 多智能体评估与确定性守卫
   -> 协同决策、Dashboard、全局数据表、HumanApprovalGate
 ```
@@ -45,10 +45,15 @@ MES / QMS / EMS / CMMS / 设备信号 / released checklist
 ## 技术优势
 
 - 证据优先：模型解释证据，确定性逻辑处理指标、动作和责任边界。
+- 端侧可部署：可在 Jetson、IPC、本地工控机或边缘服务器运行 Agent Runtime，支持数据不出厂和局域网演示。
 - 平台适配：REST API 可由工易魔方 Python Function Block 调用。
 - 多智能体联合：可覆盖不少于三个赛题方向。
 - 安全边界：高风险动作进入人工确认，不直接控制 OT。
 - 可验证：仓库包含离线评估、smoke test、pytest 和工程证据文档。
+
+## 企业组落地能力
+
+企业组提交将 Wearedge 表达为可与 Siemens Xcelerator / 工易魔方共创的联合产品，而不是个人作品或一次性 demo。交付包包括端侧 Agent Runtime、WFC 资源块原型、Xcelerator OpenAPI、离线指标评估、Dashboard 证据和商业计划书。真实企业主体、联系人、知识产权和无不良记录承诺由负责人在最终提交前补齐。
 
 ## 预期收益
 
@@ -59,6 +64,7 @@ MES / QMS / EMS / CMMS / 设备信号 / released checklist
 | 降低能耗 | 能源预测准确率、节能率 |
 | 提高换型效率 | 调度效率提升、组件复用率 |
 | 降低人工协调成本 | 决策路径可视化、人工确认闭环 |
+| 降低数据合规风险 | 图像、知识库和审计日志可留在端侧节点 |
 
 ## 成果截图与证据
 
@@ -75,7 +81,7 @@ MES / QMS / EMS / CMMS / 设备信号 / released checklist
 
 ## 商业模式
 
-联合 PoC 服务、场景模板授权、边缘部署集成和持续运营支持。首批客户建议选择多 SKU 包装、电子装配或汽车零部件产线。
+联合 PoC 服务、工易魔方场景模板授权、边缘 Agent Runtime 部署集成和持续运营支持。首批客户建议选择汽车零部件、电子装配、包装、食品和医药等多 SKU 产线。
 
 ## 团队、企业与知识产权
 

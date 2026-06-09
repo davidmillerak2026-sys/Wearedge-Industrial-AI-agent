@@ -1,6 +1,6 @@
 # Registration Fields Draft
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 此文件用于 7月1日后打开报名系统时快速复制。当前文本基于仓库已完成的离线验证、工易魔方 PoC 接入包和演示证据包；真实企业信息、联系人、正式截图和视频链接需要最后补齐。
 
@@ -15,7 +15,7 @@ Wearedge Industrial AI Agent：面向柔性可重构产线的多智能体协同�
 一句话简介：
 
 ```text
-基于西门子 Xcelerator 和工易魔方，Wearedge 将设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 智能体统一为可解释、可审批、可回写的工业联合解决方案。
+基于西门子 Xcelerator 和工易魔方，Wearedge 将可部署到 Jetson/IPC/本地工控机的端侧工业智能体，与设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 编排统一成可解释、可审批、可回写的工业联合解决方案。
 ```
 
 ## 中版字段
@@ -23,7 +23,7 @@ Wearedge Industrial AI Agent：面向柔性可重构产线的多智能体协同�
 项目简介，约 300 字：
 
 ```text
-Wearedge Industrial AI Agent 面向多 SKU 离散制造产线，构建基于西门子 Xcelerator 智能体开发平台和工易魔方开发平台的多智能体协同决策系统。项目通过 Wearedge Agent Service 接收 MES、设备信号、质量数据、能源数据和 Workflow Canvas 上下文，输出主方向、优先级、建议动作、确认项、残余风险和 Dashboard 数据。系统覆盖设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 智能体，强调证据优先、确定性守卫和人工确认，避免模型直接控制 OT。当前仓库已实现 /v1/workflow-canvas/decision、赛事指标 evaluator、离线评估数据集、评估脚本和工易魔方 PoC runbook，可用于初赛技术方案和后续联合 PoC 准备。
+Wearedge Industrial AI Agent 面向多 SKU 离散制造产线，构建基于西门子 Xcelerator 智能体开发平台和工易魔方开发平台的多智能体协同决策系统。项目通过部署在 Jetson、IPC、本地工控机或边缘服务器上的 Wearedge Agent Service 接收 MES、设备信号、质量数据、能源数据和 Workflow Canvas 上下文，输出主方向、优先级、建议动作、确认项、残余风险和 Dashboard 数据。系统覆盖设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 智能体，强调证据优先、确定性守卫和人工确认，避免模型直接控制 OT。当前仓库已实现 /v1/workflow-canvas/decision、/v1/edge/runtime-profile、赛事指标 evaluator、离线评估数据集、评估脚本和工易魔方资源块原型，可用于初赛技术方案和后续联合 PoC 准备。
 ```
 
 ## 长版字段
@@ -33,7 +33,7 @@ Wearedge Industrial AI Agent 面向多 SKU 离散制造产线，构建基于西�
 ```text
 Wearedge Industrial AI Agent 是面向柔性可重构产线的工业多智能体协同决策与自主执行系统。项目聚焦多 SKU 离散制造现场中“订单变化、换型压力、设备健康、质量风险、能耗窗口”互相影响但难以协同的问题，计划基于西门子 Xcelerator 智能体开发平台和工易魔方开发平台共创一套可执行、可审批、可回写的联合解决方案。
 
-系统以 Wearedge Agent Service 为核心服务，由工易魔方资源块和 Python Function Block 调用 /v1/workflow-canvas/decision 接口。输入来自 MES、设备信号、质量检测、能源表、released checklist 和 Workflow Canvas 上下文；输出包括主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态和 Dashboard 数据。智能体方向覆盖设备预测性维护、质量管控、能源管理、柔性生产和 Workflow Canvas 编排，满足不少于三个智能体方向协同的赛事目标。
+系统以 Wearedge Agent Service 为核心服务，可部署在 Jetson、IPC、本地工控机或边缘服务器，由工易魔方资源块和 Python Function Block 调用 /v1/workflow-canvas/decision 接口。输入来自 MES、设备信号、质量检测、能源表、released checklist 和 Workflow Canvas 上下文；输出包括主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态和 Dashboard 数据。智能体方向覆盖设备预测性维护、质量管控、能源管理、柔性生产和 Workflow Canvas 编排，满足不少于三个智能体方向协同的赛事目标。
 
 技术方案采用“证据优先 + 确定性守卫 + 人工确认”的工业安全边界。模型用于解释症状、关联证据和生成可读建议；关键阈值、指标达标、动作权限、审批要求和残余风险由确定性逻辑生成，避免模型文本直接控制 OT。当前仓库已完成离线评估数据集、赛事 evaluator、Workflow Canvas API schema、PoC runbook、smoke test、Dashboard mock、商业计划书和技术方案草稿。离线评估结果明确标注为模拟/离线验证，后续将在工易魔方或 Xcelerator PoC 环境中补充真实平台截图、日志和联合解决方案证据。
 
@@ -63,6 +63,7 @@ Wearedge Industrial AI Agent 是面向柔性可重构产线的工业多智能体
 ## 产品优势
 
 - 平台适配：保持 `POST /v1/workflow-canvas/decision` 兼容，工易魔方 Python Function Block 可直接调用。
+- 端侧部署：智能体运行时可部署在 Jetson、IPC、本地工控机或边缘服务器，支持数据不出厂和局域网运行。
 - 多智能体协同：维护、质量、能源、生产和 WFC 编排同屏决策，而不是单点问答。
 - 可解释证据链：每个建议包含症状、指标、证据来源、责任角色、确认项和残余风险。
 - 安全边界清楚：高风险动作进入 HumanApprovalGate，不让模型直接写 OT 控制。
@@ -89,6 +90,8 @@ Wearedge Industrial AI Agent 的核心工程包括多智能体路由、输出契
 | 离线评估报告 | `docs/competition-offline-eval-report.md` |
 | 工易魔方 PoC runbook | `docs/workflow-canvas-poc-runbook.md` |
 | API schema | `docs/workflow-canvas-api-schema.md` |
+| Edge Runtime 文档 | `docs/edge-agent-runtime-for-xcelerator.md` |
+| WFC 资源块原型 | `wfc-blocks/wearedge-agent-service/` |
 | 商业计划书 | `docs/submission/business-plan.md` |
 | 技术方案 | `docs/submission/technical-solution.md` |
 | 证据索引 | `docs/submission/poc-evidence-index.md` |

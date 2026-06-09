@@ -1,0 +1,66 @@
+{
+  "name": "wearedge-agent-service",
+  "displayName": "Wearedge Agent Service",
+  "type": "wearedge.agent.service",
+  "version": "0.1.0",
+  "description": "Workflow Canvas resource block prototype for calling the Wearedge edge industrial agent runtime.",
+  "parameters": [
+    {
+      "name": "agentHost",
+      "type": "string",
+      "required": true,
+      "default": "127.0.0.1",
+      "description": "Wearedge FastAPI host, Jetson/IPC address, or API World proxy host."
+    },
+    {
+      "name": "agentPort",
+      "type": "number",
+      "required": true,
+      "default": 8081,
+      "description": "Wearedge FastAPI port."
+    },
+    {
+      "name": "apiKeyRef",
+      "type": "secret",
+      "required": false,
+      "default": "WEAREDGE_DEMO_TOKEN",
+      "description": "Optional bearer token or WFC secret reference."
+    },
+    {
+      "name": "deploymentMode",
+      "type": "enum",
+      "required": true,
+      "default": "jetson",
+      "options": ["jetson", "ipc", "local_server", "cloud_proxy"],
+      "description": "Where the Wearedge Agent Runtime is deployed."
+    },
+    {
+      "name": "plantId",
+      "type": "string",
+      "required": true,
+      "default": "demo-plant-01",
+      "description": "Plant context for data-table filtering."
+    },
+    {
+      "name": "lineId",
+      "type": "string",
+      "required": true,
+      "default": "pkg-line-3",
+      "description": "Line context for Workflow Canvas decisions."
+    }
+  ],
+  "functionBlocks": [
+    {
+      "name": "CallWearedgeDecisionApi",
+      "language": "python",
+      "entry": "function-blocks/CallWearedgeDecisionApi.py",
+      "description": "Calls POST /v1/workflow-canvas/decision and returns JSON for data-table and Dashboard writeback."
+    }
+  ],
+  "outputs": [
+    "decision_json",
+    "primary_direction",
+    "requires_human_confirmation",
+    "error_message"
+  ]
+}

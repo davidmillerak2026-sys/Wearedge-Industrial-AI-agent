@@ -1,12 +1,12 @@
 # Demo Script
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## 3-5 分钟演示脚本
 
 ### 0:00-0:30 开场
 
-Wearedge Industrial AI Agent 面向多 SKU 柔性产线，基于西门子 Xcelerator 和工易魔方，把设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 智能体统一成可解释、可审批、可回写的工业闭环。
+Wearedge Industrial AI Agent 面向多 SKU 柔性产线，基于西门子 Xcelerator 和工易魔方，把设备运维、质量管控、能源管理、柔性生产和 Workflow Canvas 智能体统一成可解释、可审批、可回写的工业闭环。我们的企业组差异化是：智能体运行时可以部署在 Jetson、IPC、本地工控机或边缘服务器上，贴近设备和产线运行。
 
 ### 0:30-1:10 痛点
 
@@ -14,11 +14,11 @@ Wearedge Industrial AI Agent 面向多 SKU 柔性产线，基于西门子 Xceler
 
 ### 1:10-2:10 技术方案
 
-Wearedge Agent Service 接收来自 MES、设备信号、质量检测、能源表和工易魔方工作流的上下文。大模型只负责解释证据，关键指标、动作通道、责任人、人工确认和残余风险由确定性逻辑生成，避免模型直接控制 OT。
+Wearedge Agent Service 接收来自 MES、设备信号、质量检测、能源表和工易魔方工作流的上下文。端侧运行多模态推理、工业 RAG、确定性守卫、结构化 action card 和审计日志；Xcelerator / 工易魔方负责平台编排、审批和数据回写。大模型只负责解释证据，关键指标、动作通道、责任人、人工确认和残余风险由确定性逻辑生成，避免模型直接控制 OT。
 
 ### 2:10-3:10 演示
 
-运行 Workflow Canvas decision smoke test。输入包含维护、质量、能源、生产和 WFC 上下文，输出包含 `competition_metrics`、`collaborative_decision` 和 `workflow_canvas.function_blocks`。结果可以写回全局数据表和 Dashboard，并进入 `HumanApprovalGate`。
+先打开 `/v1/edge/runtime-profile`，展示 Wearedge 可作为 Jetson/IPC/local server 端侧 Agent Runtime。再运行 Workflow Canvas decision smoke test。输入包含维护、质量、能源、生产和 WFC 上下文，输出包含 `competition_metrics`、`collaborative_decision` 和 `workflow_canvas.function_blocks`。结果可以写回全局数据表和 Dashboard，并进入 `HumanApprovalGate`。
 
 ### 3:10-4:00 指标
 
@@ -26,7 +26,7 @@ Wearedge Agent Service 接收来自 MES、设备信号、质量检测、能源�
 
 ### 4:00-5:00 商业价值与共创
 
-目标客户是汽车零部件、电子装配、包装等多 SKU 离散制造工厂。商业模式包括联合 PoC、场景模板授权、边缘部署集成和持续运营支持。与西门子共创的价值在于把智能体能力变成可执行的 Xcelerator / 工易魔方联合解决方案。
+目标客户是汽车零部件、电子装配、包装、食品、医药等多 SKU 离散制造工厂。商业模式包括联合 PoC、工易魔方场景模板授权、边缘 Agent Runtime 部署集成和持续运营支持。与西门子共创的价值在于把端侧智能体能力变成可执行的 Xcelerator / 工易魔方联合解决方案。
 
 ## 必须避免的表述
 

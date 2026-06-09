@@ -6,6 +6,8 @@
 
 Wearedge Industrial AI Agent 的核心工程包括多智能体路由、输出契约、确定性动作守卫、赛事指标 evaluator、Workflow Canvas decision API、离线评估脚本和参赛文档，均在本仓库中维护。
 
+端侧 Agent Runtime、WFC 资源块原型、`/v1/edge/runtime-profile` 和 Xcelerator API World OpenAPI 规格也作为本项目自主工程资产维护。
+
 ## 开源依赖边界
 
 | Area | Dependency Type | Notes |

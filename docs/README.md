@@ -9,6 +9,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | Current project status | [`project-status.md`](project-status.md) |
 | Siemens industrial agent track memory | [`siemens-industrial-agent-track-memory-20260521.md`](siemens-industrial-agent-track-memory-20260521.md) |
 | Gongyi Mofang Workflow Canvas memory | [`gongyi-mofang-workflow-canvas-memory-202604.md`](gongyi-mofang-workflow-canvas-memory-202604.md) |
+| Edge Agent Runtime for Xcelerator | [`edge-agent-runtime-for-xcelerator.md`](edge-agent-runtime-for-xcelerator.md) |
 | Siemens Xcelerator co-creation one-pager | [`siemens-xcelerator-co-creation-onepager.md`](siemens-xcelerator-co-creation-onepager.md) |
 | Xcelerator API World onboarding notes | [`xcelerator-apiworld-onboarding.md`](xcelerator-apiworld-onboarding.md) |
 | Workflow Canvas PoC runbook | [`workflow-canvas-poc-runbook.md`](workflow-canvas-poc-runbook.md) |
@@ -26,6 +27,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | --- | --- |
 | End-to-end technical evidence | [`technical-evidence.md`](technical-evidence.md) |
 | Competition offline eval report | [`competition-offline-eval-report.md`](competition-offline-eval-report.md) |
+| Enterprise group winning strategy | [`submission/enterprise-winning-strategy.md`](submission/enterprise-winning-strategy.md) |
 | Gemma 4 E2B PoC summary | [`gemma4-e2b-poc-summary.md`](gemma4-e2b-poc-summary.md) |
 | Five-agent validation | [`five-agent-poc-validation.md`](five-agent-poc-validation.md) |
 | M400 inference contract | [`m400-inference-contract.md`](m400-inference-contract.md) |

@@ -52,6 +52,8 @@ class GatewayConfig:
     xcelerator_app_key: str | None = None
     xcelerator_sign_check_url: str = "https://apig.developers.siemens-x.com.cn/x-api/sign/check"
     xcelerator_sign_check_timeout_seconds: int = 10
+    deployment_mode: str = "local_server"
+    edge_node_id: str = "wearedge-demo-node"
 
     @classmethod
     def from_env(cls) -> "GatewayConfig":
@@ -82,6 +84,8 @@ class GatewayConfig:
                 "https://apig.developers.siemens-x.com.cn/x-api/sign/check",
             ),
             xcelerator_sign_check_timeout_seconds=_int_env("WEAREDGE_XCELERATOR_SIGN_CHECK_TIMEOUT_SECONDS", 10),
+            deployment_mode=os.getenv("WEAREDGE_DEPLOYMENT_MODE", "local_server"),
+            edge_node_id=os.getenv("WEAREDGE_EDGE_NODE_ID", "wearedge-demo-node"),
         )
 
     @property

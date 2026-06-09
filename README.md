@@ -23,6 +23,7 @@ This project is prepared for the Siemens Xcelerator Industrial Agent challenge u
 - Co-creation idea: build a joint industrial multi-agent product for flexible production lines, combining maintenance, quality, energy, production-change, and Workflow Canvas agents.
 - Target customers: discrete manufacturers running multi-SKU production lines, especially factories with maintenance downtime, quality containment, energy optimization, and changeover pressure.
 - Product advantage: low-latency edge runtime, evidence-first industrial RAG, deterministic action guards, human approval gates, and data-table/dashboard writeback.
+- Enterprise-group advantage: Wearedge can run the industrial agent runtime on Jetson, Siemens Edge IPC, local industrial PCs, or plant edge servers, while Xcelerator / Gongyi Mofang handle orchestration and approval.
 - Business model: deployable agent service plus workflow templates, PoC integration, scenario customization, and recurring support for plant rollout.
 - Compliance: project materials should include independent IP ownership, open-source dependency boundaries, and no-dispute/no-adverse-record declarations before submission.
 
@@ -58,6 +59,12 @@ Run the API locally after configuring `.env` from `.env.example`:
 
 ```powershell
 python -m uvicorn jetson.app:app --host 127.0.0.1 --port 8081
+```
+
+Show the edge runtime profile used for Xcelerator / Gongyi Mofang evidence:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8081/v1/edge/runtime-profile
 ```
 
 Workflow Canvas / Gongyi Mofang can call the competition decision endpoint with JSON from a Python Function Block:

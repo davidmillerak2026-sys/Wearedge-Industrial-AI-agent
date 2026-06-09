@@ -24,6 +24,7 @@
 | TBD | 项目负责人 | 总体方案、商务和赛事提交 | TBD |
 | TBD | AI/算法 | 智能体、评估、模型和数据 | TBD |
 | TBD | IT/OT 集成 | 工易魔方、API、MES/QMS/EMS/CMMS | TBD |
+| TBD | 边缘部署 | Jetson/IPC/本地工控机、M400/AR、端侧 runtime profile | TBD |
 | TBD | 工业场景专家 | 维护、质量、生产和能源场景校准 | TBD |
 
 ## 企业情况

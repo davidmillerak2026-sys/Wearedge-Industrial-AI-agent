@@ -33,10 +33,11 @@
 | `agentHost` | `127.0.0.1` | Wearedge FastAPI host or IPC address. |
 | `agentPort` | `8081` | Wearedge FastAPI port. |
 | `apiKeyRef` | `WEAREDGE_DEMO_TOKEN` | Optional secret reference for bearer token. |
+| `deploymentMode` | `jetson` | Edge runtime target: `jetson`, `ipc`, `local_server`, or `cloud_proxy`. |
 | `plantId` | `demo-plant-01` | Plant context for data-table filtering. |
 | `lineId` | `pkg-line-3` | Production line context. |
 
-资源块二次开发路径：后续可按 WFC 资料中的资源块包结构建立 `wfc-blocks/wearedge-agent-service/`。资源块目录名、`info.json` 中的 `name`、资源配置中的 `type` 需要保持一致；打包为 `.zip` 后可通过资源管理/RA API 上传。当前仓库 Phase B 先以 runbook + API + smoke script 证明接入路径，资源块 zip 原型作为下一步增强。
+资源块二次开发路径：当前仓库已提供原型目录 `wfc-blocks/wearedge-agent-service/`，包含 `info.json`、Python Function Block 示例和本地打包脚本。资源块目录名、`info.json` 中的 `name`、资源配置中的 `type` 需要保持一致；打包为 `.zip` 后可通过资源管理/RA API 上传。
 
 ## 功能块
 
@@ -173,6 +174,12 @@ python scripts/smoke_workflow_canvas_decision.py
 ```powershell
 python -m uvicorn jetson.app:app --host 127.0.0.1 --port 8081
 python scripts/smoke_workflow_canvas_decision.py --url http://127.0.0.1:8081/v1/workflow-canvas/decision
+```
+
+端侧 runtime profile 截图：
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8081/v1/edge/runtime-profile
 ```
 
 ## Xcelerator API World 接入

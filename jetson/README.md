@@ -6,7 +6,7 @@ This package contains the WearEdge Pro edge gateway that runs on Jetson.
 
 | File | Purpose |
 | --- | --- |
-| [`app.py`](app.py) | FastAPI gateway, `/healthz`, `/v1/infer`, `/v1/workflow-canvas/decision`, audit query, and agent run endpoints. |
+| [`app.py`](app.py) | FastAPI gateway, `/healthz`, `/v1/infer`, `/v1/workflow-canvas/decision`, `/v1/edge/runtime-profile`, audit query, and agent run endpoints. |
 | [`competition.py`](competition.py) | Deterministic competition-target evaluator and Workflow Canvas decision payload builder. |
 | [`llama_client.py`](llama_client.py) | Local llama.cpp chat and multimodal payload adapter. |
 | [`config.py`](config.py) | Environment-driven runtime configuration. |
@@ -27,6 +27,8 @@ The model explains visual and contextual evidence. Deterministic guards decide w
 ## Workflow Canvas Entry
 
 Use `POST /v1/workflow-canvas/decision` for Gongyi Mofang Python Function Blocks. It accepts JSON with `selected_directions` and `context` tables, then returns competition metrics, collaborative decision state, required confirmations, and reusable Workflow Canvas block names. `POST /v1/competition/decision` is the same local validation surface.
+
+Use `GET /v1/edge/runtime-profile` for enterprise-group evidence that the Wearedge agent runtime can run on Jetson, IPC, local industrial PCs, or cloud proxy while remaining Workflow Canvas ready.
 
 ## Local Verification
 

@@ -28,6 +28,13 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
     ],
     "Phase B - Gongyi Mofang PoC package": [
         Artifact("docs/gongyi-mofang-workflow-canvas-memory-202604.md", "Gongyi Mofang Workflow Canvas memory"),
+        Artifact("docs/edge-agent-runtime-for-xcelerator.md", "Edge Agent Runtime notes"),
+        Artifact("wfc-blocks/wearedge-agent-service/info.json", "WFC Wearedge resource block metadata"),
+        Artifact(
+            "wfc-blocks/wearedge-agent-service/function-blocks/CallWearedgeDecisionApi.py",
+            "WFC Python function block prototype",
+        ),
+        Artifact("scripts/smoke_edge_runtime_profile.py", "Edge runtime profile smoke script"),
         Artifact("docs/workflow-canvas-poc-runbook.md", "Workflow Canvas runbook"),
         Artifact("docs/workflow-canvas-api-schema.md", "Workflow Canvas API schema"),
         Artifact("workflows/wearedge_wfc_poc_payload.json", "Workflow Canvas sample payload"),
@@ -47,6 +54,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
     ],
     "Phase D - Business and technical package": [
         Artifact("docs/siemens-industrial-agent-track-memory-20260521.md", "Siemens industrial agent track memory"),
+        Artifact("docs/submission/enterprise-winning-strategy.md", "Enterprise group winning strategy"),
         Artifact("docs/submission/business-plan.md", "Business plan draft"),
         Artifact("docs/submission/technical-solution.md", "Technical solution draft"),
         Artifact("docs/submission/ip-and-compliance-statement.md", "IP and compliance statement"),
@@ -82,6 +90,14 @@ WFC_REQUIRED_TOP_LEVEL_FIELDS = (
     "workflow_canvas",
     "collaborative_decision",
     "competition_metrics",
+)
+
+EDGE_PROFILE_REQUIRED_TOP_LEVEL_FIELDS = (
+    "ok",
+    "edge_node",
+    "edge_capabilities",
+    "platform_integration",
+    "safety_boundary",
 )
 
 EXTERNAL_PENDING_ITEMS = (
@@ -245,6 +261,7 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
     failures: list[str] = []
     summary = _load_json(repo_root / "docs" / "submission" / "evidence" / "competition-eval-summary.json", failures)
     decision = _load_json(repo_root / "docs" / "submission" / "evidence" / "workflow-canvas-decision.json", failures)
+    edge_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "edge-runtime-profile.json", failures)
 
     if summary:
         if summary.get("all_cases_passed") is not True:
@@ -261,9 +278,20 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
         if not isinstance(function_blocks, list) or not function_blocks:
             failures.append("generated evidence: workflow_canvas.function_blocks is empty")
 
+    if edge_profile:
+        for field in EDGE_PROFILE_REQUIRED_TOP_LEVEL_FIELDS:
+            if field not in edge_profile:
+                failures.append(f"generated evidence: missing edge runtime field {field}")
+        capabilities = _object(edge_profile.get("edge_capabilities"))
+        safety = _object(edge_profile.get("safety_boundary"))
+        if capabilities.get("workflow_canvas_ready") is not True:
+            failures.append("generated evidence: edge runtime is not Workflow Canvas ready")
+        if safety.get("model_direct_ot_control") is not False:
+            failures.append("generated evidence: edge safety boundary allows direct OT control")
+
     return {
         "status": "ready" if not failures else "review",
-        "notes": "offline evidence and WFC smoke snapshot are present",
+        "notes": "offline evidence, WFC smoke snapshot, and edge runtime profile are present",
         "failures": failures,
     }
 

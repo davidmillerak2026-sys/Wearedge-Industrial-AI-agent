@@ -127,6 +127,11 @@ def agent_flow_definition(authorization: str | None = Header(default=None)) -> d
     }
 
 
+@app.get("/v1/edge/runtime-profile")
+def edge_runtime_profile() -> dict[str, object]:
+    return _build_edge_runtime_profile()
+
+
 @app.post("/v1/workflow-canvas/decision")
 def workflow_canvas_decision(
     payload: dict[str, object] | None = Body(default=None),
@@ -513,6 +518,72 @@ def _verify_xcelerator_token(x_token: str) -> bool:
     except json.JSONDecodeError as exc:
         raise HTTPException(status_code=502, detail="Xcelerator sign check returned invalid JSON") from exc
     return isinstance(payload, dict) and payload.get("code") == 200
+
+
+def _build_edge_runtime_profile() -> dict[str, object]:
+    deployment_mode = str(config.deployment_mode or "local_server").strip().lower()
+    if deployment_mode not in {"jetson", "ipc", "local_server", "cloud_proxy"}:
+        deployment_mode = "local_server"
+    return {
+        "ok": True,
+        "api_version": "wear-edge-edge-runtime-profile.v1",
+        "edge_node": {
+            "node_id": config.edge_node_id,
+            "deployment_mode": deployment_mode,
+            "supported_deployment_modes": ["jetson", "ipc", "local_server", "cloud_proxy"],
+            "role": "edge_agent_runtime",
+            "data_residency": "Production images, device context, audit logs, and local KB evidence can remain on the edge node.",
+        },
+        "runtime": {
+            "model": config.model,
+            "model_variant": config.model_variant,
+            "llama_base_url": config.llama_base_url,
+            "local_multimodal_inference": True,
+            "workflow_decision_api": "/v1/workflow-canvas/decision",
+            "wearable_infer_api": "/v1/infer",
+            "health_api": "/healthz",
+            "audit_log_enabled": config.event_log_path is not None,
+            "upload_persistence_enabled": config.upload_dir is not None,
+            "auth_enabled": config.auth_enabled,
+        },
+        "edge_capabilities": {
+            "local_multimodal_inference": True,
+            "m400_or_ar_first_person_capture": True,
+            "industrial_rag": True,
+            "deterministic_guards": True,
+            "structured_action_cards": True,
+            "privacy_preserving_audit": True,
+            "offline_or_lan_operation": deployment_mode in {"jetson", "ipc", "local_server"},
+            "workflow_canvas_ready": True,
+            "xcelerator_api_world_ready": True,
+        },
+        "platform_integration": {
+            "xcelerator": {
+                "api_world_import_ready": True,
+                "x_auth_enabled": config.xcelerator_x_auth_enabled,
+                "x_token_header": "X-TOKEN",
+            },
+            "gongyi_mofang": {
+                "resource_block": "Wearedge Agent Service",
+                "python_function_block": "CallWearedgeDecisionApi",
+                "data_table_update": "UpdateDashboardDataTable",
+                "human_gate": "HumanApprovalGate",
+            },
+            "industrial_connectors": ["OPC UA", "MES", "QMS", "EMS", "CMMS", "MQTT", "S7"],
+        },
+        "safety_boundary": {
+            "model_direct_ot_control": False,
+            "high_risk_actions_require_human": True,
+            "required_gate": "HumanApprovalGate",
+            "policy": "The model explains evidence; deterministic guards and Workflow Canvas approval decide action boundaries.",
+        },
+        "competition_evidence": {
+            "offline_eval_report": "docs/competition-offline-eval-report.md",
+            "workflow_canvas_runbook": "docs/workflow-canvas-poc-runbook.md",
+            "edge_runtime_doc": "docs/edge-agent-runtime-for-xcelerator.md",
+            "wfc_block_package": "wfc-blocks/wearedge-agent-service/",
+        },
+    }
 
 
 def _normalize_content_type(content_type: str | None) -> str:

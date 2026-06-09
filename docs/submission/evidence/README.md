@@ -20,8 +20,16 @@ Boundary: this is simulated/offline validation, not customer production data.
 - Function blocks: 18
 - Smoke failures: none
 
+## Edge Runtime Profile
+
+- Deployment mode: local_server
+- Local multimodal inference: True
+- Workflow Canvas ready: True
+- Edge profile failures: none
+
 ## Files
 
 - `competition-eval-summary.json`
 - `workflow-canvas-decision.json`
+- `edge-runtime-profile.json`
 - `competition-offline-eval-report.snapshot.md`

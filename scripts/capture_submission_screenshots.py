@@ -57,6 +57,27 @@ DOCUMENT_SPECS = (
         "07-api-schema.png",
     ),
     CaptureSpec(
+        "edge-runtime-profile",
+        "Edge Agent Runtime for Xcelerator",
+        REPO_ROOT / "docs" / "edge-agent-runtime-for-xcelerator.md",
+        "markdown",
+        "15-edge-runtime-doc.png",
+    ),
+    CaptureSpec(
+        "wfc-resource-block",
+        "WFC Wearedge Resource Block Prototype",
+        REPO_ROOT / "wfc-blocks" / "wearedge-agent-service" / "info.json",
+        "json",
+        "13-wfc-resource-block-prototype.png",
+    ),
+    CaptureSpec(
+        "enterprise-winning-strategy",
+        "Enterprise Group Winning Strategy",
+        REPO_ROOT / "docs" / "submission" / "enterprise-winning-strategy.md",
+        "markdown",
+        "14-enterprise-winning-strategy.png",
+    ),
+    CaptureSpec(
         "registration-fields",
         "Registration Fields",
         REPO_ROOT / "docs" / "submission" / "registration-fields.md",
@@ -210,6 +231,13 @@ def _run_evidence_commands(python_executable: str, include_pytest: bool) -> list
             [python_executable, "scripts/smoke_workflow_canvas_decision.py"],
             120,
             "04-wfc-smoke.png",
+        ),
+        (
+            "edge-runtime-profile-cli",
+            "Edge Runtime Profile Smoke CLI",
+            [python_executable, "scripts/smoke_edge_runtime_profile.py"],
+            120,
+            "12-edge-runtime-profile.png",
         ),
         (
             "submission-verifier-cli",

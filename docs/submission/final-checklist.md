@@ -21,8 +21,11 @@
 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
 | Siemens track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
 | Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
+| Edge Agent Runtime for Xcelerator | `docs/edge-agent-runtime-for-xcelerator.md` | ready |
+| Enterprise group winning strategy | `docs/submission/enterprise-winning-strategy.md` | ready |
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
+| WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
 | API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |

@@ -123,7 +123,7 @@ V3D 可作为“柔性生产/换型/状态回放”的演示增强，不是 Phas
 
 | 缺口 | 下一步 |
 | --- | --- |
-| 尚未形成 WFC 资源块目录和 `info.json` | 新增 `wfc-blocks/wearedge-agent-service/` 原型包 |
+| 已形成 WFC 资源块目录和 `info.json` | 后续在真实 WFC 平台上传/截图复现 |
 | 尚未有真实 WFC 登录/Workflow/资源配置截图 | 账号可用后按操作检查清单补截图 |
 | 数据表到 ui-builder 的字段绑定尚未截图复现 | 在 WFC 中创建全局数据表并绑定 Dashboard/mock |
 | Spider/IPC 部署证据尚未复现 | 使用 PC/NUC 或 IPC 执行器跑一次 smoke workflow |

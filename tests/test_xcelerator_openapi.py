@@ -15,6 +15,7 @@ def test_xcelerator_openapi_import_spec_contains_decision_endpoint() -> None:
     assert spec["openapi"].startswith("3.")
     assert "/v1/workflow-canvas/decision" in spec["paths"]
     assert "/healthz" in spec["paths"]
+    assert "/v1/edge/runtime-profile" in spec["paths"]
     decision = spec["paths"]["/v1/workflow-canvas/decision"]["post"]
     assert decision["operationId"] == "buildWorkflowCanvasDecision"
     assert {"XceleratorXToken": []} in decision["security"]

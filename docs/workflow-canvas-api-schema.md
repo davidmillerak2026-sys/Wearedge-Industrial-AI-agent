@@ -1,6 +1,6 @@
 # Workflow Canvas Decision API Schema
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## Endpoint
 
@@ -9,6 +9,22 @@
 同等本地验证入口：`POST /v1/competition/decision`
 
 用途：供工易魔方 Python Function Block 调用 Wearedge 多智能体协同决策服务，并将输出写入全局数据表、Dashboard 和人工审批节点。
+
+## Edge Runtime Profile
+
+`GET /v1/edge/runtime-profile`
+
+用途：只读展示 Wearedge 端侧 Agent Runtime 能力，供 Xcelerator / 工易魔方评审截图使用。响应包含部署模式、端侧能力、平台接入状态、工业连接器和安全边界，不触发模型推理，也不写入 OT。
+
+重要字段：
+
+| Field | Purpose |
+| --- | --- |
+| `edge_node.deployment_mode` | `jetson`、`ipc`、`local_server` 或 `cloud_proxy`。 |
+| `runtime.workflow_decision_api` | 指向 `/v1/workflow-canvas/decision`。 |
+| `edge_capabilities.local_multimodal_inference` | 说明端侧可运行本地多模态推理。 |
+| `platform_integration.gongyi_mofang.resource_block` | `Wearedge Agent Service`。 |
+| `safety_boundary.model_direct_ot_control` | 必须为 `false`。 |
 
 ## Request JSON
 

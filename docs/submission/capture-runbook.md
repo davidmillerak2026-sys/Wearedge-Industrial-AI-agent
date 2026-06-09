@@ -1,8 +1,8 @@
 # Capture Runbook
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
-目标：用当前仓库材料录制初赛截图和 3-5 分钟演示视频。若暂时没有真实工易魔方平台环境，先使用 API、离线评估、Dashboard mock 作为初版证据，并明确标注“模拟/离线验证”。
+目标：用当前仓库材料录制初赛截图和 3-5 分钟演示视频。若暂时没有真实工易魔方平台环境，先使用端侧 runtime profile、API、离线评估、WFC 资源块原型和 Dashboard mock 作为初版证据，并明确标注“模拟/离线验证”。
 
 ## 准备命令
 
@@ -10,6 +10,7 @@
 cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/run_competition_eval.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/smoke_workflow_canvas_decision.py
+& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/smoke_edge_runtime_profile.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/build_submission_evidence.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/verify_submission_package.py --write-manifest
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/capture_submission_screenshots.py
@@ -27,9 +28,14 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 | 5 | Workflow Canvas payload | `workflows/wearedge_wfc_poc_payload.json` |
 | 6 | Dashboard mock | `docs/submission/dashboard-mock.html` |
 | 7 | API schema | `docs/workflow-canvas-api-schema.md` |
-| 8 | pytest output | terminal or CI |
-| 9 | Registration fields | `docs/submission/registration-fields.md` |
-| 10 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` |
+| 8 | Submission verifier | terminal |
+| 9 | pytest output | terminal or CI |
+| 10 | Registration fields | `docs/submission/registration-fields.md` |
+| 11 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` |
+| 12 | Edge runtime profile smoke | terminal |
+| 13 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/info.json` |
+| 14 | Enterprise winning strategy | `docs/submission/enterprise-winning-strategy.md` |
+| 15 | Edge runtime doc | `docs/edge-agent-runtime-for-xcelerator.md` |
 
 ## Dashboard Mock
 
@@ -65,16 +71,22 @@ submission-assets/screenshots/08-submission-verifier.png
 submission-assets/screenshots/09-pytest-output.png
 submission-assets/screenshots/10-registration-fields.png
 submission-assets/screenshots/11-co-creation-onepager.png
+submission-assets/screenshots/12-edge-runtime-profile.png
+submission-assets/screenshots/13-wfc-resource-block-prototype.png
+submission-assets/screenshots/14-enterprise-winning-strategy.png
+submission-assets/screenshots/15-edge-runtime-doc.png
 ```
 
 ## Video Flow
 
-1. Start with the README and explain Siemens Xcelerator / Gongyi Mofang fit.
-2. Show `workflows/wearedge_wfc_poc_payload.json` and explain data sources.
-3. Run or show `scripts/smoke_workflow_canvas_decision.py` output.
-4. Open `docs/submission/dashboard-mock.html` and explain decision visualization.
-5. Open `docs/competition-offline-eval-report.md` and explain simulated/offline metric status.
-6. Close with `docs/siemens-xcelerator-co-creation-onepager.md` and business model.
+1. Start with the README and explain enterprise-group fit.
+2. Run or show `scripts/smoke_edge_runtime_profile.py` to prove edge Agent Runtime readiness.
+3. Show `wfc-blocks/wearedge-agent-service/info.json` and explain deployment mode parameters.
+4. Show `workflows/wearedge_wfc_poc_payload.json` and explain data sources.
+5. Run or show `scripts/smoke_workflow_canvas_decision.py` output.
+6. Open `docs/submission/dashboard-mock.html` and explain decision visualization.
+7. Open `docs/competition-offline-eval-report.md` and explain simulated/offline metric status.
+8. Close with `docs/siemens-xcelerator-co-creation-onepager.md` and business model.
 
 ## Boundary Statement For Narration
 
