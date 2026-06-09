@@ -44,15 +44,39 @@ submission-assets/live-evidence/
 
 ## 工易魔方 / Workflow Canvas 截图
 
+文档确认的执行顺序：
+
+1. 在项目页创建或打开 `Wearedge WFC PoC`。
+2. 进入工作流编辑器，确认默认 `工作流.1` 可见。
+3. 左侧切 `编程` -> `配置资源`，先配置 `通用工控机` / `Generic IPC` 的 Spider/SPIDR URL。该资源用于证明 WFC 可部署到端侧执行器，不等同于 Wearedge Agent Service。
+4. 在资源配置页展开 `用户设备`，拖入 `自定义资源`，命名为 `Wearedge Agent Service`，定义 `agentHost`、`agentPort` 等服务参数。
+5. 回到工作流，左侧 `编程` -> `编程语言`，拖入 Python 程序块，命名为 `CallWearedgeDecisionApi`。
+6. 在 Python Block 的属性面板中编辑输入输出：`input1` 为 `Resource` 并绑定 `Wearedge Agent Service`，`input2` 为 `JSON`，输出为 `JSON`。
+7. 双击 Python Block，在代码模板的 Business Code 区域调用 `/v1/workflow-canvas/decision`。
+8. 右侧打开 `数据表`，定义 `wearedgeDecision` 或拆分字段，拖入 `更新数据表` 功能块并绑定。
+9. 运行/部署工作流，截取日志和 Dashboard/ui-builder 展示。
+
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |
 | `gongyi-mofang/00-wfc-projects-authenticated.png` | 已登录项目页 | 展示 Workflow Canvas 项目页和 `新建空白项目` 入口，证明账号已具备 WFC 访问权限。 |
-| `gongyi-mofang/01-resource-block-wearedge-agent-service.png` | `Wearedge Agent Service` 资源块配置 | 参数至少包含 `agentHost`、`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。 |
+| `gongyi-mofang/01-resource-block-wearedge-agent-service.png` | 资源配置页 | 优先展示 `通用工控机` / Spider 执行器配置；若已创建自定义资源，则同时展示 `Wearedge Agent Service` 参数。 |
 | `gongyi-mofang/02-python-function-block-call-api.png` | Python Function Block 编辑页 | 展示 `CallWearedgeDecisionApi` 调用 `/v1/workflow-canvas/decision`。 |
 | `gongyi-mofang/03-global-data-table-decision-fields.png` | 全局数据表字段 | 展示主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态。 |
 | `gongyi-mofang/04-dashboard-decision-view.png` | Dashboard | 展示指标卡、决策路径、确认项、工作流状态。 |
 | `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 展示 `ok=true`、function blocks、latency 或成功写表记录。 |
 | `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 证明高风险动作不会由模型直接控制 OT。 |
+
+已采集的辅助截图可用于视频素材和操作复盘，不替代上表核心 0-6 项：
+
+| 文件名 | 用途 |
+| --- | --- |
+| `gongyi-mofang/07-wfc-project-create-form-filled.png` | 项目创建表单，含项目名称与描述。 |
+| `gongyi-mofang/08-wfc-project-created-card.png` | `Wearedge WFC PoC` 项目卡创建成功。 |
+| `gongyi-mofang/09-wfc-project-editor-opened.png` | 项目编辑器已打开。 |
+| `gongyi-mofang/10-wfc-expanded-project-baseline.png` | 扩大视图后的资源配置基线。 |
+| `gongyi-mofang/11-wfc-workflow-canvas-active.png` | 工作流主画布可见。 |
+| `gongyi-mofang/12-wfc-programming-library-open.png` | 编程功能块库可见。 |
+| `gongyi-mofang/17-wfc-function-block-properties.png` | 右侧属性面板/数据表入口可见。 |
 
 ## 端侧运行证据截图
 

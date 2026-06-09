@@ -88,9 +88,9 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
     EvidenceItem(
         "gongyi-mofang",
         "gongyi-mofang/01-resource-block-wearedge-agent-service.png",
-        "Wearedge Agent Service resource block",
+        "Workflow Canvas resource configuration",
         "platform",
-        "Show agentHost, agentPort, apiKeyRef, deploymentMode, plantId, and lineId.",
+        "Show Generic IPC/SPIDR configuration or Wearedge Agent Service custom-resource parameters; final evidence should include agentHost, agentPort, deploymentMode, plantId, and lineId.",
     ),
     EvidenceItem(
         "gongyi-mofang",

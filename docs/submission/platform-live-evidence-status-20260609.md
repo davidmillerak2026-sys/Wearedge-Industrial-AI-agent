@@ -17,6 +17,9 @@
 | API 接口数量 | 已确认 | 3 个接口。 |
 | 发布/上架 | 未执行 | 未点击 `保存并发布`，未申请上架。 |
 | Gongyi Mofang WFC 登录 | 已确认 | 2026-06-09 已进入 `https://wfc.bd-iiot.com/projects` 项目页。 |
+| Gongyi Mofang WFC 项目 | 已创建 | `Wearedge WFC PoC` 项目已创建并进入编辑器。 |
+| WFC 资源配置/工作流入口 | 已截图 | 已保存资源配置页、工作流主画布、编程库和右侧属性/数据表入口截图。 |
+| `Wearedge Agent Service` 自定义资源 | 部分完成 | 已拖入 `自定义资源`、命名为 `Wearedge Agent Service`，并添加 `agentHost / Agent Host` 参数；其他参数待补。 |
 
 已导入接口：
 
@@ -48,6 +51,16 @@
 | 文件 | 说明 |
 | --- | --- |
 | `00-wfc-projects-authenticated.png` | Gongyi Mofang / Workflow Canvas 已登录项目页，显示 `新建空白项目` 入口。 |
+| `01-resource-block-wearedge-agent-service.png` | `Wearedge Agent Service` 自定义资源属性面板，已显示 `Agent Host` 参数。 |
+| `07-wfc-project-create-form-filled.png` | `Wearedge WFC PoC` 项目创建表单。 |
+| `08-wfc-project-created-card.png` | 项目卡创建成功。 |
+| `09-wfc-project-editor-opened.png` | 项目编辑器已打开。 |
+| `10-wfc-expanded-project-baseline.png` | 扩大视图后的资源配置页，含 `通用工控机.1`。 |
+| `11-wfc-workflow-canvas-active.png` | 工作流主画布，含开始节点和运行按钮。 |
+| `12-wfc-programming-library-open.png` | 左侧编程功能块库，含资源列表、通用工控机、通用、控制流等分类。 |
+| `13-wfc-general-category-expanded.png` | `通用` 分类展开，显示可拖拽通用块。 |
+| `14-wfc-general-category-scrolled.png` | 通用块列表滚动，显示 `调用子工作流`、`组`、`注释`、`嵌入图片`、`更新数据表` 等块。 |
+| `17-wfc-function-block-properties.png` | 右侧属性面板/大纲视图/数据表入口可见。 |
 
 ## 安全边界
 
@@ -61,7 +74,9 @@
 
 | 缺口 | 下一步 |
 | --- | --- |
-| Gongyi Mofang Workflow Canvas 项目配置截图 | 账号已可进入项目页；下一步需要在 UI 中创建 `Wearedge WFC PoC` 项目，并补齐资源块、函数块、全局数据表、Dashboard、运行日志、人工确认节点截图。 |
+| `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。 |
+| `CallWearedgeDecisionApi` Python Function Block 截图 | 下一步按文档从 `编程语言` -> Python 程序块创建，而不是盲找 `自定义功能块`。 |
+| 全局数据表 / Dashboard / 运行日志 / 人工确认截图 | 下一步按 `docs/gongyi-mofang-workflow-canvas-memory-202604.md` 的操作级记忆继续。 |
 | 真实 HTTPS Wearedge Agent Service | 部署公网 HTTPS 或评审可访问的临时 PoC 网关，再替换服务地址。 |
 | Xcelerator 调试调用截图 | 服务地址可访问后，在 Console / API World 中调试 `POST /v1/workflow-canvas/decision` 并截图。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
@@ -69,15 +84,15 @@
 
 ## 2026-06-09 WFC 自动化备注
 
-- 已登录 WFC 项目页并保存已登录截图。
-- 当前 WFC 页面在 Codex in-app browser 自动化通道中对 DOM / 全页截图 / 节点读取响应较慢，自动点击 `新建空白项目` 未能稳定进入创建表单。
-- 为避免误操作平台，本阶段不盲点创建或发布配置；后续可由负责人手动打开创建表单，或在更稳定的浏览器环境中继续采集 6 张 WFC 核心证据截图。
+- 已登录 WFC 项目页、创建 `Wearedge WFC PoC` 项目，并保存项目卡、项目编辑器、资源配置页、工作流主画布和编程库截图。
+- 当前 WFC 页面大量元素由 canvas 绘制，DOM 不稳定暴露块名、端口和右键菜单。后续操作不再盲点试错，改按 `docs/gongyi-mofang-workflow-canvas-memory-202604.md` 中的“2026-06-09 操作级补充记忆”执行。
+- 文档确认后，Wearedge 最小闭环应走 `通用工控机/SPIDR` -> `自定义资源 Wearedge Agent Service` -> `Python 程序块 CallWearedgeDecisionApi` -> `更新数据表` -> `Dashboard/ui-builder` 的顺序。
 - 本项目不会保存 WFC 账号、密码、token 或任何平台密钥。
 
 ## 下一步建议
 
-1. 在 Gongyi Mofang 创建 `Wearedge WFC PoC` 项目。
-2. 按 `docs/workflow-canvas-poc-runbook.md` 配置资源块、Python Function Block、全局数据表、Dashboard 和 HumanApprovalGate。
+1. 按文档路线在 Gongyi Mofang 创建 `Wearedge Agent Service` 自定义资源。
+2. 从 `编程语言` 拖入 Python 程序块，配置 `CallWearedgeDecisionApi` 的资源输入、JSON 输入和 JSON 输出。
 3. 部署 Wearedge Agent Service 到临时 HTTPS 域名。
 4. 在 Xcelerator API 服务草稿中替换服务器地址。
 5. 执行平台调试调用并保存返回结果截图。

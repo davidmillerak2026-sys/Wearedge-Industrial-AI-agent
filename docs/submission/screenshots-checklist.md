@@ -13,8 +13,9 @@
 | `/v1/edge/runtime-profile` JSON | yes | captured locally | `submission-assets/screenshots/12-edge-runtime-profile.png`，展示 Jetson/IPC/local server 端侧 Agent Runtime、WFC-ready 和安全边界。 |
 | WFC resource block prototype | yes | captured locally | `submission-assets/screenshots/13-wfc-resource-block-prototype.png`，展示 `deploymentMode` 和资源参数。 |
 | Xcelerator API World 服务截图 | when available | pending | 保存到 `submission-assets/live-evidence/xcelerator/`，按 live evidence runbook 命名。 |
-| 工易魔方资源块截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/01-resource-block-wearedge-agent-service.png`。 |
-| 工易魔方 Python Function Block 截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/02-python-function-block-call-api.png`。 |
+| 工易魔方项目/画布基础截图 | when available | captured live | 已保存 `submission-assets/live-evidence/gongyi-mofang/07-18*.png` 辅助截图，含项目创建、项目卡、编辑器、资源配置、工作流画布、编程库和右侧面板入口。 |
+| 工易魔方资源块截图 | when available | partial | `01-resource-block-wearedge-agent-service.png` 已替换为真实 `Wearedge Agent Service` 自定义资源属性面板，并显示 `Agent Host` 参数；仍需补全其余参数。 |
+| 工易魔方 Python Function Block 截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/02-python-function-block-call-api.png`；按文档从 `编程语言` 拖入 Python 程序块。 |
 | Dashboard mock 截图 | yes | captured locally | 使用 `docs/submission/dashboard-mock.html`，本地素材路径 `submission-assets/screenshots/06-dashboard-mock.png`。 |
 | 工易魔方 Dashboard 截图 | when available | pending | 保存到 `submission-assets/live-evidence/gongyi-mofang/04-dashboard-decision-view.png`。 |
 | API schema | yes | captured locally | `submission-assets/screenshots/07-api-schema.png`，展示工易魔方 Python Function Block 调用方式。 |

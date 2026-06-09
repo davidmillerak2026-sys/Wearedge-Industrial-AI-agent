@@ -135,3 +135,222 @@ V3D 可作为“柔性生产/换型/状态回放”的演示增强，不是 Phas
 2. 补一个 WFC 资源块原型包，至少包含 `info.json`、Python 函数示例和 README，便于评审理解二次开发路径。
 3. 在 `docs/submission/screenshots-checklist.md` 中增加 WFC 平台截图项，并按真实平台界面逐项打勾。
 4. 若 Spider/IPC 条件允许，再补边缘部署截图；若暂时不可用，材料中明确写为“待平台环境复现”。
+
+## 2026-06-09 操作级补充记忆
+
+本节来自对工易魔方资料包、WFC001-WFC010 技术文档、资源块安装文档、Spider/IPC 手册和当前 live WFC 页面试操作的重新回顾。后续不要再靠盲点试错，应按以下操作模型执行。
+
+### 正确心智模型
+
+工易魔方的核心链路不是“在网页里写一个 AI 应用”，而是：
+
+```text
+项目 -> 资源配置 -> 工作流编排 -> Python/功能块业务代码 -> 全局数据表 -> Dashboard/ui-builder -> 部署到 Spider/IPC -> 日志/调试
+```
+
+对 Wearedge 而言，应区分三类对象：
+
+| 对象 | WFC 角色 | Wearedge 口径 |
+| --- | --- | --- |
+| `通用工控机` / `Generic IPC` | Spider/SPIDR 执行器连接点，通常配置 `http://端侧IP:3002` 或云端 SPIDR URL | 证明工作流可部署到端侧/IPC/本地执行器 |
+| `自定义资源` / `Custom Resource` | 暴露 IT 服务或设备参数，如 IP、端口、业务参数 | 表示 `Wearedge Agent Service` 的 host、port、plant、line 等参数 |
+| `Python 程序块` / Python Block | 写业务代码、调用 REST API、绑定资源和 JSON 输入输出 | 实现 `CallWearedgeDecisionApi`，POST `/v1/workflow-canvas/decision` |
+
+不能把 `通用工控机` 和 `Wearedge Agent Service` 混成一个资源。前者是 WFC 工作流运行时，后者是被 Python Block 调用的边缘智能体服务。
+
+### 项目与主界面入口
+
+| 目标 | 手册入口 | 操作记忆 |
+| --- | --- | --- |
+| 登录 | `https://wfc.bd-iiot.com/` | 推荐 Chrome/Edge；注册后需激活；登录后进入项目管理页。 |
+| 新建项目 | 项目管理页 -> `新建空白项目` | 填项目名和描述，创建后点击项目卡进入编辑器。 |
+| 工作流编辑 | 默认进入项目后的 `工作流.1` | 左侧有 `画布` / `编程`，画布中默认 `开始`、`结束` 或 `占位`。 |
+| 资源配置 | 左侧 `编程` -> `配置资源`，或项目中的 `Resource` tab | 左侧是资源库，中间是资源画布，右侧是资源树/属性面板。 |
+| 功能块库 | 左侧 `编程` | 展开 `资源列表`、`通用`、`控制流`、`编程语言` 等分类。 |
+| 右侧面板 | 画布右侧展开箭头 | 可切 `属性面板`、`大纲视图`、`数据表`。 |
+| 运行调试 | 右上部署/运行图标 | 部署后可查看日志、运行、退出；画布下方或右侧显示执行器日志。 |
+
+### 资源配置正确路径
+
+配置端侧执行器：
+
+1. 进入 `编程` -> `配置资源`。
+2. 选择或保留 `通用工控机`。
+3. 在属性面板中设置 Spider/SPIDR URL，常见格式是 `http://<IPC或本地设备IP>:3002`。
+4. 如果页面有 `存在执行器`，设置为 `是`。
+5. 连接成功时，资源块左上角小圆点或底部状态条会变绿。
+6. 如果使用本地私网 Spider，手册要求浏览器关闭 `Block insecure private network requests`，并优先使用 http 版 WFC 地址，否则 https 页面可能访问不了本地 `http://<ip>:3002`。
+
+配置 `Wearedge Agent Service` 自定义资源：
+
+1. 进入 `编程` -> `配置资源`。
+2. 展开 `用户设备`。
+3. 拖入 `自定义资源`。
+4. 改名为 `Wearedge Agent Service`。
+5. 在右侧属性面板中编辑参数。
+6. 最少参数建议：
+
+| 参数 ID | 显示名 | 类型 | 默认/说明 |
+| --- | --- | --- | --- |
+| `agentHost` | Agent Host | String | 本地 API 主机，如 `127.0.0.1` 或边缘节点 IP |
+| `agentPort` | Agent Port | Number | 默认 `8000` |
+| `apiKeyRef` | API Key Ref | String | 只填引用名，不填真实密钥 |
+| `deploymentMode` | Deployment Mode | String | `jetson` / `ipc` / `local_server` / `cloud_proxy` |
+| `plantId` | Plant ID | String | 示例 `demo-plant-a` |
+| `lineId` | Line ID | String | 示例 `line-flex-01` |
+
+### Python Function Block 正确路径
+
+手册给了两种可用方式：`通用` 下的 `自定义功能块`，或 `编程语言` 下的 Python 程序块。Wearedge 优先使用 Python 程序块，因为它最适合调用 HTTP API。
+
+1. 回到工作流画布。
+2. 左侧切 `编程`。
+3. 展开 `编程语言`。
+4. 拖入 `Python` 程序块到 `占位`，或拖到开始/结束之间。
+5. 在属性面板中改名为 `CallWearedgeDecisionApi`。
+6. 点击 `编辑输入输出`。
+7. 将 `input1` 类型改为 `Resource`，绑定 `Wearedge Agent Service`。
+8. 将 `input2` 类型改为 `JSON`，用于传入 WFC context payload。
+9. 将输出端口类型改为 `JSON`。
+10. 双击 Python Block 打开代码模板。
+11. 只在 `-- Business Code Start --` 到 `Business Code End` 之间写业务代码。
+12. 保存时使用代码编辑器里的 `Save All and Close` 或等价按钮。
+
+Wearedge Python Block 代码形态：
+
+```python
+import json
+import requests
+
+agent_host = input1["agentHost"]
+agent_port = input1["agentPort"]
+payload = input2 if isinstance(input2, dict) else json.loads(input2)
+
+url = "http://{}:{}/v1/workflow-canvas/decision".format(agent_host, agent_port)
+headers = {"Content-Type": "application/json"}
+res = requests.post(url, data=json.dumps(payload), headers=headers, timeout=10)
+res.raise_for_status()
+result = res.json()
+print(json.dumps(result, ensure_ascii=False))
+```
+
+现场实现时以 WFC 自动生成的变量名为准。如果模板提供 `get_input2()`，则使用模板函数读取 JSON 输入。不要在平台中写真实 API key。
+
+### 数据表和 Dashboard 正确路径
+
+全局数据表：
+
+1. 打开右侧 `数据表` tab。
+2. 点击右侧 `编辑`。
+3. 新建变量，建议先建一个 JSON 变量，如 `wearedgeDecision`，再按需拆字段。
+4. 拖入 `通用` 下的 `更新数据表` 功能块。
+5. 在 `更新数据表` 的属性面板中绑定 `wearedgeDecision`。
+6. 将 `CallWearedgeDecisionApi` 的 JSON 输出连到 `更新数据表` 输入。
+7. 运行后截图：变量定义、绑定关系、运行后的 JSON 值。
+
+建议字段：
+
+| 字段 | 映射 |
+| --- | --- |
+| `primary_direction` | `collaborative_decision.primary_direction` |
+| `priority` | `collaborative_decision.priority` |
+| `recommendation` | `collaborative_decision.recommendation` |
+| `required_confirmations` | `collaborative_decision.required_confirmations` |
+| `residual_risk` | `collaborative_decision.residual_risk` |
+| `latency_ms` | `latency_ms` 或 `competition_metrics.latency_ms` |
+| `approval_status` | 初始 `pending`，人工确认后更新 |
+
+Dashboard/ui-builder：
+
+1. 先运行工作流，不要停止。
+2. 打开 ui-builder / Dashboard。
+3. 拖入 HTML 或卡片组件。
+4. 绑定数据流或数据表。
+5. `工具` -> `项目&工作流常量` 可查看 workflow instance ID 等常量。
+6. 解析 `wearedgeDecision` JSON，展示主方向、建议动作、指标、确认项和残余风险。
+7. 如果 JSON 里有 `url`，可按 WFC007 示例生成 `<img>` 展示证据图。
+
+### 部署与日志正确路径
+
+1. 保存资源配置和工作流。
+2. 点击右上角部署/调试按钮。
+3. 选择部署。
+4. 查看运行日志。
+5. 点击运行。
+6. 截图日志中 Python Block 的 `print` 输出或 API 返回摘要。
+7. 退出部署后再继续编辑。
+
+赛事证据中需要说明：
+
+- 若 Spider/IPC 未绿色连接，则这是“平台编辑态证据”，不能写成已完成端侧执行。
+- 若连接本地 Spider/IPC 成功，则这是“端侧工作流运行证据”，应作为 Wearedge 端侧优势重点。
+
+### 标准化资源块/功能块入库路径
+
+如果从“画布内快速定义”升级为“标准库组件”：
+
+1. 使用开发者工坊 / Foundry。
+2. 创建资源块或功能块。
+3. 定义参数。
+4. 修改元信息和 UI 信息，包括 ID、语言、资源名称、描述、标题、颜色、图标。
+5. 点击 `更新到库`。
+6. 回到资源配置或功能块库，在 `用户设备` / `用户功能块库` 中拖拽使用。
+
+离线包安装路径：
+
+1. 资源块目录名、`info.json.name` 和资源配置 `type` 必须匹配。
+2. 加入 `requirements.txt` 描述 Python 依赖。
+3. 只打包必要文件为 `.zip`。
+4. 通过 RA API / Swagger UI 上传，手册提到入口通常为 `:61720/docs`。
+5. 在资源配置页添加对应资源并配置参数。
+6. 在工作流页添加功能块并引用该资源。
+
+### V3D 记忆
+
+V3D 是可选增强项，不阻塞当前 live evidence。其价值是展示柔性生产、换型、AGV/机器人/输送线/质检点的状态回放。
+
+| 用途 | 推荐格式/方法 |
+| --- | --- |
+| 动态模型 | `.gltf` 优先 |
+| 静态模型 | `.3mf` 优先，也可 `.obj`、`.stl`、`.ply` |
+| 设备绑定 | 场景中设备对象的 `resource` 与资源块 ID 匹配 |
+| 脚本匹配 | 去除功能块 ID 的数字编号后与脚本名匹配 |
+| 仿真对象能力 | 输送线、升降机、AGV、相机、传感器、末端执行器、机器人等基础方法 |
+
+### Wearedge live evidence 路线
+
+后续平台截图优先按以下顺序补，不再从界面上随机寻找：
+
+| 顺序 | 证据文件 | 必须拍到 |
+| --- | --- | --- |
+| 1 | `00-wfc-projects-authenticated.png` | 已登录项目页 |
+| 2 | `08-wfc-project-created-card.png` | `Wearedge WFC PoC` 项目卡 |
+| 3 | `09-wfc-project-editor-opened.png` | 项目进入编辑器 |
+| 4 | `01-resource-block-wearedge-agent-service.png` | 资源配置页，自定义资源或通用工控机连接参数 |
+| 5 | `02-python-function-block-call-api.png` | Python Block 名称、输入输出或代码编辑器 |
+| 6 | `03-global-data-table-decision-fields.png` | 右侧数据表变量和 `更新数据表` 绑定 |
+| 7 | `04-dashboard-decision-view.png` | Dashboard/ui-builder 展示 JSON 决策 |
+| 8 | `05-run-log-ok-true.png` | 部署/运行日志、API 返回摘要 |
+| 9 | `06-human-approval-gate.png` | pending/approved/rejected 或人工确认状态 |
+
+### 当前自动化经验
+
+WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端口和右键菜单。后续浏览器操作策略：
+
+1. 先按文档锁定入口，再操作。
+2. 对 canvas 元素用截图确认，少用 DOM 文本猜测。
+3. 每一步先截图再继续，避免操作成功但证据丢失。
+4. 创建、上传、发布、保存密钥、写企业敏感信息前必须确认授权。
+5. 本项目不得保存 WFC 密码、token、真实 API key。
+6. 不发布上架，不向真实 OT 输出写控制指令。
+
+### 夺冠叙事对应
+
+工易魔方材料强调低代码、IT/OT 融合、Spider/IPC 边缘执行器、AI/算法封装、Dashboard、柔性生产和生态共创。Wearedge 的最佳表达应固定为：
+
+```text
+Wearedge Agent Runtime 部署在 Jetson / IPC / 本地工控机等端侧算力，
+工易魔方通过自定义资源和 Python Function Block 调用它，
+再将协同决策结果写入全局数据表、Dashboard 和人工确认流程。
+模型只做解释、建议和指标推断，动作边界由确定性守卫、WFC 工作流和人工确认控制。
+```
