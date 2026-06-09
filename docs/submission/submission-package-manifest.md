@@ -1,6 +1,6 @@
 # Submission Package Manifest
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 此文件由 `scripts/verify_submission_package.py --write-manifest` 生成，用于提交前总控检查。
 
@@ -14,7 +14,7 @@
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 4 / 4 |
-| Phase B - Gongyi Mofang PoC package | ready | 6 / 6 |
+| Phase B - Gongyi Mofang PoC package | ready | 7 / 7 |
 | Phase C - Demo evidence | ready | 8 / 8 |
 | Phase D - Business and technical package | ready | 5 / 5 |
 | Phase E - Registration fields | ready | 2 / 2 |

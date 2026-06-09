@@ -9,7 +9,7 @@ from typing import Any
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 DEFAULT_MANIFEST = REPO_ROOT / "docs" / "submission" / "submission-package-manifest.md"
-VERIFICATION_DATE = "2026-06-04"
+VERIFICATION_DATE = "2026-06-09"
 
 
 @dataclass(frozen=True)
@@ -27,6 +27,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("tests/test_competition_eval.py", "Evaluator pytest coverage"),
     ],
     "Phase B - Gongyi Mofang PoC package": [
+        Artifact("docs/gongyi-mofang-workflow-canvas-memory-202604.md", "Gongyi Mofang Workflow Canvas memory"),
         Artifact("docs/workflow-canvas-poc-runbook.md", "Workflow Canvas runbook"),
         Artifact("docs/workflow-canvas-api-schema.md", "Workflow Canvas API schema"),
         Artifact("workflows/wearedge_wfc_poc_payload.json", "Workflow Canvas sample payload"),

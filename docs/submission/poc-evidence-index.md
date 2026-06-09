@@ -1,6 +1,6 @@
 # PoC Evidence Index
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## 当前可提交证据
 
@@ -8,6 +8,7 @@
 | --- | --- | --- |
 | Siemens co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
 | Siemens industrial agent track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
+| Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
@@ -27,4 +28,5 @@
 
 - Current offline evaluation is simulated and repository-local.
 - Current WFC integration is API-ready and runbook-ready; real platform screenshots remain pending until access is available.
+- Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.
 - High-risk actions are routed through human confirmation, not direct OT control.

@@ -1,6 +1,6 @@
 # Final Submission Checklist
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## Timeline
 
@@ -20,6 +20,7 @@
 | --- | --- | --- |
 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
 | Siemens track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
+| Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | API schema | `docs/workflow-canvas-api-schema.md` | ready |

@@ -1,6 +1,6 @@
 # 工易魔方 PoC 接入 Runbook
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## 目标
 
@@ -11,6 +11,18 @@
 ```
 
 当前 runbook 用于初赛 PoC 准备。若暂时没有真实工易魔方环境，可先用 `scripts/smoke_workflow_canvas_decision.py` 和 `workflows/wearedge_wfc_poc_payload.json` 验证后端接口。
+
+平台资料对齐记录见 `docs/gongyi-mofang-workflow-canvas-memory-202604.md`。本 runbook 只写可执行闭环，原始资料中的账号激活、资源块打包、Spider/IPC、数据表和 V3D 注意事项统一收敛到该记忆卡。
+
+## 平台准备
+
+| Item | Action | Evidence |
+| --- | --- | --- |
+| WFC account | 使用 Chrome/Edge 登录 `https://wfc.bd-iiot.com/`，若账号未激活，联系工易魔方团队处理；资料说明激活通常需要 1-2 个工作日。 | 登录页、项目首页或激活沟通记录 |
+| Project | 创建 Wearedge 工业智能体 PoC 项目和 Workflow。 | 项目列表、Workflow Canvas 截图 |
+| Executor | 绑定 Spider/SPIDR 或 IPC 执行器。资料示例包含本地 `http://<ipc-or-pc-ip>:3002`。 | 执行器地址、连接状态、部署日志 |
+| API service | 启动 Wearedge FastAPI 或准备 Xcelerator API World 代理地址。 | `health`/OpenAPI/API Console 截图 |
+| Safety | 对高风险建议启用人工确认，不允许模型直接写 PLC/机器人。 | `HumanApprovalGate` 截图 |
 
 ## 资源块
 
@@ -23,6 +35,8 @@
 | `apiKeyRef` | `WEAREDGE_DEMO_TOKEN` | Optional secret reference for bearer token. |
 | `plantId` | `demo-plant-01` | Plant context for data-table filtering. |
 | `lineId` | `pkg-line-3` | Production line context. |
+
+资源块二次开发路径：后续可按 WFC 资料中的资源块包结构建立 `wfc-blocks/wearedge-agent-service/`。资源块目录名、`info.json` 中的 `name`、资源配置中的 `type` 需要保持一致；打包为 `.zip` 后可通过资源管理/RA API 上传。当前仓库 Phase B 先以 runbook + API + smoke script 证明接入路径，资源块 zip 原型作为下一步增强。
 
 ## 功能块
 
@@ -80,6 +94,15 @@ response.raise_for_status()
 decision = response.json()
 ```
 
+输出端口要求：
+
+| Port | Type | Notes |
+| --- | --- | --- |
+| `decision_json` | JSON | 完整 Wearedge 响应，用于数据表和 Dashboard。 |
+| `primary_direction` | string | 便于 WFC 画布直接连线或状态判断。 |
+| `requires_human_confirmation` | boolean | 连接人工确认/状态监控功能块。 |
+| `error_message` | string | HTTP 超时、401、422、502 或字段缺失时写入。 |
+
 ## 全局数据表字段
 
 | Column | Type | Source |
@@ -97,6 +120,9 @@ decision = response.json()
 | `latency_target_met` | boolean | `competition_metrics.latency_target_met` |
 | `final_min_agent_directions_met` | boolean | `competition_metrics.final_min_agent_directions_met` |
 | `approval_status` | string | `pending`, `approved`, `rejected` |
+| `evidence_url` | string | Optional image/report URL for ui-builder HTML display. |
+
+工易魔方资料中的数据表模式是：Python Function Block 输出 JSON，将输出端口类型设为 JSON，定义全局数据表变量，再用“更新数据表”功能块绑定变量。ui-builder 可绑定数据流或数据表，并解析 JSON 字段展示指标、状态或图片链接。
 
 ## Dashboard 建议
 
@@ -115,6 +141,24 @@ decision = response.json()
 6. 将 summary 写入全局数据表。
 7. Dashboard 显示指标、建议、确认项和残余风险。
 8. 对高风险建议进入 `HumanApprovalGate`，不直接写 PLC。
+
+## WFC 平台截图清单
+
+| Screenshot | Status |
+| --- | --- |
+| 登录 `https://wfc.bd-iiot.com/` 后的项目首页 | pending |
+| Wearedge PoC Workflow Canvas 总览 | pending |
+| Spider/SPIDR 或 IPC 执行器资源配置与连接状态 | pending |
+| `Wearedge Agent Service` 资源参数 | pending |
+| `CallWearedgeDecisionApi` Python Function Block 代码和端口 | pending |
+| 全局数据表变量和“更新数据表”绑定 | pending |
+| Dashboard/ui-builder 指标卡和决策路径 | pending |
+| 工作流部署/调试日志 | pending |
+| 人工确认 pending/approved/rejected 状态 | pending |
+
+## V3D 可选增强
+
+若需要展示柔性生产或换型仿真，可使用 V3D 作为 Phase C 演示增强。资料推荐动态模型优先使用 `.gltf`，静态模型可用 `.3mf`，也支持 `.obj`、`.fbx`、`.dae`、`.stl` 等格式。V3D 证据应围绕工位、输送线、AGV、机器人、质检点和能耗状态，不作为离线指标达标依据。
 
 ## 本地 Smoke Test
 
