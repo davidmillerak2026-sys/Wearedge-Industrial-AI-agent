@@ -7,6 +7,7 @@
 | Evidence | Path | Status |
 | --- | --- | --- |
 | Siemens co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
+| Siemens industrial agent track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |

@@ -7,6 +7,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | Topic | Document |
 | --- | --- |
 | Current project status | [`project-status.md`](project-status.md) |
+| Siemens industrial agent track memory | [`siemens-industrial-agent-track-memory-20260521.md`](siemens-industrial-agent-track-memory-20260521.md) |
 | Siemens Xcelerator co-creation one-pager | [`siemens-xcelerator-co-creation-onepager.md`](siemens-xcelerator-co-creation-onepager.md) |
 | Xcelerator API World onboarding notes | [`xcelerator-apiworld-onboarding.md`](xcelerator-apiworld-onboarding.md) |
 | Workflow Canvas PoC runbook | [`workflow-canvas-poc-runbook.md`](workflow-canvas-poc-runbook.md) |

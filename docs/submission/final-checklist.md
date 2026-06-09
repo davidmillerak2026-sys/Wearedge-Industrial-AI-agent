@@ -19,6 +19,7 @@
 | Attachment | Path | Status |
 | --- | --- | --- |
 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
+| Siemens track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | API schema | `docs/workflow-canvas-api-schema.md` | ready |
