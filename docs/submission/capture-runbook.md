@@ -2,7 +2,7 @@
 
 更新日期：2026-06-09
 
-目标：用当前仓库材料录制初赛截图和 3-5 分钟演示视频。若暂时没有真实工易魔方平台环境，先使用端侧 runtime profile、API、离线评估、WFC 资源块原型和 Dashboard mock 作为初版证据，并明确标注“模拟/离线验证”。
+目标：用当前仓库材料录制初赛截图和 3-5 分钟演示视频。若暂时没有真实工易魔方平台环境，先使用端侧 runtime profile、API、离线评估、WFC 资源块原型和 Dashboard mock 作为初版证据，并明确标注“模拟/离线验证”。真实平台截图按 `docs/submission/live-platform-evidence-runbook.md` 进入 `submission-assets/live-evidence/`。
 
 ## 准备命令
 
@@ -13,6 +13,7 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/smoke_edge_runtime_profile.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/build_submission_evidence.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/verify_submission_package.py --write-manifest
+& "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/verify_live_evidence.py --init --allow-missing --write-manifest
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" scripts/capture_submission_screenshots.py
 & "C:\tmp\wearedge-ci-venv\Scripts\python.exe" -m pytest --basetemp "C:\tmp\wearedge-industrial-ai-agent-pytest" tests industrial-rag-agent/tests
 ```
@@ -87,6 +88,12 @@ submission-assets/screenshots/15-edge-runtime-doc.png
 6. Open `docs/submission/dashboard-mock.html` and explain decision visualization.
 7. Open `docs/competition-offline-eval-report.md` and explain simulated/offline metric status.
 8. Close with `docs/siemens-xcelerator-co-creation-onepager.md` and business model.
+
+真实平台版视频按 `docs/submission/video-production-plan.md` 录制，素材统一保存到：
+
+```text
+submission-assets/live-evidence/
+```
 
 ## Boundary Statement For Narration
 

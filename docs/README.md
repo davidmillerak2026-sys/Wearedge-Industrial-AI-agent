@@ -28,6 +28,9 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | End-to-end technical evidence | [`technical-evidence.md`](technical-evidence.md) |
 | Competition offline eval report | [`competition-offline-eval-report.md`](competition-offline-eval-report.md) |
 | Enterprise group winning strategy | [`submission/enterprise-winning-strategy.md`](submission/enterprise-winning-strategy.md) |
+| Live platform evidence runbook | [`submission/live-platform-evidence-runbook.md`](submission/live-platform-evidence-runbook.md) |
+| Demo video production plan | [`submission/video-production-plan.md`](submission/video-production-plan.md) |
+| Company info and compliance intake | [`submission/company-info-and-compliance-intake.md`](submission/company-info-and-compliance-intake.md) |
 | Gemma 4 E2B PoC summary | [`gemma4-e2b-poc-summary.md`](gemma4-e2b-poc-summary.md) |
 | Five-agent validation | [`five-agent-poc-validation.md`](five-agent-poc-validation.md) |
 | M400 inference contract | [`m400-inference-contract.md`](m400-inference-contract.md) |
@@ -47,4 +50,4 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 
 ## Curation Rule
 
-Keep permanent claims in Markdown or JSON summaries. Keep raw runtime folders, model weights, local tar packages, generated videos, and temporary logs out of Git unless they are intentionally selected evidence for a specific review package.
+Keep permanent claims in Markdown or JSON summaries. Keep raw runtime folders, model weights, local tar packages, generated videos, signed company files, live platform screenshots, and temporary logs out of Git unless they are intentionally selected evidence for a specific review package.

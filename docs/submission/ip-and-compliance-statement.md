@@ -1,6 +1,6 @@
 # IP And Compliance Statement Draft
 
-更新日期：2026-06-04
+更新日期：2026-06-09
 
 ## 自主知识产权口径
 
@@ -26,6 +26,8 @@ Wearedge Industrial AI Agent 的核心工程包括多智能体路由、输出契
 - 企业无不良记录。
 - 报名材料真实、准确、可核验。
 - 第三方开源依赖遵守对应许可证。
+
+最终填写和签署材料按 `docs/submission/company-info-and-compliance-intake.md` 收口，保存到 `submission-assets/live-evidence/legal/`，不提交到 Git。
 
 ## 风险边界
 

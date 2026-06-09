@@ -46,11 +46,14 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/submission/demo-shot-list.md", "Demo shot list"),
         Artifact("docs/submission/demo-script.md", "Demo script"),
         Artifact("docs/submission/screenshots-checklist.md", "Screenshots checklist"),
+        Artifact("docs/submission/live-platform-evidence-runbook.md", "Live platform evidence runbook"),
+        Artifact("docs/submission/video-production-plan.md", "Demo video production plan"),
         Artifact("docs/submission/poc-evidence-index.md", "PoC evidence index"),
         Artifact("docs/submission/dashboard-mock.html", "Dashboard mock"),
         Artifact("docs/submission/capture-runbook.md", "Capture runbook"),
         Artifact("docs/submission/evidence/README.md", "Generated evidence summary"),
         Artifact("scripts/capture_submission_screenshots.py", "Batch screenshot capture script"),
+        Artifact("scripts/verify_live_evidence.py", "Live evidence verifier"),
     ],
     "Phase D - Business and technical package": [
         Artifact("docs/siemens-industrial-agent-track-memory-20260521.md", "Siemens industrial agent track memory"),
@@ -58,6 +61,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/submission/business-plan.md", "Business plan draft"),
         Artifact("docs/submission/technical-solution.md", "Technical solution draft"),
         Artifact("docs/submission/ip-and-compliance-statement.md", "IP and compliance statement"),
+        Artifact("docs/submission/company-info-and-compliance-intake.md", "Company info and compliance intake"),
         Artifact("docs/submission/team-and-company-info-template.md", "Team and company template"),
     ],
     "Phase E - Registration fields": [
@@ -101,10 +105,11 @@ EDGE_PROFILE_REQUIRED_TOP_LEVEL_FIELDS = (
 )
 
 EXTERNAL_PENDING_ITEMS = (
-    "企业名称、统一社会信用代码、联系人、电话、邮箱等真实主体信息",
+    "按 docs/submission/company-info-and-compliance-intake.md 补齐企业名称、统一社会信用代码、联系人、电话、邮箱等真实主体信息",
+    "按 docs/submission/live-platform-evidence-runbook.md 保存真实 Xcelerator / API World 平台截图",
+    "按 docs/submission/live-platform-evidence-runbook.md 保存真实工易魔方 Workflow Canvas 截图",
+    "按 docs/submission/video-production-plan.md 输出 3-5 分钟演示视频文件或可访问链接",
     "企业负责人最终签署的知识产权、无产权纠纷、无不良记录承诺",
-    "真实工易魔方 / Xcelerator 平台截图，待平台环境开通后补齐",
-    "3-5 分钟演示视频文件或可访问链接",
     "报名系统正式提交状态截图",
 )
 
@@ -180,6 +185,18 @@ def render_manifest(result: dict[str, Any]) -> str:
     )
     for item in result["external_pending_items"]:
         lines.append(f"- {item}")
+
+    lines.extend(
+        [
+            "",
+            "## External Evidence Command",
+            "",
+            "```powershell",
+            "python scripts/verify_live_evidence.py --stage platform --allow-missing --write-manifest",
+            "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
+            "```",
+        ]
+    )
 
     lines.extend(
         [

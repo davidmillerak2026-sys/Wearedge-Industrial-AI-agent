@@ -22,6 +22,10 @@
 | Offline evaluation script | `scripts/run_competition_eval.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
+| Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
+| Live evidence verifier | `scripts/verify_live_evidence.py` | ready |
+| Demo video production plan | `docs/submission/video-production-plan.md` | ready |
+| Company info and compliance intake | `docs/submission/company-info-and-compliance-intake.md` | ready |
 | Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
 | Capture runbook | `docs/submission/capture-runbook.md` | ready |
 | Technical architecture | `docs/technical_architecture.md` | ready |
@@ -34,3 +38,4 @@
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
 - Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.
 - High-risk actions are routed through human confirmation, not direct OT control.
+- Live Xcelerator / Gongyi screenshots, signed company materials, and video should be stored under `submission-assets/live-evidence/` and checked with `python scripts/verify_live_evidence.py --stage final`.

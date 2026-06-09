@@ -67,6 +67,12 @@ Show the edge runtime profile used for Xcelerator / Gongyi Mofang evidence:
 Invoke-RestMethod http://127.0.0.1:8081/v1/edge/runtime-profile
 ```
 
+Initialize and check the ignored live platform evidence folder:
+
+```powershell
+python scripts/verify_live_evidence.py --init --allow-missing --write-manifest
+```
+
 Workflow Canvas / Gongyi Mofang can call the competition decision endpoint with JSON from a Python Function Block:
 
 ```powershell
@@ -90,4 +96,4 @@ Invoke-RestMethod `
 
 ## Notes
 
-Models, generated runtime artifacts, deployment tarballs, local RAG indexes, and media outputs are ignored by Git. Keep reusable evidence in Markdown/JSON under `docs/`; keep large or local-only artifacts outside the repository history.
+Models, generated runtime artifacts, deployment tarballs, local RAG indexes, live platform screenshots, signed company files, and media outputs are ignored by Git. Keep reusable evidence in Markdown/JSON under `docs/`; keep large or local-only artifacts outside the repository history.
