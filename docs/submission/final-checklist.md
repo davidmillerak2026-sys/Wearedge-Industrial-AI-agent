@@ -22,6 +22,8 @@
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | API schema | `docs/workflow-canvas-api-schema.md` | ready |
+| Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
+| Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Business plan | `docs/submission/business-plan.md` | draft |
 | Technical solution | `docs/submission/technical-solution.md` | draft |
 | Demo script | `docs/submission/demo-script.md` | draft |

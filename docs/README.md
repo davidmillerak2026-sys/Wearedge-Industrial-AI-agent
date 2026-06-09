@@ -8,6 +8,7 @@ This directory is the engineering evidence hub for WearEdge Pro. It is organized
 | --- | --- |
 | Current project status | [`project-status.md`](project-status.md) |
 | Siemens Xcelerator co-creation one-pager | [`siemens-xcelerator-co-creation-onepager.md`](siemens-xcelerator-co-creation-onepager.md) |
+| Xcelerator API World onboarding notes | [`xcelerator-apiworld-onboarding.md`](xcelerator-apiworld-onboarding.md) |
 | Workflow Canvas PoC runbook | [`workflow-canvas-poc-runbook.md`](workflow-canvas-poc-runbook.md) |
 | Workflow Canvas API schema | [`workflow-canvas-api-schema.md`](workflow-canvas-api-schema.md) |
 | Technical architecture | [`technical_architecture.md`](technical_architecture.md) |

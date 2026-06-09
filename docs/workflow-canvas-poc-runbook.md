@@ -131,6 +131,25 @@ python -m uvicorn jetson.app:app --host 127.0.0.1 --port 8081
 python scripts/smoke_workflow_canvas_decision.py --url http://127.0.0.1:8081/v1/workflow-canvas/decision
 ```
 
+## Xcelerator API World 接入
+
+若通过 Xcelerator API World 发布 Wearedge 服务，优先使用“基于 Xcelerator AppID/Secret 的 X 认证”。API World 代理请求会在请求头携带 `X-TOKEN`，Wearedge 可启用可选验签：
+
+```powershell
+$env:WEAREDGE_AUTH_DISABLED="false"
+$env:WEAREDGE_XCELERATOR_X_AUTH_ENABLED="true"
+$env:WEAREDGE_XCELERATOR_APP_KEY="<Xcelerator AppID>"
+python -m uvicorn jetson.app:app --host 0.0.0.0 --port 8081
+```
+
+API Console 可导入：
+
+```text
+openapi/wearedge-xcelerator-apiworld.openapi.json
+```
+
+详细平台字段和截图清单见 `docs/xcelerator-apiworld-onboarding.md`。
+
 ## PoC 边界
 
 - 当前 payload 和离线指标是模拟/离线验证数据，不代表客户真实产线数据。

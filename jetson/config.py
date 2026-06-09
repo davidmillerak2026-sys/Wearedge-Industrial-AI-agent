@@ -48,6 +48,10 @@ class GatewayConfig:
     llama_image_max_tokens: int
     audio_fusion_runtime: str
     model_variant: str
+    xcelerator_x_auth_enabled: bool = False
+    xcelerator_app_key: str | None = None
+    xcelerator_sign_check_url: str = "https://apig.developers.siemens-x.com.cn/x-api/sign/check"
+    xcelerator_sign_check_timeout_seconds: int = 10
 
     @classmethod
     def from_env(cls) -> "GatewayConfig":
@@ -71,6 +75,13 @@ class GatewayConfig:
             llama_image_max_tokens=_int_env("LLAMA_IMAGE_MAX_TOKENS", 70),
             audio_fusion_runtime=os.getenv("WEAREDGE_AUDIO_FUSION_RUNTIME", "llama.cpp"),
             model_variant=os.getenv("WEAREDGE_MODEL_VARIANT", "E2B"),
+            xcelerator_x_auth_enabled=_bool_env("WEAREDGE_XCELERATOR_X_AUTH_ENABLED", False),
+            xcelerator_app_key=os.getenv("WEAREDGE_XCELERATOR_APP_KEY"),
+            xcelerator_sign_check_url=os.getenv(
+                "WEAREDGE_XCELERATOR_SIGN_CHECK_URL",
+                "https://apig.developers.siemens-x.com.cn/x-api/sign/check",
+            ),
+            xcelerator_sign_check_timeout_seconds=_int_env("WEAREDGE_XCELERATOR_SIGN_CHECK_TIMEOUT_SECONDS", 10),
         )
 
     @property

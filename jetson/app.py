@@ -3,6 +3,8 @@ from __future__ import annotations
 import json
 import logging
 import time
+import urllib.error
+import urllib.request
 from pathlib import Path
 
 from fastapi import Body, FastAPI, File, Form, Header, HTTPException, UploadFile
@@ -67,6 +69,11 @@ def healthz() -> dict[str, object]:
             "competition_endpoint": "/v1/competition/decision",
             "targets": COMPETITION_TARGETS,
         },
+        "xcelerator": {
+            "x_auth_enabled": config.xcelerator_x_auth_enabled,
+            "x_token_header": "X-TOKEN",
+            "sign_check_configured": bool(config.xcelerator_app_key),
+        },
         "output_contract": {
             "min_words": config.contract_min_words,
             "repair_enabled": config.contract_repair_enabled,
@@ -124,8 +131,9 @@ def agent_flow_definition(authorization: str | None = Header(default=None)) -> d
 def workflow_canvas_decision(
     payload: dict[str, object] | None = Body(default=None),
     authorization: str | None = Header(default=None),
+    x_token: str | None = Header(default=None, alias="X-TOKEN"),
 ) -> dict[str, object]:
-    _require_token(authorization)
+    _require_token(authorization, x_token=x_token)
     return build_competition_decision(payload or {})
 
 
@@ -133,8 +141,9 @@ def workflow_canvas_decision(
 def competition_decision(
     payload: dict[str, object] | None = Body(default=None),
     authorization: str | None = Header(default=None),
+    x_token: str | None = Header(default=None, alias="X-TOKEN"),
 ) -> dict[str, object]:
-    return workflow_canvas_decision(payload=payload, authorization=authorization)
+    return workflow_canvas_decision(payload=payload, authorization=authorization, x_token=x_token)
 
 
 @app.get("/v1/agent-runs/recent")
@@ -460,13 +469,50 @@ async def _execute_infer_request(
     return response_body
 
 
-def _require_token(authorization: str | None) -> None:
+def _require_token(authorization: str | None, *, x_token: str | None = None) -> None:
     if not config.auth_enabled:
         return
+    if config.xcelerator_x_auth_enabled:
+        if x_token:
+            if _verify_xcelerator_token(x_token):
+                return
+            raise HTTPException(status_code=401, detail="invalid Xcelerator X-TOKEN")
+        if authorization is None and not config.demo_token:
+            raise HTTPException(status_code=401, detail="missing X-TOKEN or Authorization header")
     if not config.demo_token:
         raise HTTPException(status_code=503, detail="DEMO_TOKEN is not configured")
     if authorization != f"Bearer {config.demo_token}":
         raise HTTPException(status_code=401, detail="unauthorized")
+
+
+def _verify_xcelerator_token(x_token: str) -> bool:
+    if not config.xcelerator_app_key:
+        raise HTTPException(status_code=503, detail="WEAREDGE_XCELERATOR_APP_KEY is not configured")
+    body = json.dumps({"X-TOKEN": x_token}).encode("utf-8")
+    request = urllib.request.Request(
+        config.xcelerator_sign_check_url,
+        data=body,
+        headers={
+            "Content-Type": "application/json",
+            "appKey": config.xcelerator_app_key,
+        },
+        method="POST",
+    )
+    try:
+        with urllib.request.urlopen(request, timeout=config.xcelerator_sign_check_timeout_seconds) as response:
+            raw = response.read().decode("utf-8")
+    except urllib.error.HTTPError as exc:
+        if exc.code in {400, 401, 403}:
+            return False
+        raise HTTPException(status_code=502, detail="Xcelerator sign check failed") from exc
+    except OSError as exc:
+        raise HTTPException(status_code=502, detail="Xcelerator sign check unavailable") from exc
+
+    try:
+        payload = json.loads(raw)
+    except json.JSONDecodeError as exc:
+        raise HTTPException(status_code=502, detail="Xcelerator sign check returned invalid JSON") from exc
+    return isinstance(payload, dict) and payload.get("code") == 200
 
 
 def _normalize_content_type(content_type: str | None) -> str:

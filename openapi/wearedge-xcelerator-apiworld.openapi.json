@@ -1,0 +1,230 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Wearedge Workflow Canvas Decision API",
+    "version": "0.1.0",
+    "description": "Xcelerator API World import spec for the Wearedge Industrial AI Agent Workflow Canvas decision endpoint."
+  },
+  "servers": [
+    {
+      "url": "https://YOUR-WEAREDGE-AGENT-SERVICE.example.com",
+      "description": "Replace with the public HTTPS Wearedge Agent Service base URL before API World publication."
+    },
+    {
+      "url": "http://127.0.0.1:8081",
+      "description": "Local validation endpoint, not for API World publication."
+    }
+  ],
+  "paths": {
+    "/healthz": {
+      "get": {
+        "summary": "Gateway health and competition metadata",
+        "operationId": "getWearedgeHealth",
+        "responses": {
+          "200": {
+            "description": "Gateway is healthy.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/v1/workflow-canvas/decision": {
+      "post": {
+        "summary": "Build a multi-agent Workflow Canvas decision",
+        "operationId": "buildWorkflowCanvasDecision",
+        "security": [
+          {
+            "XceleratorXToken": []
+          },
+          {
+            "DemoBearer": []
+          }
+        ],
+        "parameters": [
+          {
+            "name": "X-TOKEN",
+            "in": "header",
+            "required": false,
+            "description": "Xcelerator API World proxy token. Wearedge verifies it through /x-api/sign/check when X auth is enabled.",
+            "schema": {
+              "type": "string"
+            }
+          }
+        ],
+        "requestBody": {
+          "required": true,
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/DecisionRequest"
+              },
+              "example": {
+                "stage": "final",
+                "selected_directions": [
+                  "maintenance",
+                  "quality",
+                  "energy",
+                  "flexible_production",
+                  "workflow_canvas"
+                ],
+                "context": {
+                  "maintenance": {
+                    "f1_pct": 88.0,
+                    "warning_lead_time_hours": 30.0,
+                    "root_cause_top3_pct": 92.0,
+                    "vibration_rms_mm_s": 7.2,
+                    "has_threshold_evidence": true
+                  },
+                  "quality": {
+                    "defect_rate_pct": 3.4,
+                    "detection_confidence_pct": 93.0,
+                    "relative_improvement_pct": 6.0,
+                    "has_detector_evidence": true
+                  },
+                  "energy": {
+                    "forecast_accuracy_pct": 96.0,
+                    "saving_pct": 12.0,
+                    "idle_kw": 5.8,
+                    "has_meter_baseline": true
+                  },
+                  "production": {
+                    "schedule_efficiency_gain_pct": 22.0,
+                    "component_reuse_pct": 76.0,
+                    "target_sku": "SKU-C500",
+                    "has_released_checklist": true
+                  },
+                  "workflow_canvas": {
+                    "existing_component_use_pct": 72.0,
+                    "new_component_reuse_potential_pct": 80.0
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "Collaborative decision generated.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/DecisionResponse"
+                }
+              }
+            }
+          },
+          "401": {
+            "description": "Missing or invalid authorization token."
+          },
+          "502": {
+            "description": "Xcelerator sign check service unavailable or returned invalid data."
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "securitySchemes": {
+      "XceleratorXToken": {
+        "type": "apiKey",
+        "in": "header",
+        "name": "X-TOKEN"
+      },
+      "DemoBearer": {
+        "type": "http",
+        "scheme": "bearer"
+      }
+    },
+    "schemas": {
+      "DecisionRequest": {
+        "type": "object",
+        "additionalProperties": true,
+        "properties": {
+          "stage": {
+            "type": "string",
+            "enum": [
+              "initial",
+              "final"
+            ],
+            "default": "initial"
+          },
+          "selected_directions": {
+            "type": "array",
+            "items": {
+              "type": "string",
+              "enum": [
+                "maintenance",
+                "quality",
+                "energy",
+                "flexible_production",
+                "workflow_canvas"
+              ]
+            }
+          },
+          "context": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "DecisionResponse": {
+        "type": "object",
+        "required": [
+          "ok",
+          "competition_metrics",
+          "collaborative_decision",
+          "workflow_canvas"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "latency_ms": {
+            "type": "integer"
+          },
+          "competition_metrics": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "collaborative_decision": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "workflow_canvas": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "HealthResponse": {
+        "type": "object",
+        "required": [
+          "ok",
+          "competition",
+          "xcelerator"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "competition": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "xcelerator": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      }
+    }
+  }
+}

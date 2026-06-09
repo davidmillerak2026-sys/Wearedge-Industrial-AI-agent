@@ -7,6 +7,8 @@
 | Evidence | Path | Status |
 | --- | --- | --- |
 | Siemens co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready |
+| Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
+| Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
 | Workflow Canvas API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Workflow Canvas PoC runbook | `docs/workflow-canvas-poc-runbook.md` | ready |

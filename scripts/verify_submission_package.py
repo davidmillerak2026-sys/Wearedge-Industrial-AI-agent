@@ -31,6 +31,8 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/workflow-canvas-api-schema.md", "Workflow Canvas API schema"),
         Artifact("workflows/wearedge_wfc_poc_payload.json", "Workflow Canvas sample payload"),
         Artifact("scripts/smoke_workflow_canvas_decision.py", "Workflow Canvas smoke script"),
+        Artifact("docs/xcelerator-apiworld-onboarding.md", "Xcelerator API World onboarding notes"),
+        Artifact("openapi/wearedge-xcelerator-apiworld.openapi.json", "Xcelerator OpenAPI import spec"),
     ],
     "Phase C - Demo evidence": [
         Artifact("docs/submission/demo-shot-list.md", "Demo shot list"),

@@ -120,8 +120,10 @@ Important response fields:
 
 ## Error Handling
 
-- If gateway auth is enabled, include `Authorization: Bearer <DEMO_TOKEN>`.
+- For local demos with gateway auth enabled, include `Authorization: Bearer <DEMO_TOKEN>`.
+- For Xcelerator API World X authentication, the platform proxy forwards `X-TOKEN` in the request header; Wearedge verifies it through `POST https://apig.developers.siemens-x.com.cn/x-api/sign/check` when `WEAREDGE_XCELERATOR_X_AUTH_ENABLED=true`.
 - If HTTP status is `401`, check `apiKeyRef` or token binding.
+- If HTTP status is `502` during X authentication, check that `WEAREDGE_XCELERATOR_APP_KEY` and outbound access to the sign-check endpoint are configured.
 - If HTTP status is `422`, check the Python Function Block request body is a JSON object.
 - If `ok` is not true or required response fields are missing, route to `HumanApprovalGate` and show the raw response in the Dashboard.
 
