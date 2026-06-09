@@ -80,6 +80,13 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
     ),
     EvidenceItem(
         "gongyi-mofang",
+        "gongyi-mofang/00-wfc-projects-authenticated.png",
+        "Workflow Canvas authenticated projects page",
+        "platform",
+        "Show the logged-in Gongyi Mofang projects page and New Blank Project entry.",
+    ),
+    EvidenceItem(
+        "gongyi-mofang",
         "gongyi-mofang/01-resource-block-wearedge-agent-service.png",
         "Wearedge Agent Service resource block",
         "platform",

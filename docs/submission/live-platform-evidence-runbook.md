@@ -46,6 +46,7 @@ submission-assets/live-evidence/
 
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |
+| `gongyi-mofang/00-wfc-projects-authenticated.png` | 已登录项目页 | 展示 Workflow Canvas 项目页和 `新建空白项目` 入口，证明账号已具备 WFC 访问权限。 |
 | `gongyi-mofang/01-resource-block-wearedge-agent-service.png` | `Wearedge Agent Service` 资源块配置 | 参数至少包含 `agentHost`、`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。 |
 | `gongyi-mofang/02-python-function-block-call-api.png` | Python Function Block 编辑页 | 展示 `CallWearedgeDecisionApi` 调用 `/v1/workflow-canvas/decision`。 |
 | `gongyi-mofang/03-global-data-table-decision-fields.png` | 全局数据表字段 | 展示主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态。 |
