@@ -34,8 +34,12 @@ submission-assets/live-evidence/
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |
 | `xcelerator/01-tenant-or-workspace.png` | 租户、工作台或服务空间页面 | 证明账号和平台空间已具备接入入口；遮挡个人邮箱和敏感 ID。 |
-| `xcelerator/02-apiworld-openapi-import.png` | API World OpenAPI 导入或服务创建页面 | 展示 `openapi/wearedge-xcelerator-apiworld.openapi.json` 可作为平台服务描述。 |
-| `xcelerator/03-apiworld-service-detail.png` | Wearedge API 服务详情 | 展示服务名、接口列表、`/v1/workflow-canvas/decision`、`/v1/edge/runtime-profile`。 |
+| `xcelerator/05-app-group-created.png` | Wearedge 应用分组 | 展示自有应用分组和 `注册应用` 入口。 |
+| `xcelerator/07-app-detail-created-redacted-top.png` | Wearedge 应用草稿 | 展示应用草稿存在；截图需避开 AppID / AppSecret 区域。 |
+| `xcelerator/10-openapi-json-import-filled.png` | OpenAPI JSON/YAML 导入 | 展示 `openapi/wearedge-xcelerator-apiworld.openapi.json` 已填入平台导入框。 |
+| `xcelerator/11-openapi-parse-preview.png` | OpenAPI 解析预览 | 展示 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`。 |
+| `xcelerator/13-openapi-three-apis-imported.png` | API 接口导入结果 | 展示服务接口列表含 3 个接口。 |
+| `xcelerator/15-api-service-saved-unpublished-list.png` | Wearedge API 服务列表 | 展示服务名、`未发布` 状态、接口数 `3`、可见范围 `租户内`。 |
 | `xcelerator/04-runtime-profile-api-test.png` | 平台 API 测试或调用结果 | 展示 `ok=true`、`workflow_canvas_ready=true`、`model_direct_ot_control=false`。 |
 
 ## 工易魔方 / Workflow Canvas 截图

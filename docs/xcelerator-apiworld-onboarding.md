@@ -122,9 +122,21 @@ openapi/wearedge-xcelerator-apiworld.openapi.json
 | --- | --- |
 | 企业账号真实资料 | 由负责人在平台中填写。 |
 | HTTPS 公网可访问地址 | PoC 前需要部署 Wearedge Agent Service 或使用临时隧道。 |
-| Xcelerator AppID | 创建应用后填入 `WEAREDGE_XCELERATOR_APP_KEY`。 |
-| API World 服务截图 | 在平台完成应用/服务/接口配置后补入 `submission-assets/screenshots/`。 |
+| Xcelerator AppID / AppSecret | 应用草稿已创建；AppSecret 不保存到仓库，由负责人安全保管。 |
 | 真实平台调用日志 | 使用 API Console 调试调用或流程服务调用后截图/导出。 |
+| Gongyi Mofang WFC 访问 | 当前需平台侧激活或授权。 |
+
+## 2026-06-09 实时平台状态
+
+- 已创建 `Wearedge 工业智能体 PoC` 应用分组。
+- 已创建 `Wearedge 工业智能体服务` 应用草稿，未发布。
+- 已创建 `Wearedge Workflow Canvas 协同决策 API` 服务草稿。
+- 已通过 JSON/YAML 导入 `openapi/wearedge-xcelerator-apiworld.openapi.json`。
+- 已导入 3 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`。
+- API 服务列表确认：状态 `未发布`，接口数 `3`，可见范围 `租户内`。
+- 证据状态文档：`docs/submission/platform-live-evidence-status-20260609.md`。
+- 截图目录：`submission-assets/live-evidence/xcelerator/`。
+- 未执行发布、公开上架或密钥保存。
 
 ## 下一步执行清单
 

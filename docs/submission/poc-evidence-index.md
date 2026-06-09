@@ -23,6 +23,7 @@
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
+| Xcelerator live evidence status | `docs/submission/platform-live-evidence-status-20260609.md` | ready |
 | Live evidence verifier | `scripts/verify_live_evidence.py` | ready |
 | Demo video production plan | `docs/submission/video-production-plan.md` | ready |
 | Company info and compliance intake | `docs/submission/company-info-and-compliance-intake.md` | ready |
@@ -34,8 +35,9 @@
 ## Evidence Boundaries
 
 - Current offline evaluation is simulated and repository-local.
-- Current WFC integration is API-ready and runbook-ready; real platform screenshots remain pending until access is available.
+- Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, and OpenAPI-imported API list are captured under `submission-assets/live-evidence/xcelerator/`.
+- Current WFC integration is API-ready and runbook-ready; real Gongyi Mofang screenshots remain pending until WFC account access is activated.
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
 - Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.
 - High-risk actions are routed through human confirmation, not direct OT control.
-- Live Xcelerator / Gongyi screenshots, signed company materials, and video should be stored under `submission-assets/live-evidence/` and checked with `python scripts/verify_live_evidence.py --stage final`.
+- Live Gongyi screenshots, signed company materials, and video should be stored under `submission-assets/live-evidence/` and checked with `python scripts/verify_live_evidence.py --stage final`.
