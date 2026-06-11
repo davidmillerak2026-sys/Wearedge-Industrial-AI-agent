@@ -360,6 +360,15 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 | 运行日志 | 已尝试点击运行区，但未触发真实运行日志 | `69-wfc-run-control-attempt-properties.png` 不能命名为 `ok=true` 证据。 |
 | 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时或只截左侧画布；右侧弹窗字段可通过实时 DOM 核验。 | 最终材料优先使用清晰平台图；若截图工具裁剪，使用明确标注的 DOM verified evidence，不伪装为原生截图。 |
 
+2026-06-11 Dashboard Explorer 路由分析：
+
+| 发现 | 结论 |
+| --- | --- |
+| `/dashboard-explorer` 页面显示 `No Dashboard`。 | 当前租户/项目没有可预览 Dashboard，空页不是创建入口。 |
+| 前端代码读取 `/api/projects/dashboard-explorer`。 | Dashboard Explorer 是列表/预览页，依赖后台已有 Dashboard 记录。 |
+| 有 Dashboard 时通过 `/remote/preview?_wfc=...&_projectid=...&_token=...&_spidr=...&_projectInstanceId=...` 加载。 | 真正 Dashboard 证据需要先有 workflow instance / ui-builder 应用，再从预览 URL 截图。 |
+| 直接访问 `/edit/apps` 会回到项目页。 | 不能把 `/edit/apps` 当成稳定创建入口；下一步应按 WFC007 路线：运行工作流 -> 不停止实例 -> 从 ui-builder 绑定数据表/数据流 -> 再预览。 |
+
 2026-06-11 已创建的 WFC 自定义数据字段：
 
 | 字段 ID | 显示名 | 用途 |

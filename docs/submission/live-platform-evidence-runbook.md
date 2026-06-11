@@ -42,6 +42,14 @@ submission-assets/live-evidence/
 | `xcelerator/16-openapi-four-apis-imported.png` | 新版 API 接口导入结果 | 2026-06-11 已补充，展示服务接口列表含 4 个接口，新增 solution profile。 |
 | `xcelerator/15-api-service-saved-unpublished-list.png` | Wearedge API 服务列表 | 展示服务名、`未发布` 状态、接口数 `4`、可见范围 `租户内`。 |
 | `xcelerator/04-runtime-profile-api-test.png` | 平台 API 测试或调用结果 | 展示 `ok=true`、`workflow_canvas_ready=true`、`model_direct_ot_control=false`。 |
+| `xcelerator/05-xcelerator-app-home-wearedge-drafts.png` | 应用主页复核 | 展示 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
+| `xcelerator/06-xcelerator-api-detail-basic-info-unpublished.png` | API 服务基础信息复核 | 展示服务名、服务版本、`未发布`、所属应用和 `租户内` 可见范围。 |
+| `xcelerator/07-xcelerator-api-interface-list-four-endpoints-unpublished.png` | API 服务接口信息复核 | 展示 4 个未发布草稿接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
+
+边界说明：
+
+- `04-runtime-profile-api-test.png/json` 是临时 HTTPS PoC 网关的外部可达验证，不等同于 Xcelerator 已发布代理调用。
+- `06/07-xcelerator-*` 截图证明 Xcelerator 草稿内的应用、API 服务和接口定义已经配置，但服务仍保持 `未发布` 和 `租户内`。
 
 ## 工易魔方 / Workflow Canvas 截图
 
@@ -66,6 +74,12 @@ submission-assets/live-evidence/
 | `gongyi-mofang/04-dashboard-decision-view.png` | Dashboard | 展示指标卡、决策路径、确认项、工作流状态。 |
 | `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 展示 `ok=true`、function blocks、latency 或成功写表记录。 |
 | `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 证明高风险动作不会由模型直接控制 OT。 |
+
+Dashboard 路径备注：
+
+- `https://wfc.bd-iiot.com/dashboard-explorer` 当前是 Dashboard 预览/列表页。若接口返回空，会显示 `No Dashboard`，页面本身不提供新建入口。
+- 前端路由读取 `/api/projects/dashboard-explorer`，有数据时通过 `/remote/preview?...` 加载已有 Dashboard。
+- 因此 Dashboard 证据应从 WFC 工作流运行实例和 ui-builder 创建路径获得，而不是在 Dashboard Explorer 空页里继续盲点。
 
 已采集的辅助截图可用于视频素材和操作复盘，不替代上表核心 0-6 项：
 

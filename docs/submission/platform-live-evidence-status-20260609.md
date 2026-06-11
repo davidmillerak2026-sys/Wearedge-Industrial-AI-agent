@@ -24,6 +24,9 @@
 | WFC 数据表字段 | 已完成 DOM verified 证据 | 2026-06-11 已在真实 WFC 项目右侧 `数据表` 中创建 `selected_direction`、`priority`、`recommended_action`、`evidence_summary`、`competition_metrics`、`owner`、`residual_risk`、`approval_status`。内置截图工具裁剪不到右侧弹窗，已保存 DOM verified evidence 图并保留原生截图尝试。 |
 | WFC Dashboard 入口 | 部分完成 | 已进入 `https://wfc.bd-iiot.com/dashboard-explorer`；尚未创建 Wearedge 决策 Dashboard。 |
 | WFC 运行/日志入口 | 尝试未完成 | 已尝试点击工作流顶部运行区，当前只回到属性面板 `请选择一个功能块`，没有真实 ok 日志。 |
+| Xcelerator 应用主页复核 | 已完成 | 2026-06-11 已重新进入 `https://developers.siemens-x.com.cn/client`，可见 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
+| Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
+| Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
 
 已导入接口：
 
@@ -54,6 +57,12 @@
 | `24-xcelerator-openapi-parse-result-four-apis.png` | OpenAPI 解析预览显示 4 个接口。 |
 | `34-xcelerator-four-apis-saved-unpublished.png` | API 服务编辑页显示 4 个接口，服务仍为未发布。 |
 | `35-xcelerator-api-service-list-current.png` | API 服务列表页；DOM 核验显示接口数为 4、状态未发布、可见范围租户内。 |
+| `04-runtime-profile-api-test.png` | 临时 HTTPS PoC 网关调用 `/v1/edge/runtime-profile` 的渲染证据；证明外部可达的 Wearedge Runtime API 输出，不等同于已发布的 Xcelerator 代理调用。 |
+| `04-runtime-profile-api-test.json` | 与上图对应的原始 JSON 响应，含 `ok=true`、`workflow_canvas_ready=true`、`model_direct_ot_control=false`。 |
+| `05-xcelerator-app-home-wearedge-drafts.png` | 2026-06-11 应用主页复核截图，显示 Wearedge 分组和应用草稿入口。 |
+| `06-xcelerator-api-detail-basic-info-unpublished.png` | 2026-06-11 API 详情基础信息截图，显示服务名、版本、未发布、所属应用和租户内可见范围。 |
+| `07-xcelerator-api-interface-list-four-endpoints-unpublished.png` | 2026-06-11 API 详情接口信息截图，显示 4 个接口均在未发布草稿中。 |
+| `07-xcelerator-api-interface-list-four-endpoints-unpublished.dom.json` | 与上图对应的 DOM 摘要，记录 4 个接口行，便于截图不清时复核。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -89,17 +98,18 @@
 - 未保存 AppSecret 或任何密钥。
 - 应用详情截图只保留顶部裁剪图，避免保存 AppID / AppSecret 区域。
 - API 服务当前使用 PoC 草稿服务器地址，正式调用前需要替换为真实可访问 HTTPS 地址。
+- `04-runtime-profile-api-test.*` 使用临时 HTTPS PoC 网关证明 Wearedge API 可外部访问；没有把它表述为 Xcelerator 已发布代理调用。
 
 ## 剩余缺口
 
 | 缺口 | 下一步 |
 | --- | --- |
 | `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
-| Dashboard 截图 | 已进入 Dashboard Explorer；下一步创建 Wearedge 决策 Dashboard，展示指标卡、决策路径、确认项、工作流状态。 |
+| Dashboard 截图 | 已进入 Dashboard Explorer 并确认当前返回 `No Dashboard`。前端路由分析显示该页读取 `/api/projects/dashboard-explorer` 并通过 `/remote/preview?...` 预览已有 Dashboard，不是创建入口。下一步需要先运行工作流并从 ui-builder / workflow instance 路径创建可预览看板。 |
 | 运行日志截图 | 当前没有真实运行日志；需要先完成 Python Function Block、数据表写回和可访问的 Wearedge Agent Service。 |
 | 人工确认截图 | 当前没有平台内 HumanApprovalGate 截图；需要在工作流中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
-| 真实 HTTPS Wearedge Agent Service | 部署公网 HTTPS 或评审可访问的临时 PoC 网关，再替换服务地址。 |
-| Xcelerator 调试调用截图 | 服务地址可访问后，在 Console / API World 中调试 `GET /v1/edge/runtime-profile` 和 `POST /v1/workflow-canvas/decision` 并截图。当前服务草稿仍使用 PoC 地址，不能声称已完成真实网关调用。 |
+| 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
+| Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
 | 企业主体/联系人/IP 承诺 | 由负责人补齐真实公司信息、联系人、承诺材料。 |
 
