@@ -38,9 +38,9 @@ submission-assets/live-evidence/
 | `xcelerator/07-app-detail-created-redacted-top.png` | Wearedge 应用草稿 | 展示应用草稿存在；截图需避开 AppID / AppSecret 区域。 |
 | `xcelerator/10-openapi-json-import-filled.png` | OpenAPI JSON/YAML 导入 | 展示 `openapi/wearedge-xcelerator-apiworld.openapi.json` 已填入平台导入框。 |
 | `xcelerator/11-openapi-parse-preview.png` | OpenAPI 解析预览 | 新版应展示 `/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
-| `xcelerator/13-openapi-three-apis-imported.png` | 历史 API 接口导入结果 | 2026-06-09 截图显示 3 个接口；仓库升级后下一次应补 4 个接口截图。 |
-| `xcelerator/16-openapi-four-apis-imported.png` | 新版 API 接口导入结果 | 展示服务接口列表含 4 个接口，新增 solution profile。 |
-| `xcelerator/15-api-service-saved-unpublished-list.png` | Wearedge API 服务列表 | 展示服务名、`未发布` 状态、接口数 `3`、可见范围 `租户内`。 |
+| `xcelerator/13-openapi-three-apis-imported.png` | 历史 API 接口导入结果 | 2026-06-09 截图显示 3 个接口，保留为操作轨迹。 |
+| `xcelerator/16-openapi-four-apis-imported.png` | 新版 API 接口导入结果 | 2026-06-11 已补充，展示服务接口列表含 4 个接口，新增 solution profile。 |
+| `xcelerator/15-api-service-saved-unpublished-list.png` | Wearedge API 服务列表 | 展示服务名、`未发布` 状态、接口数 `4`、可见范围 `租户内`。 |
 | `xcelerator/04-runtime-profile-api-test.png` | 平台 API 测试或调用结果 | 展示 `ok=true`、`workflow_canvas_ready=true`、`model_direct_ot_control=false`。 |
 
 ## 工易魔方 / Workflow Canvas 截图

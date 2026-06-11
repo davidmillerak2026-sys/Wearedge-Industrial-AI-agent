@@ -134,8 +134,8 @@ openapi/wearedge-xcelerator-apiworld.openapi.json
 - 已创建 `Wearedge Workflow Canvas 协同决策 API` 服务草稿。
 - 已通过 JSON/YAML 导入 `openapi/wearedge-xcelerator-apiworld.openapi.json`。
 - 2026-06-09 live 截图中已导入 3 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`。
-- 2026-06-11 仓库 OpenAPI 已升级为 4 个接口，新增 `/v1/industrial-agent/solution-profile`；下一次进入 Xcelerator Console 时需要重新导入或补充截图。
-- API 服务列表确认：状态 `未发布`，接口数 `3`，可见范围 `租户内`。
+- 2026-06-11 已在 Xcelerator Console 重新通过 `JSON/YAML导入` 导入新版 OpenAPI，API 服务草稿接口数升级为 4，新增 `/v1/industrial-agent/solution-profile`。
+- API 服务列表确认：状态 `未发布`，接口数 `4`，可见范围 `租户内`。
 - 证据状态文档：`docs/submission/platform-live-evidence-status-20260609.md`。
 - 截图目录：`submission-assets/live-evidence/xcelerator/`。
 - 未执行发布、公开上架或密钥保存。

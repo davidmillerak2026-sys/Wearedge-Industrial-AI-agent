@@ -59,17 +59,17 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
     ),
     EvidenceItem(
         "xcelerator",
-        "xcelerator/13-openapi-three-apis-imported.png",
-        "OpenAPI interfaces imported",
+        "xcelerator/16-openapi-four-apis-imported.png",
+        "OpenAPI four interfaces imported",
         "platform",
-        "Show all three imported APIs in the API service interface list.",
+        "Show /healthz, /v1/edge/runtime-profile, /v1/industrial-agent/solution-profile, and /v1/workflow-canvas/decision in the API service interface list.",
     ),
     EvidenceItem(
         "xcelerator",
         "xcelerator/15-api-service-saved-unpublished-list.png",
         "Wearedge API service saved as unpublished",
         "platform",
-        "Show service status unpublished, tenant visibility, and interface count 3.",
+        "Show service status unpublished, tenant visibility, and interface count 4.",
     ),
     EvidenceItem(
         "xcelerator",
@@ -154,6 +154,13 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
         "Edge node proof",
         "platform",
         "Show Jetson, IPC, local industrial PC, or plant edge server runtime proof.",
+    ),
+    EvidenceItem(
+        "edge-runtime",
+        "edge-runtime/05-solution-profile.png",
+        "Industrial-agent solution profile",
+        "platform",
+        "Show the explicit industrial problem, model role, KPI decision matrix, and HumanApprovalGate boundary.",
     ),
     EvidenceItem(
         "video",

@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import inspect
 import sys
 from pathlib import Path
 
@@ -53,3 +54,4 @@ def test_capture_plan_has_required_submission_shots() -> None:
     assert "05-wfc-payload.png" in output_names
     assert "06-dashboard-mock.png" in output_names
     assert "07-api-schema.png" in output_names
+    assert "16-solution-profile.png" in inspect.getsource(module._run_evidence_commands)

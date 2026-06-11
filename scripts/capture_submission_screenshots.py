@@ -240,6 +240,13 @@ def _run_evidence_commands(python_executable: str, include_pytest: bool) -> list
             "12-edge-runtime-profile.png",
         ),
         (
+            "solution-profile-cli",
+            "Industrial Agent Solution Profile CLI",
+            [python_executable, "scripts/smoke_solution_profile.py"],
+            120,
+            "16-solution-profile.png",
+        ),
+        (
             "submission-verifier-cli",
             "Submission Package Verifier CLI",
             [python_executable, "scripts/verify_submission_package.py", "--write-manifest"],

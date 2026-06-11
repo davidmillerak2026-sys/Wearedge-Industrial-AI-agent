@@ -1,6 +1,6 @@
 # Xcelerator / 工易魔方实时平台证据状态
 
-更新日期：2026-06-09
+更新日期：2026-06-11
 
 ## 本次已完成的真实平台动作
 
@@ -14,7 +14,7 @@
 | API 服务草稿 | 已创建 | `Wearedge Workflow Canvas 协同决策 API`。 |
 | API 服务可见范围 | 已设置 | `租户内`，未公开到 AI & API World。 |
 | OpenAPI 导入 | 已完成 | 通过 `JSON/YAML导入` 导入 `openapi/wearedge-xcelerator-apiworld.openapi.json`。 |
-| API 接口数量 | 已确认 | 2026-06-09 live 截图为 3 个接口；2026-06-11 仓库 OpenAPI 已新增 `/v1/industrial-agent/solution-profile`，下一轮平台导入应更新为 4 个接口。 |
+| API 接口数量 | 已确认 | 2026-06-11 已在 Xcelerator Console 重新导入新版 OpenAPI，服务草稿接口数从 3 升级为 4，新增 `/v1/industrial-agent/solution-profile`。 |
 | 发布/上架 | 未执行 | 未点击 `保存并发布`，未申请上架。 |
 | Gongyi Mofang WFC 登录 | 已确认 | 2026-06-09 已进入 `https://wfc.bd-iiot.com/projects` 项目页。 |
 | Gongyi Mofang WFC 项目 | 已创建 | `Wearedge WFC PoC` 项目已创建并进入编辑器。 |
@@ -47,9 +47,13 @@
 | `09-api-service-interface-info-step.png` | API 服务进入接口信息步骤。 |
 | `10-openapi-json-import-filled.png` | OpenAPI JSON/YAML 导入框已填入规范。 |
 | `11-openapi-parse-preview.png` | 历史 OpenAPI 解析预览，包含 3 个接口。 |
-| `13-openapi-three-apis-imported.png` | 历史接口列表显示 3 个已导入接口。 |
+| `13-openapi-three-apis-imported.png` | 历史接口列表显示 3 个已导入接口，保留为操作轨迹。 |
 | `14-api-service-transaction-step-draft.png` | 交易属性页草稿，未发布。 |
-| `15-api-service-saved-unpublished-list.png` | API 服务列表确认服务 `未发布`、接口数 `3`、可见范围 `租户内`。 |
+| `15-api-service-saved-unpublished-list.png` | API 服务列表确认服务 `未发布`、接口数 `4`、可见范围 `租户内`。 |
+| `16-openapi-four-apis-imported.png` | 2026-06-11 新版接口列表，显示 4 个接口，包含 `/v1/industrial-agent/solution-profile`。 |
+| `24-xcelerator-openapi-parse-result-four-apis.png` | OpenAPI 解析预览显示 4 个接口。 |
+| `34-xcelerator-four-apis-saved-unpublished.png` | API 服务编辑页显示 4 个接口，服务仍为未发布。 |
+| `35-xcelerator-api-service-list-current.png` | API 服务列表页；DOM 核验显示接口数为 4、状态未发布、可见范围租户内。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -91,7 +95,7 @@
 | 运行日志截图 | 当前没有真实运行日志；需要先完成 Python Function Block、数据表写回和可访问的 Wearedge Agent Service。 |
 | 人工确认截图 | 当前没有平台内 HumanApprovalGate 截图；需要在工作流中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 部署公网 HTTPS 或评审可访问的临时 PoC 网关，再替换服务地址。 |
-| Xcelerator 调试调用截图 | 服务地址可访问后，在 Console / API World 中调试 `POST /v1/workflow-canvas/decision` 并截图。 |
+| Xcelerator 调试调用截图 | 服务地址可访问后，在 Console / API World 中调试 `GET /v1/edge/runtime-profile` 和 `POST /v1/workflow-canvas/decision` 并截图。当前服务草稿仍使用 PoC 地址，不能声称已完成真实网关调用。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
 | 企业主体/联系人/IP 承诺 | 由负责人补齐真实公司信息、联系人、承诺材料。 |
 

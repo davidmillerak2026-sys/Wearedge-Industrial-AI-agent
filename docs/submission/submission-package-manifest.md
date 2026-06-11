@@ -1,6 +1,6 @@
 # Submission Package Manifest
 
-更新日期：2026-06-09
+更新日期：2026-06-11
 
 此文件由 `scripts/verify_submission_package.py --write-manifest` 生成，用于提交前总控检查。
 
@@ -14,16 +14,16 @@
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 4 / 4 |
-| Phase B - Gongyi Mofang PoC package | ready | 11 / 11 |
+| Phase B - Gongyi Mofang PoC package | ready | 12 / 12 |
 | Phase C - Demo evidence | ready | 11 / 11 |
-| Phase D - Business and technical package | ready | 7 / 7 |
+| Phase D - Business and technical package | ready | 8 / 8 |
 | Phase E - Registration fields | ready | 2 / 2 |
 
 ## Validation Status
 
 | Check | Status | Notes |
 | --- | --- | --- |
-| Generated evidence | ready | offline evidence, WFC smoke snapshot, and edge runtime profile are present |
+| Generated evidence | ready | offline evidence, WFC smoke snapshot, edge runtime profile, and solution profile are present |
 | Registration fields | ready | short/mid/long field copy and human-owned fields are separated |
 | Offline report boundary | ready | report includes metric table and simulated/offline boundary |
 | Submission timeline | ready | internal submit date and official deadline are tracked |
