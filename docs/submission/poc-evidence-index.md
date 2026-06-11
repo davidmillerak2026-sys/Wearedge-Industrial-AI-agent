@@ -14,6 +14,7 @@
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
+| WFC resource block package builder | `scripts/package_wfc_resource_block.py` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
 | Workflow Canvas API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Workflow Canvas PoC runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
@@ -37,6 +38,7 @@
 - Current offline evaluation is simulated and repository-local.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, `fb_main.py` saved into the live Python block, DEBUG entry, and `Workflow is ready` log-manager evidence.
+- WFC resource package zip is generated locally under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` by `scripts/package_wfc_resource_block.py`; it is a reusable prototype attachment, not proof of live platform execution.
 - Dashboard, `ok=true` run log, and HumanApprovalGate now have fallback demo assets under `submission-assets/live-evidence/gongyi-mofang/04-06*`; they are visibly marked or metadata-marked as mock/API-smoke evidence and must not be described as live WFC `ok=true` proof until the platform workflow execution is reproduced end to end.
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
 - Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.

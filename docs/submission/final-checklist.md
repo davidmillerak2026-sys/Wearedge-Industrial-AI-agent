@@ -26,6 +26,7 @@
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
+| WFC resource block zip package | `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.zip` | generated local asset |
 | API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
@@ -80,6 +81,7 @@ python scripts/verify_live_evidence.py --stage final --write-manifest
 | --- | --- |
 | Xcelerator / API World screenshots | `submission-assets/live-evidence/xcelerator/` |
 | Gongyi Mofang screenshots | `submission-assets/live-evidence/gongyi-mofang/` |
+| Gongyi Mofang WFC resource package | `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` |
 | Edge runtime screenshots | `submission-assets/live-evidence/edge-runtime/` |
 | Demo video | `submission-assets/live-evidence/video/` |
 | Company and signed compliance files | `submission-assets/live-evidence/legal/` |

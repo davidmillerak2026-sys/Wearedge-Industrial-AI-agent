@@ -66,7 +66,7 @@ Use this to make Wearedge look like a reusable Gongyi Mofang component, not only
 | --- | --- |
 | 1 | Keep `wfc-blocks/wearedge-agent-service/info.json` aligned with WFC resource naming rules. |
 | 2 | Keep `function-blocks/CallWearedgeDecisionApi.py` as the reusable block sample. |
-| 3 | Run `wfc-blocks/wearedge-agent-service/package.ps1` to produce the local `.zip` package. |
+| 3 | Run `python scripts/package_wfc_resource_block.py --json` to produce the local `.zip` package and manifest under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/`. |
 | 4 | If the WFC/RA environment exposes Swagger, use the manual-noted `:61720/docs` route to upload/install the package. |
 | 5 | Capture resource-library or installed-resource screenshots if available. |
 

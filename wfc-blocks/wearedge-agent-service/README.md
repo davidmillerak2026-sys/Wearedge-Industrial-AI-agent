@@ -40,7 +40,20 @@ The block must not write directly to PLC, robot, or quality-release outputs. It 
 
 ## Packaging
 
-Run:
+Preferred deterministic package command:
+
+```powershell
+python scripts/package_wfc_resource_block.py --json
+```
+
+The default output is an ignored local deliverable:
+
+```text
+submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.zip
+submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.package-manifest.json
+```
+
+Legacy PowerShell helper:
 
 ```powershell
 .\package.ps1
