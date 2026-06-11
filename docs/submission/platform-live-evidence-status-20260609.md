@@ -70,6 +70,12 @@
 | `09-xcelerator-api-basic-info-live-unpublished.dom.json` | 与上图对应的 DOM 摘要。 |
 | `10-xcelerator-api-interface-list-live-four-endpoints.png` | 2026-06-11 API 服务接口信息复核，显示 4 个租户内未启用接口。 |
 | `10-xcelerator-api-interface-list-live-four-endpoints.dom.json` | 与上图对应的 4 个接口结构化记录。 |
+| `38-xcelerator-client-app-home-current.png` | 2026-06-11 最新应用主页复核截图，显示 `Wearedge 工业智能体 PoC` 分组、`Wearedge 工业智能体服务` 应用卡片和租户内标识。 |
+| `38-xcelerator-client-app-home-current.json` | 与上图对应的页面 URL、标题和 DOM 摘要；不包含密钥。 |
+| `39-xcelerator-api-detail-current-draft.png` | 2026-06-11 最新 API 详情草稿截图，显示服务名、版本、`未发布`、所属应用、可见范围 `租户内`、服务器地址和 `/v1` 路径。 |
+| `39-xcelerator-api-detail-current-draft.json` | 与上图对应的 DOM 摘要；记录草稿边界和无密钥保存说明。 |
+| `40-xcelerator-api-interface-list-current-four-endpoints.png` | 2026-06-11 最新接口信息截图，显示 4 个租户内、未启用接口。 |
+| `40-xcelerator-api-interface-list-current-four-endpoints.json` | 与上图对应的 4 个接口结构化记录。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 

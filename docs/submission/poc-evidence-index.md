@@ -1,6 +1,6 @@
 # PoC Evidence Index
 
-更新日期：2026-06-09
+更新日期：2026-06-11
 
 ## 当前可提交证据
 
@@ -35,8 +35,8 @@
 ## Evidence Boundaries
 
 - Current offline evaluation is simulated and repository-local.
-- Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, and OpenAPI-imported API list are captured under `submission-assets/live-evidence/xcelerator/`.
-- Current WFC integration is API-ready and runbook-ready; real Gongyi Mofang screenshots remain pending until WFC account access is activated.
+- Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
+- Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, debug/log entry, and `fb_main.py` copy-ready reference code. Dashboard, `ok=true` run log, and HumanApprovalGate screenshots remain open.
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
 - Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.
 - High-risk actions are routed through human confirmation, not direct OT control.

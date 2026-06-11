@@ -73,6 +73,27 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
     ),
     EvidenceItem(
         "xcelerator",
+        "xcelerator/38-xcelerator-client-app-home-current.png",
+        "Current Xcelerator application home",
+        "platform",
+        "Show Wearedge app group, app card, and tenant-internal application evidence from the current console session.",
+    ),
+    EvidenceItem(
+        "xcelerator",
+        "xcelerator/39-xcelerator-api-detail-current-draft.png",
+        "Current Xcelerator API detail draft",
+        "platform",
+        "Show the current API detail page with unpublished status, owning app, tenant visibility, server host, and /v1 path.",
+    ),
+    EvidenceItem(
+        "xcelerator",
+        "xcelerator/40-xcelerator-api-interface-list-current-four-endpoints.png",
+        "Current Xcelerator API interface list",
+        "platform",
+        "Show the four tenant-internal, not-enabled endpoints in the current API service draft.",
+    ),
+    EvidenceItem(
+        "xcelerator",
         "xcelerator/04-runtime-profile-api-test.png",
         "Runtime profile API test",
         "platform",

@@ -45,11 +45,14 @@ submission-assets/live-evidence/
 | `xcelerator/05-xcelerator-app-home-wearedge-drafts.png` | 应用主页复核 | 展示 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
 | `xcelerator/06-xcelerator-api-detail-basic-info-unpublished.png` | API 服务基础信息复核 | 展示服务名、服务版本、`未发布`、所属应用和 `租户内` 可见范围。 |
 | `xcelerator/07-xcelerator-api-interface-list-four-endpoints-unpublished.png` | API 服务接口信息复核 | 展示 4 个未发布草稿接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
+| `xcelerator/38-xcelerator-client-app-home-current.png` | 当前应用主页复核 | 最新截图，展示应用分组、应用卡片和租户内标识。 |
+| `xcelerator/39-xcelerator-api-detail-current-draft.png` | 当前 API 详情草稿复核 | 最新截图，展示 `未发布`、所属应用、可见范围 `租户内`、服务器地址和 `/v1` 路径。 |
+| `xcelerator/40-xcelerator-api-interface-list-current-four-endpoints.png` | 当前接口列表复核 | 最新截图，展示 4 个接口均为租户内、未启用草稿接口。 |
 
 边界说明：
 
 - `04-runtime-profile-api-test.png/json` 是临时 HTTPS PoC 网关的外部可达验证，不等同于 Xcelerator 已发布代理调用。
-- `06/07-xcelerator-*` 截图证明 Xcelerator 草稿内的应用、API 服务和接口定义已经配置，但服务仍保持 `未发布` 和 `租户内`。
+- `06/07-xcelerator-*` 和 `38/39/40-xcelerator-*` 截图证明 Xcelerator 草稿内的应用、API 服务和接口定义已经配置，但服务仍保持 `未发布` 和 `租户内`。
 
 ## 工易魔方 / Workflow Canvas 截图
 
