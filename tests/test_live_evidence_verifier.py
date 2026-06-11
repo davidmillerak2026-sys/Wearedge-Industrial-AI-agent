@@ -43,7 +43,32 @@ def test_live_evidence_platform_stage_can_be_ready(tmp_path: Path) -> None:
 
     assert result["ready"] is True
     assert result["missing"] == []
+    assert result["warnings"] == []
     assert result["groups"]["gongyi-mofang"]["missing"] == 0
+
+
+def test_live_evidence_manifest_marks_fallback_items(tmp_path: Path) -> None:
+    module = _load_module()
+    for item in module.EXPECTED_ITEMS:
+        if item.stage == "platform":
+            path = tmp_path / item.path
+            path.parent.mkdir(parents=True, exist_ok=True)
+            path.write_bytes(b"present")
+
+    fallback_item = tmp_path / "gongyi-mofang" / "05-run-log-ok-true.png"
+    fallback_item.with_suffix(".fallback.json").write_text(
+        '{"provenance":"fallback_api_smoke_not_live_wfc_log"}',
+        encoding="utf-8",
+    )
+
+    result = module.verify_live_evidence(tmp_path, "platform")
+    manifest = module.render_manifest(result)
+
+    assert result["ready"] is True
+    assert len(result["warnings"]) == 1
+    assert result["warnings"][0]["path"] == "gongyi-mofang/05-run-log-ok-true.png"
+    assert "| fallback | `gongyi-mofang/05-run-log-ok-true.png`" in manifest
+    assert "do not describe it as live platform proof" in manifest
 
 
 def test_live_evidence_final_stage_includes_legal_and_submission_assets(tmp_path: Path) -> None:

@@ -80,9 +80,9 @@ submission-assets/live-evidence/
 | `gongyi-mofang/01-resource-block-wearedge-agent-service.png` | 资源配置页 | 优先展示 `通用工控机` / Spider 执行器配置；若已创建自定义资源，则同时展示 `Wearedge Agent Service` 参数。 |
 | `gongyi-mofang/02-python-function-block-call-api.png` | Python Function Block 编辑页 | 展示 `CallWearedgeDecisionApi` 调用 `/v1/workflow-canvas/decision`。 |
 | `gongyi-mofang/03-global-data-table-decision-fields.png` | 全局数据表字段 | 展示主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态。 |
-| `gongyi-mofang/04-dashboard-decision-view.png` | Dashboard | 展示指标卡、决策路径、确认项、工作流状态。 |
-| `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 展示 `ok=true`、function blocks、latency 或成功写表记录。 |
-| `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 证明高风险动作不会由模型直接控制 OT。 |
+| `gongyi-mofang/04-dashboard-decision-view.png` | Dashboard | 首选真实 WFC Dashboard/ui-builder；若使用 `docs/submission/dashboard-mock.html` 截图，必须标注为 fallback mock。 |
+| `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 首选真实 WFC log-manager 中的 `ok=true`、function blocks、latency 或写表记录；当前 fallback 图来自本地 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不能声称为 live WFC 成功日志。 |
+| `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 首选真实 WFC 人工确认节点/Dashboard 确认项；若使用 Dashboard mock 截图，必须标注为 fallback mock。 |
 
 Dashboard 路径备注：
 
@@ -104,6 +104,10 @@ Dashboard 路径备注：
 | `gongyi-mofang/95-wfc-debug-state-spidr-open.png` | WFC 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；只作为调试状态辅助证据。 |
 | `gongyi-mofang/96-wfc-run-log-workflow-ready.png` | 运行日志弹窗辅助证据；iframe 曾读取到 `Workflow is ready.`，还不是 `ok=true` API 成功日志。 |
 | `gongyi-mofang/debug-current-for-coordinate.png` | 2026-06-11 调试态坐标排查图；仅作为操作审计，不作为提交核心证据。 |
+| `gongyi-mofang/102-wfc-python-fb-main-saved.png` | 2026-06-11 已把仓库中的 `workflows/wfc_call_wearedge_decision_fb_main.py` 粘贴并保存到 live WFC `fb_main.py`。 |
+| `gongyi-mofang/103-wfc-log-manager-after-python-run.png` | log-manager 页面读取到 `Workflow is ready.`。 |
+| `gongyi-mofang/104-wfc-log-manager-after-debug-trigger.png` | 调试触发后的 log-manager 辅助证据，仍未形成 `ok=true`。 |
+| `gongyi-mofang/105-wfc-debug-stopped-after-run-attempt.png` | 调试运行尝试后已停止，避免平台会话长时间挂起。 |
 
 ## 端侧运行证据截图
 

@@ -252,11 +252,22 @@ def verify_live_evidence(assets_dir: Path = DEFAULT_ASSETS_DIR, stage: str = DEF
     selected = [item for item in EXPECTED_ITEMS if STAGE_ORDER[item.stage] <= STAGE_ORDER[stage]]
     items = []
     missing = []
+    warnings = []
     for item in selected:
         path = assets_dir / item.path
         present = path.exists() and path.is_file() and path.stat().st_size > 0
+        fallback_meta = path.with_suffix(".fallback.json")
+        fallback = present and fallback_meta.exists() and fallback_meta.is_file()
         if not present:
             missing.append(item.path)
+        if fallback:
+            warnings.append(
+                {
+                    "path": item.path,
+                    "fallback_metadata": str(fallback_meta.relative_to(assets_dir)),
+                    "warning": "Fallback evidence is present; do not describe it as live platform proof.",
+                }
+            )
         items.append(
             {
                 "group": item.group,
@@ -264,6 +275,7 @@ def verify_live_evidence(assets_dir: Path = DEFAULT_ASSETS_DIR, stage: str = DEF
                 "title": item.title,
                 "stage": item.stage,
                 "present": present,
+                "fallback": fallback,
                 "note": item.note,
             }
         )
@@ -285,6 +297,7 @@ def verify_live_evidence(assets_dir: Path = DEFAULT_ASSETS_DIR, stage: str = DEF
         "present_count": sum(1 for item in items if item["present"]),
         "missing_count": len(missing),
         "missing": missing,
+        "warnings": warnings,
         "groups": groups,
         "items": items,
     }
@@ -341,9 +354,19 @@ def render_manifest(result: dict[str, Any]) -> str:
     else:
         lines.append("- None.")
 
+    lines.extend(["", "## Warnings", ""])
+    if result["warnings"]:
+        for warning in result["warnings"]:
+            lines.append(
+                f"- `{warning['path']}` uses fallback metadata "
+                f"`{warning['fallback_metadata']}`. {warning['warning']}"
+            )
+    else:
+        lines.append("- None.")
+
     lines.extend(["", "## Item Detail", "", "| Status | Path | Title | Note |", "| --- | --- | --- | --- |"])
     for item in result["items"]:
-        status = "present" if item["present"] else "missing"
+        status = "fallback" if item.get("fallback") else ("present" if item["present"] else "missing")
         lines.append(f"| {status} | `{item['path']}` | {item['title']} | {item['note']} |")
 
     lines.append("")

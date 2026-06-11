@@ -20,10 +20,12 @@
 | Gongyi Mofang WFC 项目 | 已创建 | `Wearedge WFC PoC` 项目已创建并进入编辑器。 |
 | WFC 资源配置/工作流入口 | 已截图 | 已保存资源配置页、工作流主画布、编程库和右侧属性/数据表入口截图。 |
 | `Wearedge Agent Service` 自定义资源 | 部分完成 | 已拖入 `自定义资源`、命名为 `Wearedge Agent Service`，并添加 `agentHost / Agent Host` 参数；其他参数待补。 |
-| WFC Python 程序块定位 | 已完成关键截图 | 2026-06-11 已在 `编程` 库搜索 `Python`，拖入 `Python 程序块` 到画布，属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开；代码内容和端口绑定仍待最终平台确认。 |
+| WFC Python 程序块定位 | 已完成关键截图 | 2026-06-11 已在 `编程` 库搜索 `Python`，拖入 `Python 程序块` 到画布，属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开。 |
+| WFC `fb_main.py` live 保存 | 已完成 | 2026-06-11 已把仓库中的 `workflows/wfc_call_wearedge_decision_fb_main.py` 粘贴并保存到 live WFC Python Block；截图见 `102-wfc-python-fb-main-saved.png`。 |
 | WFC 数据表字段 | 已完成 DOM verified 证据 | 2026-06-11 已在真实 WFC 项目右侧 `数据表` 中创建 `selected_direction`、`priority`、`recommended_action`、`evidence_summary`、`competition_metrics`、`owner`、`residual_risk`、`approval_status`。内置截图工具裁剪不到右侧弹窗，已保存 DOM verified evidence 图并保留原生截图尝试。 |
-| WFC Dashboard 入口 | 部分完成 | 已进入 `https://wfc.bd-iiot.com/dashboard-explorer`；尚未创建 Wearedge 决策 Dashboard。 |
-| WFC 运行/日志入口 | 部分完成 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`，运行日志 iframe 显示 `Workflow is ready.`；这证明日志入口和 workflow instance 可用，但还不是 API `ok=true` 成功证据。 |
+| WFC Dashboard 入口 | live 待复现，fallback 已生成 | 已进入 `https://wfc.bd-iiot.com/dashboard-explorer`；尚未创建 Wearedge 决策 Dashboard。当前 `04-dashboard-decision-view.png` 来自 `docs/submission/dashboard-mock.html`，作为带标注的备用演示证据。 |
+| WFC 运行/日志入口 | live 待复现，fallback 已生成 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`，log-manager 曾显示 `Workflow is ready.`；已触发一次调试运行并停止，但尚未拿到 live WFC `ok=true`。当前 `05-run-log-ok-true.png` 来自本地 API smoke，配套 `.fallback.json` 标注来源。 |
+| WFC HumanApprovalGate | live 待复现，fallback 已生成 | 当前 `06-human-approval-gate.png` 来自 Dashboard mock，展示 HumanApprovalGate 和人工确认边界；真实 WFC 人工确认节点/确认项仍待平台流程复现。 |
 | Xcelerator 应用主页复核 | 已完成 | 2026-06-11 已重新进入 `https://developers.siemens-x.com.cn/client`，可见 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
 | Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
@@ -76,6 +78,9 @@
 | `39-xcelerator-api-detail-current-draft.json` | 与上图对应的 DOM 摘要；记录草稿边界和无密钥保存说明。 |
 | `40-xcelerator-api-interface-list-current-four-endpoints.png` | 2026-06-11 最新接口信息截图，显示 4 个租户内、未启用接口。 |
 | `40-xcelerator-api-interface-list-current-four-endpoints.json` | 与上图对应的 4 个接口结构化记录。 |
+| `41-xcelerator-client-app-home-refresh.png` | 2026-06-11 用户重新登录/进入应用后的应用主页刷新截图。 |
+| `42-xcelerator-api-detail-refresh.png` | 2026-06-11 API 详情刷新截图，确认服务仍为未发布、租户内草稿。 |
+| `43-xcelerator-api-interface-list-refresh-four-endpoints.png` | 2026-06-11 接口信息刷新截图，确认 4 个接口仍在草稿中且未启用。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -108,6 +113,13 @@
 | `96-wfc-run-log-workflow-ready.png` | 2026-06-11 运行日志弹窗辅助证据，iframe 曾读取到 `Workflow is ready.`。 |
 | `96-wfc-run-log-workflow-ready.json` | 与上图对应的文字记录和边界说明。 |
 | `debug-current-for-coordinate.png` | 2026-06-11 调试态源码只读/坐标排查辅助图，不作为提交核心证据。 |
+| `102-wfc-python-fb-main-saved.png` | 2026-06-11 live WFC `fb_main.py` 保存成功后的源码/画布证据。 |
+| `103-wfc-log-manager-after-python-run.png` | log-manager 页面读取到 `Workflow is ready.`；证明 workflow instance 和日志页可访问。 |
+| `104-wfc-log-manager-after-debug-trigger.png` | 调试触发后的 log-manager 辅助证据；未出现业务 `ok=true`。 |
+| `105-wfc-debug-stopped-after-run-attempt.png` | 调试运行尝试后停止状态截图。 |
+| `04-dashboard-decision-view.png` | fallback Dashboard mock 截图，来自 `docs/submission/dashboard-mock.html`，不等同于 live WFC Dashboard。 |
+| `05-run-log-ok-true.png` | fallback API smoke 图，来自 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不等同于 live WFC `ok=true` 日志。 |
+| `06-human-approval-gate.png` | fallback Dashboard mock 图，展示 HumanApprovalGate，不等同于 live WFC 人工确认节点。 |
 
 ## 安全边界
 
@@ -123,9 +135,9 @@
 | 缺口 | 下一步 |
 | --- | --- |
 | `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
-| Dashboard 截图 | 已进入 Dashboard Explorer 并确认当前返回 `No Dashboard`。前端路由分析显示该页读取 `/api/projects/dashboard-explorer` 并通过 `/remote/preview?...` 预览已有 Dashboard，不是创建入口。下一步需要先运行工作流并从 ui-builder / workflow instance 路径创建可预览看板。 |
-| 运行日志截图 | 已有 `Workflow is ready.` 辅助证据；仍需让 `CallWearedgeDecisionApi` 真正执行并调用 Wearedge API，形成 `ok=true`、latency、function blocks 或写表成功日志。 |
-| 人工确认截图 | 当前没有平台内 HumanApprovalGate 截图；需要在工作流中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
+| Dashboard live 截图 | fallback 已有；live 仍需从 WFC 工作流运行实例和 ui-builder 创建路径获得。 |
+| 运行日志 live `ok=true` | 已有 `Workflow is ready.` 辅助证据和本地 API fallback `ok=True`；仍需让 `CallWearedgeDecisionApi` 在 WFC/SPIDR 中真正执行并产生 `ok=true`、latency、function blocks 或写表成功日志。 |
+| 人工确认 live 截图 | fallback 已有；仍需在真实 WFC 中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
