@@ -1,6 +1,6 @@
 # Demo Video Production Plan
 
-更新日期：2026-06-09
+更新日期：2026-06-11
 
 目标：制作一条 3-5 分钟企业组演示视频，让评委在短时间内看到 Wearedge 的差异化：智能体运行在端侧算力，Xcelerator / 工易魔方负责编排、审批和回写。
 
@@ -41,6 +41,23 @@
 | --- | --- | --- |
 | A 路：真实平台版 | Xcelerator / 工易魔方环境可登录且能截图 | “已完成平台 PoC 接入路径验证。” |
 | B 路：本地备用版 | 平台环境临时不可用或网络不稳定 | “当前使用本地 API、资源块原型和 Dashboard mock 展示闭环，真实平台截图将在联合 PoC 环境复现。” |
+
+## 自动生成初版视频
+
+已新增可复现脚本：
+
+```bash
+python scripts/generate_enterprise_demo_video.py --json
+```
+
+输出：
+
+```text
+submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4
+submission-assets/live-evidence/video/wearedge-enterprise-demo-script-final.md
+```
+
+2026-06-11 已生成初版视频，时长 210 秒。素材全部来自 `submission-assets/live-evidence/`，其中 Xcelerator 与部分 WFC 画面是真实平台证据；Dashboard、HumanApprovalGate、`ok=true` run-log 当前含 fallback/mock/API-smoke 证据，视频脚本和画面中必须保留该边界说明，不能说成 live WFC 成功运行日志。
 
 ## 最终文件
 

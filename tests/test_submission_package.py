@@ -38,7 +38,7 @@ def test_submission_manifest_marks_external_pending_without_repo_failure() -> No
     manifest = module.render_manifest(result)
 
     assert "Repository-controlled package ready: True" in manifest
-    assert "真实 Xcelerator / API World 平台截图" in manifest
+    assert "替换当前 fallback 标记的 04/05/06 Gongyi Mofang 证据" in manifest
     assert "python scripts/verify_live_evidence.py --stage final" in manifest
     assert "Repository Failures" in manifest
     assert "- None." in manifest

@@ -7,7 +7,7 @@
 ## Repository Readiness
 
 - Repository-controlled package ready: True
-- Recommended next action: Capture screenshots/video and fill human-owned registration fields.
+- Recommended next action: Replace fallback WFC evidence and fill human-owned registration fields.
 
 ## Phase Status
 
@@ -15,7 +15,7 @@
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 4 / 4 |
 | Phase B - Gongyi Mofang PoC package | ready | 13 / 13 |
-| Phase C - Demo evidence | ready | 11 / 11 |
+| Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 8 / 8 |
 | Phase E - Registration fields | ready | 2 / 2 |
 
@@ -31,11 +31,11 @@
 ## External Pending Items
 
 - 按 docs/submission/company-info-and-compliance-intake.md 补齐企业名称、统一社会信用代码、联系人、电话、邮箱等真实主体信息
-- 按 docs/submission/live-platform-evidence-runbook.md 保存真实 Xcelerator / API World 平台截图
-- 按 docs/submission/live-platform-evidence-runbook.md 保存真实工易魔方 Workflow Canvas 截图
-- 按 docs/submission/video-production-plan.md 输出 3-5 分钟演示视频文件或可访问链接
+- 用真实 WFC Dashboard / log-manager ok=true / HumanApprovalGate 截图替换当前 fallback 标记的 04/05/06 Gongyi Mofang 证据
+- 将临时 PoC HTTPS 地址替换为稳定可复现地址，并在 Xcelerator / WFC 材料中同步更新
 - 企业负责人最终签署的知识产权、无产权纠纷、无不良记录承诺
-- 报名系统正式提交状态截图
+- 报名系统字段填报截图，隐藏证件号等敏感字段后存入 submission-assets/live-evidence/submission/
+- 报名系统正式提交成功状态截图
 
 ## External Evidence Command
 

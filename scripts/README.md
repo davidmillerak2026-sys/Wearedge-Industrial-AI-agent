@@ -18,6 +18,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`verify_live_evidence.py`](verify_live_evidence.py) | Initialize and check ignored Xcelerator, Gongyi Mofang, edge runtime, video, legal, and submission evidence assets. |
 | [`capture_dashboard_mock.py`](capture_dashboard_mock.py) | Capture the Dashboard mock to a local ignored screenshot under `submission-assets/screenshots/`. |
 | [`capture_submission_screenshots.py`](capture_submission_screenshots.py) | Batch-render README, reports, payloads, CLI outputs, and the Dashboard mock into local ignored screenshots. |
+| [`generate_enterprise_demo_video.py`](generate_enterprise_demo_video.py) | Generate the 3-5 minute enterprise-group demo MP4 and final narration under ignored `submission-assets/live-evidence/video/`. |
 | [`network_diagnostics.sh`](network_diagnostics.sh) | Capture router, DNS, GitHub, Hugging Face, and mirror connectivity diagnostics. |
 | [`run_maintenance_session_poc.sh`](run_maintenance_session_poc.sh) | Exercise multi-evidence lao-shi-fu maintenance session flow. |
 
