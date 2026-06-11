@@ -63,6 +63,8 @@ INCLUDE_PATHS = (
     "scripts/verify_submission_package.py",
     "scripts/verify_live_evidence.py",
     "scripts/build_final_submission_bundle.py",
+    "scripts/prepare_final_human_action_pack.py",
+    "scripts/generate_final_readiness_report.py",
     "scripts/package_wfc_resource_block.py",
     "scripts/wfc_private_api_probe.py",
 )

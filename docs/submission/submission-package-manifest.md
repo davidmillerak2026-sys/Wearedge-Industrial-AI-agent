@@ -17,7 +17,7 @@
 | Phase B - Gongyi Mofang PoC package | ready | 15 / 15 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 10 / 10 |
-| Phase E - Registration fields | ready | 5 / 5 |
+| Phase E - Registration fields | ready | 7 / 7 |
 
 ## Validation Status
 
