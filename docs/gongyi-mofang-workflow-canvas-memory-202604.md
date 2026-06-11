@@ -29,6 +29,8 @@
 
 工易魔方不是单纯的看板或脚本容器，而是把资源配置、低代码流程编排、Python/JS/C/C++/Rust 等扩展、Spider 边缘执行器、全局数据表、Dashboard/ui-builder 和 V3D 仿真串在一起的 IT/OT 工作流工程平台。Wearedge 的参赛表达应该是：把 Wearedge 多智能体决策服务封装成工易魔方可调用、可部署、可观察、可人工确认的 Workflow Canvas 资源块/功能块组合。
 
+官方资料到可执行路径的最新决策表见 `docs/gongyi-mofang-official-completion-paths.md`。结论是：当前没有确认的官方 CLI 可完整编辑 WFC 项目；官方主路径仍是 WFC 项目、资源配置、Python 程序块、全局数据表、Dashboard/ui-builder 和 Spider/SPIDR 日志。CLI/API 只作为打包、只读探测、备份和 smoke test 辅助，不替代 live WFC 运行证据。
+
 ## 平台能力记忆
 
 | 能力 | 对 Wearedge 的意义 |

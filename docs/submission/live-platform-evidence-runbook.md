@@ -9,6 +9,7 @@
 - 不在 Git 仓库中保存平台账号、密码、token、企业证件号码截图或客户敏感数据。
 - 真实截图、签署文件和视频放入 `submission-assets/live-evidence/`，该目录已被 `.gitignore` 忽略。
 - 如果平台环境暂时不可用，用本地 API、WFC 原型包和 Dashboard mock 作为备用证据，并在材料中标注“待平台复现”。
+- 官方资料到可执行路径的决策表见 `docs/gongyi-mofang-official-completion-paths.md`：GUI 仍是 live WFC 证据主路径；CLI/API 只用于资源包打包、只读探测、备份、smoke test 和本地证据生成。
 
 ## 初始化素材目录
 
