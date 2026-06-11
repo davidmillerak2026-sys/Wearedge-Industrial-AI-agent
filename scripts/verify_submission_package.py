@@ -64,6 +64,8 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/siemens-industrial-agent-track-memory-20260521.md", "Siemens industrial agent track memory"),
         Artifact("docs/industrial-agent-solution-profile.md", "Industrial-agent solution profile"),
         Artifact("docs/submission/enterprise-winning-strategy.md", "Enterprise group winning strategy"),
+        Artifact("docs/submission/judging-scorecard-evidence-map.md", "Judging scorecard evidence map"),
+        Artifact("docs/submission/defense-qna-playbook.md", "Defense Q&A playbook"),
         Artifact("docs/submission/business-plan.md", "Business plan draft"),
         Artifact("docs/submission/technical-solution.md", "Technical solution draft"),
         Artifact("docs/submission/ip-and-compliance-statement.md", "IP and compliance statement"),

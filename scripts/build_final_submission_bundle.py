@@ -35,6 +35,8 @@ INCLUDE_PATHS = (
     "docs/submission/business-plan.md",
     "docs/submission/technical-solution.md",
     "docs/submission/enterprise-winning-strategy.md",
+    "docs/submission/judging-scorecard-evidence-map.md",
+    "docs/submission/defense-qna-playbook.md",
     "docs/submission/registration-fields.md",
     "docs/submission/final-checklist.md",
     "docs/submission/submission-package-manifest.md",

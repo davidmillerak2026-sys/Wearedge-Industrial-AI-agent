@@ -23,6 +23,8 @@
 | Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
 | Edge Agent Runtime for Xcelerator | `docs/edge-agent-runtime-for-xcelerator.md` | ready |
 | Enterprise group winning strategy | `docs/submission/enterprise-winning-strategy.md` | ready |
+| Judging scorecard evidence map | `docs/submission/judging-scorecard-evidence-map.md` | ready |
+| Defense Q&A playbook | `docs/submission/defense-qna-playbook.md` | ready |
 | Offline eval report | `docs/competition-offline-eval-report.md` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |

@@ -94,6 +94,8 @@ Wearedge Industrial AI Agent 的核心工程包括多智能体路由、输出契
 | WFC 资源块原型 | `wfc-blocks/wearedge-agent-service/` |
 | 商业计划书 | `docs/submission/business-plan.md` |
 | 技术方案 | `docs/submission/technical-solution.md` |
+| 评审打分证据映射 | `docs/submission/judging-scorecard-evidence-map.md` |
+| 答辩问答准备 | `docs/submission/defense-qna-playbook.md` |
 | 证据索引 | `docs/submission/poc-evidence-index.md` |
 | Demo 脚本 | `docs/submission/demo-script.md` |
 | Dashboard mock | `docs/submission/dashboard-mock.html` |
