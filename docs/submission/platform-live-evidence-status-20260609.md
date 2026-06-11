@@ -30,6 +30,7 @@
 | Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
 | WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
+| WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
 
 已导入接口：
 
@@ -150,6 +151,7 @@
 - 2026-06-11 进一步确认：WFC 处于 `DEBUG` 时源码编辑器只读，会提示 `Cannot edit in read-only editor`。需要先点击调试浮条的 stop 图标，恢复到 `已保存` / `play-circle` 状态，再进行 `fb_main.py` 粘贴保存。
 - 文档确认后，Wearedge 最小闭环应走 `通用工控机/SPIDR` -> `自定义资源 Wearedge Agent Service` -> `Python 程序块 CallWearedgeDecisionApi` -> `更新数据表` -> `Dashboard/ui-builder` 的顺序。
 - 本项目不会保存 WFC 账号、密码、token 或任何平台密钥。
+- 2026-06-11 已新增 `scripts/wfc_private_api_probe.py`，用于只读探测 WFC 项目持久化文件、Dashboard Explorer 和 log-manager 页面路径。该脚本默认 dry-run；真实读取必须通过本地环境变量临时提供 `WFC_COOKIE`，结果只应放入 ignored 的 `submission-assets/live-evidence/gongyi-mofang/private-api-probe/`。
 
 ## 下一步建议
 

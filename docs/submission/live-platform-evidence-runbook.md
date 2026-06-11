@@ -69,6 +69,14 @@ submission-assets/live-evidence/
 8. 右侧打开 `数据表`，定义 `wearedgeDecision` 或拆分字段，拖入 `更新数据表` 功能块并绑定。
 9. 运行/部署工作流，截取日志和 Dashboard/ui-builder 展示。
 
+只读 CLI 辅助：
+
+```powershell
+python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae --workflow-instance-id ryn.cmq6lbb9x00bx1l6pxll7voae.workflow1 --dry-run --json
+```
+
+该脚本只用于诊断 WFC 项目文件、Dashboard Explorer 和 log-manager 路径。真实请求必须通过本地环境变量临时提供 `WFC_COOKIE`，脚本会拒绝无 cookie 的非 dry-run 请求，并且不会打印 cookie 值。其输出只能作为内部备份/诊断，不能替代 live WFC 运行日志和 Dashboard 截图。
+
 源码编辑注意：
 
 - 如果顶部显示 `DEBUG`，`fb_main.py` 编辑器会进入只读状态，并提示 `Cannot edit in read-only editor`。先点击调试浮条的 stop 图标，使顶部恢复 `已保存` / `play-circle`，再打开源码编辑。

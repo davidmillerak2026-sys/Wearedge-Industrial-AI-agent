@@ -97,7 +97,8 @@ Allowed and useful:
 - Run `scripts/smoke_workflow_canvas_decision.py`.
 - Run `scripts/verify_live_evidence.py`.
 - Generate local submission evidence, screenshots, and video.
-- Create a read-only WFC private API probe that accepts a session cookie through an environment variable and never writes credentials to disk.
+- Run `scripts/wfc_private_api_probe.py --dry-run` to inspect planned read-only WFC project probes.
+- Run `scripts/wfc_private_api_probe.py` with a locally supplied `WFC_COOKIE` only when we need authenticated read-only diagnosis; the script never prints credential values.
 - Back up non-secret project JSON if the platform exposes readable project files.
 
 Not allowed or not suitable:
@@ -126,6 +127,20 @@ These are useful for read-only diagnosis and possible backup, but they are not o
 - redact authentication from logs;
 - save outputs only under ignored `submission-assets/live-evidence/...`;
 - require a separate explicit flag for any write operation.
+
+Dry-run example:
+
+```powershell
+python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae --workflow-instance-id ryn.cmq6lbb9x00bx1l6pxll7voae.workflow1 --dry-run --json
+```
+
+Authenticated read-only example, only for local diagnosis:
+
+```powershell
+$env:WFC_COOKIE="<paste current session cookie locally; do not commit>"
+python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae --probe workflow-json --json
+Remove-Item Env:WFC_COOKIE
+```
 
 ## Immediate Next Actions
 
