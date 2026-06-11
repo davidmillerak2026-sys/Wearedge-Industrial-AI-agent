@@ -9,6 +9,7 @@
 - 此文件保留为模板，不填写敏感真实值。
 - 最终填写版放入 `submission-assets/live-evidence/legal/company-info-filled.md`，不要提交到 Git。
 - 签署版承诺材料放入 `submission-assets/live-evidence/legal/`。
+- 可先运行 `python scripts/prepare_final_human_action_pack.py --json` 生成 ignored 的 `.template.md` 操作模板，再由企业负责人填写/签署为最终文件。
 
 ## 企业主体
 

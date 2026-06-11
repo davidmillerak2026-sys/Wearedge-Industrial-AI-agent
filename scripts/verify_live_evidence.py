@@ -351,6 +351,17 @@ def render_manifest(result: dict[str, Any]) -> str:
     if result["missing"]:
         for item in result["missing"]:
             lines.append(f"- `{item}`")
+        if result["stage"] == "final":
+            lines.extend(
+                [
+                    "",
+                    "Generate ignored human-action templates before collecting the final enterprise-owned files:",
+                    "",
+                    "```powershell",
+                    "python scripts/prepare_final_human_action_pack.py --json",
+                    "```",
+                ]
+            )
     else:
         lines.append("- None.")
 

@@ -80,3 +80,4 @@ def test_live_evidence_final_stage_includes_legal_and_submission_assets(tmp_path
     assert "legal/ip-and-no-dispute-signed.pdf" in result["missing"]
     assert "submission/02-submission-success.png" in result["missing"]
     assert "video/wearedge-enterprise-demo-3-5min.mp4" in manifest
+    assert "prepare_final_human_action_pack.py" in manifest

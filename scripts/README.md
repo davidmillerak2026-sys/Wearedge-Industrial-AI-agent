@@ -15,6 +15,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`smoke_workflow_canvas_decision.py`](smoke_workflow_canvas_decision.py) | Smoke test the Workflow Canvas decision payload in-process or against a running gateway. |
 | [`package_wfc_resource_block.py`](package_wfc_resource_block.py) | Build a deterministic Gongyi Mofang WFC resource block zip and manifest under ignored `submission-assets/live-evidence/`. |
 | [`build_final_submission_bundle.py`](build_final_submission_bundle.py) | Build the repo-controlled final submission bundle zip and manifest while excluding live screenshots, signed legal files, and registration screenshots by default. |
+| [`prepare_final_human_action_pack.py`](prepare_final_human_action_pack.py) | Generate ignored templates for final enterprise-owned legal/contact files, registration screenshots, and live WFC replacement checklists without satisfying verifier targets. |
 | [`build_submission_evidence.py`](build_submission_evidence.py) | Generate JSON and Markdown evidence snapshots for the submission package. |
 | [`verify_submission_package.py`](verify_submission_package.py) | Check Phase A-E repository deliverables, generated evidence, registration fields, and deadline markers. |
 | [`verify_live_evidence.py`](verify_live_evidence.py) | Initialize and check ignored Xcelerator, Gongyi Mofang, edge runtime, video, legal, and submission evidence assets. |

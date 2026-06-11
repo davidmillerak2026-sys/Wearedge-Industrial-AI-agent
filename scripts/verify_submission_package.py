@@ -74,6 +74,8 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/submission/registration-fields.md", "Registration fields"),
         Artifact("docs/submission/final-checklist.md", "Final checklist"),
         Artifact("scripts/build_final_submission_bundle.py", "Repo-controlled final submission bundle builder"),
+        Artifact("scripts/prepare_final_human_action_pack.py", "Final human action template generator"),
+        Artifact("docs/submission/final-human-action-runbook.md", "Final human action runbook"),
     ],
 }
 
