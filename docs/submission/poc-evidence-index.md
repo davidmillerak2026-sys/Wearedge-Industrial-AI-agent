@@ -26,6 +26,7 @@
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
 | Xcelerator live evidence status | `docs/submission/platform-live-evidence-status-20260609.md` | ready |
 | Live evidence verifier | `scripts/verify_live_evidence.py` | ready |
+| Repo-controlled submission bundle builder | `scripts/build_final_submission_bundle.py` | ready |
 | Demo video production plan | `docs/submission/video-production-plan.md` | ready |
 | Company info and compliance intake | `docs/submission/company-info-and-compliance-intake.md` | ready |
 | Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
@@ -39,6 +40,7 @@
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, `fb_main.py` saved into the live Python block, DEBUG entry, and `Workflow is ready` log-manager evidence.
 - WFC resource package zip is generated locally under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` by `scripts/package_wfc_resource_block.py`; it is a reusable prototype attachment, not proof of live platform execution.
+- Repo-controlled final submission bundle is generated locally under ignored `submission-assets/live-evidence/submission-bundle/` by `scripts/build_final_submission_bundle.py`; it excludes live screenshots, signed legal files, company identifiers, and final registration screenshots by default.
 - Dashboard, `ok=true` run log, and HumanApprovalGate now have fallback demo assets under `submission-assets/live-evidence/gongyi-mofang/04-06*`; they are visibly marked or metadata-marked as mock/API-smoke evidence and must not be described as live WFC `ok=true` proof until the platform workflow execution is reproduced end to end.
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
 - Gongyi Mofang source documents have been reviewed and distilled into a project memory card, but screenshots must still be produced from the live WFC account.

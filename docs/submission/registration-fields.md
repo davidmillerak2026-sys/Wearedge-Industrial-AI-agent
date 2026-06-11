@@ -97,6 +97,7 @@ Wearedge Industrial AI Agent 的核心工程包括多智能体路由、输出契
 | 证据索引 | `docs/submission/poc-evidence-index.md` |
 | Demo 脚本 | `docs/submission/demo-script.md` |
 | Dashboard mock | `docs/submission/dashboard-mock.html` |
+| 仓库侧最终提交包 | `submission-assets/live-evidence/submission-bundle/wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip` |
 
 ## 人工待填字段
 
