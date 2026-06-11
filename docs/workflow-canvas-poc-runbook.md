@@ -175,7 +175,7 @@ print(json.dumps(decision, ensure_ascii=False))
 | Wearedge PoC Workflow Canvas 总览 | pending |
 | Spider/SPIDR 或 IPC 执行器资源配置与连接状态 | pending |
 | `Wearedge Agent Service` 资源参数 | pending |
-| `CallWearedgeDecisionApi` Python Function Block 代码和端口 | pending |
+| `CallWearedgeDecisionApi` Python Function Block 代码和端口 | partially done: 2026-06-11 live WFC evidence shows a Python block dragged into the workflow, saved, renamed to `CallWearedgeDecisionApi`, and opened in the source editor; port/code paste still needs final platform confirmation. |
 | 全局数据表变量和“更新数据表”绑定 | pending |
 | Dashboard/ui-builder 指标卡和决策路径 | pending |
 | 工作流部署/调试日志 | pending |
