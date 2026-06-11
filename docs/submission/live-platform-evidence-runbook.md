@@ -92,6 +92,8 @@ Dashboard 路径备注：
 | `gongyi-mofang/11-wfc-workflow-canvas-active.png` | 工作流主画布可见。 |
 | `gongyi-mofang/12-wfc-programming-library-open.png` | 编程功能块库可见。 |
 | `gongyi-mofang/17-wfc-function-block-properties.png` | 右侧属性面板/数据表入口可见。 |
+| `gongyi-mofang/95-wfc-debug-state-spidr-open.png` | WFC 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；只作为调试状态辅助证据。 |
+| `gongyi-mofang/96-wfc-run-log-workflow-ready.png` | 运行日志弹窗辅助证据；iframe 曾读取到 `Workflow is ready.`，还不是 `ok=true` API 成功日志。 |
 
 ## 端侧运行证据截图
 

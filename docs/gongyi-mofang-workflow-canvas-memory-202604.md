@@ -357,7 +357,7 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 | Python 拖拽/命名 | 已形成可确认的新块并在属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开。 | `02-python-function-block-call-api.png`、`86-wfc-python-block-renamed-code-dialog.png`。 |
 | 数据表 | 右侧 `数据表` tab 可进入；2026-06-11 已在真实 WFC 项目 `编辑数据表 -> 自定义数据` 中创建 8 个 Wearedge 决策字段。 | `03-global-data-table-decision-fields.png` 是 DOM verified evidence 图；原生截图尝试 `92/93/94-wfc-data-fields-*.png` 因截图裁剪只显示左侧画布。 |
 | Dashboard | 已进入 `/dashboard-explorer` | `71-wfc-dashboard-explorer-entry-native.png` 只是入口图，不是 Wearedge Dashboard 完成图。 |
-| 运行日志 | 已尝试点击运行区，但未触发真实运行日志 | `69-wfc-run-control-attempt-properties.png` 不能命名为 `ok=true` 证据。 |
+| 运行日志 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；运行日志 iframe 可打开并读取到 `Workflow is ready.`。 | `95-wfc-debug-state-spidr-open.png`、`96-wfc-run-log-workflow-ready.png/json` 是辅助证据；还不能命名为 `05-run-log-ok-true.png`，因为 Python Block 尚未形成 `ok=true` API 调用日志。 |
 | 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时或只截左侧画布；右侧弹窗字段可通过实时 DOM 核验。 | 最终材料优先使用清晰平台图；若截图工具裁剪，使用明确标注的 DOM verified evidence，不伪装为原生截图。 |
 
 2026-06-11 Dashboard Explorer 路由分析：

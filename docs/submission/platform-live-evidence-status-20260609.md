@@ -23,7 +23,7 @@
 | WFC Python 程序块定位 | 已完成关键截图 | 2026-06-11 已在 `编程` 库搜索 `Python`，拖入 `Python 程序块` 到画布，属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开；代码内容和端口绑定仍待最终平台确认。 |
 | WFC 数据表字段 | 已完成 DOM verified 证据 | 2026-06-11 已在真实 WFC 项目右侧 `数据表` 中创建 `selected_direction`、`priority`、`recommended_action`、`evidence_summary`、`competition_metrics`、`owner`、`residual_risk`、`approval_status`。内置截图工具裁剪不到右侧弹窗，已保存 DOM verified evidence 图并保留原生截图尝试。 |
 | WFC Dashboard 入口 | 部分完成 | 已进入 `https://wfc.bd-iiot.com/dashboard-explorer`；尚未创建 Wearedge 决策 Dashboard。 |
-| WFC 运行/日志入口 | 尝试未完成 | 已尝试点击工作流顶部运行区，当前只回到属性面板 `请选择一个功能块`，没有真实 ok 日志。 |
+| WFC 运行/日志入口 | 部分完成 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`，运行日志 iframe 显示 `Workflow is ready.`；这证明日志入口和 workflow instance 可用，但还不是 API `ok=true` 成功证据。 |
 | Xcelerator 应用主页复核 | 已完成 | 2026-06-11 已重新进入 `https://developers.siemens-x.com.cn/client`，可见 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
 | Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
@@ -90,6 +90,10 @@
 | `92/93/94-wfc-data-fields-*.png` | 原生截图尝试；因内置浏览器只截到左侧画布，保留为审计轨迹。 |
 | `71-wfc-dashboard-explorer-entry-native.png` | Dashboard Explorer 入口原生截图尝试；最终 Dashboard 截图仍未完成。 |
 | `69-wfc-run-control-attempt-properties.png` | 运行入口点击尝试；没有真实运行日志，不能作为 ok=true 证据。 |
+| `95-wfc-debug-state-spidr-open.png` | 2026-06-11 WFC 进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；辅助证据，不替代成功运行日志。 |
+| `95-wfc-debug-state-spidr-open.dom.txt` | 与上图对应的 DOM 记录。 |
+| `96-wfc-run-log-workflow-ready.png` | 2026-06-11 运行日志弹窗辅助证据，iframe 曾读取到 `Workflow is ready.`。 |
+| `96-wfc-run-log-workflow-ready.json` | 与上图对应的文字记录和边界说明。 |
 
 ## 安全边界
 
@@ -106,7 +110,7 @@
 | --- | --- |
 | `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
 | Dashboard 截图 | 已进入 Dashboard Explorer 并确认当前返回 `No Dashboard`。前端路由分析显示该页读取 `/api/projects/dashboard-explorer` 并通过 `/remote/preview?...` 预览已有 Dashboard，不是创建入口。下一步需要先运行工作流并从 ui-builder / workflow instance 路径创建可预览看板。 |
-| 运行日志截图 | 当前没有真实运行日志；需要先完成 Python Function Block、数据表写回和可访问的 Wearedge Agent Service。 |
+| 运行日志截图 | 已有 `Workflow is ready.` 辅助证据；仍需让 `CallWearedgeDecisionApi` 真正执行并调用 Wearedge API，形成 `ok=true`、latency、function blocks 或写表成功日志。 |
 | 人工确认截图 | 当前没有平台内 HumanApprovalGate 截图；需要在工作流中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
