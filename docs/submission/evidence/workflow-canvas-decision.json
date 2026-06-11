@@ -28,6 +28,47 @@
     "latency_target_met": true,
     "final_min_agent_directions_met": true
   },
+  "decision_mechanism": {
+    "type": "deterministic_kpi_rule_guarded_engine",
+    "model_dependency": "not_required_for_workflow_canvas_decision",
+    "model_role": "optional_explanation_and_field_interpretation_only",
+    "key_metrics_matrix": {
+      "maintenance": [
+        "f1_pct",
+        "warning_lead_time_hours",
+        "root_cause_top3_pct",
+        "vibration_rms_mm_s"
+      ],
+      "quality": [
+        "defect_rate_pct",
+        "detection_confidence_pct",
+        "relative_improvement_pct"
+      ],
+      "energy": [
+        "forecast_accuracy_pct",
+        "saving_pct",
+        "idle_kw"
+      ],
+      "flexible_production": [
+        "schedule_efficiency_gain_pct",
+        "component_reuse_pct",
+        "target_sku"
+      ],
+      "workflow_canvas": [
+        "existing_component_use_pct",
+        "new_component_reuse_potential_pct"
+      ]
+    },
+    "primary_selection": "priority_rank_then_score",
+    "safety_boundary": "HumanApprovalGate is required before high-risk OT or quality-disposition actions.",
+    "selection_steps": [
+      "normalize selected agent directions",
+      "evaluate each direction against target KPIs and evidence flags",
+      "assign target status, priority, score, recommendation, workflow blocks, and confirmations",
+      "select primary direction by priority and score",
+      "merge confirmations and residual risk into Workflow Canvas HumanApprovalGate"
+    ]
+  },
   "compliance": {
     "initial_round": {
       "single_agent_core_supported": true,

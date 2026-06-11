@@ -33,9 +33,10 @@ M400 / Camera / OPC UA / MES / QMS / EMS / CMMS / released checklist
 ## 算法设计与模型选择
 
 - 规则和指标层：维护 F1、预警提前时间、根因 Top3、能源预测准确率、节能率、质量提升、调度效率和延迟由确定性 evaluator 计算。
-- 智能体层：模型负责把症状、证据和上下文转成可读解释、行动建议和协同摘要。
+- 智能体层：当前 PoC 默认使用 Gemma 4 E2B 通过 llama.cpp / llama-server 在端侧运行，模型负责把图片、症状、证据和上下文转成可读解释、行动建议和协同摘要。
 - 知识层：RAG/KB 保存设备手册、released checklist、维护记录、质量计划和现场校准知识。
 - 安全层：高风险动作由确定性守卫标记责任人、确认项和残余风险，进入人工审批。
+- 决策边界：工易魔方主接口 `/v1/workflow-canvas/decision` 不依赖模型直接拍板，而是使用 KPI 指标矩阵、规则评分、优先级排序和 `HumanApprovalGate` 做最终动作边界。
 - 模型选择：PoC 阶段支持本地/边缘大模型或 OpenAI-compatible API；报名材料不绑定不可获得的专有模型权重。
 
 ## 工作流定义

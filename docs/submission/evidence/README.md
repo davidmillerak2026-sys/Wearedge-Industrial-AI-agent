@@ -27,9 +27,18 @@ Boundary: this is simulated/offline validation, not customer production data.
 - Workflow Canvas ready: True
 - Edge profile failures: none
 
+## Industrial Agent Solution Profile
+
+- Problem: cross-domain abnormal-event decision for flexible multi-SKU production lines
+- Primary model: gemma4 / E2B
+- Decision mechanism: deterministic KPI and rule guarded decision engine
+- Decision model dependency: not required for /v1/workflow-canvas/decision
+- Solution profile failures: none
+
 ## Files
 
 - `competition-eval-summary.json`
 - `workflow-canvas-decision.json`
 - `edge-runtime-profile.json`
+- `solution-profile.json`
 - `competition-offline-eval-report.snapshot.md`

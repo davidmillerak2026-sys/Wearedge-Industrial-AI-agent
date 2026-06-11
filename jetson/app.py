@@ -24,6 +24,7 @@ from .maintenance_session import (
     ensure_maintenance_mode,
     maintenance_session_store,
 )
+from .solution_profile import RuntimeProfileInput, build_solution_profile
 
 
 API_VERSION = "wear-edge-infer.v1"
@@ -130,6 +131,19 @@ def agent_flow_definition(authorization: str | None = Header(default=None)) -> d
 @app.get("/v1/edge/runtime-profile")
 def edge_runtime_profile() -> dict[str, object]:
     return _build_edge_runtime_profile()
+
+
+@app.get("/v1/industrial-agent/solution-profile")
+def industrial_agent_solution_profile() -> dict[str, object]:
+    return build_solution_profile(
+        RuntimeProfileInput(
+            model=config.model,
+            model_variant=config.model_variant,
+            llama_base_url=config.llama_base_url,
+            deployment_mode=config.deployment_mode,
+            edge_node_id=config.edge_node_id,
+        )
+    )
 
 
 @app.post("/v1/workflow-canvas/decision")

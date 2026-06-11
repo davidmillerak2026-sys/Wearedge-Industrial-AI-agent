@@ -37,8 +37,9 @@ submission-assets/live-evidence/
 | `xcelerator/05-app-group-created.png` | Wearedge 应用分组 | 展示自有应用分组和 `注册应用` 入口。 |
 | `xcelerator/07-app-detail-created-redacted-top.png` | Wearedge 应用草稿 | 展示应用草稿存在；截图需避开 AppID / AppSecret 区域。 |
 | `xcelerator/10-openapi-json-import-filled.png` | OpenAPI JSON/YAML 导入 | 展示 `openapi/wearedge-xcelerator-apiworld.openapi.json` 已填入平台导入框。 |
-| `xcelerator/11-openapi-parse-preview.png` | OpenAPI 解析预览 | 展示 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`。 |
-| `xcelerator/13-openapi-three-apis-imported.png` | API 接口导入结果 | 展示服务接口列表含 3 个接口。 |
+| `xcelerator/11-openapi-parse-preview.png` | OpenAPI 解析预览 | 新版应展示 `/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
+| `xcelerator/13-openapi-three-apis-imported.png` | 历史 API 接口导入结果 | 2026-06-09 截图显示 3 个接口；仓库升级后下一次应补 4 个接口截图。 |
+| `xcelerator/16-openapi-four-apis-imported.png` | 新版 API 接口导入结果 | 展示服务接口列表含 4 个接口，新增 solution profile。 |
 | `xcelerator/15-api-service-saved-unpublished-list.png` | Wearedge API 服务列表 | 展示服务名、`未发布` 状态、接口数 `3`、可见范围 `租户内`。 |
 | `xcelerator/04-runtime-profile-api-test.png` | 平台 API 测试或调用结果 | 展示 `ok=true`、`workflow_canvas_ready=true`、`model_direct_ot_control=false`。 |
 
@@ -84,6 +85,7 @@ submission-assets/live-evidence/
 | --- | --- | --- |
 | `edge-runtime/01-healthz.png` | `/healthz` 或服务启动终端 | 证明 Wearedge Agent Service 已运行。 |
 | `edge-runtime/02-runtime-profile.png` | `/v1/edge/runtime-profile` 输出 | 展示 Jetson / IPC / local server 部署能力和安全边界。 |
+| `edge-runtime/05-solution-profile.png` | `/v1/industrial-agent/solution-profile` 输出 | 展示工业问题、Gemma 4 E2B/llama.cpp 模型角色、KPI 决策矩阵和 HumanApprovalGate。 |
 | `edge-runtime/03-workflow-canvas-decision-smoke.png` | `scripts/smoke_workflow_canvas_decision.py` 输出 | 证明 WFC decision API 可跑通。 |
 | `edge-runtime/04-jetson-ipc-local-node.png` | Jetson、IPC、本地工控机或边缘服务器画面 | 证明智能体运行时可放在端侧算力中；如果硬件未到位，用本地工控机/边缘服务器证据替代。 |
 

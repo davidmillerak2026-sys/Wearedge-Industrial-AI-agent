@@ -28,6 +28,7 @@ This project is prepared for the Siemens Xcelerator Industrial Agent challenge u
 - Compliance: project materials should include independent IP ownership, open-source dependency boundaries, and no-dispute/no-adverse-record declarations before submission.
 
 Submission-ready co-creation one-pager: [`docs/siemens-xcelerator-co-creation-onepager.md`](docs/siemens-xcelerator-co-creation-onepager.md).
+Solution profile and decision mechanism: [`docs/industrial-agent-solution-profile.md`](docs/industrial-agent-solution-profile.md).
 
 ## Runtime
 
@@ -65,6 +66,12 @@ Show the edge runtime profile used for Xcelerator / Gongyi Mofang evidence:
 
 ```powershell
 Invoke-RestMethod http://127.0.0.1:8081/v1/edge/runtime-profile
+```
+
+Show the industrial-agent solution profile, including the model role and KPI/rule decision mechanism:
+
+```powershell
+Invoke-RestMethod http://127.0.0.1:8081/v1/industrial-agent/solution-profile
 ```
 
 Initialize and check the ignored live platform evidence folder:

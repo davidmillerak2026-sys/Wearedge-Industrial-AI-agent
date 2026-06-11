@@ -14,7 +14,7 @@
 | API 服务草稿 | 已创建 | `Wearedge Workflow Canvas 协同决策 API`。 |
 | API 服务可见范围 | 已设置 | `租户内`，未公开到 AI & API World。 |
 | OpenAPI 导入 | 已完成 | 通过 `JSON/YAML导入` 导入 `openapi/wearedge-xcelerator-apiworld.openapi.json`。 |
-| API 接口数量 | 已确认 | 3 个接口。 |
+| API 接口数量 | 已确认 | 2026-06-09 live 截图为 3 个接口；2026-06-11 仓库 OpenAPI 已新增 `/v1/industrial-agent/solution-profile`，下一轮平台导入应更新为 4 个接口。 |
 | 发布/上架 | 未执行 | 未点击 `保存并发布`，未申请上架。 |
 | Gongyi Mofang WFC 登录 | 已确认 | 2026-06-09 已进入 `https://wfc.bd-iiot.com/projects` 项目页。 |
 | Gongyi Mofang WFC 项目 | 已创建 | `Wearedge WFC PoC` 项目已创建并进入编辑器。 |
@@ -31,6 +31,7 @@
 | --- | --- | --- |
 | GET | `/healthz` | Gateway health and competition metadata. |
 | GET | `/v1/edge/runtime-profile` | 展示端侧智能体运行时能力。 |
+| GET | `/v1/industrial-agent/solution-profile` | 展示工业问题、模型角色、Agent 分工、KPI 决策机制和验证证据。 |
 | POST | `/v1/workflow-canvas/decision` | Workflow Canvas 协同决策主接口。 |
 
 ## 证据截图
@@ -45,8 +46,8 @@
 | `08-api-service-basic-info-filled.png` | API 服务基础信息草稿。 |
 | `09-api-service-interface-info-step.png` | API 服务进入接口信息步骤。 |
 | `10-openapi-json-import-filled.png` | OpenAPI JSON/YAML 导入框已填入规范。 |
-| `11-openapi-parse-preview.png` | OpenAPI 解析预览，包含 3 个接口。 |
-| `13-openapi-three-apis-imported.png` | 接口列表显示 3 个已导入接口。 |
+| `11-openapi-parse-preview.png` | 历史 OpenAPI 解析预览，包含 3 个接口。 |
+| `13-openapi-three-apis-imported.png` | 历史接口列表显示 3 个已导入接口。 |
 | `14-api-service-transaction-step-draft.png` | 交易属性页草稿，未发布。 |
 | `15-api-service-saved-unpublished-list.png` | API 服务列表确认服务 `未发布`、接口数 `3`、可见范围 `租户内`。 |
 

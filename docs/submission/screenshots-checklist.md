@@ -11,6 +11,7 @@
 | `workflows/wearedge_wfc_poc_payload.json` | yes | captured locally | `submission-assets/screenshots/05-wfc-payload.png`，展示 WFC 输入上下文。 |
 | `/healthz` JSON | recommended | pending | 展示 gateway readiness 和 competition metadata。 |
 | `/v1/edge/runtime-profile` JSON | yes | captured locally | `submission-assets/screenshots/12-edge-runtime-profile.png`，展示 Jetson/IPC/local server 端侧 Agent Runtime、WFC-ready 和安全边界。 |
+| `/v1/industrial-agent/solution-profile` JSON | yes | pending | 展示工业问题、Gemma 4 E2B/llama.cpp 模型角色、KPI 决策矩阵、Agent 分工和 HumanApprovalGate。 |
 | WFC resource block prototype | yes | captured locally | `submission-assets/screenshots/13-wfc-resource-block-prototype.png`，展示 `deploymentMode` 和资源参数。 |
 | Xcelerator API World 服务截图 | when available | pending | 保存到 `submission-assets/live-evidence/xcelerator/`，按 live evidence runbook 命名。 |
 | 工易魔方项目/画布基础截图 | when available | captured live | 已保存 `submission-assets/live-evidence/gongyi-mofang/07-18*.png` 辅助截图，含项目创建、项目卡、编辑器、资源配置、工作流画布、编程库和右侧面板入口。 |
@@ -47,6 +48,7 @@ submission-assets/screenshots/09-pytest-output.png
 submission-assets/screenshots/10-registration-fields.png
 submission-assets/screenshots/11-co-creation-onepager.png
 submission-assets/screenshots/12-edge-runtime-profile.png
+submission-assets/screenshots/16-solution-profile.png
 submission-assets/screenshots/13-wfc-resource-block-prototype.png
 submission-assets/screenshots/14-enterprise-winning-strategy.png
 submission-assets/screenshots/15-edge-runtime-doc.png

@@ -13,6 +13,7 @@ if str(REPO_ROOT) not in sys.path:
 
 import run_competition_eval
 import smoke_edge_runtime_profile
+import smoke_solution_profile
 import smoke_workflow_canvas_decision
 
 
@@ -33,29 +34,38 @@ def build_evidence(output_dir: Path, dataset_path: Path, payload_path: Path) -> 
     failures = smoke_workflow_canvas_decision.validate_decision(decision)
     edge_profile = smoke_edge_runtime_profile._fetch_profile(None)
     edge_failures = smoke_edge_runtime_profile._validate_profile(edge_profile)
+    solution_profile = smoke_solution_profile.fetch_profile(None)
+    solution_failures = smoke_solution_profile.validate_profile(solution_profile)
 
     summary_path = output_dir / "competition-eval-summary.json"
     decision_path = output_dir / "workflow-canvas-decision.json"
     edge_profile_path = output_dir / "edge-runtime-profile.json"
+    solution_profile_path = output_dir / "solution-profile.json"
     report_path = output_dir / "competition-offline-eval-report.snapshot.md"
     readme_path = output_dir / "README.md"
 
     summary_path.write_text(json.dumps(summary, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     decision_path.write_text(json.dumps(decision, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     edge_profile_path.write_text(json.dumps(edge_profile, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
+    solution_profile_path.write_text(json.dumps(solution_profile, ensure_ascii=False, indent=2) + "\n", encoding="utf-8")
     report_path.write_text(report, encoding="utf-8")
-    readme_path.write_text(_render_readme(summary, decision, failures, edge_profile, edge_failures), encoding="utf-8")
+    readme_path.write_text(
+        _render_readme(summary, decision, failures, edge_profile, edge_failures, solution_profile, solution_failures),
+        encoding="utf-8",
+    )
 
     return {
         "output_dir": str(output_dir),
         "summary_path": str(summary_path),
         "decision_path": str(decision_path),
         "edge_profile_path": str(edge_profile_path),
+        "solution_profile_path": str(solution_profile_path),
         "report_path": str(report_path),
         "readme_path": str(readme_path),
         "all_target_checks_passed": bool(summary["all_target_checks_passed"]),
         "smoke_failures": failures,
         "edge_profile_failures": edge_failures,
+        "solution_profile_failures": solution_failures,
     }
 
 
@@ -68,7 +78,12 @@ def main(argv: list[str] | None = None) -> int:
 
     result = build_evidence(args.output_dir, args.dataset, args.payload)
     print(json.dumps(result, ensure_ascii=False, indent=2))
-    if not result["all_target_checks_passed"] or result["smoke_failures"] or result["edge_profile_failures"]:
+    if (
+        not result["all_target_checks_passed"]
+        or result["smoke_failures"]
+        or result["edge_profile_failures"]
+        or result["solution_profile_failures"]
+    ):
         return 1
     return 0
 
@@ -79,12 +94,17 @@ def _render_readme(
     failures: list[str],
     edge_profile: dict[str, Any],
     edge_failures: list[str],
+    solution_profile: dict[str, Any],
+    solution_failures: list[str],
 ) -> str:
     collaborative = _object(decision.get("collaborative_decision"))
     metrics = _object(decision.get("competition_metrics"))
     workflow = _object(decision.get("workflow_canvas"))
     edge_node = _object(edge_profile.get("edge_node"))
     capabilities = _object(edge_profile.get("edge_capabilities"))
+    problem = _object(solution_profile.get("industrial_problem"))
+    model_runtime = _object(solution_profile.get("model_runtime"))
+    decision_mechanism = _object(solution_profile.get("decision_mechanism"))
     return "\n".join(
         [
             "# Submission Evidence Snapshot",
@@ -116,11 +136,20 @@ def _render_readme(
             f"- Workflow Canvas ready: {capabilities.get('workflow_canvas_ready')}",
             f"- Edge profile failures: {edge_failures if edge_failures else 'none'}",
             "",
+            "## Industrial Agent Solution Profile",
+            "",
+            f"- Problem: {problem.get('name')}",
+            f"- Primary model: {model_runtime.get('primary_model')} / {model_runtime.get('model_variant')}",
+            f"- Decision mechanism: {decision_mechanism.get('type')}",
+            f"- Decision model dependency: {decision_mechanism.get('model_dependency')}",
+            f"- Solution profile failures: {solution_failures if solution_failures else 'none'}",
+            "",
             "## Files",
             "",
             "- `competition-eval-summary.json`",
             "- `workflow-canvas-decision.json`",
             "- `edge-runtime-profile.json`",
+            "- `solution-profile.json`",
             "- `competition-offline-eval-report.snapshot.md`",
             "",
         ]

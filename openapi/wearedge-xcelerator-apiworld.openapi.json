@@ -52,6 +52,24 @@
         }
       }
     },
+    "/v1/industrial-agent/solution-profile": {
+      "get": {
+        "summary": "Describe the Wearedge industrial-agent solution, model role, and decision mechanism",
+        "operationId": "getIndustrialAgentSolutionProfile",
+        "responses": {
+          "200": {
+            "description": "Industrial-agent solution profile for reviewers and platform co-creation discussions.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/SolutionProfileResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/workflow-canvas/decision": {
       "post": {
         "summary": "Build a multi-agent Workflow Canvas decision",
@@ -278,6 +296,55 @@
             "additionalProperties": true
           },
           "safety_boundary": {
+            "type": "object",
+            "additionalProperties": true
+          }
+        }
+      },
+      "SolutionProfileResponse": {
+        "type": "object",
+        "required": [
+          "ok",
+          "solution_name",
+          "industrial_problem",
+          "model_runtime",
+          "agent_system",
+          "decision_mechanism",
+          "platform_integration",
+          "validation_evidence"
+        ],
+        "additionalProperties": true,
+        "properties": {
+          "ok": {
+            "type": "boolean"
+          },
+          "api_version": {
+            "type": "string"
+          },
+          "solution_name": {
+            "type": "string"
+          },
+          "industrial_problem": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "model_runtime": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "agent_system": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "decision_mechanism": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "platform_integration": {
+            "type": "object",
+            "additionalProperties": true
+          },
+          "validation_evidence": {
             "type": "object",
             "additionalProperties": true
           }

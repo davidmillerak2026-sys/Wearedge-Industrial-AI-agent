@@ -80,6 +80,9 @@ def test_competition_decision_meets_final_joint_solution_targets() -> None:
     assert decision["direction_count"] == 5
     assert decision["competition_metrics"]["latency_target_met"] is True
     assert decision["competition_metrics"]["final_min_agent_directions_met"] is True
+    assert decision["decision_mechanism"]["type"] == "deterministic_kpi_rule_guarded_engine"
+    assert decision["decision_mechanism"]["model_dependency"] == "not_required_for_workflow_canvas_decision"
+    assert "maintenance" in decision["decision_mechanism"]["key_metrics_matrix"]
     assert decision["compliance"]["final_round"]["at_least_three_directions"] is True
     assert decision["compliance"]["runtime_targets"]["decision_accuracy_target_met"] is True
     assert decision["competition_targets"]["maintenance_f1_pct_min"] == COMPETITION_TARGETS["maintenance_f1_pct_min"]

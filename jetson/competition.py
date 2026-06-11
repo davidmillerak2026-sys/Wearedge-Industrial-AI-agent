@@ -51,6 +51,22 @@ COMPETITION_TARGETS = {
 }
 
 
+DECISION_MECHANISM = {
+    "type": "deterministic_kpi_rule_guarded_engine",
+    "model_dependency": "not_required_for_workflow_canvas_decision",
+    "model_role": "optional_explanation_and_field_interpretation_only",
+    "key_metrics_matrix": {
+        "maintenance": ("f1_pct", "warning_lead_time_hours", "root_cause_top3_pct", "vibration_rms_mm_s"),
+        "quality": ("defect_rate_pct", "detection_confidence_pct", "relative_improvement_pct"),
+        "energy": ("forecast_accuracy_pct", "saving_pct", "idle_kw"),
+        "flexible_production": ("schedule_efficiency_gain_pct", "component_reuse_pct", "target_sku"),
+        "workflow_canvas": ("existing_component_use_pct", "new_component_reuse_potential_pct"),
+    },
+    "primary_selection": "priority_rank_then_score",
+    "safety_boundary": "HumanApprovalGate is required before high-risk OT or quality-disposition actions.",
+}
+
+
 @dataclass(frozen=True)
 class DirectionEvaluation:
     direction: str
@@ -102,6 +118,7 @@ def build_competition_decision(payload: dict[str, object]) -> dict[str, object]:
             "latency_target_met": latency_ms <= COMPETITION_TARGETS["latency_ms_max"],
             "final_min_agent_directions_met": len(directions) >= COMPETITION_TARGETS["final_min_agent_directions"],
         },
+        "decision_mechanism": _decision_mechanism(),
         "compliance": compliance,
         "evaluations": [evaluation.as_dict() for evaluation in evaluations],
         "collaborative_decision": {
@@ -133,6 +150,20 @@ def _selected_directions(payload: dict[str, object], context: dict[str, object])
         if direction and direction not in normalized:
             normalized.append(direction)
     return normalized or list(DEFAULT_DIRECTIONS)
+
+
+def _decision_mechanism() -> dict[str, object]:
+    return {
+        **DECISION_MECHANISM,
+        "key_metrics_matrix": {key: list(value) for key, value in DECISION_MECHANISM["key_metrics_matrix"].items()},
+        "selection_steps": [
+            "normalize selected agent directions",
+            "evaluate each direction against target KPIs and evidence flags",
+            "assign target status, priority, score, recommendation, workflow blocks, and confirmations",
+            "select primary direction by priority and score",
+            "merge confirmations and residual risk into Workflow Canvas HumanApprovalGate",
+        ],
+    }
 
 
 def _normalize_direction(value: str) -> str | None:
@@ -440,4 +471,3 @@ def _number(value: object, default: float) -> float:
         return float(value)
     except (TypeError, ValueError):
         return default
-

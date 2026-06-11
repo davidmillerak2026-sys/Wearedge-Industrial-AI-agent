@@ -18,7 +18,7 @@ Wearedge Agent Service 接收来自 MES、设备信号、质量检测、能源�
 
 ### 2:10-3:10 演示
 
-先打开 `/v1/edge/runtime-profile`，展示 Wearedge 可作为 Jetson/IPC/local server 端侧 Agent Runtime。再运行 Workflow Canvas decision smoke test。输入包含维护、质量、能源、生产和 WFC 上下文，输出包含 `competition_metrics`、`collaborative_decision` 和 `workflow_canvas.function_blocks`。结果可以写回全局数据表和 Dashboard，并进入 `HumanApprovalGate`。
+先打开 `/v1/industrial-agent/solution-profile`，展示 Wearedge 解决的跨域异常协同决策问题、Gemma 4 E2B/llama.cpp 模型角色、KPI 决策矩阵和 HumanApprovalGate 安全边界。再打开 `/v1/edge/runtime-profile`，展示 Wearedge 可作为 Jetson/IPC/local server 端侧 Agent Runtime。随后运行 Workflow Canvas decision smoke test。输入包含维护、质量、能源、生产和 WFC 上下文，输出包含 `decision_mechanism`、`competition_metrics`、`collaborative_decision` 和 `workflow_canvas.function_blocks`。结果可以写回全局数据表和 Dashboard，并进入 `HumanApprovalGate`。
 
 ### 3:10-4:00 指标
 

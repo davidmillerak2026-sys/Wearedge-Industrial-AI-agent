@@ -35,6 +35,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
             "WFC Python function block prototype",
         ),
         Artifact("scripts/smoke_edge_runtime_profile.py", "Edge runtime profile smoke script"),
+        Artifact("scripts/smoke_solution_profile.py", "Industrial-agent solution profile smoke script"),
         Artifact("docs/workflow-canvas-poc-runbook.md", "Workflow Canvas runbook"),
         Artifact("docs/workflow-canvas-api-schema.md", "Workflow Canvas API schema"),
         Artifact("workflows/wearedge_wfc_poc_payload.json", "Workflow Canvas sample payload"),
@@ -57,6 +58,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
     ],
     "Phase D - Business and technical package": [
         Artifact("docs/siemens-industrial-agent-track-memory-20260521.md", "Siemens industrial agent track memory"),
+        Artifact("docs/industrial-agent-solution-profile.md", "Industrial-agent solution profile"),
         Artifact("docs/submission/enterprise-winning-strategy.md", "Enterprise group winning strategy"),
         Artifact("docs/submission/business-plan.md", "Business plan draft"),
         Artifact("docs/submission/technical-solution.md", "Technical solution draft"),
@@ -102,6 +104,16 @@ EDGE_PROFILE_REQUIRED_TOP_LEVEL_FIELDS = (
     "edge_capabilities",
     "platform_integration",
     "safety_boundary",
+)
+
+SOLUTION_PROFILE_REQUIRED_TOP_LEVEL_FIELDS = (
+    "ok",
+    "industrial_problem",
+    "model_runtime",
+    "agent_system",
+    "decision_mechanism",
+    "platform_integration",
+    "validation_evidence",
 )
 
 EXTERNAL_PENDING_ITEMS = (
@@ -279,6 +291,7 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
     summary = _load_json(repo_root / "docs" / "submission" / "evidence" / "competition-eval-summary.json", failures)
     decision = _load_json(repo_root / "docs" / "submission" / "evidence" / "workflow-canvas-decision.json", failures)
     edge_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "edge-runtime-profile.json", failures)
+    solution_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "solution-profile.json", failures)
 
     if summary:
         if summary.get("all_cases_passed") is not True:
@@ -306,9 +319,20 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
         if safety.get("model_direct_ot_control") is not False:
             failures.append("generated evidence: edge safety boundary allows direct OT control")
 
+    if solution_profile:
+        for field in SOLUTION_PROFILE_REQUIRED_TOP_LEVEL_FIELDS:
+            if field not in solution_profile:
+                failures.append(f"generated evidence: missing solution profile field {field}")
+        decision_mechanism = _object(solution_profile.get("decision_mechanism"))
+        model_runtime = _object(solution_profile.get("model_runtime"))
+        if decision_mechanism.get("model_dependency") != "not required for /v1/workflow-canvas/decision":
+            failures.append("generated evidence: solution profile does not separate model from decision engine")
+        if not model_runtime.get("primary_model"):
+            failures.append("generated evidence: solution profile missing primary model")
+
     return {
         "status": "ready" if not failures else "review",
-        "notes": "offline evidence, WFC smoke snapshot, and edge runtime profile are present",
+        "notes": "offline evidence, WFC smoke snapshot, edge runtime profile, and solution profile are present",
         "failures": failures,
     }
 

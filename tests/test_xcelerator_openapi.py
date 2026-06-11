@@ -16,10 +16,14 @@ def test_xcelerator_openapi_import_spec_contains_decision_endpoint() -> None:
     assert "/v1/workflow-canvas/decision" in spec["paths"]
     assert "/healthz" in spec["paths"]
     assert "/v1/edge/runtime-profile" in spec["paths"]
+    assert "/v1/industrial-agent/solution-profile" in spec["paths"]
     decision = spec["paths"]["/v1/workflow-canvas/decision"]["post"]
     assert decision["operationId"] == "buildWorkflowCanvasDecision"
     assert {"XceleratorXToken": []} in decision["security"]
     assert spec["components"]["securitySchemes"]["XceleratorXToken"]["name"] == "X-TOKEN"
+    profile = spec["paths"]["/v1/industrial-agent/solution-profile"]["get"]
+    assert profile["operationId"] == "getIndustrialAgentSolutionProfile"
+    assert "SolutionProfileResponse" in spec["components"]["schemas"]
 
 
 def test_xcelerator_runbook_tracks_platform_auth_constraints() -> None:
