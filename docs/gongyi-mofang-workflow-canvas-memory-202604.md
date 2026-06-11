@@ -355,10 +355,23 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 | 资源参数缺口 | `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId` 尚未稳定补入平台参数编辑器 | 不能在材料里写成已完成。 |
 | Python 程序块 | `编程` 库搜索 `Python` 成功，能看到 `编程语言` 分类和 Python 程序块入口；2026-06-11 已拖入画布并保存。 | `59-wfc-python-search.png`、`79-wfc-python-search-filled.png`、`81-wfc-python-drag-center-attempt.png`。 |
 | Python 拖拽/命名 | 已形成可确认的新块并在属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开。 | `02-python-function-block-call-api.png`、`86-wfc-python-block-renamed-code-dialog.png`。 |
-| 数据表 | 右侧 `数据表` tab 可进入，DOM 提示 `点击这里，选择数据` | `70-wfc-data-table-entry-attempt-native.png` 只是入口图，不是字段表完成图。 |
+| 数据表 | 右侧 `数据表` tab 可进入；2026-06-11 已在真实 WFC 项目 `编辑数据表 -> 自定义数据` 中创建 8 个 Wearedge 决策字段。 | `03-global-data-table-decision-fields.png` 是 DOM verified evidence 图；原生截图尝试 `92/93/94-wfc-data-fields-*.png` 因截图裁剪只显示左侧画布。 |
 | Dashboard | 已进入 `/dashboard-explorer` | `71-wfc-dashboard-explorer-entry-native.png` 只是入口图，不是 Wearedge Dashboard 完成图。 |
 | 运行日志 | 已尝试点击运行区，但未触发真实运行日志 | `69-wfc-run-control-attempt-properties.png` 不能命名为 `ok=true` 证据。 |
-| 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时；临时设置 viewport 后原生截图可用但画幅较窄，Windows 屏幕截图可作为辅助 | 最终材料优先使用清晰平台图；不足图只进入 attempt 记录。 |
+| 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时或只截左侧画布；右侧弹窗字段可通过实时 DOM 核验。 | 最终材料优先使用清晰平台图；若截图工具裁剪，使用明确标注的 DOM verified evidence，不伪装为原生截图。 |
+
+2026-06-11 已创建的 WFC 自定义数据字段：
+
+| 字段 ID | 显示名 | 用途 |
+| --- | --- | --- |
+| `selected_direction` | 主方向 selected_direction | 主智能体/主优化方向 |
+| `priority` | 优先级 priority | 决策优先级 |
+| `recommended_action` | 建议动作 recommended_action | 推荐执行或检查动作 |
+| `evidence_summary` | 证据摘要 evidence_summary | 证据来源和关键依据 |
+| `competition_metrics` | 指标 competition_metrics | 赛事指标和估算结果 |
+| `owner` | 责任人 owner | 责任角色或处理人 |
+| `residual_risk` | 残余风险 residual_risk | 人工确认前的残余风险 |
+| `approval_status` | 人工确认状态 approval_status | `pending` / `approved` / `rejected` |
 
 ### 夺冠叙事对应
 
