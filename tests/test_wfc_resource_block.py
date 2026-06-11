@@ -25,3 +25,16 @@ def test_wfc_function_block_example_calls_workflow_canvas_endpoint() -> None:
     assert "/v1/workflow-canvas/decision" in code
     assert "HumanApprovalGate" not in code
     assert "requires_human_confirmation" in code
+
+
+def test_live_wfc_fb_main_reference_is_platform_safe() -> None:
+    code = (REPO_ROOT / "workflows" / "wfc_call_wearedge_decision_fb_main.py").read_text(
+        encoding="utf-8"
+    )
+
+    assert "/v1/workflow-canvas/decision" in code
+    assert "wearedge_decision_ok" in code
+    assert "urllib.request" in code
+    assert "bypass-tunnel-reminder" in code
+    assert "apiKey" not in code
+    assert "AppSecret" not in code

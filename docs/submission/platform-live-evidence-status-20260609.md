@@ -27,6 +27,7 @@
 | Xcelerator 应用主页复核 | 已完成 | 2026-06-11 已重新进入 `https://developers.siemens-x.com.cn/client`，可见 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
 | Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
+| WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 
 已导入接口：
 
@@ -63,6 +64,12 @@
 | `06-xcelerator-api-detail-basic-info-unpublished.png` | 2026-06-11 API 详情基础信息截图，显示服务名、版本、未发布、所属应用和租户内可见范围。 |
 | `07-xcelerator-api-interface-list-four-endpoints-unpublished.png` | 2026-06-11 API 详情接口信息截图，显示 4 个接口均在未发布草稿中。 |
 | `07-xcelerator-api-interface-list-four-endpoints-unpublished.dom.json` | 与上图对应的 DOM 摘要，记录 4 个接口行，便于截图不清时复核。 |
+| `08-xcelerator-app-home-live-current.png` | 2026-06-11 重新进入应用主页后的复核截图，显示 Wearedge 分组和应用草稿。 |
+| `08-xcelerator-app-home-live-current.dom.json` | 与上图对应的 DOM 摘要。 |
+| `09-xcelerator-api-basic-info-live-unpublished.png` | 2026-06-11 API 服务基础信息复核，确认仍为 `未发布`、`租户内`。 |
+| `09-xcelerator-api-basic-info-live-unpublished.dom.json` | 与上图对应的 DOM 摘要。 |
+| `10-xcelerator-api-interface-list-live-four-endpoints.png` | 2026-06-11 API 服务接口信息复核，显示 4 个租户内未启用接口。 |
+| `10-xcelerator-api-interface-list-live-four-endpoints.dom.json` | 与上图对应的 4 个接口结构化记录。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -94,6 +101,7 @@
 | `95-wfc-debug-state-spidr-open.dom.txt` | 与上图对应的 DOM 记录。 |
 | `96-wfc-run-log-workflow-ready.png` | 2026-06-11 运行日志弹窗辅助证据，iframe 曾读取到 `Workflow is ready.`。 |
 | `96-wfc-run-log-workflow-ready.json` | 与上图对应的文字记录和边界说明。 |
+| `debug-current-for-coordinate.png` | 2026-06-11 调试态源码只读/坐标排查辅助图，不作为提交核心证据。 |
 
 ## 安全边界
 
@@ -121,6 +129,7 @@
 
 - 已登录 WFC 项目页、创建 `Wearedge WFC PoC` 项目，并保存项目卡、项目编辑器、资源配置页、工作流主画布和编程库截图。
 - 当前 WFC 页面大量元素由 canvas 绘制，DOM 不稳定暴露块名、端口和右键菜单。2026-06-11 已确认可以通过“编程搜索 Python -> 从块中心拖入画布 -> 双击打开源码 -> 属性面板改名”的路线创建 `CallWearedgeDecisionApi`。
+- 2026-06-11 进一步确认：WFC 处于 `DEBUG` 时源码编辑器只读，会提示 `Cannot edit in read-only editor`。需要先点击调试浮条的 stop 图标，恢复到 `已保存` / `play-circle` 状态，再进行 `fb_main.py` 粘贴保存。
 - 文档确认后，Wearedge 最小闭环应走 `通用工控机/SPIDR` -> `自定义资源 Wearedge Agent Service` -> `Python 程序块 CallWearedgeDecisionApi` -> `更新数据表` -> `Dashboard/ui-builder` 的顺序。
 - 本项目不会保存 WFC 账号、密码、token 或任何平台密钥。
 

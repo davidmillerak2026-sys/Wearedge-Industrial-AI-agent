@@ -65,6 +65,12 @@ submission-assets/live-evidence/
 8. 右侧打开 `数据表`，定义 `wearedgeDecision` 或拆分字段，拖入 `更新数据表` 功能块并绑定。
 9. 运行/部署工作流，截取日志和 Dashboard/ui-builder 展示。
 
+源码编辑注意：
+
+- 如果顶部显示 `DEBUG`，`fb_main.py` 编辑器会进入只读状态，并提示 `Cannot edit in read-only editor`。先点击调试浮条的 stop 图标，使顶部恢复 `已保存` / `play-circle`，再打开源码编辑。
+- 当前仓库提供可复制到 WFC `fb_main.py` 的 live-edit 参考源码：`workflows/wfc_call_wearedge_decision_fb_main.py`。该版本只使用标准库 `urllib.request` 调用临时 HTTPS Wearedge Agent Service，不包含平台账号、token 或密钥。
+- 粘贴保存后，截图应同时覆盖 `fb_main.py`、`/v1/workflow-canvas/decision`、`wearedge_decision_ok` 日志标识和底部 `保存` 成功状态。
+
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |
 | `gongyi-mofang/00-wfc-projects-authenticated.png` | 已登录项目页 | 展示 Workflow Canvas 项目页和 `新建空白项目` 入口，证明账号已具备 WFC 访问权限。 |
@@ -94,6 +100,7 @@ Dashboard 路径备注：
 | `gongyi-mofang/17-wfc-function-block-properties.png` | 右侧属性面板/数据表入口可见。 |
 | `gongyi-mofang/95-wfc-debug-state-spidr-open.png` | WFC 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；只作为调试状态辅助证据。 |
 | `gongyi-mofang/96-wfc-run-log-workflow-ready.png` | 运行日志弹窗辅助证据；iframe 曾读取到 `Workflow is ready.`，还不是 `ok=true` API 成功日志。 |
+| `gongyi-mofang/debug-current-for-coordinate.png` | 2026-06-11 调试态坐标排查图；仅作为操作审计，不作为提交核心证据。 |
 
 ## 端侧运行证据截图
 

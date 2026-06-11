@@ -355,12 +355,19 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 | 资源参数缺口 | `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId` 尚未稳定补入平台参数编辑器 | 不能在材料里写成已完成。 |
 | Python 程序块 | `编程` 库搜索 `Python` 成功，能看到 `编程语言` 分类和 Python 程序块入口；2026-06-11 已拖入画布并保存。 | `59-wfc-python-search.png`、`79-wfc-python-search-filled.png`、`81-wfc-python-drag-center-attempt.png`。 |
 | Python 拖拽/命名 | 已形成可确认的新块并在属性面板命名为 `CallWearedgeDecisionApi`，源码编辑器 `fb_main.py` 可打开。 | `02-python-function-block-call-api.png`、`86-wfc-python-block-renamed-code-dialog.png`。 |
+| Python 源码参考 | 已新增可复制到 WFC `fb_main.py` 的 live-edit 参考源码 | `workflows/wfc_call_wearedge_decision_fb_main.py`，调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 | 数据表 | 右侧 `数据表` tab 可进入；2026-06-11 已在真实 WFC 项目 `编辑数据表 -> 自定义数据` 中创建 8 个 Wearedge 决策字段。 | `03-global-data-table-decision-fields.png` 是 DOM verified evidence 图；原生截图尝试 `92/93/94-wfc-data-fields-*.png` 因截图裁剪只显示左侧画布。 |
 | Dashboard | 已进入 `/dashboard-explorer` | `71-wfc-dashboard-explorer-entry-native.png` 只是入口图，不是 Wearedge Dashboard 完成图。 |
 | 运行日志 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；运行日志 iframe 可打开并读取到 `Workflow is ready.`。 | `95-wfc-debug-state-spidr-open.png`、`96-wfc-run-log-workflow-ready.png/json` 是辅助证据；还不能命名为 `05-run-log-ok-true.png`，因为 Python Block 尚未形成 `ok=true` API 调用日志。 |
 | 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时或只截左侧画布；右侧弹窗字段可通过实时 DOM 核验。 | 最终材料优先使用清晰平台图；若截图工具裁剪，使用明确标注的 DOM verified evidence，不伪装为原生截图。 |
 
 2026-06-11 Dashboard Explorer 路由分析：
+
+2026-06-11 源码编辑补充：
+
+- WFC 处于 `DEBUG` 时 `fb_main.py` 编辑器为只读，会提示 `Cannot edit in read-only editor`。
+- 需要先点击调试浮条 stop 图标，使顶部恢复 `已保存` / `play-circle` 状态，再打开源码编辑器粘贴保存。
+- 若需要平台内 `ok=true` 运行日志，先把 `workflows/wfc_call_wearedge_decision_fb_main.py` 粘贴进 `CallWearedgeDecisionApi` 的 `fb_main.py`，再重新进入 DEBUG 并运行。
 
 | 发现 | 结论 |
 | --- | --- |

@@ -14,7 +14,7 @@
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 4 / 4 |
-| Phase B - Gongyi Mofang PoC package | ready | 12 / 12 |
+| Phase B - Gongyi Mofang PoC package | ready | 13 / 13 |
 | Phase C - Demo evidence | ready | 11 / 11 |
 | Phase D - Business and technical package | ready | 8 / 8 |
 | Phase E - Registration fields | ready | 2 / 2 |
