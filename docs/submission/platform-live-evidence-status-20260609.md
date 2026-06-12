@@ -152,7 +152,7 @@
 | --- | --- |
 | `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
 | Dashboard live 截图 | fallback 已有；live 仍需从 WFC 工作流运行实例和 ui-builder 创建路径获得。 |
-| 运行日志 live `ok=true` / 数据表写回 | 已有 WFC 原生 `状态码 Good`、`Workflow is ready.`、本地 API fallback `ok=True`，以及 2026-06-12 WFC/SPIDR -> Wearedge gateway `POST 200 OK` live 调用证据；仍需让 WFC 原生 log-manager、inline read 视图或数据表写回画面直接显示 `ok=true`、latency、selected direction、function blocks 或写表成功记录。 |
+| 运行日志 live `ok=true` / 数据表写回 | 已有 WFC 原生 `状态码 Good`、`Workflow is ready.`、本地 API fallback `ok=True`、2026-06-12 WFC/SPIDR -> Wearedge gateway `POST 200 OK` live 调用证据，以及真实 WFC `更新数据表.1` 四字段绑定证据；仍需让 WFC 原生 log-manager、inline read 视图或数据表写回画面直接显示 `ok=true`、latency、selected direction、function blocks 或写表成功记录。 |
 | 人工确认 live 截图 | fallback 已有；仍需在真实 WFC 中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
@@ -171,12 +171,14 @@
 - 2026-06-12 运行边界：WFC/SPIDR 到 Wearedge API 的网络调用已经被 gateway 日志证明；最新 WFC 原生属性面板显示 `状态码 Good`，但 WFC log-manager / read 视图仍未显示业务 stdout `wearedge_decision_ok` / `ok=true`。提交材料可以表述为“WFC 原生运行状态 Good + live 平台调用辅助证据”，不能表述为“WFC 原生日志已显示 ok=true”。
 - 2026-06-12 已将仓库侧 `workflows/wfc_call_wearedge_decision_fb_main.py` 压缩为 120 行短版 live-edit 代码，并用 `tests/test_wfc_function_block_live_edit.py` 约束短摘要输出和文件体积。浏览器 GUI 已在 live WFC 源码窗口搜索 `wearedge`，可见 `_summary`、`selected_direction`、`evidence_summary`、`approval_status` 等字段，证明平台内 `fb_main.py` 已替换为 Wearedge 摘要版本。
 - 2026-06-12 浏览器自动化再次操作当前 WFC 页面，确认项目仍在 `Workflow Canvas`、URL 为 `project/cmq6lbb9x00bx1l6pxll7voae`，主线含 `CallWearedgeDecisionApi`，顶部可从 `play-circle` 进入 DEBUG，运行后可恢复 `已保存`。WFC Canvas 页面在部分语义点击、DOM 节点点击和坐标点击时会超时，因此所有 live 运行结论均配套截图和 sidecar JSON 记录。
+- 2026-06-12 浏览器 GUI 继续操作真实 WFC 页面，已从 `通用 -> 更新数据表` 拖入 `System.UpdateDataTable.1` / `更新数据表.1`，并在输入弹窗中绑定四个全局数据表字段：`selected_direction`、`priority`、`recommended_action`、`approval_status`。证据图包括 `129-wfc-update-data-table-field-options-20260612.png`、`141-wfc-update-data-table-binding-confirmed-20260612.png`、`147-wfc-update-table-panel-scrolled-for-status-20260612.png` 和 `148-wfc-debug-stopped-after-update-table-evidence-20260612.png`。
+- 2026-06-12 当前 WFC 数据表写回边界：`更新数据表.1` 字段绑定和 DEBUG 运行态输入面板已取得真实平台截图；但画布上 Python 输出到 `更新数据表.1` 的数据/执行连线仍需进一步精修，且原生数据表值或 log-manager 还没有可见的 `ok=true`/latency/selected direction 写回结果。
 
 ## 下一步建议
 
-1. 增加或绑定 `更新数据表` 功能块，让 WFC 页面可直接看到 `ok`、`latency_ms`、`selected_direction` 和 `approval_status`。
-2. 补 WFC 原生 read/log 或数据表写回画面，让业务摘要不只停留在 `状态码 Good`。
-3. 创建 Wearedge Dashboard/ui-builder 视图，展示指标卡、决策路径、确认项和工作流状态。
+1. 精修 Python 输出到 `更新数据表.1` 的数据/执行连线，并让原生数据表值或 log-manager 显示 `ok=true`、latency、selected direction。
+2. 创建 Wearedge Dashboard/ui-builder 视图，展示指标卡、决策路径、确认项和工作流状态。
+3. 补 WFC 原生 read/log 或数据表写回画面，让业务摘要不只停留在 `状态码 Good`。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
 5. 在 Xcelerator API 服务草稿中替换为稳定 HTTPS Wearedge Agent Service 地址，并执行平台调试调用截图。
 6. 将 2026-06-12 WFC live 调用证据纳入演示视频素材和 PoC 证据索引，同时保留 live/fallback 边界。

@@ -371,6 +371,13 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 - 需要先点击调试浮条 stop 图标，使顶部恢复 `已保存` / `play-circle` 状态，再打开源码编辑器粘贴保存。
 - 若需要平台内业务 `ok=true` 运行日志或数据表写回，下一步应在现有 `CallWearedgeDecisionApi` 后增加/绑定 `更新数据表` 或打开 read 输出，让 `ok`、`latency_ms`、`selected_direction`、`approval_status` 可见；当前已取得 WFC 原生 `状态码 Good` 运行态。
 
+2026-06-12 `更新数据表` live 绑定进展：
+
+- 已在真实 WFC 页面通过浏览器 GUI 从 `通用 -> 更新数据表` 创建 `System.UpdateDataTable.1` / `更新数据表.1`。
+- 已在 `更新数据表.1` 输入弹窗中绑定四个全局数据表字段：`selected_direction`、`priority`、`recommended_action`、`approval_status`。
+- 已保存字段选项、四字段绑定确认和 DEBUG 运行态输入面板截图：`129-wfc-update-data-table-field-options-20260612.png`、`141-wfc-update-data-table-binding-confirmed-20260612.png`、`147-wfc-update-table-panel-scrolled-for-status-20260612.png`。
+- 当前边界：平台截图证明字段绑定完成，但 Python 输出到 `更新数据表.1` 的执行/数据连线和原生写回值仍需继续精修；不能把这些截图描述成原生 `ok=true` 或 latency 写回已完成。
+
 | 发现 | 结论 |
 | --- | --- |
 | `/dashboard-explorer` 页面显示 `No Dashboard`。 | 当前租户/项目没有可预览 Dashboard，空页不是创建入口。 |
