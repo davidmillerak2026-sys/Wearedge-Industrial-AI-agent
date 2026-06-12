@@ -105,3 +105,9 @@ def test_wfc_function_block_outputs_compact_summary(monkeypatch):
         "HumanApprovalGate",
     ]
     assert "evaluations" not in summary
+
+
+def test_wfc_function_block_file_stays_live_editor_friendly():
+    source = WFC_FB_PATH.read_text(encoding="utf-8")
+    assert len(source) < 6000
+    assert source.count("\n") < 140
