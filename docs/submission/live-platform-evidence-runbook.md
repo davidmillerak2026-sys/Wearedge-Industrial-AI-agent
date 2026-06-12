@@ -84,6 +84,7 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 - 当前仓库提供可复制到 WFC `fb_main.py` 的 live-edit 参考源码：`workflows/wfc_call_wearedge_decision_fb_main.py`。该版本只使用标准库 `urllib.request` 调用临时 HTTPS Wearedge Agent Service，不包含平台账号、token 或密钥。
 - 粘贴保存后，截图应同时覆盖 `fb_main.py`、`/v1/workflow-canvas/decision`、`wearedge_decision_ok` 日志标识和底部 `保存` 成功状态。
 - 若 WFC 原生 log-manager 或 inline read 视图没有显示 stdout，可把 Wearedge gateway 中同一轮运行产生的外部 `POST /v1/workflow-canvas/decision` `200 OK` 作为辅助证据；这不能替代 `05-run-log-ok-true.png` 的 live WFC 原生日志要求。
+- 2026-06-12 以后优先复制仓库中的短版 `workflows/wfc_call_wearedge_decision_fb_main.py`。该版本保持 `ok`、`latency_ms`、`selected_direction`、`approval_status` 和短 `competition_metrics` 输出，避免完整 API 响应导致 WFC 编辑器或输出面板过重。保存后必须复核源码窗口可见 `_summary` / `selected_direction`，或运行后数据表/日志出现这些字段，才能认定 live WFC 已使用短版。
 
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |

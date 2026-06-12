@@ -163,6 +163,7 @@
 - 2026-06-11 已新增 `scripts/wfc_private_api_probe.py`，用于只读探测 WFC 项目持久化文件、Dashboard Explorer 和 log-manager 页面路径。该脚本默认 dry-run；真实读取必须通过本地环境变量临时提供 `WFC_COOKIE`，结果只应放入 ignored 的 `submission-assets/live-evidence/gongyi-mofang/private-api-probe/`。
 - 2026-06-12 已确认：仅把 Python Block 放在画布上不会进入主线执行；必须按 WFC010 的方式把 Python Block 拖到已有 `[占位]` 上完成替换。替换后主线显示 `Language.Python - CallWearedgeDecisionApi`，WFC 运行会触发 Wearedge gateway 收到外部 `POST 200 OK`。
 - 2026-06-12 运行边界：WFC/SPIDR 到 Wearedge API 的网络调用已经被 gateway 日志证明，但 WFC 平台自己的 log-manager / read 视图仍未显示业务 stdout。因此提交材料只能表述为“已取得 live 平台调用辅助证据”，不能表述为“WFC 原生日志已显示 ok=true”。
+- 2026-06-12 已将仓库侧 `workflows/wfc_call_wearedge_decision_fb_main.py` 压缩为 120 行短版 live-edit 代码，并用 `tests/test_wfc_function_block_live_edit.py` 约束短摘要输出和文件体积。浏览器 GUI 粘贴到 live WFC 的尝试尚未形成可验证保存，平台内 `fb_main.py` 是否已替换不能声称完成；下一轮应以源码窗口可见 `_summary` / `selected_direction` 或 WFC 数据表写回作为确认依据。
 
 ## 下一步建议
 
