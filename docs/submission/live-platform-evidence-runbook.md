@@ -93,6 +93,23 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 | `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 首选真实 WFC log-manager 中的 `ok=true`、function blocks、latency 或写表记录；当前 fallback 图来自本地 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不能声称为 live WFC 成功日志。 |
 | `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 首选真实 WFC 人工确认节点/Dashboard 确认项；若使用 Dashboard mock 截图，必须标注为 fallback mock。 |
 
+真实截图替换流程：
+
+1. 把三张真实 WFC PNG 截图放入忽略目录 `submission-assets/live-evidence/gongyi-mofang-live-source/`。
+2. 文件名使用下列任一组：
+   `04-dashboard-decision-view.png` / `dashboard-decision-view.png` / `dashboard.png`；
+   `05-run-log-ok-true.png` / `run-log-ok-true.png` / `run-log.png`；
+   `06-human-approval-gate.png` / `human-approval-gate.png` / `approval-gate.png`。
+3. 人工复核画面确实来自 live WFC 后运行：
+
+```powershell
+python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"
+python scripts/verify_live_evidence.py --stage platform --write-manifest
+python scripts/verify_finals_foundation.py --json
+```
+
+`promote_wfc_live_evidence.py` 会覆盖核心 04/05/06 截图，删除对应 `.fallback.json/.fallback.html` 标记，并写入 `wfc-live-evidence-replacement-manifest.json`。没有 `--confirm-live-source` 时脚本会拒绝执行，防止把 mock 或 smoke test 图误标成 live 平台证据。
+
 Dashboard 路径备注：
 
 - `https://wfc.bd-iiot.com/dashboard-explorer` 当前是 Dashboard 预览/列表页。若接口返回空，会显示 `No Dashboard`，页面本身不提供新建入口。
