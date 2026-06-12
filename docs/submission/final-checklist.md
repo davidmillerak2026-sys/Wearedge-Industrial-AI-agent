@@ -29,6 +29,8 @@
 | Finals validation report | `docs/finals-validation-report.md` | generated |
 | Finals latency benchmark report | `docs/finals-latency-benchmark-report.md` | generated |
 | Finals latency benchmark JSON | `docs/submission/evidence/finals-latency-benchmark.json` | generated |
+| Local FastAPI gateway latency report | `docs/finals-local-gateway-latency-benchmark-report.md` | generated |
+| Local FastAPI gateway latency JSON | `docs/submission/evidence/finals-local-gateway-latency-benchmark.json` | generated |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
 | WFC resource block zip package | `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.zip` | generated local asset |
@@ -64,13 +66,14 @@ Run before each milestone review:
 python scripts/run_final_readiness_pipeline.py --json
 python scripts/run_finals_validation.py --json
 python scripts/benchmark_workflow_canvas_latency.py
+python scripts/benchmark_local_gateway_latency.py
 python scripts/verify_finals_foundation.py --json
 python scripts/verify_submission_package.py --write-manifest
 ```
 
 The verifier treats repository-controlled materials as pass/fail and keeps human-owned registration information and final submission screenshots as external pending items. Video and platform evidence can now be checked with the live evidence verifier; fallback-marked WFC assets must not be described as live platform proof.
 
-`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. For final defense evidence, rerun it with `--base-url http://<edge-host>:<port>` against the deployed FastAPI gateway and store the generated report/JSON with edge hardware logs.
+`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. `scripts/benchmark_local_gateway_latency.py` starts the local FastAPI gateway and measures real HTTP calls. For final defense evidence, rerun the HTTP benchmark on Jetson / IPC or a final edge gateway and store the generated report/JSON with hardware resource logs.
 
 Run before platform evidence review:
 

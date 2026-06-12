@@ -43,11 +43,14 @@ def test_build_final_submission_bundle_contains_repo_controlled_artifacts(tmp_pa
         assert "docs/submission/final-human-action-runbook.md" in names
         assert "docs/finals-validation-report.md" in names
         assert "docs/finals-latency-benchmark-report.md" in names
+        assert "docs/finals-local-gateway-latency-benchmark-report.md" in names
         assert "docs/submission/evidence/finals-latency-benchmark.json" in names
+        assert "docs/submission/evidence/finals-local-gateway-latency-benchmark.json" in names
         assert "evals/finals_validation_dataset.jsonl" in names
         assert "openapi/wearedge-xcelerator-apiworld.openapi.json" in names
         assert "scripts/run_finals_validation.py" in names
         assert "scripts/benchmark_workflow_canvas_latency.py" in names
+        assert "scripts/benchmark_local_gateway_latency.py" in names
         assert "scripts/verify_finals_foundation.py" in names
         assert "wfc-blocks/wearedge-agent-service/info.json" in names
         assert "scripts/run_final_readiness_pipeline.py" in names

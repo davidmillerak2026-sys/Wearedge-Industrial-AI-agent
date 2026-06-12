@@ -49,13 +49,17 @@ REQUIRED_FOUNDATION_FILES = {
         "scripts/run_competition_eval.py",
         "scripts/run_finals_validation.py",
         "scripts/benchmark_workflow_canvas_latency.py",
+        "scripts/benchmark_local_gateway_latency.py",
         "docs/finals-validation-report.md",
         "docs/finals-latency-benchmark-report.md",
+        "docs/finals-local-gateway-latency-benchmark-report.md",
         "docs/competition-offline-eval-report.md",
         "docs/submission/evidence/finals-latency-benchmark.json",
+        "docs/submission/evidence/finals-local-gateway-latency-benchmark.json",
         "tests/test_competition_eval.py",
         "tests/test_run_finals_validation.py",
         "tests/test_benchmark_workflow_canvas_latency.py",
+        "tests/test_benchmark_local_gateway_latency.py",
     ],
     "hmi_foundation": [
         "jetson/app.py",
@@ -197,11 +201,13 @@ def render_markdown(result: dict[str, Any]) -> str:
         "## Latency Replay Evidence",
         "",
         f"- Replay ready: {result['latency_replay']['ready']}",
+        f"- Evidence tier: {result['latency_replay']['evidence_tier']}",
         f"- Replay mode: {result['latency_replay']['mode']}",
         f"- Replay samples: {result['latency_replay']['sample_count']}",
         f"- Wall latency max: {result['latency_replay']['wall_latency_ms_max']} ms",
         f"- Wall latency p95: {result['latency_replay']['wall_latency_ms_p95']} ms",
         f"- Target met: {result['latency_replay']['target_met']}",
+        f"- Evidence path: `{result['latency_replay']['path']}`",
         f"- Boundary: {result['latency_replay']['boundary']}",
         "",
         "## Priority Gaps",
@@ -261,11 +267,36 @@ def _verify_foundation_files(repo_root: Path) -> dict[str, Any]:
 
 
 def _load_latency_replay(repo_root: Path) -> dict[str, Any]:
-    path = repo_root / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json"
+    candidates = [
+        (
+            repo_root / "docs" / "submission" / "evidence" / "finals-local-gateway-latency-benchmark.json",
+            "local_fastapi_http_gateway",
+        ),
+        (
+            repo_root / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json",
+            "in_process_replay",
+        ),
+    ]
+    loaded = [_load_latency_replay_file(path, fallback_tier=tier) for path, tier in candidates]
+    for item in loaded:
+        if item["ready"] and item["target_met"] and item["mode"] == "http":
+            item["candidate_count"] = len(loaded)
+            return item
+    for item in loaded:
+        if item["ready"] and item["target_met"]:
+            item["candidate_count"] = len(loaded)
+            return item
+    selected = loaded[0]
+    selected["candidate_count"] = len(loaded)
+    return selected
+
+
+def _load_latency_replay_file(path: Path, *, fallback_tier: str) -> dict[str, Any]:
     if not path.is_file():
         return {
             "ready": False,
             "path": str(path),
+            "evidence_tier": "missing",
             "mode": "missing",
             "sample_count": 0,
             "target_met": False,
@@ -279,6 +310,7 @@ def _load_latency_replay(repo_root: Path) -> dict[str, Any]:
         return {
             "ready": False,
             "path": str(path),
+            "evidence_tier": "invalid-json",
             "mode": "invalid-json",
             "sample_count": 0,
             "target_met": False,
@@ -291,6 +323,7 @@ def _load_latency_replay(repo_root: Path) -> dict[str, Any]:
     return {
         "ready": bool(data.get("ok")) and int(data.get("sample_count", 0)) > 0,
         "path": str(path),
+        "evidence_tier": str(data.get("evidence_tier", fallback_tier)),
         "mode": str(data.get("mode", "unknown")),
         "endpoint": str(data.get("endpoint", "unknown")),
         "sample_count": int(data.get("sample_count", 0)),
@@ -319,7 +352,9 @@ def _priority_gaps(
     if not latency_replay["ready"] or not latency_replay["target_met"]:
         gaps.append("Run the finals latency replay benchmark until the Workflow Canvas path is <=500ms.")
     elif latency_replay["mode"] != "http":
-        gaps.append("Replace in-process latency replay with deployed FastAPI/edge-hardware benchmark before final defense.")
+        gaps.append("Replace in-process latency replay with local FastAPI HTTP gateway evidence before final defense.")
+    elif latency_replay["evidence_tier"] == "local_fastapi_http_gateway":
+        gaps.append("Repeat the HTTP gateway latency benchmark on Jetson/IPC edge hardware and attach resource logs.")
     if not platform["ready"]:
         gaps.append("Complete platform-stage Xcelerator/WFC evidence before treating the platform path as stable.")
     if platform["warnings"]:

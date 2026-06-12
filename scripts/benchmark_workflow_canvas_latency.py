@@ -60,6 +60,16 @@ def run_latency_benchmark(
 
     wall_latencies = [sample["wall_latency_ms"] for sample in samples]
     decision_latencies = [sample["decision_latency_ms"] for sample in samples]
+    boundary = (
+        "HTTP mode measures the Workflow Canvas collaborative decision path through "
+        "/v1/workflow-canvas/decision. For final defense, run it on the Jetson/IPC/local industrial PC gateway "
+        "and capture edge hardware resource logs beside the report."
+        if base_url
+        else (
+            "Default in_process mode is a deterministic local replay of the Workflow Canvas decision engine. "
+            "Use --base-url against a deployed Jetson/IPC/local-server gateway before claiming deployed endpoint latency."
+        )
+    )
     summary = {
         "ok": all(sample["ok"] for sample in samples),
         "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
@@ -73,10 +83,7 @@ def run_latency_benchmark(
         "wall_latency_ms": _latency_stats(wall_latencies),
         "decision_latency_ms": _latency_stats(decision_latencies),
         "target_met": max(wall_latencies) <= COMPETITION_TARGETS["latency_ms_max"],
-        "boundary": (
-            "Default in_process mode is a deterministic local replay of the Workflow Canvas decision engine. "
-            "Use --base-url against a deployed Jetson/IPC/local-server gateway before claiming deployed endpoint latency."
-        ),
+        "boundary": boundary,
         "samples": samples,
     }
     return summary
@@ -96,6 +103,7 @@ def render_report(result: dict[str, Any]) -> str:
         "",
         "## Summary",
         "",
+        f"- Evidence tier: {result.get('evidence_tier', result['mode'])}",
         f"- Mode: {result['mode']}",
         f"- Endpoint: `{result['endpoint']}`",
         f"- Dataset cases: {result['case_count']}",
@@ -104,24 +112,41 @@ def render_report(result: dict[str, Any]) -> str:
         f"- Target latency: <= {result['target_latency_ms']} ms",
         f"- Target met: {result['target_met']}",
         "",
-        "## Latency Stats",
-        "",
-        "| Metric | Min | P50 | P95 | Avg | Max |",
-        "| --- | ---: | ---: | ---: | ---: | ---: |",
-        (
-            f"| Wall-clock replay latency | {wall['min']} ms | {wall['p50']} ms | {wall['p95']} ms | "
-            f"{wall['avg']} ms | {wall['max']} ms |"
-        ),
-        (
-            f"| Decision-reported latency | {decision['min']} ms | {decision['p50']} ms | {decision['p95']} ms | "
-            f"{decision['avg']} ms | {decision['max']} ms |"
-        ),
-        "",
-        "## Sample Coverage",
-        "",
-        "| Case | Samples | Max Wall Latency |",
-        "| --- | ---: | ---: |",
     ]
+    gateway = result.get("gateway")
+    if isinstance(gateway, dict):
+        lines.extend(
+            [
+                "## Gateway",
+                "",
+                f"- App: `{gateway.get('app', 'unknown')}`",
+                f"- Base URL: `{gateway.get('base_url', 'unknown')}`",
+                f"- Healthz OK: {gateway.get('healthz_ok', False)}",
+                f"- Workflow endpoint: `{gateway.get('deployment_mode', 'unknown')}`",
+                "",
+            ]
+        )
+    lines.extend(
+        [
+            "## Latency Stats",
+            "",
+            "| Metric | Min | P50 | P95 | Avg | Max |",
+            "| --- | ---: | ---: | ---: | ---: | ---: |",
+            (
+                f"| Wall-clock replay latency | {wall['min']} ms | {wall['p50']} ms | {wall['p95']} ms | "
+                f"{wall['avg']} ms | {wall['max']} ms |"
+            ),
+            (
+                f"| Decision-reported latency | {decision['min']} ms | {decision['p50']} ms | {decision['p95']} ms | "
+                f"{decision['avg']} ms | {decision['max']} ms |"
+            ),
+            "",
+            "## Sample Coverage",
+            "",
+            "| Case | Samples | Max Wall Latency |",
+            "| --- | ---: | ---: |",
+        ]
+    )
     by_case: dict[str, list[int]] = {}
     for sample in result["samples"]:
         by_case.setdefault(sample["case_id"], []).append(int(sample["wall_latency_ms"]))

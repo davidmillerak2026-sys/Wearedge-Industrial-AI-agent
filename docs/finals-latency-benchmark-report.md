@@ -1,6 +1,6 @@
 # Finals Latency Benchmark Report
 
-Generated: 2026-06-12T01:51:59+00:00
+Generated: 2026-06-12T02:09:10+00:00
 
 ## Boundary
 
@@ -8,6 +8,7 @@ Default in_process mode is a deterministic local replay of the Workflow Canvas d
 
 ## Summary
 
+- Evidence tier: in_process
 - Mode: in_process
 - Endpoint: `jetson.competition.build_competition_decision`
 - Dataset cases: 15
