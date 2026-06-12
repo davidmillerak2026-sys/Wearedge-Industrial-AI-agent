@@ -117,6 +117,12 @@ def build_final_readiness(
             "manifest_present": bool(human_manifest),
             "manifest_path": str(human_action_manifest_path),
             "written_count": human_manifest.get("written_count") if human_manifest else None,
+            "skipped_count": human_manifest.get("skipped_count") if human_manifest else None,
+            "template_count": (
+                int(human_manifest.get("written_count", 0)) + int(human_manifest.get("skipped_count", 0))
+                if human_manifest
+                else None
+            ),
             "final_targets_not_created": human_manifest.get("final_targets_not_created", []) if human_manifest else [],
         },
         "recommended_next_actions": recommended_next_actions(repo, final, bundle_present, human_manifest),
@@ -132,10 +138,8 @@ def recommended_next_actions(
     actions: list[str] = []
     if not repo["repo_ready"]:
         actions.append("Fix repository-controlled failures reported by verify_submission_package.py.")
-    if not bundle_present:
-        actions.append("Run python scripts/build_final_submission_bundle.py --json.")
-    if not human_manifest:
-        actions.append("Run python scripts/prepare_final_human_action_pack.py --json.")
+    if not bundle_present or not human_manifest:
+        actions.append("Run python scripts/run_final_readiness_pipeline.py --json.")
     if final["missing"]:
         actions.append("Fill/capture the final live-evidence files listed under Final Missing Items.")
     if final["warnings"]:
@@ -207,7 +211,8 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"- Bundle SHA256: `{result['bundle']['sha256']}`",
             f"- Bundle manifest file count: `{result['bundle']['manifest_file_count']}`",
             f"- Human action manifest: `{result['human_action_pack']['manifest_path']}`",
-            f"- Human action template count: `{result['human_action_pack']['written_count']}`",
+            f"- Human action template count: `{result['human_action_pack']['template_count']}`",
+            f"- Human action templates written/skipped: `{result['human_action_pack']['written_count']} / {result['human_action_pack']['skipped_count']}`",
             "",
             "## Recommended Next Actions",
             "",
@@ -221,6 +226,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             "## Verification Commands",
             "",
             "```powershell",
+            "python scripts/run_final_readiness_pipeline.py --json",
             "python scripts/verify_submission_package.py --write-manifest",
             "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
             "python scripts/build_final_submission_bundle.py --json",

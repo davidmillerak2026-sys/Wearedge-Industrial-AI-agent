@@ -39,6 +39,7 @@ INCLUDE_PATHS = (
     "docs/submission/defense-qna-playbook.md",
     "docs/submission/registration-fields.md",
     "docs/submission/final-checklist.md",
+    "docs/submission/final-human-action-runbook.md",
     "docs/submission/submission-package-manifest.md",
     "docs/submission/poc-evidence-index.md",
     "docs/submission/demo-script.md",
@@ -65,6 +66,7 @@ INCLUDE_PATHS = (
     "scripts/build_final_submission_bundle.py",
     "scripts/prepare_final_human_action_pack.py",
     "scripts/generate_final_readiness_report.py",
+    "scripts/run_final_readiness_pipeline.py",
     "scripts/package_wfc_resource_block.py",
     "scripts/wfc_private_api_probe.py",
 )

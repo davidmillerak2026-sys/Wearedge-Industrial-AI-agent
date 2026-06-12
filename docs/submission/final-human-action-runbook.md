@@ -42,6 +42,7 @@ Only remove or supersede `.fallback.json` metadata after real live evidence is c
 Before final submission:
 
 ```powershell
+python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_live_evidence.py --stage final --write-manifest
 python scripts/verify_submission_package.py --write-manifest
 python scripts/build_final_submission_bundle.py --json

@@ -35,8 +35,7 @@ def test_final_readiness_report_shows_missing_external_items(tmp_path: Path) -> 
     assert result["repo"]["ready"] is True
     assert result["overall_ready_for_official_submission"] is False
     assert "legal/company-info-filled.md" in report
-    assert "Run python scripts/build_final_submission_bundle.py --json" in report
-    assert "Run python scripts/prepare_final_human_action_pack.py --json" in report
+    assert "Run python scripts/run_final_readiness_pipeline.py --json" in report
 
 
 def test_final_readiness_detects_bundle_and_human_manifest(tmp_path: Path) -> None:
@@ -66,6 +65,7 @@ def test_final_readiness_detects_bundle_and_human_manifest(tmp_path: Path) -> No
     assert result["status"]["human_templates_present"] is True
     assert result["bundle"]["manifest_file_count"] == 5
     assert result["human_action_pack"]["written_count"] == 7
+    assert result["human_action_pack"]["template_count"] == 7
 
 
 def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) -> None:
@@ -80,5 +80,6 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
     report = module.render_readiness_report(result)
 
     assert "Verification Commands" in report
+    assert "run_final_readiness_pipeline.py --json" in report
     assert "generate_final_readiness_report.py --write" in report
     assert "does not make external/human-owned files complete" in report

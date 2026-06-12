@@ -17,7 +17,7 @@
 | Phase B - Gongyi Mofang PoC package | ready | 15 / 15 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 10 / 10 |
-| Phase E - Registration fields | ready | 7 / 7 |
+| Phase E - Registration fields | ready | 8 / 8 |
 
 ## Validation Status
 
@@ -40,6 +40,7 @@
 ## External Evidence Command
 
 ```powershell
+python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_live_evidence.py --stage platform --allow-missing --write-manifest
 python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest
 ```
