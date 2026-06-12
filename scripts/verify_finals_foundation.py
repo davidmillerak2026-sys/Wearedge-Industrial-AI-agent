@@ -51,17 +51,21 @@ REQUIRED_FOUNDATION_FILES = {
         "scripts/benchmark_workflow_canvas_latency.py",
         "scripts/benchmark_local_gateway_latency.py",
         "scripts/collect_edge_runtime_evidence.py",
+        "scripts/collect_jetson_edge_evidence.py",
         "docs/finals-validation-report.md",
         "docs/finals-latency-benchmark-report.md",
         "docs/finals-local-gateway-latency-benchmark-report.md",
+        "docs/finals-jetson-gateway-latency-benchmark-report.md",
         "docs/competition-offline-eval-report.md",
         "docs/submission/evidence/finals-latency-benchmark.json",
         "docs/submission/evidence/finals-local-gateway-latency-benchmark.json",
+        "docs/submission/evidence/finals-jetson-gateway-latency-benchmark.json",
         "tests/test_competition_eval.py",
         "tests/test_run_finals_validation.py",
         "tests/test_benchmark_workflow_canvas_latency.py",
         "tests/test_benchmark_local_gateway_latency.py",
         "tests/test_collect_edge_runtime_evidence.py",
+        "tests/test_collect_jetson_edge_evidence.py",
     ],
     "hmi_foundation": [
         "jetson/app.py",
@@ -273,6 +277,10 @@ def _verify_foundation_files(repo_root: Path) -> dict[str, Any]:
 
 def _load_latency_replay(repo_root: Path) -> dict[str, Any]:
     candidates = [
+        (
+            repo_root / "docs" / "submission" / "evidence" / "finals-jetson-gateway-latency-benchmark.json",
+            "final_edge_fastapi_http_gateway",
+        ),
         (
             repo_root / "docs" / "submission" / "evidence" / "finals-local-gateway-latency-benchmark.json",
             "local_fastapi_http_gateway",

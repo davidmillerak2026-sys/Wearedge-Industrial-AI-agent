@@ -19,6 +19,14 @@ DEFAULT_READINESS_REPORT = REPO_ROOT / "docs" / "submission" / "final-readiness-
 DEFAULT_FINALS_VALIDATION_REPORT = REPO_ROOT / "docs" / "finals-validation-report.md"
 DEFAULT_LATENCY_BENCHMARK_REPORT = REPO_ROOT / "docs" / "finals-latency-benchmark-report.md"
 DEFAULT_LATENCY_BENCHMARK_JSON = REPO_ROOT / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json"
+DEFAULT_LOCAL_GATEWAY_REPORT = REPO_ROOT / "docs" / "finals-local-gateway-latency-benchmark-report.md"
+DEFAULT_LOCAL_GATEWAY_JSON = (
+    REPO_ROOT / "docs" / "submission" / "evidence" / "finals-local-gateway-latency-benchmark.json"
+)
+DEFAULT_JETSON_GATEWAY_REPORT = REPO_ROOT / "docs" / "finals-jetson-gateway-latency-benchmark-report.md"
+DEFAULT_JETSON_GATEWAY_JSON = (
+    REPO_ROOT / "docs" / "submission" / "evidence" / "finals-jetson-gateway-latency-benchmark.json"
+)
 DEFAULT_BUNDLE_DIR = DEFAULT_ASSETS_DIR / "submission-bundle"
 DEFAULT_WFC_PACKAGE_DIR = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package"
 
@@ -77,7 +85,13 @@ def run_pipeline(
         report_path=latency_benchmark_report_path,
         json_path=latency_benchmark_json_path,
     )
-    edge_runtime_evidence = collect_edge_runtime_evidence(output_dir=assets_dir / "edge-runtime")
+    edge_source_report, edge_source_json, final_edge_node = select_edge_runtime_source()
+    edge_runtime_evidence = collect_edge_runtime_evidence(
+        output_dir=assets_dir / "edge-runtime",
+        source_report=edge_source_report,
+        source_json=edge_source_json,
+        final_edge_node=final_edge_node,
+    )
     wfc_package = package_resource_block(output_dir=wfc_package_output_dir, write_manifest=True)
     submission_package = build_final_submission_bundle(output_dir=bundle_output_dir)
 
@@ -180,6 +194,12 @@ def render_summary(result: dict[str, Any]) -> str:
 def _resolve_path(path: Path) -> Path:
     path = Path(path)
     return path if path.is_absolute() else REPO_ROOT / path
+
+
+def select_edge_runtime_source() -> tuple[Path, Path, bool]:
+    if DEFAULT_JETSON_GATEWAY_REPORT.is_file() and DEFAULT_JETSON_GATEWAY_JSON.is_file():
+        return DEFAULT_JETSON_GATEWAY_REPORT, DEFAULT_JETSON_GATEWAY_JSON, True
+    return DEFAULT_LOCAL_GATEWAY_REPORT, DEFAULT_LOCAL_GATEWAY_JSON, False
 
 
 def main(argv: list[str] | None = None) -> int:

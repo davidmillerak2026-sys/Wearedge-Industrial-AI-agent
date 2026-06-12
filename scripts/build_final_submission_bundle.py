@@ -7,7 +7,7 @@ import re
 import sys
 import zipfile
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any, Iterable
 
@@ -69,6 +69,7 @@ INCLUDE_PATHS = (
     "scripts/benchmark_workflow_canvas_latency.py",
     "scripts/benchmark_local_gateway_latency.py",
     "scripts/collect_edge_runtime_evidence.py",
+    "scripts/collect_jetson_edge_evidence.py",
     "scripts/verify_finals_foundation.py",
     "scripts/smoke_workflow_canvas_decision.py",
     "scripts/smoke_edge_runtime_profile.py",
@@ -81,6 +82,10 @@ INCLUDE_PATHS = (
     "scripts/run_final_readiness_pipeline.py",
     "scripts/package_wfc_resource_block.py",
     "scripts/wfc_private_api_probe.py",
+)
+
+OPTIONAL_INCLUDE_PATHS = (
+    "docs/finals-jetson-gateway-latency-benchmark-report.md",
 )
 
 EXTERNAL_EXCLUDED_ITEMS = (
@@ -168,6 +173,32 @@ def collect_files(repo_root: Path = REPO_ROOT, include_paths: Iterable[str] = IN
 
     if missing:
         raise ValueError(f"missing bundle source(s): {', '.join(missing)}")
+    for item in OPTIONAL_INCLUDE_PATHS:
+        path = (repo_root / item).resolve()
+        if not path.exists():
+            continue
+        if path.is_file():
+            candidates = [path]
+        else:
+            candidates = sorted(child for child in path.rglob("*") if child.is_file())
+        for candidate in candidates:
+            relative = candidate.relative_to(repo_root)
+            if any(part in EXCLUDED_DIRS for part in relative.parts):
+                continue
+            if candidate.suffix.lower() in EXCLUDED_SUFFIXES:
+                continue
+            archive_name = PurePosixPath(*relative.parts).as_posix()
+            if archive_name in seen:
+                continue
+            seen.add(archive_name)
+            files.append(
+                BundleFile(
+                    source=candidate,
+                    archive_name=archive_name,
+                    size=candidate.stat().st_size,
+                    sha256=file_sha256(candidate),
+                )
+            )
     return sorted(files, key=lambda item: item.archive_name)
 
 
@@ -216,7 +247,7 @@ def build_manifest(
     return {
         "ok": True,
         "dry_run": dry_run,
-        "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "bundle_path": str(bundle_path),
         "bundle_sha256": None,
         "file_count": len(files),

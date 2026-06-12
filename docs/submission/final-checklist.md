@@ -76,7 +76,7 @@ python scripts/verify_submission_package.py --write-manifest
 
 The verifier treats repository-controlled materials as pass/fail and keeps human-owned registration information and final submission screenshots as external pending items. Video and platform evidence can now be checked with the live evidence verifier; fallback-marked WFC assets must not be described as live platform proof.
 
-`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. `scripts/benchmark_local_gateway_latency.py` starts the local FastAPI gateway, measures real HTTP calls, and samples gateway CPU/RSS/system memory. `scripts/collect_edge_runtime_evidence.py` copies or reruns this benchmark into ignored live-evidence files. For final defense evidence, rerun the collector on Jetson / IPC or a final edge gateway and store the generated report/JSON with hardware resource logs.
+`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. `scripts/benchmark_local_gateway_latency.py` starts the local FastAPI gateway, measures real HTTP calls, and samples gateway CPU/RSS/system memory. `scripts/collect_edge_runtime_evidence.py` copies or reruns this benchmark into ignored live-evidence files. For Jetson evidence from the Windows workstation, run `scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20` with the SSH password supplied only through a local `JETSON_SSH_PASSWORD` environment variable. For final defense evidence, rerun on Jetson / IPC or a final edge gateway and store the generated report/JSON with hardware resource logs.
 
 Run before platform evidence review:
 

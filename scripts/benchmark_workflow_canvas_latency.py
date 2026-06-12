@@ -6,7 +6,7 @@ import sys
 import time
 import urllib.error
 import urllib.request
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -72,7 +72,7 @@ def run_latency_benchmark(
     )
     summary = {
         "ok": all(sample["ok"] for sample in samples),
-        "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "mode": mode,
         "endpoint": endpoint,
         "dataset_path": str(dataset_path),
@@ -182,7 +182,14 @@ def render_report(result: dict[str, Any]) -> str:
         lines.append(f"| {case_id} | {len(values)} | {max(values)} ms |")
 
     lines.extend(["", "## Next Evidence Upgrade", ""])
-    if result.get("evidence_tier") == "local_fastapi_http_gateway":
+    if result.get("evidence_tier") == "final_edge_fastapi_http_gateway":
+        lines.extend(
+            [
+                "- Keep the generated JSON/report together with Jetson `tegrastats` logs as final-edge hardware evidence.",
+                "- Rerun the same collector before final defense if the Jetson image, Python environment, or WFC payload changes.",
+            ]
+        )
+    elif result.get("evidence_tier") == "local_fastapi_http_gateway":
         lines.extend(
             [
                 "- Rerun `python scripts/benchmark_local_gateway_latency.py` on the Jetson / IPC / final edge gateway.",

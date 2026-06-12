@@ -84,7 +84,7 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
     assert "Finals foundation ready" in report
     assert "Finals Foundation" in report
     assert "Workflow Canvas evidence tier" in report
-    assert "local_fastapi_http_gateway" in report
+    assert "final_edge_fastapi_http_gateway" in report
     assert "Workflow Canvas replay mode" in report
     assert "Workflow Canvas resource samples" in report
     assert "Workflow Canvas gateway RSS max" in report

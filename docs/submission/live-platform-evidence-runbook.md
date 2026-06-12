@@ -143,7 +143,15 @@ Jetson / IPC 复跑：
 python scripts/collect_edge_runtime_evidence.py --rerun-benchmark --iterations 20 --final-edge-node
 ```
 
-Jetson 上同时打开 `tegrastats --interval 1000`，把日志保存到 `submission-assets/live-evidence/edge-runtime/08-tegrastats-http-resource-benchmark.log`。
+Windows 侧可用一条命令远程完成 Jetson 部署、benchmark、`tegrastats` 和证据拉回：
+
+```powershell
+$env:JETSON_SSH_PASSWORD = "<本地设置，不提交>"
+python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20
+Remove-Item Env:\JETSON_SSH_PASSWORD
+```
+
+Jetson 上也可手动同时打开 `tegrastats --interval 1000`，把日志保存到 `submission-assets/live-evidence/edge-runtime/08-tegrastats-http-resource-benchmark.log`。
 
 ## 企业与合规材料
 

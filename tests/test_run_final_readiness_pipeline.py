@@ -43,7 +43,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert result["latency_benchmark_mode"] == "in_process"
     assert result["latency_benchmark_target_met"] is True
     assert result["latency_benchmark_sample_count"] > 0
-    assert result["selected_latency_evidence_tier"] == "local_fastapi_http_gateway"
+    assert result["selected_latency_evidence_tier"] == "final_edge_fastapi_http_gateway"
     assert result["selected_latency_evidence_mode"] == "http"
     assert result["selected_latency_evidence_sample_count"] > 0
     assert result["selected_latency_resource_sample_count"] > 0
@@ -111,7 +111,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "latency_benchmark_report=" in summary
     assert "latency_benchmark_target_met=True" in summary
     assert "edge_runtime_evidence_ok=True" in summary
-    assert "selected_latency_evidence_tier=local_fastapi_http_gateway" in summary
+    assert "selected_latency_evidence_tier=final_edge_fastapi_http_gateway" in summary
     assert "selected_latency_evidence_mode=http" in summary
     assert "selected_latency_resource_sample_count=" in summary
     assert "selected_latency_process_rss_mb_max=" in summary

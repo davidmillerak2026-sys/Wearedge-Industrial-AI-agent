@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T02:38:02+00:00
+Updated: 2026-06-12T03:13:28+00:00
 
 ## Executive Status
 
@@ -17,7 +17,7 @@ Updated: 2026-06-12T02:38:02+00:00
 | Area | Ready | Present / Expected | Missing | Warnings |
 | --- | --- | ---: | ---: | ---: |
 | Platform evidence | True | 25 / 25 | 0 | 3 |
-| Finals foundation | True | 15 cases | 0 | 2 |
+| Finals foundation | True | 15 cases | 0 | 1 |
 | Final evidence | False | 27 / 33 | 6 | 3 |
 
 ## Repository Phase Status
@@ -52,23 +52,22 @@ Updated: 2026-06-12T02:38:02+00:00
 - Finals validation cases: 15
 - Decision accuracy min: 95.0%
 - Rule decision latency max: 1 ms
-- Workflow Canvas evidence tier: local_fastapi_http_gateway
+- Workflow Canvas evidence tier: final_edge_fastapi_http_gateway
 - Workflow Canvas replay mode: http
 - Workflow Canvas replay samples: 300
-- Workflow Canvas replay p95/max: 24 / 30 ms
-- Workflow Canvas resource samples: 34
-- Workflow Canvas gateway RSS max: 60.71 MB
-- Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-local-gateway-latency-benchmark.json`
+- Workflow Canvas replay p95/max: 4 / 7 ms
+- Workflow Canvas resource samples: 13
+- Workflow Canvas gateway RSS max: 47.57 MB
+- Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-jetson-gateway-latency-benchmark.json`
 
 Priority gaps:
-- Repeat the HTTP gateway latency benchmark on Jetson/IPC edge hardware and attach resource logs.
 - Replace fallback WFC dashboard/run-log/HumanApprovalGate assets with live WFC execution screenshots.
 
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `cfb52bcd4b53d1e14dba5fe1a33584b771bd3397eeafe19ed74c7ef768b9d35a`
-- Bundle manifest file count: `71`
+- Bundle SHA256: `b9abf5db54d9d04591ecf7b574db91f02fb0a097ffce1017c51fd488bf323dc9`
+- Bundle manifest file count: `74`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
 - Human action templates written/skipped: `0 / 7`
@@ -87,6 +86,9 @@ python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_finals_foundation.py --json
 python scripts/benchmark_workflow_canvas_latency.py
 python scripts/benchmark_local_gateway_latency.py
+$env:JETSON_SSH_PASSWORD = "<set locally, do not commit>"
+python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20
+Remove-Item Env:\JETSON_SSH_PASSWORD
 python scripts/verify_submission_package.py --write-manifest
 python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest
 python scripts/build_final_submission_bundle.py --json

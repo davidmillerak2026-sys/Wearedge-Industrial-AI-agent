@@ -51,6 +51,16 @@ For Jetson, also capture a parallel resource log:
 tegrastats --interval 1000 | tee submission-assets/live-evidence/edge-runtime/08-tegrastats-http-resource-benchmark.log
 ```
 
+From the Windows workstation, after the Jetson is powered and reachable over SSH, use the remote collector so the deployment, benchmark, `tegrastats`, and evidence pullback happen in one repeatable step:
+
+```powershell
+$env:JETSON_SSH_PASSWORD = "<set locally, do not commit>"
+python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20
+Remove-Item Env:\JETSON_SSH_PASSWORD
+```
+
+The remote collector deploys the competition runtime into `~/Wearedge-Industrial-AI-agent-competition` and leaves the older `~/WearEdge-Pro` M400/VLM service untouched.
+
 For Windows IPC or plant server, capture Task Manager / Resource Monitor screenshots or an OS-level CSV beside the generated files.
 
 ## Acceptance Criteria

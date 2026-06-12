@@ -56,6 +56,22 @@ def test_local_gateway_latency_benchmark_writes_outputs(tmp_path: Path) -> None:
     assert saved["resource_profile"]["sample_count"] > 0
 
 
+def test_local_gateway_latency_benchmark_can_mark_final_edge_node() -> None:
+    module = _load_module()
+
+    result = module.run_local_gateway_latency_benchmark(
+        iterations=1,
+        final_edge_node=True,
+        deployment_mode="jetson_edge_http_gateway_benchmark",
+        edge_node_id="jetson-orin-nano-8gb",
+    )
+
+    assert result["ok"] is True
+    assert result["evidence_tier"] == "final_edge_fastapi_http_gateway"
+    assert result["gateway"]["edge_node_id"] == "jetson-orin-nano-8gb"
+    assert "final Jetson/IPC/plant edge node" in result["boundary"]
+
+
 def test_find_free_port_returns_candidate_port() -> None:
     module = _load_module()
 

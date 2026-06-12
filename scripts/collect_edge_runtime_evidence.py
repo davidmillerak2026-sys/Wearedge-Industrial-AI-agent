@@ -4,7 +4,7 @@ import argparse
 import json
 import shutil
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -46,7 +46,12 @@ def collect_edge_runtime_evidence(
     manifest_path = output_dir / DEFAULT_MANIFEST_NAME
 
     if rerun_benchmark:
-        benchmark = run_local_gateway_latency_benchmark(iterations=iterations)
+        benchmark = run_local_gateway_latency_benchmark(
+            iterations=iterations,
+            final_edge_node=final_edge_node,
+            deployment_mode="jetson_edge_http_gateway_benchmark" if final_edge_node else None,
+            edge_node_id="jetson-orin-nano-8gb" if final_edge_node else None,
+        )
         write_outputs(benchmark, report_path=report_path, json_path=json_path)
     else:
         if not source_report.is_file():
@@ -92,7 +97,7 @@ def build_manifest(
     platform_profile = object_or_empty(resource_profile.get("platform"))
     return {
         "ok": bool(benchmark.get("ok")) and bool(benchmark.get("target_met")),
-        "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "output_dir": str(output_dir),
         "rerun_benchmark": rerun_benchmark,
         "iterations": iterations,

@@ -47,9 +47,18 @@ def run_local_gateway_latency_benchmark(
     resource_sample_interval_s: float = DEFAULT_RESOURCE_SAMPLE_INTERVAL_S,
     collect_resources: bool = True,
     python_executable: str = sys.executable,
+    final_edge_node: bool = False,
+    deployment_mode: str | None = None,
+    edge_node_id: str | None = None,
 ) -> dict[str, Any]:
     selected_port = port or find_free_port(host)
     base_url = f"http://{host}:{selected_port}"
+    effective_deployment_mode = deployment_mode or (
+        "jetson_edge_http_gateway_benchmark" if final_edge_node else "local_http_gateway_benchmark"
+    )
+    effective_edge_node_id = edge_node_id or (
+        "jetson-edge-benchmark" if final_edge_node else "local-gateway-benchmark"
+    )
     command = [
         python_executable,
         "-m",
@@ -64,8 +73,8 @@ def run_local_gateway_latency_benchmark(
     ]
     env = os.environ.copy()
     env["WEAREDGE_AUTH_DISABLED"] = "1"
-    env["WEAREDGE_DEPLOYMENT_MODE"] = "local_http_gateway_benchmark"
-    env.setdefault("WEAREDGE_EDGE_NODE_ID", "local-gateway-benchmark")
+    env["WEAREDGE_DEPLOYMENT_MODE"] = effective_deployment_mode
+    env["WEAREDGE_EDGE_NODE_ID"] = effective_edge_node_id
     process = subprocess.Popen(
         command,
         cwd=REPO_ROOT,
@@ -82,17 +91,16 @@ def run_local_gateway_latency_benchmark(
         result = run_latency_benchmark(iterations=iterations, base_url=base_url)
         resource_profile = stop_resource_sampler(sampler) if sampler else unavailable_resource_profile()
         sampler = None
-        result["evidence_tier"] = "local_fastapi_http_gateway"
-        result["boundary"] = (
-            "This benchmark starts the Wearedge FastAPI gateway on the current workstation and measures real HTTP "
-            "POST calls to /v1/workflow-canvas/decision with process resource sampling. It is stronger than "
-            "in-process replay, but it is still not Jetson/IPC hardware evidence until rerun on the final edge node."
+        result["evidence_tier"] = (
+            "final_edge_fastapi_http_gateway" if final_edge_node else "local_fastapi_http_gateway"
         )
+        result["boundary"] = build_gateway_boundary(final_edge_node=final_edge_node)
         result["gateway"] = {
             "app": GATEWAY_APP,
             "base_url": base_url,
             "healthz_ok": bool(healthz.get("ok")),
-            "deployment_mode": healthz.get("competition", {}).get("workflow_canvas_endpoint"),
+            "deployment_mode": healthz.get("deployment_mode", effective_deployment_mode),
+            "edge_node_id": effective_edge_node_id,
             "process_started": True,
             "pid": process.pid,
         }
@@ -113,12 +121,14 @@ class ResourceSampler:
         samples: list[dict[str, Any]],
         interval_s: float,
         pid: int,
+        backend: str,
     ) -> None:
         self.stop_event = stop_event
         self.thread = thread
         self.samples = samples
         self.interval_s = interval_s
         self.pid = pid
+        self.backend = backend
 
 
 def start_resource_sampler(pid: int, *, interval_s: float = DEFAULT_RESOURCE_SAMPLE_INTERVAL_S) -> ResourceSampler:
@@ -126,7 +136,35 @@ def start_resource_sampler(pid: int, *, interval_s: float = DEFAULT_RESOURCE_SAM
     samples: list[dict[str, Any]] = []
     stop_event = threading.Event()
     if psutil is None:
-        return ResourceSampler(stop_event=stop_event, thread=None, samples=samples, interval_s=safe_interval, pid=pid)
+        if platform.system().lower() != "linux" or not Path(f"/proc/{pid}").exists():
+            return ResourceSampler(
+                stop_event=stop_event,
+                thread=None,
+                samples=samples,
+                interval_s=safe_interval,
+                pid=pid,
+                backend="unavailable",
+            )
+
+        def collect_linux_procfs() -> None:
+            started = time.perf_counter()
+            state: dict[str, Any] = {}
+            while not stop_event.is_set():
+                sample = sample_linux_procfs_resources(pid, started, state)
+                if sample:
+                    samples.append(sample)
+                stop_event.wait(safe_interval)
+
+        thread = threading.Thread(target=collect_linux_procfs, name="wearedge-procfs-sampler", daemon=True)
+        thread.start()
+        return ResourceSampler(
+            stop_event=stop_event,
+            thread=thread,
+            samples=samples,
+            interval_s=safe_interval,
+            pid=pid,
+            backend="linux_procfs",
+        )
 
     def collect() -> None:
         started = time.perf_counter()
@@ -143,7 +181,14 @@ def start_resource_sampler(pid: int, *, interval_s: float = DEFAULT_RESOURCE_SAM
 
     thread = threading.Thread(target=collect, name="wearedge-resource-sampler", daemon=True)
     thread.start()
-    return ResourceSampler(stop_event=stop_event, thread=thread, samples=samples, interval_s=safe_interval, pid=pid)
+    return ResourceSampler(
+        stop_event=stop_event,
+        thread=thread,
+        samples=samples,
+        interval_s=safe_interval,
+        pid=pid,
+        backend="psutil",
+    )
 
 
 def stop_resource_sampler(sampler: ResourceSampler) -> dict[str, Any]:
@@ -158,7 +203,7 @@ def stop_resource_sampler(sampler: ResourceSampler) -> dict[str, Any]:
                 sampler.samples.append(sample)
         except (psutil.Error, OSError):
             pass
-    return summarize_resource_profile(sampler.samples, interval_s=sampler.interval_s)
+    return summarize_resource_profile(sampler.samples, interval_s=sampler.interval_s, backend=sampler.backend)
 
 
 def sample_process_resources(process: Any, started: float) -> dict[str, Any] | None:
@@ -177,9 +222,77 @@ def sample_process_resources(process: Any, started: float) -> dict[str, Any] | N
         return None
 
 
-def summarize_resource_profile(samples: list[dict[str, Any]], *, interval_s: float) -> dict[str, Any]:
+def sample_linux_procfs_resources(pid: int, started: float, state: dict[str, Any]) -> dict[str, Any] | None:
+    try:
+        status = Path(f"/proc/{pid}/status").read_text(encoding="utf-8", errors="replace")
+        rss_kb = parse_status_kb(status, "VmRSS")
+        vms_kb = parse_status_kb(status, "VmSize")
+        memory = read_linux_meminfo()
+        proc_ticks = read_process_cpu_ticks(pid)
+        total_ticks = read_total_cpu_ticks()
+    except (OSError, ValueError):
+        return None
+
+    last_proc_ticks = state.get("proc_ticks")
+    last_total_ticks = state.get("total_ticks")
+    cpu_percent = 0.0
+    if isinstance(last_proc_ticks, int) and isinstance(last_total_ticks, int):
+        proc_delta = max(0, proc_ticks - last_proc_ticks)
+        total_delta = max(1, total_ticks - last_total_ticks)
+        cpu_percent = (proc_delta / total_delta) * max(1, os.cpu_count() or 1) * 100
+    state["proc_ticks"] = proc_ticks
+    state["total_ticks"] = total_ticks
+
     return {
-        "available": psutil is not None,
+        "elapsed_ms": max(0, int((time.perf_counter() - started) * 1000)),
+        "process_cpu_percent": round(cpu_percent, 2),
+        "process_rss_mb": round(rss_kb / 1024, 2),
+        "process_vms_mb": round(vms_kb / 1024, 2),
+        "system_memory_percent": round(memory.get("used_percent", 0.0), 2),
+        "system_available_mb": round(memory.get("available_kb", 0) / 1024, 2),
+    }
+
+
+def parse_status_kb(status: str, key: str) -> int:
+    prefix = f"{key}:"
+    for line in status.splitlines():
+        if line.startswith(prefix):
+            parts = line.split()
+            if len(parts) >= 2:
+                return int(parts[1])
+    return 0
+
+
+def read_linux_meminfo() -> dict[str, float]:
+    values: dict[str, int] = {}
+    try:
+        for line in Path("/proc/meminfo").read_text(encoding="utf-8", errors="replace").splitlines():
+            parts = line.split()
+            if len(parts) >= 2:
+                values[parts[0].rstrip(":")] = int(parts[1])
+    except OSError:
+        return {"total_kb": 0, "available_kb": 0, "used_percent": 0.0}
+    total = values.get("MemTotal", 0)
+    available = values.get("MemAvailable", 0)
+    used_percent = 0.0 if total <= 0 else (1 - available / total) * 100
+    return {"total_kb": total, "available_kb": available, "used_percent": used_percent}
+
+
+def read_process_cpu_ticks(pid: int) -> int:
+    stat = Path(f"/proc/{pid}/stat").read_text(encoding="utf-8", errors="replace")
+    after_name = stat.rsplit(")", maxsplit=1)[1].strip().split()
+    return int(after_name[11]) + int(after_name[12])
+
+
+def read_total_cpu_ticks() -> int:
+    first_line = Path("/proc/stat").read_text(encoding="utf-8", errors="replace").splitlines()[0]
+    return sum(int(part) for part in first_line.split()[1:])
+
+
+def summarize_resource_profile(samples: list[dict[str, Any]], *, interval_s: float, backend: str) -> dict[str, Any]:
+    return {
+        "available": bool(samples),
+        "backend": backend,
         "sample_interval_s": interval_s,
         "sample_count": len(samples),
         "platform": platform_profile(),
@@ -190,7 +303,7 @@ def summarize_resource_profile(samples: list[dict[str, Any]], *, interval_s: flo
         "samples": samples,
         "boundary": (
             "Resource samples describe the benchmark gateway process on the node that runs this script. "
-            "For final defense, rerun on Jetson/IPC and keep this profile with tegrastats or OS-level logs."
+            "On Jetson, keep this profile together with tegrastats for final-round defense."
         ),
     }
 
@@ -198,6 +311,7 @@ def summarize_resource_profile(samples: list[dict[str, Any]], *, interval_s: flo
 def unavailable_resource_profile() -> dict[str, Any]:
     return {
         "available": False,
+        "backend": "unavailable",
         "sample_interval_s": 0,
         "sample_count": 0,
         "platform": platform_profile(),
@@ -227,7 +341,30 @@ def platform_profile() -> dict[str, Any]:
                 "total_memory_mb": round(memory.total / (1024 * 1024), 2),
             }
         )
+    elif platform.system().lower() == "linux":
+        memory = read_linux_meminfo()
+        profile.update(
+            {
+                "cpu_logical_count": os.cpu_count(),
+                "cpu_physical_count": None,
+                "total_memory_mb": round(memory.get("total_kb", 0) / 1024, 2),
+            }
+        )
     return profile
+
+
+def build_gateway_boundary(*, final_edge_node: bool) -> str:
+    if final_edge_node:
+        return (
+            "This benchmark starts the Wearedge FastAPI gateway on the final Jetson/IPC/plant edge node and "
+            "measures real HTTP POST calls to /v1/workflow-canvas/decision with process resource sampling. "
+            "It measures the collaborative decision path, not high-detail image/VLM inference."
+        )
+    return (
+        "This benchmark starts the Wearedge FastAPI gateway on the current workstation and measures real HTTP "
+        "POST calls to /v1/workflow-canvas/decision with process resource sampling. It is stronger than "
+        "in-process replay, but it is still not Jetson/IPC hardware evidence until rerun on the final edge node."
+    )
 
 
 def stats(values: list[float]) -> dict[str, float]:
@@ -289,6 +426,9 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--startup-timeout", type=float, default=DEFAULT_STARTUP_TIMEOUT_S)
     parser.add_argument("--resource-sample-interval", type=float, default=DEFAULT_RESOURCE_SAMPLE_INTERVAL_S)
     parser.add_argument("--no-resource-sampling", action="store_true")
+    parser.add_argument("--final-edge-node", action="store_true")
+    parser.add_argument("--deployment-mode", default=None)
+    parser.add_argument("--edge-node-id", default=None)
     parser.add_argument("--report", type=Path, default=DEFAULT_REPORT)
     parser.add_argument("--json-output", type=Path, default=DEFAULT_JSON)
     parser.add_argument("--json", action="store_true")
@@ -302,6 +442,9 @@ def main(argv: list[str] | None = None) -> int:
             startup_timeout_s=args.startup_timeout,
             resource_sample_interval_s=args.resource_sample_interval,
             collect_resources=not args.no_resource_sampling,
+            final_edge_node=args.final_edge_node,
+            deployment_mode=args.deployment_mode,
+            edge_node_id=args.edge_node_id,
         )
     except (RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)

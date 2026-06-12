@@ -313,7 +313,10 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
     summary = _load_json(repo_root / "docs" / "submission" / "evidence" / "competition-eval-summary.json", failures)
     decision = _load_json(repo_root / "docs" / "submission" / "evidence" / "workflow-canvas-decision.json", failures)
     edge_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "edge-runtime-profile.json", failures)
-    local_gateway_latency = _load_json(
+    gateway_latency = _load_json(
+        repo_root / "docs" / "submission" / "evidence" / "finals-jetson-gateway-latency-benchmark.json",
+        [],
+    ) or _load_json(
         repo_root / "docs" / "submission" / "evidence" / "finals-local-gateway-latency-benchmark.json",
         failures,
     )
@@ -345,14 +348,14 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
         if safety.get("model_direct_ot_control") is not False:
             failures.append("generated evidence: edge safety boundary allows direct OT control")
 
-    if local_gateway_latency:
-        if local_gateway_latency.get("mode") != "http":
-            failures.append("generated evidence: local gateway benchmark did not use HTTP mode")
-        if local_gateway_latency.get("target_met") is not True:
-            failures.append("generated evidence: local gateway benchmark did not meet latency target")
-        resource_profile = _object(local_gateway_latency.get("resource_profile"))
+    if gateway_latency:
+        if gateway_latency.get("mode") != "http":
+            failures.append("generated evidence: gateway benchmark did not use HTTP mode")
+        if gateway_latency.get("target_met") is not True:
+            failures.append("generated evidence: gateway benchmark did not meet latency target")
+        resource_profile = _object(gateway_latency.get("resource_profile"))
         if int(resource_profile.get("sample_count", 0)) <= 0:
-            failures.append("generated evidence: local gateway benchmark missing resource samples")
+            failures.append("generated evidence: gateway benchmark missing resource samples")
 
     if solution_profile:
         for field in SOLUTION_PROFILE_REQUIRED_TOP_LEVEL_FIELDS:

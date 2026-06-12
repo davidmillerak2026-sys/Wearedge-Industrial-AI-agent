@@ -4,7 +4,7 @@ import argparse
 import hashlib
 import json
 import sys
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path
 from typing import Any
 
@@ -86,7 +86,7 @@ def build_final_readiness(
     )
 
     return {
-        "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "overall_ready_for_official_submission": overall_ready,
         "status": status,
         "repo": {
@@ -280,6 +280,9 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             "python scripts/verify_finals_foundation.py --json",
             "python scripts/benchmark_workflow_canvas_latency.py",
             "python scripts/benchmark_local_gateway_latency.py",
+            "$env:JETSON_SSH_PASSWORD = \"<set locally, do not commit>\"",
+            "python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20",
+            "Remove-Item Env:\\JETSON_SSH_PASSWORD",
             "python scripts/verify_submission_package.py --write-manifest",
             "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
             "python scripts/build_final_submission_bundle.py --json",

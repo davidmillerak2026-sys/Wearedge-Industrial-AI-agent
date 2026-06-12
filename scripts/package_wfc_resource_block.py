@@ -7,7 +7,7 @@ import re
 import sys
 import zipfile
 from dataclasses import dataclass
-from datetime import UTC, datetime
+from datetime import datetime, timezone
 from pathlib import Path, PurePosixPath
 from typing import Any
 
@@ -146,7 +146,7 @@ def create_manifest(
     return {
         "ok": required_present,
         "dry_run": dry_run,
-        "generated_at": datetime.now(UTC).replace(microsecond=0).isoformat(),
+        "generated_at": datetime.now(timezone.utc).replace(microsecond=0).isoformat(),
         "resource": {
             "name": info["name"],
             "displayName": info["displayName"],
