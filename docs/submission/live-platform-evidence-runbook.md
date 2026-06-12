@@ -103,15 +103,46 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
    `04-dashboard-decision-view.png` / `dashboard-decision-view.png` / `dashboard.png`；
    `05-run-log-ok-true.png` / `run-log-ok-true.png` / `run-log.png`；
    `06-human-approval-gate.png` / `human-approval-gate.png` / `approval-gate.png`。
-3. 人工复核画面确实来自 live WFC 后运行：
+3. 为每张截图创建同名 `.review.json` 复核侧车，文件也放在 staging 目录。命名示例：
+
+```text
+04-dashboard-decision-view.png
+04-dashboard-decision-view.review.json
+05-run-log-ok-true.png
+05-run-log-ok-true.review.json
+06-human-approval-gate.png
+06-human-approval-gate.review.json
+```
+
+4. `.review.json` 必须确认 `live_wfc_source=true`，`source_url` 来自 `https://wfc.bd-iiot.com/` 或 `https://spidr.wfc.bd-iiot.com/`，并记录 UTC 截图时间和观察到的 live 信号。示例：
+
+```json
+{
+  "live_wfc_source": true,
+  "source_url": "https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae",
+  "captured_at_utc": "2026-06-12T10:30:00Z",
+  "reviewer_role": "WFC operator",
+  "observed_signals": ["wearedge_decision_ok", "latency"]
+}
+```
+
+5. 三类截图的最低复核信号：
+
+| 目标 | `observed_signals` 要求 |
+| --- | --- |
+| Dashboard | 必须同时包含 `metric_cards`、`decision_path`、`approval_items`、`workflow_state`。 |
+| Run log | 至少包含 `ok=true`、`wearedge_decision_ok`、`latency`、`function_block_output`、`table_writeback` 之一。 |
+| HumanApprovalGate | 至少包含 `pending`、`approved`、`rejected`、`human_confirmation`、`approval_status` 之一。 |
+
+6. 人工复核画面确实来自 live WFC 后运行：
 
 ```powershell
-python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"
+python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"
 python scripts/verify_live_evidence.py --stage platform --write-manifest
 python scripts/verify_finals_foundation.py --json
 ```
 
-`promote_wfc_live_evidence.py` 会覆盖核心 04/05/06 截图，删除对应 `.fallback.json/.fallback.html` 标记，并写入 `wfc-live-evidence-replacement-manifest.json`。没有 `--confirm-live-source` 时脚本会拒绝执行，防止把 mock 或 smoke test 图误标成 live 平台证据。
+`promote_wfc_live_evidence.py` 会覆盖核心 04/05/06 截图，删除对应 `.fallback.json/.fallback.html` 标记，并写入 `wfc-live-evidence-replacement-manifest.json`。没有 `--confirm-live-source` 时脚本会拒绝执行；加上 `--require-review-sidecars` 后，脚本还会拒绝没有 live WFC 来源 URL、UTC 截图时间和目标信号的截图，防止把 mock 或 smoke test 图误标成 live 平台证据。
 
 Dashboard 路径备注：
 

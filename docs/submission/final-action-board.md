@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-12T10:01:29+00:00
+Updated: 2026-06-12T10:11:26+00:00
 
 ## Current Gate
 
@@ -18,7 +18,7 @@ Updated: 2026-06-12T10:01:29+00:00
 
 1. Replace WFC 04/05/06 fallback screenshots with reviewed live WFC screenshots.
 2. Complete the six enterprise-owned legal/contact/submission evidence files.
-3. Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"` only after real WFC screenshots are in staging.
+3. Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"` only after real WFC screenshots and review sidecars are in staging.
 4. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.
 5. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
 
@@ -45,7 +45,7 @@ Updated: 2026-06-12T10:01:29+00:00
 
 ```powershell
 python scripts/prepare_final_human_action_pack.py --json
-python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"
+python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"
 python scripts/verify_final_external_assets.py --write-report
 python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_live_evidence.py --stage final --write-manifest
@@ -56,5 +56,6 @@ python scripts/verify_submission_package.py --write-manifest
 
 - Do not commit files under `submission-assets/live-evidence/`.
 - Do not remove `.fallback.json` metadata until the corresponding screenshot is real WFC live evidence.
+- For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.
 - Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.
 - Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.
