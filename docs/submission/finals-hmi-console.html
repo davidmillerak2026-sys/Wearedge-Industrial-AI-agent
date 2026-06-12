@@ -269,6 +269,34 @@
       display: grid;
       gap: 8px;
     }
+    .evidence-grid {
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) minmax(320px, .8fr);
+      gap: 14px;
+      align-items: start;
+    }
+    .audit-list {
+      display: grid;
+      gap: 8px;
+      max-height: 270px;
+      overflow: auto;
+    }
+    .audit-event {
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      background: #fbfdff;
+      display: grid;
+      gap: 4px;
+      font-size: 12px;
+    }
+    .audit-event strong {
+      font-size: 12px;
+    }
+    .audit-event span {
+      color: var(--muted);
+      line-height: 1.35;
+    }
     .approval {
       display: grid;
       grid-template-columns: 18px minmax(0, 1fr);
@@ -297,7 +325,7 @@
       font-weight: 750;
     }
     @media (max-width: 1080px) {
-      main, .main-grid, .metric-grid { grid-template-columns: 1fr; }
+      main, .main-grid, .metric-grid, .evidence-grid { grid-template-columns: 1fr; }
       .path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
       header { grid-template-columns: 1fr; }
       .status-bar { justify-content: flex-start; }
@@ -314,6 +342,7 @@
       <span class="badge" id="source-badge">fallback sample</span>
       <span class="badge">decision <= 500 ms</span>
       <span class="badge">accuracy >= 90%</span>
+      <span class="badge">audit trail</span>
     </div>
   </header>
 
@@ -427,6 +456,28 @@
           </thead>
           <tbody id="evaluation-body"></tbody>
         </table>
+      </section>
+
+      <section class="grid evidence-grid">
+        <div class="panel panel-pad">
+          <h2 class="section-title">Evidence References</h2>
+          <table>
+            <thead>
+              <tr>
+                <th>Direction</th>
+                <th>Evidence source</th>
+                <th>Key metrics</th>
+              </tr>
+            </thead>
+            <tbody id="evidence-body"></tbody>
+          </table>
+        </div>
+
+        <div class="panel panel-pad">
+          <h2 class="section-title">Audit Trail</h2>
+          <div class="audit-list" id="audit-trail"></div>
+          <p class="small" style="margin-top:10px">Audit events are local HMI evidence for demo/replay. Production writeback should use WFC data tables and approved plant audit stores.</p>
+        </div>
       </section>
     </section>
   </main>
@@ -569,7 +620,12 @@
           "HumanApprovalGate",
           "UpdateDashboardDataTable"
         ]
-      }
+      },
+      audit_events: [
+        { stage: "context", actor: "operator", summary: "Natural-language line query captured with plant, line, SKU, and selected agent directions." },
+        { stage: "decision", actor: "Wearedge Agent Service", summary: "KPI matrix selected maintenance as primary direction and preserved quality, energy, production, and WFC evidence." },
+        { stage: "approval", actor: "HumanApprovalGate", summary: "High-risk OT action is pending manual confirmation before stop-line, restart, recipe, or quality-release action." }
+      ]
     };
 
     function buildPayload() {
@@ -649,6 +705,59 @@
         `;
         body.appendChild(row);
       });
+
+      const evidenceBody = document.querySelector("#evidence-body");
+      evidenceBody.innerHTML = "";
+      (decision.evaluations || []).forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.direction}</td>
+          <td>${item.evidence && item.evidence.source ? item.evidence.source : "-"}</td>
+          <td>${formatMetrics(item.metrics || {})}</td>
+        `;
+        evidenceBody.appendChild(row);
+      });
+
+      const auditTrail = document.querySelector("#audit-trail");
+      auditTrail.innerHTML = "";
+      const events = decision.audit_events && decision.audit_events.length
+        ? decision.audit_events
+        : buildAuditEvents(decision);
+      events.forEach((event, index) => {
+        const row = document.createElement("div");
+        row.className = "audit-event";
+        row.innerHTML = `<strong>${index + 1}. ${event.stage} · ${event.actor}</strong><span>${event.summary}</span>`;
+        auditTrail.appendChild(row);
+      });
+    }
+
+    function buildAuditEvents(decision) {
+      const collaborative = decision.collaborative_decision || {};
+      return [
+        {
+          stage: "context",
+          actor: "operator",
+          summary: "Natural-language query and selected directions were captured for Workflow Canvas decision replay."
+        },
+        {
+          stage: "decision",
+          actor: "Wearedge Agent Service",
+          summary: `${collaborative.primary_direction || "unknown"} selected with priority ${collaborative.priority || "unknown"}.`
+        },
+        {
+          stage: "approval",
+          actor: "HumanApprovalGate",
+          summary: collaborative.requires_human_confirmation
+            ? "Human confirmation is required before high-risk OT or quality disposition actions."
+            : "No high-risk approval gate was requested by the current decision."
+        }
+      ];
+    }
+
+    function formatMetrics(metrics) {
+      const entries = Object.entries(metrics).slice(0, 4);
+      if (!entries.length) return "-";
+      return entries.map(([key, value]) => `${key}: ${value}`).join("; ");
     }
 
     function blockHint(block) {

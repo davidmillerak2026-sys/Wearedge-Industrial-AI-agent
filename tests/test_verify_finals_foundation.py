@@ -42,6 +42,11 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["hmi"]["natural_language_api_foundation"] is True
     assert result["hmi"]["natural_language_console_foundation"] is True
     assert result["hmi"]["decision_visualization_foundation"] is True
+    assert result["hmi"]["production_hmi_foundation"] is True
+    assert result["hmi"]["capabilities"]["missing_capabilities"] == []
+    assert result["hmi"]["capabilities"]["capabilities"]["natural_language_query"] is True
+    assert result["hmi"]["capabilities"]["capabilities"]["evidence_references"] is True
+    assert result["hmi"]["capabilities"]["capabilities"]["audit_trail"] is True
     assert result["platform_evidence"]["fallback_warning_count"] == 3
     assert result["priority_gaps"]
 
@@ -60,5 +65,7 @@ def test_finals_foundation_report_states_boundary() -> None:
     assert "Evidence tier: final_edge_fastapi_http_gateway" in report
     assert "Replay mode: http" in report
     assert "Resource samples:" in report
+    assert "Production HMI foundation: True" in report
+    assert "HMI missing capabilities: None" in report
     assert "Finals validation cases: 15 / 15" in report
     assert "Foundation-ready does not mean finals-ready" in report

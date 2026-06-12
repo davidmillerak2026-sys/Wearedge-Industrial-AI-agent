@@ -96,6 +96,7 @@ def verify_finals_foundation(
     files = _verify_foundation_files(repo_root)
     platform = verify_live_evidence(assets_dir, "platform")
     latency_replay = _load_latency_replay(repo_root)
+    hmi_capabilities = _verify_hmi_capabilities(repo_root)
 
     performance = {
         "decision_accuracy_pct_min": summary["decision_accuracy_pct_min"],
@@ -114,6 +115,8 @@ def verify_finals_foundation(
         "natural_language_api_foundation": (repo_root / "jetson" / "app.py").is_file(),
         "natural_language_console_foundation": (repo_root / "docs" / "submission" / "finals-hmi-console.html").is_file(),
         "decision_visualization_foundation": (repo_root / "docs" / "submission" / "dashboard-mock.html").is_file(),
+        "production_hmi_foundation": hmi_capabilities["all_required_capabilities_present"],
+        "capabilities": hmi_capabilities,
         "live_wfc_dashboard_ready": not any(
             warning["path"].startswith("gongyi-mofang/04")
             for warning in platform["warnings"]
@@ -139,6 +142,7 @@ def verify_finals_foundation(
             hmi["natural_language_api_foundation"],
             hmi["natural_language_console_foundation"],
             hmi["decision_visualization_foundation"],
+            hmi["production_hmi_foundation"],
         )
     )
 
@@ -202,8 +206,10 @@ def render_markdown(result: dict[str, Any]) -> str:
         f"- Natural-language API foundation: {result['hmi']['natural_language_api_foundation']}",
         f"- Natural-language console foundation: {result['hmi']['natural_language_console_foundation']}",
         f"- Decision visualization foundation: {result['hmi']['decision_visualization_foundation']}",
+        f"- Production HMI foundation: {result['hmi']['production_hmi_foundation']}",
         f"- Live WFC dashboard ready: {result['hmi']['live_wfc_dashboard_ready']}",
         f"- Live WFC human approval ready: {result['hmi']['live_wfc_human_approval_ready']}",
+        f"- HMI missing capabilities: {', '.join(result['hmi']['capabilities']['missing_capabilities']) or 'None'}",
         "",
         "## Latency Replay Evidence",
         "",
@@ -358,6 +364,45 @@ def _load_latency_replay_file(path: Path, *, fallback_tier: str) -> dict[str, An
     }
 
 
+def _verify_hmi_capabilities(repo_root: Path) -> dict[str, Any]:
+    hmi_path = repo_root / "docs" / "submission" / "finals-hmi-console.html"
+    if not hmi_path.is_file():
+        return {
+            "path": str(hmi_path),
+            "all_required_capabilities_present": False,
+            "missing_capabilities": [
+                "natural_language_query",
+                "workflow_canvas_api_call",
+                "decision_path_visualization",
+                "evidence_references",
+                "human_approval_gate",
+                "audit_trail",
+                "source_boundary",
+            ],
+            "capabilities": {},
+        }
+
+    text = hmi_path.read_text(encoding="utf-8")
+    checks = {
+        "natural_language_query": all(marker in text for marker in ('id="operator-query"', "Natural language")),
+        "workflow_canvas_api_call": all(
+            marker in text for marker in ('fetch("/v1/workflow-canvas/decision"', "buildPayload()")
+        ),
+        "decision_path_visualization": all(marker in text for marker in ('id="decision-path"', "function_blocks")),
+        "evidence_references": all(marker in text for marker in ("Evidence References", 'id="evidence-body"')),
+        "human_approval_gate": all(marker in text for marker in ("HumanApprovalGate", 'id="approval-list"')),
+        "audit_trail": all(marker in text for marker in ("Audit Trail", 'id="audit-trail"', "audit_events")),
+        "source_boundary": all(marker in text for marker in ('id="source-badge"', "fallback sample")),
+    }
+    missing = [name for name, present in checks.items() if not present]
+    return {
+        "path": str(hmi_path),
+        "all_required_capabilities_present": not missing,
+        "missing_capabilities": missing,
+        "capabilities": checks,
+    }
+
+
 def _priority_gaps(
     coverage: dict[str, Any],
     performance: dict[str, Any],
@@ -385,8 +430,15 @@ def _priority_gaps(
         gaps.append("Complete platform-stage Xcelerator/WFC evidence before treating the platform path as stable.")
     if platform["warnings"]:
         gaps.append("Replace fallback WFC dashboard/run-log/HumanApprovalGate assets with live WFC execution screenshots.")
-    if not hmi["natural_language_api_foundation"] or not hmi["decision_visualization_foundation"]:
-        gaps.append("Build the natural-language HMI and decision-process visualization as first-class product surfaces.")
+    if (
+        not hmi["natural_language_api_foundation"]
+        or not hmi["decision_visualization_foundation"]
+        or not hmi["production_hmi_foundation"]
+    ):
+        gaps.append(
+            "Build the natural-language HMI, evidence references, audit trail, and decision-process visualization "
+            "as first-class product surfaces."
+        )
     if files["missing"]:
         gaps.append("Restore missing foundation files before relying on the finals roadmap.")
     if performance["finals_case_count"] < MIN_FINALS_CASES:
