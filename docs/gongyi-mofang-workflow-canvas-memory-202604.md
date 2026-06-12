@@ -377,6 +377,7 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 - 已在 `更新数据表.1` 输入弹窗中绑定四个全局数据表字段：`selected_direction`、`priority`、`recommended_action`、`approval_status`。
 - 已保存字段选项、四字段绑定确认和 DEBUG 运行态输入面板截图：`129-wfc-update-data-table-field-options-20260612.png`、`141-wfc-update-data-table-binding-confirmed-20260612.png`、`147-wfc-update-table-panel-scrolled-for-status-20260612.png`。
 - 当前边界：平台截图证明字段绑定完成，但 Python 输出到 `更新数据表.1` 的执行/数据连线和原生写回值仍需继续精修；不能把这些截图描述成原生 `ok=true` 或 latency 写回已完成。
+- WFC007 原文路径进一步确认：需要“建立 `[图片处理]` 的 `输出1` 与 `[更新数据表]` 输入端口的连线”，更新块才会把 Python JSON 输出保存到全局数据表。浏览器 GUI 已验证右键菜单可删除左右连接，但 2026-06-12 自动化拖拽尚未稳定生成 `输出1 -> 更新数据表输入` 的虚线数据线；失败尝试后已撤销并恢复 `开始 -> CallWearedgeDecisionApi -> 结束` 主线，避免把真实项目留在断线状态。
 
 | 发现 | 结论 |
 | --- | --- |

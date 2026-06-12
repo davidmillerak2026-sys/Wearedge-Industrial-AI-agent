@@ -172,11 +172,12 @@
 - 2026-06-12 已将仓库侧 `workflows/wfc_call_wearedge_decision_fb_main.py` 压缩为 120 行短版 live-edit 代码，并用 `tests/test_wfc_function_block_live_edit.py` 约束短摘要输出和文件体积。浏览器 GUI 已在 live WFC 源码窗口搜索 `wearedge`，可见 `_summary`、`selected_direction`、`evidence_summary`、`approval_status` 等字段，证明平台内 `fb_main.py` 已替换为 Wearedge 摘要版本。
 - 2026-06-12 浏览器自动化再次操作当前 WFC 页面，确认项目仍在 `Workflow Canvas`、URL 为 `project/cmq6lbb9x00bx1l6pxll7voae`，主线含 `CallWearedgeDecisionApi`，顶部可从 `play-circle` 进入 DEBUG，运行后可恢复 `已保存`。WFC Canvas 页面在部分语义点击、DOM 节点点击和坐标点击时会超时，因此所有 live 运行结论均配套截图和 sidecar JSON 记录。
 - 2026-06-12 浏览器 GUI 继续操作真实 WFC 页面，已从 `通用 -> 更新数据表` 拖入 `System.UpdateDataTable.1` / `更新数据表.1`，并在输入弹窗中绑定四个全局数据表字段：`selected_direction`、`priority`、`recommended_action`、`approval_status`。证据图包括 `129-wfc-update-data-table-field-options-20260612.png`、`141-wfc-update-data-table-binding-confirmed-20260612.png`、`147-wfc-update-table-panel-scrolled-for-status-20260612.png` 和 `148-wfc-debug-stopped-after-update-table-evidence-20260612.png`。
-- 2026-06-12 当前 WFC 数据表写回边界：`更新数据表.1` 字段绑定和 DEBUG 运行态输入面板已取得真实平台截图；但画布上 Python 输出到 `更新数据表.1` 的数据/执行连线仍需进一步精修，且原生数据表值或 log-manager 还没有可见的 `ok=true`/latency/selected direction 写回结果。
+- 2026-06-12 当前 WFC 数据表写回边界：`更新数据表.1` 字段绑定和 DEBUG 运行态输入面板已取得真实平台截图；但画布上 Python 输出到 `更新数据表.1` 的数据线仍需进一步精修，且原生数据表值或 log-manager 还没有可见的 `ok=true`/latency/selected direction 写回结果。
+- 2026-06-12 已按 WFC001/WFC007 进一步验证 GUI 路径：功能块右键菜单可删除左/右连接，旧主线删除失败后已用撤销恢复，最终稳定状态仍保持 `开始 -> CallWearedgeDecisionApi -> 结束`。下一次应优先完成 `输出1` JSON 类型确认和 `输出1 -> 更新数据表输入` 虚线数据端口连接，而不是再次只移动控制流黄线。
 
 ## 下一步建议
 
-1. 精修 Python 输出到 `更新数据表.1` 的数据/执行连线，并让原生数据表值或 log-manager 显示 `ok=true`、latency、selected direction。
+1. 精修 Python `输出1` JSON 类型和 `输出1 -> 更新数据表输入` 虚线数据端口连接，并让原生数据表值或 log-manager 显示 `ok=true`、latency、selected direction。
 2. 创建 Wearedge Dashboard/ui-builder 视图，展示指标卡、决策路径、确认项和工作流状态。
 3. 补 WFC 原生 read/log 或数据表写回画面，让业务摘要不只停留在 `状态码 Good`。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
