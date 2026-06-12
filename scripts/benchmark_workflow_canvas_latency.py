@@ -122,10 +122,14 @@ def render_report(result: dict[str, Any]) -> str:
                 f"- App: `{gateway.get('app', 'unknown')}`",
                 f"- Base URL: `{gateway.get('base_url', 'unknown')}`",
                 f"- Healthz OK: {gateway.get('healthz_ok', False)}",
-                f"- Workflow endpoint: `{gateway.get('deployment_mode', 'unknown')}`",
-                "",
+                f"- Deployment mode: `{gateway.get('deployment_mode', 'unknown')}`",
             ]
         )
+        if gateway.get("workflow_endpoint"):
+            lines.append(f"- Workflow endpoint: `{gateway.get('workflow_endpoint')}`")
+        if gateway.get("dependency_profile"):
+            lines.append(f"- Dependency profile: `{gateway.get('dependency_profile')}`")
+        lines.append("")
     resource_profile = result.get("resource_profile")
     if isinstance(resource_profile, dict):
         cpu = resource_profile.get("process_cpu_percent", {})
@@ -187,6 +191,14 @@ def render_report(result: dict[str, Any]) -> str:
             [
                 "- Keep the generated JSON/report together with Jetson `tegrastats` logs as final-edge hardware evidence.",
                 "- Rerun the same collector before final defense if the Jetson image, Python environment, or WFC payload changes.",
+            ]
+        )
+    elif result.get("evidence_tier") == "final_edge_stdlib_http_gateway":
+        lines.extend(
+            [
+                "- Keep the generated JSON/report together with Jetson `tegrastats` logs as final-edge HTTP decision-path evidence.",
+                "- If FastAPI/Uvicorn become available on the edge node, rerun `scripts/collect_jetson_edge_evidence.py --allow-remote-pip-install` to upgrade this fallback evidence to FastAPI gateway evidence.",
+                "- Keep the stdlib fallback boundary visible; it proves edge execution of the same deterministic decision engine, not the full production gateway stack.",
             ]
         )
     elif result.get("evidence_tier") == "local_fastapi_http_gateway":

@@ -34,6 +34,7 @@
 | Local FastAPI gateway latency/resource report | `docs/finals-local-gateway-latency-benchmark-report.md` | generated |
 | Local FastAPI gateway latency/resource JSON | `docs/submission/evidence/finals-local-gateway-latency-benchmark.json` | generated |
 | Local FastAPI gateway benchmark script | `scripts/benchmark_local_gateway_latency.py` | ready |
+| Edge stdlib gateway benchmark script | `scripts/benchmark_edge_stdlib_gateway.py` | ready |
 | Edge runtime evidence collector | `scripts/collect_edge_runtime_evidence.py` | ready |
 | Finals foundation verifier | `scripts/verify_finals_foundation.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
@@ -60,6 +61,7 @@
 - Finals validation is now checked by `scripts/run_finals_validation.py --json`; it uses 15 simulated final-round cases, covers all five directions, and represents each primary direction 3 times.
 - Finals latency replay is checked by `scripts/benchmark_workflow_canvas_latency.py`; the default `in_process` mode measures deterministic local replay of the Workflow Canvas collaborative decision path and must be upgraded with `--base-url http://<edge-host>:<port>` before claiming deployed endpoint latency.
 - Local FastAPI gateway latency/resource evidence is checked by `scripts/benchmark_local_gateway_latency.py`; it starts the Wearedge gateway locally, measures real HTTP calls to `/v1/workflow-canvas/decision`, and samples gateway CPU/RSS/system memory, but it is still workstation evidence until rerun on Jetson / IPC.
+- Edge stdlib gateway evidence is checked by `scripts/benchmark_edge_stdlib_gateway.py`; it exists for Jetson/IPC nodes without FastAPI/Uvicorn, uses the same `jetson.competition.build_competition_decision()` entry point, and must be described as fallback HTTP decision-path evidence rather than full FastAPI production-gateway evidence.
 - Ignored live edge-runtime evidence is collected by `scripts/collect_edge_runtime_evidence.py`; it writes `edge-runtime/06-http-resource-benchmark.*` and `edge-runtime/07-edge-runtime-evidence-manifest.md` under `submission-assets/live-evidence/`.
 - Finals foundation is checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.

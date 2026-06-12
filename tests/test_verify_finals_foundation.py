@@ -35,7 +35,7 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["latency_replay"]["ready"] is True
     assert result["latency_replay"]["target_met"] is True
     assert result["latency_replay"]["mode"] == "http"
-    assert result["latency_replay"]["evidence_tier"] == "final_edge_fastapi_http_gateway"
+    assert result["latency_replay"]["evidence_tier"] == "final_edge_stdlib_http_gateway"
     assert result["latency_replay"]["sample_count"] > 0
     assert result["latency_replay"]["resource_sample_count"] > 0
     assert result["latency_replay"]["process_rss_mb_max"] > 0
@@ -62,7 +62,7 @@ def test_finals_foundation_report_states_boundary() -> None:
     assert "Decision accuracy" in report
     assert "Latency" in report
     assert "Latency Replay Evidence" in report
-    assert "Evidence tier: final_edge_fastapi_http_gateway" in report
+    assert "Evidence tier: final_edge_stdlib_http_gateway" in report
     assert "Replay mode: http" in report
     assert "Resource samples:" in report
     assert "Production HMI foundation: True" in report

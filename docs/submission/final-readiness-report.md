@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T03:13:28+00:00
+Updated: 2026-06-12T04:17:15+00:00
 
 ## Executive Status
 
@@ -25,7 +25,7 @@ Updated: 2026-06-12T03:13:28+00:00
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 8 / 8 |
-| Phase B - Gongyi Mofang PoC package | ready | 17 / 17 |
+| Phase B - Gongyi Mofang PoC package | ready | 18 / 18 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 13 / 13 |
 | Phase E - Registration fields | ready | 8 / 8 |
@@ -52,12 +52,12 @@ Updated: 2026-06-12T03:13:28+00:00
 - Finals validation cases: 15
 - Decision accuracy min: 95.0%
 - Rule decision latency max: 1 ms
-- Workflow Canvas evidence tier: final_edge_fastapi_http_gateway
+- Workflow Canvas evidence tier: final_edge_stdlib_http_gateway
 - Workflow Canvas replay mode: http
 - Workflow Canvas replay samples: 300
-- Workflow Canvas replay p95/max: 4 / 7 ms
-- Workflow Canvas resource samples: 13
-- Workflow Canvas gateway RSS max: 47.57 MB
+- Workflow Canvas replay p95/max: 2 / 3 ms
+- Workflow Canvas resource samples: 7
+- Workflow Canvas gateway RSS max: 21.46 MB
 - Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-jetson-gateway-latency-benchmark.json`
 
 Priority gaps:
@@ -66,8 +66,8 @@ Priority gaps:
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `b9abf5db54d9d04591ecf7b574db91f02fb0a097ffce1017c51fd488bf323dc9`
-- Bundle manifest file count: `74`
+- Bundle SHA256: `57dcdc04428730cfb76e7b7ec90e3265b78cd838245e068bec0777825d5b0617`
+- Bundle manifest file count: `75`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
 - Human action templates written/skipped: `0 / 7`

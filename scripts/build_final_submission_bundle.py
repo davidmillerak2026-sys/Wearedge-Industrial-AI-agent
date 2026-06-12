@@ -68,6 +68,7 @@ INCLUDE_PATHS = (
     "scripts/run_finals_validation.py",
     "scripts/benchmark_workflow_canvas_latency.py",
     "scripts/benchmark_local_gateway_latency.py",
+    "scripts/benchmark_edge_stdlib_gateway.py",
     "scripts/collect_edge_runtime_evidence.py",
     "scripts/collect_jetson_edge_evidence.py",
     "scripts/verify_finals_foundation.py",

@@ -226,24 +226,36 @@ def validate_python_candidates(python_candidates: tuple[str, ...]) -> None:
             raise ValueError(f"refusing to use Python from protected WearEdge-Pro project: {candidate}")
 
 
-def build_prepare_runtime_command(*, remote_dir: str) -> str:
+def build_prepare_runtime_command(*, remote_dir: str, allow_pip_install: bool = False) -> str:
     venv_python = posixpath.join(posixpath.normpath(remote_dir), ".venv/bin/python")
-    return "\n".join(
-        [
-            "set -euo pipefail",
-            f"cd {quote(remote_dir)}",
-            f"if [ -x {quote(venv_python)} ] && {quote(venv_python)} -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
-            f"  echo 'competition_venv={venv_python}'",
-            "  echo 'competition_venv_deps_ok=true'",
-            "elif python3 -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
-            "  echo 'system_python_deps_ok=true'",
-            "else",
-            "  if [ ! -x .venv/bin/python ]; then python3 -m venv .venv; fi",
-            "  .venv/bin/python -m pip install -r jetson/requirements.txt",
-            "  .venv/bin/python -c \"import fastapi, uvicorn; print('competition_venv_deps_ok=true')\"",
-            "fi",
-        ]
-    )
+    lines = [
+        "set -euo pipefail",
+        f"cd {quote(remote_dir)}",
+        f"if [ -x {quote(venv_python)} ] && {quote(venv_python)} -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
+        f"  echo 'competition_venv={venv_python}'",
+        "  echo 'competition_venv_deps_ok=true'",
+        "elif python3 -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
+        "  echo 'system_python_deps_ok=true'",
+    ]
+    if allow_pip_install:
+        lines.extend(
+            [
+                "else",
+                "  if [ ! -x .venv/bin/python ]; then python3 -m venv .venv; fi",
+                "  .venv/bin/python -m pip install -r jetson/requirements.txt",
+                "  .venv/bin/python -c \"import fastapi, uvicorn; print('competition_venv_deps_ok=true')\"",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "else",
+                "  python3 -c \"import jetson.competition; print('stdlib_gateway_fallback_ready=true')\"",
+                "  echo 'remote_pip_install_skipped=true'",
+            ]
+        )
+    lines.append("fi")
+    return "\n".join(lines)
 
 
 def build_benchmark_command(*, remote_dir: str, iterations: int, python_candidates: tuple[str, ...]) -> str:
@@ -255,16 +267,16 @@ def build_benchmark_command(*, remote_dir: str, iterations: int, python_candidat
             "set -euo pipefail",
             f"cd {quote(remote_dir)}",
             "PYTHON_BIN=''",
+            "STD_PYTHON_BIN=''",
             f"for candidate in {candidates}; do",
             "  CANDIDATE_BIN=''",
             "  if command -v \"$candidate\" >/dev/null 2>&1; then CANDIDATE_BIN=\"$candidate\"; fi",
             "  if [ -z \"$CANDIDATE_BIN\" ] && [ -x \"$candidate\" ]; then CANDIDATE_BIN=\"$candidate\"; fi",
             "  if [ -z \"$CANDIDATE_BIN\" ]; then continue; fi",
+            "  if [ -z \"$STD_PYTHON_BIN\" ] && \"$CANDIDATE_BIN\" -c \"import jetson.competition\" >/dev/null 2>&1; then STD_PYTHON_BIN=\"$CANDIDATE_BIN\"; fi",
             "  if \"$CANDIDATE_BIN\" -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then PYTHON_BIN=\"$CANDIDATE_BIN\"; break; fi",
             "done",
-            "if [ -z \"$PYTHON_BIN\" ]; then echo 'No usable Python found' >&2; exit 4; fi",
-            "echo \"PYTHON_BIN=$PYTHON_BIN\"",
-            "\"$PYTHON_BIN\" -c \"import fastapi, uvicorn; print('gateway_deps_ok=true')\"",
+            "if [ -z \"$PYTHON_BIN\" ] && [ -z \"$STD_PYTHON_BIN\" ]; then echo 'No usable Python found' >&2; exit 4; fi",
             f"mkdir -p {quote(REMOTE_EVIDENCE_DIR)}",
             f"rm -f {quote(REMOTE_EVIDENCE_DIR + '/08-tegrastats-http-resource-benchmark.log')}",
             "TEGRA_PID=''",
@@ -273,13 +285,30 @@ def build_benchmark_command(*, remote_dir: str, iterations: int, python_candidat
             "  TEGRA_PID=$!",
             "fi",
             "set +e",
+            "if [ -n \"$PYTHON_BIN\" ]; then",
+            "  echo \"PYTHON_BIN=$PYTHON_BIN\"",
+            "  \"$PYTHON_BIN\" -c \"import fastapi, uvicorn; print('gateway_deps_ok=true')\"",
             (
-                "WEAREDGE_AUTH_DISABLED=1 "
+                "  WEAREDGE_AUTH_DISABLED=1 "
                 "WEAREDGE_DEPLOYMENT_MODE=jetson_edge_http_gateway_benchmark "
                 "WEAREDGE_EDGE_NODE_ID=jetson-orin-nano-8gb "
                 "\"$PYTHON_BIN\" scripts/collect_edge_runtime_evidence.py "
                 f"--rerun-benchmark --iterations {iterations} --final-edge-node --json"
             ),
+            "else",
+            "  echo \"STD_PYTHON_BIN=$STD_PYTHON_BIN\"",
+            "  \"$STD_PYTHON_BIN\" -c \"import jetson.competition; print('stdlib_gateway_deps_ok=true')\"",
+            (
+                "  WEAREDGE_DEPLOYMENT_MODE=jetson_edge_stdlib_http_gateway_benchmark "
+                "WEAREDGE_EDGE_NODE_ID=jetson-orin-nano-8gb "
+                "\"$STD_PYTHON_BIN\" scripts/benchmark_edge_stdlib_gateway.py "
+                f"--iterations {iterations} --final-edge-node "
+                f"--report {quote(REMOTE_EVIDENCE_DIR + '/06-http-resource-benchmark-report.md')} "
+                f"--json-output {quote(REMOTE_EVIDENCE_DIR + '/06-http-resource-benchmark.json')} "
+                f"--manifest-output {quote(REMOTE_EVIDENCE_DIR + '/07-edge-runtime-evidence-manifest.md')} "
+                "--json"
+            ),
+            "fi",
             "STATUS=$?",
             "if [ -n \"$TEGRA_PID\" ]; then sleep 2; kill \"$TEGRA_PID\" >/dev/null 2>&1 || true; wait \"$TEGRA_PID\" >/dev/null 2>&1 || true; fi",
             "set -e",
@@ -383,6 +412,7 @@ def collect_jetson_edge_evidence(
     iterations: int,
     timeout: float,
     skip_deploy: bool,
+    allow_remote_pip_install: bool,
 ) -> dict[str, Any]:
     if iterations <= 0:
         raise ValueError("iterations must be positive")
@@ -406,7 +436,7 @@ def collect_jetson_edge_evidence(
 
         runtime = exec_checked(
             client,
-            build_prepare_runtime_command(remote_dir=remote_dir),
+            build_prepare_runtime_command(remote_dir=remote_dir, allow_pip_install=allow_remote_pip_install),
             timeout=max(timeout, 300.0),
         )
         remote_stdout += runtime.stdout
@@ -469,6 +499,11 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--iterations", type=int, default=20)
     parser.add_argument("--timeout", type=float, default=45.0)
     parser.add_argument("--skip-deploy", action="store_true")
+    parser.add_argument(
+        "--allow-remote-pip-install",
+        action="store_true",
+        help="Allow the collector to create an isolated remote venv and install FastAPI dependencies from the network.",
+    )
     parser.add_argument("--json", action="store_true")
     args = parser.parse_args(argv)
 
@@ -487,6 +522,7 @@ def main(argv: list[str] | None = None) -> int:
             iterations=args.iterations,
             timeout=args.timeout,
             skip_deploy=args.skip_deploy,
+            allow_remote_pip_install=args.allow_remote_pip_install,
         )
     except (OSError, RuntimeError, ValueError) as exc:
         print(f"ERROR: {exc}", file=sys.stderr)

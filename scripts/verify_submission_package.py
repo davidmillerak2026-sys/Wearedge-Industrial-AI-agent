@@ -40,6 +40,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
             "WFC Python function block prototype",
         ),
         Artifact("scripts/smoke_edge_runtime_profile.py", "Edge runtime profile smoke script"),
+        Artifact("scripts/benchmark_edge_stdlib_gateway.py", "Edge stdlib HTTP gateway benchmark"),
         Artifact("scripts/collect_edge_runtime_evidence.py", "Edge runtime live-evidence collector"),
         Artifact("scripts/smoke_solution_profile.py", "Industrial-agent solution profile smoke script"),
         Artifact("docs/workflow-canvas-poc-runbook.md", "Workflow Canvas runbook"),

@@ -18,6 +18,7 @@ It separates three evidence levels:
 | In-process replay | Direct Python call to the decision engine. | Tracked in `docs/finals-latency-benchmark-report.md`. |
 | Local HTTP gateway | Real HTTP POST calls to `/v1/workflow-canvas/decision` plus CPU/RSS/system memory sampling. | Tracked in `docs/finals-local-gateway-latency-benchmark-report.md`. |
 | Jetson / IPC edge node | Same HTTP benchmark rerun on final edge hardware, with resource logs. | Final defense upgrade. |
+| Jetson / IPC stdlib fallback | Dependency-light HTTP benchmark for offline edge nodes without FastAPI/Uvicorn. | Uses the same `jetson.competition.build_competition_decision()` entry point and is explicitly marked as fallback evidence. |
 
 ## One-Command Collection
 
@@ -60,7 +61,13 @@ Remove-Item Env:\JETSON_SSH_PASSWORD
 ```
 
 The remote collector deploys the competition runtime into `~/Wearedge-Industrial-AI-agent-competition` and leaves the older `~/WearEdge-Pro` M400/VLM service untouched.
-It also refuses to use a Python interpreter or virtual environment under `~/WearEdge-Pro`. If dependencies are not already available on the Jetson system Python, the collector prepares an isolated `.venv` inside `~/Wearedge-Industrial-AI-agent-competition`.
+It also refuses to use a Python interpreter or virtual environment under `~/WearEdge-Pro`. If FastAPI/Uvicorn are already available on the Jetson system Python or isolated competition `.venv`, the collector runs the FastAPI benchmark. If they are not available and the edge node has no internet, it runs `scripts/benchmark_edge_stdlib_gateway.py`, a Python standard-library HTTP gateway that calls the same Workflow Canvas decision engine and writes a report marked as `final_edge_stdlib_http_gateway`.
+
+To explicitly allow the collector to create an isolated `.venv` and install FastAPI dependencies from the network, add:
+
+```powershell
+python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user ryn --iterations 20 --allow-remote-pip-install
+```
 
 Isolation rules:
 

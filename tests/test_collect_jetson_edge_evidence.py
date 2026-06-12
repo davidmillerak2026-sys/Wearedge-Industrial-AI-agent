@@ -33,6 +33,9 @@ def test_benchmark_command_marks_final_edge_without_secret() -> None:
     assert "--iterations 20" in command
     assert "tegrastats" in command
     assert "Wearedge-Industrial-AI-agent-competition/.venv/bin/python" in command
+    assert "benchmark_edge_stdlib_gateway.py" in command
+    assert "STD_PYTHON_BIN" in command
+    assert "collect_edge_runtime_evidence.py" in command
     assert "WearEdge-Pro" not in command
     assert "JETSON_SSH_PASSWORD" not in command
     assert "password" not in command.lower()
@@ -44,9 +47,22 @@ def test_prepare_runtime_command_uses_isolated_competition_venv() -> None:
 
     command = module.build_prepare_runtime_command(remote_dir=remote_dir)
 
+    assert "stdlib_gateway_fallback_ready=true" in command
+    assert "remote_pip_install_skipped=true" in command
+    assert "Wearedge-Industrial-AI-agent-competition/.venv/bin/python" in command
+    assert "WearEdge-Pro" not in command
+    assert "password" not in command.lower()
+
+
+def test_prepare_runtime_command_allows_explicit_remote_pip_install() -> None:
+    module = _load_module()
+    remote_dir = "/home/ryn/Wearedge-Industrial-AI-agent-competition"
+
+    command = module.build_prepare_runtime_command(remote_dir=remote_dir, allow_pip_install=True)
+
     assert "python3 -m venv .venv" in command
     assert ".venv/bin/python -m pip install -r jetson/requirements.txt" in command
-    assert "Wearedge-Industrial-AI-agent-competition/.venv/bin/python" in command
+    assert "remote_pip_install_skipped=true" not in command
     assert "WearEdge-Pro" not in command
     assert "password" not in command.lower()
 
