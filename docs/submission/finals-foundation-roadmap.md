@@ -60,7 +60,7 @@ Wearedge 在端侧汇聚 MES / QMS / EMS / CMMS / 设备信号 / 视觉证据，
 2. 将当前 15 条决赛验证集继续扩到真实/半真实标签集。决赛指标至少要能解释 `accuracy>=90%` 的样本量、标签来源和失败样例。
 3. 把 WFC 04/05/06 fallback 替换成真实平台执行证据。优先级高于继续润色文案。
 4. 做正式 HMI 原型。自然语言输入、决策路径、证据引用、指标卡、人工确认状态要在一个界面里出现。
-5. 建立端侧性能基线。先用 `python scripts/benchmark_workflow_canvas_latency.py` 固化本地协同决策延迟，再用 `python scripts/benchmark_local_gateway_latency.py` 固化本地 HTTP 网关延迟和 CPU/RSS/系统内存采样，最后在 Jetson / IPC 上复跑 HTTP benchmark 并补 tegrastats 或 OS 资源日志；规则决策延迟、API 往返延迟、模型推理延迟必须分开测，避免被真实 VLM 图像推理延迟拖累 `<=500ms` 的协同决策指标。
+5. 建立端侧性能基线。先用 `python scripts/benchmark_workflow_canvas_latency.py` 固化本地协同决策延迟，再用 `python scripts/benchmark_local_gateway_latency.py` 固化本地 HTTP 网关延迟和 CPU/RSS/系统内存采样，然后用 `python scripts/collect_edge_runtime_evidence.py` 写入 live-evidence；最后在 Jetson / IPC 上用 `--rerun-benchmark` 复跑并补 tegrastats 或 OS 资源日志。规则决策延迟、API 往返延迟、模型推理延迟必须分开测，避免被真实 VLM 图像推理延迟拖累 `<=500ms` 的协同决策指标。
 6. 准备双路径演示。A 路是真实 Xcelerator / 工易魔方；B 路是本地 API + Dashboard + 录屏，防止现场环境不稳定。
 
 ## 不建议现在过早投入的事
@@ -78,6 +78,7 @@ Wearedge 在端侧汇聚 MES / QMS / EMS / CMMS / 设备信号 / 视觉证据，
 python scripts/verify_finals_foundation.py --json
 python scripts/benchmark_workflow_canvas_latency.py
 python scripts/benchmark_local_gateway_latency.py
+python scripts/collect_edge_runtime_evidence.py
 ```
 
 该命令只证明 foundation readiness，不证明 finals readiness。决赛完成仍需要真实平台端到端执行证据、正式人机协同界面、签署材料和提交成功截图。

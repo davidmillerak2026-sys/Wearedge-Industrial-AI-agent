@@ -14,7 +14,7 @@
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 8 / 8 |
-| Phase B - Gongyi Mofang PoC package | ready | 15 / 15 |
+| Phase B - Gongyi Mofang PoC package | ready | 17 / 17 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 13 / 13 |
 | Phase E - Registration fields | ready | 8 / 8 |
@@ -23,7 +23,7 @@
 
 | Check | Status | Notes |
 | --- | --- | --- |
-| Generated evidence | ready | offline evidence, WFC smoke snapshot, edge runtime profile, and solution profile are present |
+| Generated evidence | ready | offline evidence, WFC smoke snapshot, edge runtime profile, HTTP resource benchmark, and solution profile are present |
 | Registration fields | ready | short/mid/long field copy and human-owned fields are separated |
 | Offline report boundary | ready | report includes metric table and simulated/offline boundary |
 | Submission timeline | ready | internal submit date and official deadline are tracked |

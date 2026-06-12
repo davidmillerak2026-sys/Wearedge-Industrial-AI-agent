@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T02:21:08+00:00
+Updated: 2026-06-12T02:38:02+00:00
 
 ## Executive Status
 
@@ -16,16 +16,16 @@ Updated: 2026-06-12T02:21:08+00:00
 
 | Area | Ready | Present / Expected | Missing | Warnings |
 | --- | --- | ---: | ---: | ---: |
-| Platform evidence | True | 23 / 23 | 0 | 3 |
+| Platform evidence | True | 25 / 25 | 0 | 3 |
 | Finals foundation | True | 15 cases | 0 | 2 |
-| Final evidence | False | 25 / 31 | 6 | 3 |
+| Final evidence | False | 27 / 33 | 6 | 3 |
 
 ## Repository Phase Status
 
 | Phase | Status | Artifacts |
 | --- | --- | ---: |
 | Phase A - Offline evaluation | ready | 8 / 8 |
-| Phase B - Gongyi Mofang PoC package | ready | 15 / 15 |
+| Phase B - Gongyi Mofang PoC package | ready | 17 / 17 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 13 / 13 |
 | Phase E - Registration fields | ready | 8 / 8 |
@@ -67,11 +67,13 @@ Priority gaps:
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `d088e3d2be97e879f9e13ce71b400149e9a0953f24db5200a988b68c0cc996eb`
-- Bundle manifest file count: `69`
+- Bundle SHA256: `cfb52bcd4b53d1e14dba5fe1a33584b771bd3397eeafe19ed74c7ef768b9d35a`
+- Bundle manifest file count: `71`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
 - Human action templates written/skipped: `0 / 7`
+- Edge runtime evidence manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\edge-runtime\07-edge-runtime-evidence-manifest.md`
+- Edge runtime evidence manifest present: True
 
 ## Recommended Next Actions
 

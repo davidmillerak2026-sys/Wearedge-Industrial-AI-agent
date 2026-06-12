@@ -23,6 +23,9 @@ DEFAULT_BUNDLE = (
 )
 DEFAULT_BUNDLE_MANIFEST = DEFAULT_BUNDLE.with_suffix(".bundle-manifest.json")
 DEFAULT_HUMAN_ACTION_MANIFEST = DEFAULT_ASSETS_DIR / "final-human-action-pack-manifest.json"
+DEFAULT_EDGE_RUNTIME_EVIDENCE_MANIFEST = (
+    DEFAULT_ASSETS_DIR / "edge-runtime" / "07-edge-runtime-evidence-manifest.md"
+)
 
 
 def file_sha256(path: Path) -> str:
@@ -49,6 +52,7 @@ def build_final_readiness(
     bundle_path: Path = DEFAULT_BUNDLE,
     bundle_manifest_path: Path = DEFAULT_BUNDLE_MANIFEST,
     human_action_manifest_path: Path = DEFAULT_HUMAN_ACTION_MANIFEST,
+    edge_runtime_manifest_path: Path = DEFAULT_EDGE_RUNTIME_EVIDENCE_MANIFEST,
 ) -> dict[str, Any]:
     from verify_live_evidence import verify_live_evidence
     from verify_finals_foundation import verify_finals_foundation
@@ -137,6 +141,10 @@ def build_final_readiness(
                 else None
             ),
             "final_targets_not_created": human_manifest.get("final_targets_not_created", []) if human_manifest else [],
+        },
+        "edge_runtime_evidence": {
+            "manifest_present": edge_runtime_manifest_path.is_file(),
+            "manifest_path": str(edge_runtime_manifest_path),
         },
         "recommended_next_actions": recommended_next_actions(repo, final, bundle_present, human_manifest),
     }
@@ -253,6 +261,8 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"- Human action manifest: `{result['human_action_pack']['manifest_path']}`",
             f"- Human action template count: `{result['human_action_pack']['template_count']}`",
             f"- Human action templates written/skipped: `{result['human_action_pack']['written_count']} / {result['human_action_pack']['skipped_count']}`",
+            f"- Edge runtime evidence manifest: `{result['edge_runtime_evidence']['manifest_path']}`",
+            f"- Edge runtime evidence manifest present: {result['edge_runtime_evidence']['manifest_present']}",
             "",
             "## Recommended Next Actions",
             "",

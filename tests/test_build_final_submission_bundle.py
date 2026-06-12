@@ -39,6 +39,7 @@ def test_build_final_submission_bundle_contains_repo_controlled_artifacts(tmp_pa
         assert "docs/submission/registration-fields.md" in names
         assert "docs/submission/business-plan.md" in names
         assert "docs/submission/finals-foundation-roadmap.md" in names
+        assert "docs/submission/edge-runtime-evidence-runbook.md" in names
         assert "docs/submission/finals-hmi-console.html" in names
         assert "docs/submission/final-human-action-runbook.md" in names
         assert "docs/finals-validation-report.md" in names
@@ -51,6 +52,7 @@ def test_build_final_submission_bundle_contains_repo_controlled_artifacts(tmp_pa
         assert "scripts/run_finals_validation.py" in names
         assert "scripts/benchmark_workflow_canvas_latency.py" in names
         assert "scripts/benchmark_local_gateway_latency.py" in names
+        assert "scripts/collect_edge_runtime_evidence.py" in names
         assert "scripts/verify_finals_foundation.py" in names
         assert "wfc-blocks/wearedge-agent-service/info.json" in names
         assert "scripts/run_final_readiness_pipeline.py" in names

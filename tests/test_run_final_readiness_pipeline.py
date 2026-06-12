@@ -52,12 +52,17 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert result["final_missing_count"] >= 6
     assert Path(result["bundle_path"]).is_file()
     assert Path(result["wfc_package_path"]).is_file()
+    assert Path(result["edge_runtime_evidence_manifest_path"]).is_file()
+    assert result["edge_runtime_evidence_ok"] is True
+    assert result["edge_runtime_evidence_sample_count"] > 0
     assert (tmp_path / "submission-package-manifest.md").is_file()
     assert (tmp_path / "live-evidence-manifest.md").is_file()
     assert (tmp_path / "final-readiness-report.md").is_file()
     assert (tmp_path / "finals-validation-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark.json").is_file()
+    assert (assets / "edge-runtime" / "06-http-resource-benchmark.json").is_file()
+    assert (assets / "edge-runtime" / "07-edge-runtime-evidence-manifest.md").is_file()
     assert (assets / "final-human-action-pack-manifest.json").is_file()
     assert not (assets / "legal" / "company-info-filled.md").exists()
     assert not (assets / "submission" / "01-registration-form-filled.png").exists()
@@ -105,6 +110,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "finals_validation_report=" in summary
     assert "latency_benchmark_report=" in summary
     assert "latency_benchmark_target_met=True" in summary
+    assert "edge_runtime_evidence_ok=True" in summary
     assert "selected_latency_evidence_tier=local_fastapi_http_gateway" in summary
     assert "selected_latency_evidence_mode=http" in summary
     assert "selected_latency_resource_sample_count=" in summary

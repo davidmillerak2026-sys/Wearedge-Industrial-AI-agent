@@ -1,0 +1,68 @@
+# Edge Runtime Evidence Runbook
+
+更新日期：2026-06-12
+
+## Purpose
+
+This runbook collects the evidence needed to defend the Wearedge edge-runtime claim:
+
+```text
+Wearedge runs the industrial agent decision path near the production line,
+through a FastAPI gateway that can be deployed on Jetson, IPC, or a plant edge server.
+```
+
+It separates three evidence levels:
+
+| Level | Meaning | Current status |
+| --- | --- | --- |
+| In-process replay | Direct Python call to the decision engine. | Tracked in `docs/finals-latency-benchmark-report.md`. |
+| Local HTTP gateway | Real HTTP POST calls to `/v1/workflow-canvas/decision` plus CPU/RSS/system memory sampling. | Tracked in `docs/finals-local-gateway-latency-benchmark-report.md`. |
+| Jetson / IPC edge node | Same HTTP benchmark rerun on final edge hardware, with resource logs. | Final defense upgrade. |
+
+## One-Command Collection
+
+On the current workstation:
+
+```powershell
+python scripts/benchmark_local_gateway_latency.py
+python scripts/collect_edge_runtime_evidence.py
+```
+
+This writes ignored live-evidence files:
+
+```text
+submission-assets/live-evidence/edge-runtime/06-http-resource-benchmark-report.md
+submission-assets/live-evidence/edge-runtime/06-http-resource-benchmark.json
+submission-assets/live-evidence/edge-runtime/07-edge-runtime-evidence-manifest.md
+```
+
+## Jetson / IPC Rerun
+
+On Jetson, IPC, or final plant edge gateway:
+
+```bash
+cd /path/to/Wearedge-Industrial-AI-agent
+python scripts/collect_edge_runtime_evidence.py --rerun-benchmark --iterations 20 --final-edge-node
+```
+
+For Jetson, also capture a parallel resource log:
+
+```bash
+tegrastats --interval 1000 | tee submission-assets/live-evidence/edge-runtime/08-tegrastats-http-resource-benchmark.log
+```
+
+For Windows IPC or plant server, capture Task Manager / Resource Monitor screenshots or an OS-level CSV beside the generated files.
+
+## Acceptance Criteria
+
+| Check | Target |
+| --- | --- |
+| HTTP endpoint | `/v1/workflow-canvas/decision` |
+| Samples | `300` for 15 cases x 20 iterations |
+| Latency | p95 and max both `<=500ms` for the collaborative decision path |
+| Resource profile | Process RSS and CPU sampling present |
+| Boundary | Report states whether it is workstation, Jetson, IPC, or plant edge evidence |
+
+## Boundary
+
+This benchmark measures the Workflow Canvas collaborative decision path, not high-detail visual model inference. Image/VLM latency must stay in the separate Jetson/M400 evidence track.

@@ -33,12 +33,14 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
     "Phase B - Gongyi Mofang PoC package": [
         Artifact("docs/gongyi-mofang-workflow-canvas-memory-202604.md", "Gongyi Mofang Workflow Canvas memory"),
         Artifact("docs/edge-agent-runtime-for-xcelerator.md", "Edge Agent Runtime notes"),
+        Artifact("docs/submission/edge-runtime-evidence-runbook.md", "Edge runtime evidence runbook"),
         Artifact("wfc-blocks/wearedge-agent-service/info.json", "WFC Wearedge resource block metadata"),
         Artifact(
             "wfc-blocks/wearedge-agent-service/function-blocks/CallWearedgeDecisionApi.py",
             "WFC Python function block prototype",
         ),
         Artifact("scripts/smoke_edge_runtime_profile.py", "Edge runtime profile smoke script"),
+        Artifact("scripts/collect_edge_runtime_evidence.py", "Edge runtime live-evidence collector"),
         Artifact("scripts/smoke_solution_profile.py", "Industrial-agent solution profile smoke script"),
         Artifact("docs/workflow-canvas-poc-runbook.md", "Workflow Canvas runbook"),
         Artifact("docs/workflow-canvas-api-schema.md", "Workflow Canvas API schema"),
@@ -311,6 +313,10 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
     summary = _load_json(repo_root / "docs" / "submission" / "evidence" / "competition-eval-summary.json", failures)
     decision = _load_json(repo_root / "docs" / "submission" / "evidence" / "workflow-canvas-decision.json", failures)
     edge_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "edge-runtime-profile.json", failures)
+    local_gateway_latency = _load_json(
+        repo_root / "docs" / "submission" / "evidence" / "finals-local-gateway-latency-benchmark.json",
+        failures,
+    )
     solution_profile = _load_json(repo_root / "docs" / "submission" / "evidence" / "solution-profile.json", failures)
 
     if summary:
@@ -339,6 +345,15 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
         if safety.get("model_direct_ot_control") is not False:
             failures.append("generated evidence: edge safety boundary allows direct OT control")
 
+    if local_gateway_latency:
+        if local_gateway_latency.get("mode") != "http":
+            failures.append("generated evidence: local gateway benchmark did not use HTTP mode")
+        if local_gateway_latency.get("target_met") is not True:
+            failures.append("generated evidence: local gateway benchmark did not meet latency target")
+        resource_profile = _object(local_gateway_latency.get("resource_profile"))
+        if int(resource_profile.get("sample_count", 0)) <= 0:
+            failures.append("generated evidence: local gateway benchmark missing resource samples")
+
     if solution_profile:
         for field in SOLUTION_PROFILE_REQUIRED_TOP_LEVEL_FIELDS:
             if field not in solution_profile:
@@ -352,7 +367,7 @@ def _verify_evidence(repo_root: Path) -> dict[str, Any]:
 
     return {
         "status": "ready" if not failures else "review",
-        "notes": "offline evidence, WFC smoke snapshot, edge runtime profile, and solution profile are present",
+        "notes": "offline evidence, WFC smoke snapshot, edge runtime profile, HTTP resource benchmark, and solution profile are present",
         "failures": failures,
     }
 

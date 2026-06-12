@@ -28,6 +28,8 @@ def test_live_evidence_platform_stage_reports_missing_items(tmp_path: Path) -> N
     assert result["missing_count"] == result["expected_count"]
     assert "xcelerator/04-runtime-profile-api-test.png" in result["missing"]
     assert "edge-runtime/05-solution-profile.png" in result["missing"]
+    assert "edge-runtime/06-http-resource-benchmark.json" in result["missing"]
+    assert "edge-runtime/07-edge-runtime-evidence-manifest.md" in result["missing"]
     assert "video/wearedge-enterprise-demo-3-5min.mp4" not in result["missing"]
 
 

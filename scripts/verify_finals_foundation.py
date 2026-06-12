@@ -50,6 +50,7 @@ REQUIRED_FOUNDATION_FILES = {
         "scripts/run_finals_validation.py",
         "scripts/benchmark_workflow_canvas_latency.py",
         "scripts/benchmark_local_gateway_latency.py",
+        "scripts/collect_edge_runtime_evidence.py",
         "docs/finals-validation-report.md",
         "docs/finals-latency-benchmark-report.md",
         "docs/finals-local-gateway-latency-benchmark-report.md",
@@ -60,6 +61,7 @@ REQUIRED_FOUNDATION_FILES = {
         "tests/test_run_finals_validation.py",
         "tests/test_benchmark_workflow_canvas_latency.py",
         "tests/test_benchmark_local_gateway_latency.py",
+        "tests/test_collect_edge_runtime_evidence.py",
     ],
     "hmi_foundation": [
         "jetson/app.py",
@@ -71,6 +73,7 @@ REQUIRED_FOUNDATION_FILES = {
     ],
     "edge_runtime": [
         "docs/edge-agent-runtime-for-xcelerator.md",
+        "docs/submission/edge-runtime-evidence-runbook.md",
         "scripts/smoke_edge_runtime_profile.py",
         "docs/edge-runtime-benchmark.md",
     ],

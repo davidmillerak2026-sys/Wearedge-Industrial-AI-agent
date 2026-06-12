@@ -22,6 +22,7 @@
 | Siemens track memory | `docs/siemens-industrial-agent-track-memory-20260521.md` | ready |
 | Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
 | Edge Agent Runtime for Xcelerator | `docs/edge-agent-runtime-for-xcelerator.md` | ready |
+| Edge runtime evidence runbook | `docs/submission/edge-runtime-evidence-runbook.md` | ready |
 | Enterprise group winning strategy | `docs/submission/enterprise-winning-strategy.md` | ready |
 | Judging scorecard evidence map | `docs/submission/judging-scorecard-evidence-map.md` | ready |
 | Defense Q&A playbook | `docs/submission/defense-qna-playbook.md` | ready |
@@ -31,6 +32,7 @@
 | Finals latency benchmark JSON | `docs/submission/evidence/finals-latency-benchmark.json` | generated |
 | Local FastAPI gateway latency/resource report | `docs/finals-local-gateway-latency-benchmark-report.md` | generated |
 | Local FastAPI gateway latency/resource JSON | `docs/submission/evidence/finals-local-gateway-latency-benchmark.json` | generated |
+| Edge runtime live-evidence collector | `scripts/collect_edge_runtime_evidence.py` | ready |
 | Workflow Canvas runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
 | WFC resource block zip package | `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.zip` | generated local asset |
@@ -67,13 +69,14 @@ python scripts/run_final_readiness_pipeline.py --json
 python scripts/run_finals_validation.py --json
 python scripts/benchmark_workflow_canvas_latency.py
 python scripts/benchmark_local_gateway_latency.py
+python scripts/collect_edge_runtime_evidence.py
 python scripts/verify_finals_foundation.py --json
 python scripts/verify_submission_package.py --write-manifest
 ```
 
 The verifier treats repository-controlled materials as pass/fail and keeps human-owned registration information and final submission screenshots as external pending items. Video and platform evidence can now be checked with the live evidence verifier; fallback-marked WFC assets must not be described as live platform proof.
 
-`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. `scripts/benchmark_local_gateway_latency.py` starts the local FastAPI gateway, measures real HTTP calls, and samples gateway CPU/RSS/system memory. For final defense evidence, rerun the HTTP benchmark on Jetson / IPC or a final edge gateway and store the generated report/JSON with hardware resource logs.
+`scripts/benchmark_workflow_canvas_latency.py` defaults to an in-process replay of the collaborative decision engine. `scripts/benchmark_local_gateway_latency.py` starts the local FastAPI gateway, measures real HTTP calls, and samples gateway CPU/RSS/system memory. `scripts/collect_edge_runtime_evidence.py` copies or reruns this benchmark into ignored live-evidence files. For final defense evidence, rerun the collector on Jetson / IPC or a final edge gateway and store the generated report/JSON with hardware resource logs.
 
 Run before platform evidence review:
 

@@ -39,6 +39,7 @@ def run_pipeline(
 ) -> dict[str, Any]:
     from build_final_submission_bundle import build_final_submission_bundle
     from benchmark_workflow_canvas_latency import run_latency_benchmark, write_outputs as write_latency_outputs
+    from collect_edge_runtime_evidence import collect_edge_runtime_evidence
     from generate_final_readiness_report import build_final_readiness, render_readiness_report
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
@@ -76,6 +77,7 @@ def run_pipeline(
         report_path=latency_benchmark_report_path,
         json_path=latency_benchmark_json_path,
     )
+    edge_runtime_evidence = collect_edge_runtime_evidence(output_dir=assets_dir / "edge-runtime")
     wfc_package = package_resource_block(output_dir=wfc_package_output_dir, write_manifest=True)
     submission_package = build_final_submission_bundle(output_dir=bundle_output_dir)
 
@@ -93,6 +95,7 @@ def run_pipeline(
         bundle_path=Path(submission_package["bundle_path"]),
         bundle_manifest_path=Path(submission_package["manifest_path"]),
         human_action_manifest_path=Path(human_action_pack["manifest_path"]),
+        edge_runtime_manifest_path=Path(edge_runtime_evidence["manifest_path"]),
     )
     readiness_report_path.parent.mkdir(parents=True, exist_ok=True)
     readiness_report_path.write_text(render_readiness_report(readiness), encoding="utf-8")
@@ -123,6 +126,9 @@ def run_pipeline(
         "bundle_sha256": submission_package.get("bundle_sha256"),
         "bundle_path": submission_package["bundle_path"],
         "wfc_package_path": wfc_package["package_path"],
+        "edge_runtime_evidence_manifest_path": edge_runtime_evidence["manifest_path"],
+        "edge_runtime_evidence_ok": bool(edge_runtime_evidence["ok"]),
+        "edge_runtime_evidence_sample_count": int(edge_runtime_evidence["sample_count"]),
         "submission_manifest_path": str(submission_manifest_path),
         "live_evidence_manifest_path": str(live_evidence_manifest_path),
         "readiness_report_path": str(readiness_report_path),
@@ -158,6 +164,8 @@ def render_summary(result: dict[str, Any]) -> str:
         f"final_missing_count={result['final_missing_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",
         f"bundle_sha256={result['bundle_sha256']}",
+        f"edge_runtime_evidence_ok={result['edge_runtime_evidence_ok']}",
+        f"edge_runtime_evidence_sample_count={result['edge_runtime_evidence_sample_count']}",
         f"finals_validation_report={result['finals_validation_report_path']}",
         f"latency_benchmark_report={result['latency_benchmark_report_path']}",
         f"readiness_report={result['readiness_report_path']}",

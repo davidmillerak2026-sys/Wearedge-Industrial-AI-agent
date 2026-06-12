@@ -127,6 +127,23 @@ Dashboard 路径备注：
 | `edge-runtime/05-solution-profile.png` | `/v1/industrial-agent/solution-profile` 输出 | 展示工业问题、Gemma 4 E2B/llama.cpp 模型角色、KPI 决策矩阵和 HumanApprovalGate。 |
 | `edge-runtime/03-workflow-canvas-decision-smoke.png` | `scripts/smoke_workflow_canvas_decision.py` 输出 | 证明 WFC decision API 可跑通。 |
 | `edge-runtime/04-jetson-ipc-local-node.png` | Jetson、IPC、本地工控机或边缘服务器画面 | 证明智能体运行时可放在端侧算力中；如果硬件未到位，用本地工控机/边缘服务器证据替代。 |
+| `edge-runtime/06-http-resource-benchmark.json` | HTTP+资源 benchmark JSON | 由 `scripts/collect_edge_runtime_evidence.py` 生成，包含 `/v1/workflow-canvas/decision` HTTP 延迟、CPU/RSS/系统内存和平台信息。 |
+| `edge-runtime/07-edge-runtime-evidence-manifest.md` | Edge runtime evidence manifest | 汇总 benchmark 路径、p95/max、资源采样和 Jetson/IPC 复跑边界。 |
+
+端侧 benchmark 采集：
+
+```powershell
+python scripts/benchmark_local_gateway_latency.py
+python scripts/collect_edge_runtime_evidence.py
+```
+
+Jetson / IPC 复跑：
+
+```bash
+python scripts/collect_edge_runtime_evidence.py --rerun-benchmark --iterations 20 --final-edge-node
+```
+
+Jetson 上同时打开 `tegrastats --interval 1000`，把日志保存到 `submission-assets/live-evidence/edge-runtime/08-tegrastats-http-resource-benchmark.log`。
 
 ## 企业与合规材料
 

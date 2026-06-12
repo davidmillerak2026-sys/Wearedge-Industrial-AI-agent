@@ -184,6 +184,20 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
         "Show the explicit industrial problem, model role, KPI decision matrix, and HumanApprovalGate boundary.",
     ),
     EvidenceItem(
+        "edge-runtime",
+        "edge-runtime/06-http-resource-benchmark.json",
+        "HTTP decision latency and resource benchmark JSON",
+        "platform",
+        "Show 300 HTTP samples, <=500ms target status, gateway process RSS, and platform/resource profile.",
+    ),
+    EvidenceItem(
+        "edge-runtime",
+        "edge-runtime/07-edge-runtime-evidence-manifest.md",
+        "Edge runtime evidence manifest",
+        "platform",
+        "Show the report/JSON paths, latency p95/max, resource samples, and Jetson/IPC rerun boundary.",
+    ),
+    EvidenceItem(
         "video",
         "video/wearedge-enterprise-demo-3-5min.mp4",
         "Final enterprise demo video",
