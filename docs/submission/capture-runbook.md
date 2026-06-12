@@ -28,15 +28,16 @@ cd "C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent"
 | 4 | WFC smoke command output | terminal |
 | 5 | Workflow Canvas payload | `workflows/wearedge_wfc_poc_payload.json` |
 | 6 | Dashboard mock | `docs/submission/dashboard-mock.html` |
-| 7 | API schema | `docs/workflow-canvas-api-schema.md` |
-| 8 | Submission verifier | terminal |
-| 9 | pytest output | terminal or CI |
-| 10 | Registration fields | `docs/submission/registration-fields.md` |
-| 11 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` |
-| 12 | Edge runtime profile smoke | terminal |
-| 13 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/info.json` |
-| 14 | Enterprise winning strategy | `docs/submission/enterprise-winning-strategy.md` |
-| 15 | Edge runtime doc | `docs/edge-agent-runtime-for-xcelerator.md` |
+| 7 | Finals HMI console | `docs/submission/finals-hmi-console.html` |
+| 8 | API schema | `docs/workflow-canvas-api-schema.md` |
+| 9 | Submission verifier | terminal |
+| 10 | pytest output | terminal or CI |
+| 11 | Registration fields | `docs/submission/registration-fields.md` |
+| 12 | Co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` |
+| 13 | Edge runtime profile smoke | terminal |
+| 14 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/info.json` |
+| 15 | Enterprise winning strategy | `docs/submission/enterprise-winning-strategy.md` |
+| 16 | Edge runtime doc | `docs/edge-agent-runtime-for-xcelerator.md` |
 
 ## Dashboard Mock
 
@@ -67,6 +68,7 @@ submission-assets/screenshots/03-offline-eval-report.png
 submission-assets/screenshots/04-wfc-smoke.png
 submission-assets/screenshots/05-wfc-payload.png
 submission-assets/screenshots/06-dashboard-mock.png
+submission-assets/screenshots/17-finals-hmi-console.png
 submission-assets/screenshots/07-api-schema.png
 submission-assets/screenshots/08-submission-verifier.png
 submission-assets/screenshots/09-pytest-output.png
@@ -85,9 +87,10 @@ submission-assets/screenshots/15-edge-runtime-doc.png
 3. Show `wfc-blocks/wearedge-agent-service/info.json` and explain deployment mode parameters.
 4. Show `workflows/wearedge_wfc_poc_payload.json` and explain data sources.
 5. Run or show `scripts/smoke_workflow_canvas_decision.py` output.
-6. Open `docs/submission/dashboard-mock.html` and explain decision visualization.
-7. Open `docs/competition-offline-eval-report.md` and explain simulated/offline metric status.
-8. Close with `docs/siemens-xcelerator-co-creation-onepager.md` and business model.
+6. Open `docs/submission/finals-hmi-console.html` and explain natural-language HMI, evidence references, audit trail, and HumanApprovalGate.
+7. Open `docs/submission/dashboard-mock.html` and explain decision visualization fallback.
+8. Open `docs/competition-offline-eval-report.md` and explain simulated/offline metric status.
+9. Close with `docs/siemens-xcelerator-co-creation-onepager.md` and business model.
 
 真实平台版视频按 `docs/submission/video-production-plan.md` 录制，素材统一保存到：
 

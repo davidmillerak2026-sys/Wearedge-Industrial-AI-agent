@@ -18,6 +18,7 @@
 | 工易魔方资源块截图 | when available | partial | `01-resource-block-wearedge-agent-service.png` 已替换为真实 `Wearedge Agent Service` 自定义资源属性面板，并显示 `Agent Host` 参数；`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId` 仍需补全。 |
 | 工易魔方 Python Function Block 截图 | when available | partial | `59-wfc-python-search.png` 已确认 `编程语言` 下可定位 Python 程序块；`02-python-function-block-call-api.png` 仍需在拖入画布并命名后补齐。 |
 | Dashboard mock 截图 | yes | captured locally | 使用 `docs/submission/dashboard-mock.html`，本地素材路径 `submission-assets/screenshots/06-dashboard-mock.png`。 |
+| Finals HMI console 截图 | yes | captured locally | 使用 `docs/submission/finals-hmi-console.html`，本地素材路径 `submission-assets/screenshots/17-finals-hmi-console.png`，展示自然语言输入、决策路径、证据引用、审计轨迹和 HumanApprovalGate。 |
 | 工易魔方数据表字段截图 | when available | partial | `70-wfc-data-table-entry-attempt-native.png` 仅为数据表入口尝试；最终 `03-global-data-table-decision-fields.png` 仍需包含 Wearedge 决策字段。 |
 | 工易魔方 Dashboard 截图 | when available | partial | `71-wfc-dashboard-explorer-entry-native.png` 仅为 Dashboard Explorer 入口；最终 `04-dashboard-decision-view.png` 仍需展示 Wearedge 指标卡、决策路径和人工确认项。 |
 | 工易魔方运行日志截图 | when available | pending | `69-wfc-run-control-attempt-properties.png` 只是运行入口尝试，不能作为 `ok=true` 日志；最终 `05-run-log-ok-true.png` 仍待真实运行生成。 |
@@ -42,6 +43,7 @@ submission-assets/screenshots/03-offline-eval-report.png
 submission-assets/screenshots/04-wfc-smoke.png
 submission-assets/screenshots/05-wfc-payload.png
 submission-assets/screenshots/06-dashboard-mock.png
+submission-assets/screenshots/17-finals-hmi-console.png
 submission-assets/screenshots/07-api-schema.png
 submission-assets/screenshots/08-submission-verifier.png
 submission-assets/screenshots/09-pytest-output.png

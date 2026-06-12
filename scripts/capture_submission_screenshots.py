@@ -24,6 +24,8 @@ class CaptureSpec:
     source_path: Path | None
     kind: str
     output_name: str
+    viewport_width: int = 1440
+    viewport_height: int = 1200
 
 
 DOCUMENT_SPECS = (
@@ -48,6 +50,15 @@ DOCUMENT_SPECS = (
         REPO_ROOT / "docs" / "submission" / "dashboard-mock.html",
         "html",
         "06-dashboard-mock.png",
+    ),
+    CaptureSpec(
+        "finals-hmi-console",
+        "Finals Natural-Language HMI Decision Console",
+        REPO_ROOT / "docs" / "submission" / "finals-hmi-console.html",
+        "html",
+        "17-finals-hmi-console.png",
+        1440,
+        2200,
     ),
     CaptureSpec(
         "api-schema",
@@ -119,7 +130,15 @@ def capture_submission_screenshots(
 
     screenshots = []
     for page in pages:
-        screenshots.append(_capture_page(browser, page["html_path"], output_dir / page["output_name"]))
+        screenshots.append(
+            _capture_page(
+                browser,
+                page["html_path"],
+                output_dir / page["output_name"],
+                viewport_width=page["viewport_width"],
+                viewport_height=page["viewport_height"],
+            )
+        )
 
     index = {
         "ok": all(item["ok"] for item in screenshots) and all(command["ok"] for command in commands),
@@ -194,6 +213,8 @@ def _build_document_pages(render_dir: Path) -> list[dict[str, Any]]:
                     "title": spec.title,
                     "html_path": spec.source_path.resolve(),
                     "output_name": spec.output_name,
+                    "viewport_width": spec.viewport_width,
+                    "viewport_height": spec.viewport_height,
                 }
             )
             continue
@@ -211,6 +232,8 @@ def _build_document_pages(render_dir: Path) -> list[dict[str, Any]]:
                 "title": spec.title,
                 "html_path": html_path.resolve(),
                 "output_name": spec.output_name,
+                "viewport_width": spec.viewport_width,
+                "viewport_height": spec.viewport_height,
             }
         )
     return pages
@@ -291,6 +314,8 @@ def _build_command_pages(render_dir: Path, commands: list[dict[str, Any]]) -> li
                 "title": command["title"],
                 "html_path": html_path.resolve(),
                 "output_name": command["output_name"],
+                "viewport_width": 1440,
+                "viewport_height": 1200,
             }
         )
     return pages
@@ -324,7 +349,14 @@ def _run_command(name: str, title: str, command: list[str], timeout: int, output
         }
 
 
-def _capture_page(browser: Path, html_path: Path, output_path: Path) -> dict[str, Any]:
+def _capture_page(
+    browser: Path,
+    html_path: Path,
+    output_path: Path,
+    *,
+    viewport_width: int = 1440,
+    viewport_height: int = 1200,
+) -> dict[str, Any]:
     output_path = output_path.resolve()
     if output_path.exists():
         output_path.unlink()
@@ -333,7 +365,7 @@ def _capture_page(browser: Path, html_path: Path, output_path: Path) -> dict[str
         "--headless=new",
         "--disable-gpu",
         "--hide-scrollbars",
-        "--window-size=1440,1200",
+        f"--window-size={viewport_width},{viewport_height}",
         f"--screenshot={output_path}",
         html_path.resolve().as_uri(),
     ]
@@ -346,6 +378,8 @@ def _capture_page(browser: Path, html_path: Path, output_path: Path) -> dict[str
         "bytes": output_path.stat().st_size if exists else 0,
         "returncode": completed.returncode,
         "stderr": completed.stderr.strip(),
+        "viewport_width": viewport_width,
+        "viewport_height": viewport_height,
     }
 
 

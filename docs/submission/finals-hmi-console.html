@@ -68,6 +68,7 @@
       display: grid;
       grid-template-columns: 360px minmax(0, 1fr);
       gap: 14px;
+      align-items: start;
     }
     .panel {
       background: var(--panel);
@@ -153,6 +154,7 @@
     .grid {
       display: grid;
       gap: 14px;
+      align-content: start;
     }
     .metric-grid {
       grid-template-columns: repeat(4, minmax(0, 1fr));
@@ -228,6 +230,7 @@
     }
     .node strong {
       font-size: 12px;
+      overflow-wrap: anywhere;
     }
     .node span {
       font-size: 11px;

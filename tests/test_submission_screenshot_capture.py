@@ -53,5 +53,10 @@ def test_capture_plan_has_required_submission_shots() -> None:
     assert "03-offline-eval-report.png" in output_names
     assert "05-wfc-payload.png" in output_names
     assert "06-dashboard-mock.png" in output_names
+    assert "17-finals-hmi-console.png" in output_names
     assert "07-api-schema.png" in output_names
     assert "16-solution-profile.png" in inspect.getsource(module._run_evidence_commands)
+
+    hmi_spec = next(spec for spec in module.DOCUMENT_SPECS if spec.output_name == "17-finals-hmi-console.png")
+    assert hmi_spec.viewport_width == 1440
+    assert hmi_spec.viewport_height == 2200
