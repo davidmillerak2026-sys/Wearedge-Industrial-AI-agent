@@ -206,6 +206,8 @@ def render_markdown(result: dict[str, Any]) -> str:
         f"- Replay samples: {result['latency_replay']['sample_count']}",
         f"- Wall latency max: {result['latency_replay']['wall_latency_ms_max']} ms",
         f"- Wall latency p95: {result['latency_replay']['wall_latency_ms_p95']} ms",
+        f"- Resource samples: {result['latency_replay']['resource_sample_count']}",
+        f"- Gateway RSS max: {result['latency_replay']['process_rss_mb_max']} MB",
         f"- Target met: {result['latency_replay']['target_met']}",
         f"- Evidence path: `{result['latency_replay']['path']}`",
         f"- Boundary: {result['latency_replay']['boundary']}",
@@ -302,6 +304,9 @@ def _load_latency_replay_file(path: Path, *, fallback_tier: str) -> dict[str, An
             "target_met": False,
             "wall_latency_ms_max": 0,
             "wall_latency_ms_p95": 0,
+            "resource_profile_available": False,
+            "resource_sample_count": 0,
+            "process_rss_mb_max": 0.0,
             "boundary": "Latency replay evidence has not been generated yet.",
         }
     try:
@@ -316,10 +321,15 @@ def _load_latency_replay_file(path: Path, *, fallback_tier: str) -> dict[str, An
             "target_met": False,
             "wall_latency_ms_max": 0,
             "wall_latency_ms_p95": 0,
+            "resource_profile_available": False,
+            "resource_sample_count": 0,
+            "process_rss_mb_max": 0.0,
             "boundary": "Latency replay JSON could not be parsed.",
         }
 
     wall = data.get("wall_latency_ms", {})
+    resource_profile = data.get("resource_profile", {})
+    process_rss = resource_profile.get("process_rss_mb", {}) if isinstance(resource_profile, dict) else {}
     return {
         "ready": bool(data.get("ok")) and int(data.get("sample_count", 0)) > 0,
         "path": str(path),
@@ -330,6 +340,9 @@ def _load_latency_replay_file(path: Path, *, fallback_tier: str) -> dict[str, An
         "target_met": bool(data.get("target_met")),
         "wall_latency_ms_max": int(wall.get("max", 0)),
         "wall_latency_ms_p95": int(wall.get("p95", 0)),
+        "resource_profile_available": bool(resource_profile.get("available")) if isinstance(resource_profile, dict) else False,
+        "resource_sample_count": int(resource_profile.get("sample_count", 0)) if isinstance(resource_profile, dict) else 0,
+        "process_rss_mb_max": float(process_rss.get("max", 0)),
         "boundary": str(data.get("boundary", "")),
     }
 
@@ -353,6 +366,8 @@ def _priority_gaps(
         gaps.append("Run the finals latency replay benchmark until the Workflow Canvas path is <=500ms.")
     elif latency_replay["mode"] != "http":
         gaps.append("Replace in-process latency replay with local FastAPI HTTP gateway evidence before final defense.")
+    elif latency_replay["resource_sample_count"] <= 0:
+        gaps.append("Attach resource samples to the HTTP gateway latency evidence before final defense.")
     elif latency_replay["evidence_tier"] == "local_fastapi_http_gateway":
         gaps.append("Repeat the HTTP gateway latency benchmark on Jetson/IPC edge hardware and attach resource logs.")
     if not platform["ready"]:

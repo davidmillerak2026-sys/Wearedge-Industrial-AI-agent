@@ -34,6 +34,9 @@ def test_local_gateway_latency_benchmark_uses_real_http_endpoint() -> None:
     assert result["wall_latency_ms"]["max"] <= 500
     assert result["endpoint"].endswith("/v1/workflow-canvas/decision")
     assert result["gateway"]["healthz_ok"] is True
+    assert result["resource_profile"]["available"] is True
+    assert result["resource_profile"]["sample_count"] > 0
+    assert result["resource_profile"]["process_rss_mb"]["max"] > 0
 
 
 def test_local_gateway_latency_benchmark_writes_outputs(tmp_path: Path) -> None:
@@ -47,8 +50,10 @@ def test_local_gateway_latency_benchmark_writes_outputs(tmp_path: Path) -> None:
     report = report_path.read_text(encoding="utf-8")
     saved = json.loads(json_path.read_text(encoding="utf-8"))
     assert "Mode: http" in report
+    assert "Resource Profile" in report
     assert "Target met: True" in report
     assert saved["evidence_tier"] == "local_fastapi_http_gateway"
+    assert saved["resource_profile"]["sample_count"] > 0
 
 
 def test_find_free_port_returns_candidate_port() -> None:

@@ -126,6 +126,33 @@ def render_report(result: dict[str, Any]) -> str:
                 "",
             ]
         )
+    resource_profile = result.get("resource_profile")
+    if isinstance(resource_profile, dict):
+        cpu = resource_profile.get("process_cpu_percent", {})
+        rss = resource_profile.get("process_rss_mb", {})
+        system_memory = resource_profile.get("system_memory_percent", {})
+        platform_profile = resource_profile.get("platform", {})
+        lines.extend(
+            [
+                "## Resource Profile",
+                "",
+                f"- Available: {resource_profile.get('available', False)}",
+                f"- Sample count: {resource_profile.get('sample_count', 0)}",
+                f"- Sample interval: {resource_profile.get('sample_interval_s', 0)} s",
+                f"- Platform: {platform_profile.get('system', 'unknown')} {platform_profile.get('release', '')} {platform_profile.get('machine', '')}".strip(),
+                f"- CPU logical/physical: {platform_profile.get('cpu_logical_count', 'unknown')} / {platform_profile.get('cpu_physical_count', 'unknown')}",
+                f"- Total memory: {platform_profile.get('total_memory_mb', 'unknown')} MB",
+                "",
+                "| Resource | P50 | P95 | Avg | Max |",
+                "| --- | ---: | ---: | ---: | ---: |",
+                f"| Gateway process CPU | {cpu.get('p50', 0)}% | {cpu.get('p95', 0)}% | {cpu.get('avg', 0)}% | {cpu.get('max', 0)}% |",
+                f"| Gateway RSS | {rss.get('p50', 0)} MB | {rss.get('p95', 0)} MB | {rss.get('avg', 0)} MB | {rss.get('max', 0)} MB |",
+                f"| System memory | {system_memory.get('p50', 0)}% | {system_memory.get('p95', 0)}% | {system_memory.get('avg', 0)}% | {system_memory.get('max', 0)}% |",
+                "",
+                resource_profile.get("boundary", ""),
+                "",
+            ]
+        )
     lines.extend(
         [
             "## Latency Stats",
@@ -154,13 +181,23 @@ def render_report(result: dict[str, Any]) -> str:
         values = by_case[case_id]
         lines.append(f"| {case_id} | {len(values)} | {max(values)} ms |")
 
+    lines.extend(["", "## Next Evidence Upgrade", ""])
+    if result.get("evidence_tier") == "local_fastapi_http_gateway":
+        lines.extend(
+            [
+                "- Rerun `python scripts/benchmark_local_gateway_latency.py` on the Jetson / IPC / final edge gateway.",
+                "- Keep the generated report/JSON with Jetson `tegrastats` or OS-level resource logs before final-round defense.",
+            ]
+        )
+    else:
+        lines.extend(
+            [
+                "- Run the same script with `--base-url http://<edge-host>:<port>` against the deployed FastAPI gateway.",
+                "- Capture Jetson / IPC / local industrial PC resource logs beside this report before final-round defense.",
+            ]
+        )
     lines.extend(
         [
-            "",
-            "## Next Evidence Upgrade",
-            "",
-            "- Run the same script with `--base-url http://<edge-host>:<port>` against the deployed FastAPI gateway.",
-            "- Capture Jetson / IPC / local industrial PC resource logs beside this report before final-round defense.",
             "- Keep this report separate from model image-inference latency; it measures the Workflow Canvas collaborative decision path.",
             "",
         ]

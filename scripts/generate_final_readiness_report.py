@@ -233,6 +233,8 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"- Workflow Canvas replay mode: {result['finals_foundation']['latency_replay']['mode']}",
             f"- Workflow Canvas replay samples: {result['finals_foundation']['latency_replay']['sample_count']}",
             f"- Workflow Canvas replay p95/max: {result['finals_foundation']['latency_replay']['wall_latency_ms_p95']} / {result['finals_foundation']['latency_replay']['wall_latency_ms_max']} ms",
+            f"- Workflow Canvas resource samples: {result['finals_foundation']['latency_replay']['resource_sample_count']}",
+            f"- Workflow Canvas gateway RSS max: {result['finals_foundation']['latency_replay']['process_rss_mb_max']} MB",
             f"- Workflow Canvas evidence path: `{result['finals_foundation']['latency_replay']['path']}`",
             "",
             "Priority gaps:",

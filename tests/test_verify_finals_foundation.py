@@ -37,6 +37,8 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["latency_replay"]["mode"] == "http"
     assert result["latency_replay"]["evidence_tier"] == "local_fastapi_http_gateway"
     assert result["latency_replay"]["sample_count"] > 0
+    assert result["latency_replay"]["resource_sample_count"] > 0
+    assert result["latency_replay"]["process_rss_mb_max"] > 0
     assert result["hmi"]["natural_language_api_foundation"] is True
     assert result["hmi"]["natural_language_console_foundation"] is True
     assert result["hmi"]["decision_visualization_foundation"] is True
@@ -57,5 +59,6 @@ def test_finals_foundation_report_states_boundary() -> None:
     assert "Latency Replay Evidence" in report
     assert "Evidence tier: local_fastapi_http_gateway" in report
     assert "Replay mode: http" in report
+    assert "Resource samples:" in report
     assert "Finals validation cases: 15 / 15" in report
     assert "Foundation-ready does not mean finals-ready" in report

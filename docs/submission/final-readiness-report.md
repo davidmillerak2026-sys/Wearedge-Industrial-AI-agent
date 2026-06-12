@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T02:09:10+00:00
+Updated: 2026-06-12T02:21:08+00:00
 
 ## Executive Status
 
@@ -55,7 +55,9 @@ Updated: 2026-06-12T02:09:10+00:00
 - Workflow Canvas evidence tier: local_fastapi_http_gateway
 - Workflow Canvas replay mode: http
 - Workflow Canvas replay samples: 300
-- Workflow Canvas replay p95/max: 24 / 28 ms
+- Workflow Canvas replay p95/max: 24 / 30 ms
+- Workflow Canvas resource samples: 34
+- Workflow Canvas gateway RSS max: 60.71 MB
 - Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-local-gateway-latency-benchmark.json`
 
 Priority gaps:
@@ -65,7 +67,7 @@ Priority gaps:
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `03f569427bef359e32a4db6919ea06cca3d8d5aebf70e0c0f0c0ad7bdf05e80b`
+- Bundle SHA256: `d088e3d2be97e879f9e13ce71b400149e9a0953f24db5200a988b68c0cc996eb`
 - Bundle manifest file count: `69`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
