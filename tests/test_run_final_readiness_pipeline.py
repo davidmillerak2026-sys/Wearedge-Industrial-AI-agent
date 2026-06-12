@@ -28,6 +28,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        action_board_path=tmp_path / "final-action-board.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
         latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
@@ -58,6 +59,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert (tmp_path / "submission-package-manifest.md").is_file()
     assert (tmp_path / "live-evidence-manifest.md").is_file()
     assert (tmp_path / "final-readiness-report.md").is_file()
+    assert (tmp_path / "final-action-board.md").is_file()
     assert (tmp_path / "finals-validation-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark.json").is_file()
@@ -76,6 +78,7 @@ def test_final_readiness_pipeline_strict_mode_blocks_when_external_files_missing
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        action_board_path=tmp_path / "final-action-board.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
         latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
@@ -96,6 +99,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        action_board_path=tmp_path / "final-action-board.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
         latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
@@ -117,3 +121,4 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "selected_latency_process_rss_mb_max=" in summary
     assert "final_missing_count=" in summary
     assert "readiness_report=" in summary
+    assert "action_board=" in summary

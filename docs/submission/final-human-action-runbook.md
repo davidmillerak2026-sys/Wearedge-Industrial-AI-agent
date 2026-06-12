@@ -8,9 +8,11 @@ This runbook covers the final files that must be completed by the enterprise own
 
 ```powershell
 python scripts/prepare_final_human_action_pack.py --json
+python scripts/generate_final_action_board.py --write
 ```
 
 The command writes templates under ignored `submission-assets/live-evidence/` and does not create the final verifier target files. This avoids accidentally treating unsigned or incomplete files as final evidence.
+The action board at `docs/submission/final-action-board.md` is regenerated from the current verifiers and should be treated as the short list of what remains.
 
 ## Final Required Files
 

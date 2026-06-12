@@ -25,6 +25,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`prepare_final_human_action_pack.py`](prepare_final_human_action_pack.py) | Generate ignored templates for final enterprise-owned legal/contact files, registration screenshots, and live WFC replacement checklists without satisfying verifier targets. |
 | [`promote_wfc_live_evidence.py`](promote_wfc_live_evidence.py) | Promote reviewed live Gongyi Mofang Dashboard/run-log/HumanApprovalGate screenshots from an ignored staging folder, remove fallback markers, and write a replacement manifest. |
 | [`generate_final_readiness_report.py`](generate_final_readiness_report.py) | Generate a one-page final readiness report that combines repository readiness, live evidence status, submission bundle presence, human templates, and remaining gaps. |
+| [`generate_final_action_board.py`](generate_final_action_board.py) | Generate the current final action board: WFC fallback replacements, six human-owned final files, and validation commands. |
 | [`run_final_readiness_pipeline.py`](run_final_readiness_pipeline.py) | Refresh the final human templates, WFC resource package, repo-controlled submission bundle, manifests, and final readiness report in one safe local command. |
 | [`build_submission_evidence.py`](build_submission_evidence.py) | Generate JSON and Markdown evidence snapshots for the submission package. |
 | [`verify_submission_package.py`](verify_submission_package.py) | Check Phase A-E repository deliverables, generated evidence, registration fields, and deadline markers. |

@@ -16,6 +16,7 @@ DEFAULT_ASSETS_DIR = REPO_ROOT / "submission-assets" / "live-evidence"
 DEFAULT_SUBMISSION_MANIFEST = REPO_ROOT / "docs" / "submission" / "submission-package-manifest.md"
 DEFAULT_LIVE_EVIDENCE_MANIFEST = DEFAULT_ASSETS_DIR / "live-evidence-manifest.md"
 DEFAULT_READINESS_REPORT = REPO_ROOT / "docs" / "submission" / "final-readiness-report.md"
+DEFAULT_ACTION_BOARD = REPO_ROOT / "docs" / "submission" / "final-action-board.md"
 DEFAULT_FINALS_VALIDATION_REPORT = REPO_ROOT / "docs" / "finals-validation-report.md"
 DEFAULT_LATENCY_BENCHMARK_REPORT = REPO_ROOT / "docs" / "finals-latency-benchmark-report.md"
 DEFAULT_LATENCY_BENCHMARK_JSON = REPO_ROOT / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json"
@@ -37,6 +38,7 @@ def run_pipeline(
     submission_manifest_path: Path = DEFAULT_SUBMISSION_MANIFEST,
     live_evidence_manifest_path: Path | None = None,
     readiness_report_path: Path = DEFAULT_READINESS_REPORT,
+    action_board_path: Path = DEFAULT_ACTION_BOARD,
     finals_validation_report_path: Path = DEFAULT_FINALS_VALIDATION_REPORT,
     latency_benchmark_report_path: Path = DEFAULT_LATENCY_BENCHMARK_REPORT,
     latency_benchmark_json_path: Path = DEFAULT_LATENCY_BENCHMARK_JSON,
@@ -48,6 +50,7 @@ def run_pipeline(
     from build_final_submission_bundle import build_final_submission_bundle
     from benchmark_workflow_canvas_latency import run_latency_benchmark, write_outputs as write_latency_outputs
     from collect_edge_runtime_evidence import collect_edge_runtime_evidence
+    from generate_final_action_board import build_action_board, render_action_board
     from generate_final_readiness_report import build_final_readiness, render_readiness_report
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
@@ -61,6 +64,7 @@ def run_pipeline(
     assets_dir = _resolve_path(assets_dir)
     submission_manifest_path = _resolve_path(submission_manifest_path)
     readiness_report_path = _resolve_path(readiness_report_path)
+    action_board_path = _resolve_path(action_board_path)
     finals_validation_report_path = _resolve_path(finals_validation_report_path)
     latency_benchmark_report_path = _resolve_path(latency_benchmark_report_path)
     latency_benchmark_json_path = _resolve_path(latency_benchmark_json_path)
@@ -113,6 +117,9 @@ def run_pipeline(
     )
     readiness_report_path.parent.mkdir(parents=True, exist_ok=True)
     readiness_report_path.write_text(render_readiness_report(readiness), encoding="utf-8")
+    action_board = build_action_board(assets_dir=assets_dir)
+    action_board_path.parent.mkdir(parents=True, exist_ok=True)
+    action_board_path.write_text(render_action_board(action_board), encoding="utf-8")
 
     result = {
         "ok": (
@@ -146,6 +153,7 @@ def run_pipeline(
         "submission_manifest_path": str(submission_manifest_path),
         "live_evidence_manifest_path": str(live_evidence_manifest_path),
         "readiness_report_path": str(readiness_report_path),
+        "action_board_path": str(action_board_path),
         "finals_validation_report_path": str(finals_validation_report_path),
         "latency_benchmark_report_path": str(latency_benchmark_report_path),
         "latency_benchmark_json_path": str(latency_benchmark_json_path),
@@ -183,6 +191,7 @@ def render_summary(result: dict[str, Any]) -> str:
         f"finals_validation_report={result['finals_validation_report_path']}",
         f"latency_benchmark_report={result['latency_benchmark_report_path']}",
         f"readiness_report={result['readiness_report_path']}",
+        f"action_board={result['action_board_path']}",
         "recommended_next_actions:",
     ]
     lines.extend(f"- {action}" for action in result["recommended_next_actions"])
@@ -210,6 +219,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--submission-manifest", type=Path, default=DEFAULT_SUBMISSION_MANIFEST)
     parser.add_argument("--live-evidence-manifest", type=Path, default=None)
     parser.add_argument("--readiness-report", type=Path, default=DEFAULT_READINESS_REPORT)
+    parser.add_argument("--action-board", type=Path, default=DEFAULT_ACTION_BOARD)
     parser.add_argument("--finals-validation-report", type=Path, default=DEFAULT_FINALS_VALIDATION_REPORT)
     parser.add_argument("--latency-benchmark-report", type=Path, default=DEFAULT_LATENCY_BENCHMARK_REPORT)
     parser.add_argument("--latency-benchmark-json", type=Path, default=DEFAULT_LATENCY_BENCHMARK_JSON)
@@ -229,6 +239,7 @@ def main(argv: list[str] | None = None) -> int:
         submission_manifest_path=args.submission_manifest,
         live_evidence_manifest_path=args.live_evidence_manifest,
         readiness_report_path=args.readiness_report,
+        action_board_path=args.action_board,
         finals_validation_report_path=args.finals_validation_report,
         latency_benchmark_report_path=args.latency_benchmark_report,
         latency_benchmark_json_path=args.latency_benchmark_json,

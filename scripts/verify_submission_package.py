@@ -89,8 +89,10 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("scripts/prepare_final_human_action_pack.py", "Final human action template generator"),
         Artifact("scripts/generate_final_readiness_report.py", "Final readiness report generator"),
         Artifact("scripts/run_final_readiness_pipeline.py", "One-command final readiness pipeline"),
+        Artifact("scripts/generate_final_action_board.py", "Final action board generator"),
         Artifact("docs/submission/final-human-action-runbook.md", "Final human action runbook"),
         Artifact("docs/submission/final-readiness-report.md", "Final readiness report"),
+        Artifact("docs/submission/final-action-board.md", "Final action board"),
     ],
 }
 
