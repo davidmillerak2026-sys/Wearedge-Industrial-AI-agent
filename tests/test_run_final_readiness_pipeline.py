@@ -34,6 +34,9 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
 
     assert result["ok"] is True
     assert result["repo_ready"] is True
+    assert result["finals_foundation_ready"] is True
+    assert result["finals_ready"] is False
+    assert result["finals_priority_gap_count"] > 0
     assert result["final_ready"] is False
     assert result["final_missing_count"] >= 6
     assert Path(result["bundle_path"]).is_file()
@@ -78,5 +81,6 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     summary = module.render_summary(result)
 
     assert "repo_ready=True" in summary
+    assert "finals_foundation_ready=True" in summary
     assert "final_missing_count=" in summary
     assert "readiness_report=" in summary

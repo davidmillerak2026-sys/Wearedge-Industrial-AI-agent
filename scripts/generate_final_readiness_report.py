@@ -227,6 +227,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             "",
             "```powershell",
             "python scripts/run_final_readiness_pipeline.py --json",
+            "python scripts/verify_finals_foundation.py --json",
             "python scripts/verify_submission_package.py --write-manifest",
             "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
             "python scripts/build_final_submission_bundle.py --json",

@@ -64,6 +64,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/siemens-industrial-agent-track-memory-20260521.md", "Siemens industrial agent track memory"),
         Artifact("docs/industrial-agent-solution-profile.md", "Industrial-agent solution profile"),
         Artifact("docs/submission/enterprise-winning-strategy.md", "Enterprise group winning strategy"),
+        Artifact("docs/submission/finals-foundation-roadmap.md", "Final-round foundation roadmap"),
         Artifact("docs/submission/judging-scorecard-evidence-map.md", "Judging scorecard evidence map"),
         Artifact("docs/submission/defense-qna-playbook.md", "Defense Q&A playbook"),
         Artifact("docs/submission/business-plan.md", "Business plan draft"),
@@ -71,6 +72,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/submission/ip-and-compliance-statement.md", "IP and compliance statement"),
         Artifact("docs/submission/company-info-and-compliance-intake.md", "Company info and compliance intake"),
         Artifact("docs/submission/team-and-company-info-template.md", "Team and company template"),
+        Artifact("scripts/verify_finals_foundation.py", "Final-round foundation verifier"),
     ],
     "Phase E - Registration fields": [
         Artifact("docs/submission/registration-fields.md", "Registration fields"),

@@ -35,6 +35,7 @@ def run_pipeline(
     from generate_final_readiness_report import build_final_readiness, render_readiness_report
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
+    from verify_finals_foundation import verify_finals_foundation
     from verify_live_evidence import render_manifest as render_live_manifest
     from verify_live_evidence import verify_live_evidence
     from verify_submission_package import render_manifest as render_submission_manifest
@@ -62,6 +63,7 @@ def run_pipeline(
     final_evidence = verify_live_evidence(assets_dir, "final")
     live_evidence_manifest_path.parent.mkdir(parents=True, exist_ok=True)
     live_evidence_manifest_path.write_text(render_live_manifest(final_evidence), encoding="utf-8")
+    finals_foundation = verify_finals_foundation(assets_dir=assets_dir)
 
     readiness = build_final_readiness(
         assets_dir=assets_dir,
@@ -73,10 +75,17 @@ def run_pipeline(
     readiness_report_path.write_text(render_readiness_report(readiness), encoding="utf-8")
 
     result = {
-        "ok": bool(repo_verification["repo_ready"]) and (bool(final_evidence["ready"]) or not strict_final),
+        "ok": (
+            bool(repo_verification["repo_ready"])
+            and bool(finals_foundation["foundation_ready"])
+            and (bool(final_evidence["ready"]) or not strict_final)
+        ),
         "strict_final": strict_final,
         "repo_ready": bool(repo_verification["repo_ready"]),
         "platform_ready": bool(readiness["platform_evidence"]["ready"]),
+        "finals_foundation_ready": bool(finals_foundation["foundation_ready"]),
+        "finals_ready": bool(finals_foundation["finals_ready"]),
+        "finals_priority_gap_count": len(finals_foundation["priority_gaps"]),
         "final_ready": bool(final_evidence["ready"]),
         "final_missing_count": int(final_evidence["missing_count"]),
         "fallback_warning_count": len(final_evidence["warnings"]),
@@ -100,6 +109,9 @@ def render_summary(result: dict[str, Any]) -> str:
         f"strict_final={result['strict_final']}",
         f"repo_ready={result['repo_ready']}",
         f"platform_ready={result['platform_ready']}",
+        f"finals_foundation_ready={result['finals_foundation_ready']}",
+        f"finals_ready={result['finals_ready']}",
+        f"finals_priority_gap_count={result['finals_priority_gap_count']}",
         f"final_ready={result['final_ready']}",
         f"final_missing_count={result['final_missing_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",

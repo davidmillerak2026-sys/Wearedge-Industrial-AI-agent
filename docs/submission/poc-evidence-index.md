@@ -11,6 +11,7 @@
 | Gongyi Mofang Workflow Canvas memory | `docs/gongyi-mofang-workflow-canvas-memory-202604.md` | ready |
 | Edge Agent Runtime for Xcelerator | `docs/edge-agent-runtime-for-xcelerator.md` | ready |
 | Enterprise group winning strategy | `docs/submission/enterprise-winning-strategy.md` | ready |
+| Finals foundation roadmap | `docs/submission/finals-foundation-roadmap.md` | ready |
 | Judging scorecard evidence map | `docs/submission/judging-scorecard-evidence-map.md` | ready |
 | Defense Q&A playbook | `docs/submission/defense-qna-playbook.md` | ready |
 | Xcelerator API World onboarding notes | `docs/xcelerator-apiworld-onboarding.md` | ready |
@@ -23,6 +24,7 @@
 | Workflow Canvas payload | `workflows/wearedge_wfc_poc_payload.json` | ready |
 | Offline evaluation dataset | `evals/competition_offline_dataset.jsonl` | ready |
 | Offline evaluation script | `scripts/run_competition_eval.py` | ready |
+| Finals foundation verifier | `scripts/verify_finals_foundation.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
@@ -43,6 +45,7 @@
 ## Evidence Boundaries
 
 - Current offline evaluation is simulated and repository-local.
+- Finals foundation is now checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, `fb_main.py` saved into the live Python block, DEBUG entry, and `Workflow is ready` log-manager evidence.
 - WFC resource package zip is generated locally under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` by `scripts/package_wfc_resource_block.py`; it is a reusable prototype attachment, not proof of live platform execution.

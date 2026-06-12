@@ -12,6 +12,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`smoke_test.sh`](smoke_test.sh) | Verify gateway health, llama text path, image upload, output contract, audit, and agent runs. |
 | [`validate_agent_pocs.py`](validate_agent_pocs.py) | Run golden five-agent validation scenarios. |
 | [`run_competition_eval.py`](run_competition_eval.py) | Run offline competition-target evaluation and generate the Markdown report. |
+| [`verify_finals_foundation.py`](verify_finals_foundation.py) | Verify the final-round foundation: direction coverage, >=90% decision accuracy, <=500ms latency, WFC/Xcelerator execution skeleton, and HMI baseline without claiming finals completion. |
 | [`smoke_workflow_canvas_decision.py`](smoke_workflow_canvas_decision.py) | Smoke test the Workflow Canvas decision payload in-process or against a running gateway. |
 | [`package_wfc_resource_block.py`](package_wfc_resource_block.py) | Build a deterministic Gongyi Mofang WFC resource block zip and manifest under ignored `submission-assets/live-evidence/`. |
 | [`build_final_submission_bundle.py`](build_final_submission_bundle.py) | Build the repo-controlled final submission bundle zip and manifest while excluding live screenshots, signed legal files, and registration screenshots by default. |

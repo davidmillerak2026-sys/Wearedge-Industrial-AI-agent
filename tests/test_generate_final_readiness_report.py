@@ -81,5 +81,6 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
 
     assert "Verification Commands" in report
     assert "run_final_readiness_pipeline.py --json" in report
+    assert "verify_finals_foundation.py --json" in report
     assert "generate_final_readiness_report.py --write" in report
     assert "does not make external/human-owned files complete" in report

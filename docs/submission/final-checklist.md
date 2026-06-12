@@ -34,6 +34,7 @@
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Business plan | `docs/submission/business-plan.md` | draft |
 | Technical solution | `docs/submission/technical-solution.md` | draft |
+| Finals foundation roadmap | `docs/submission/finals-foundation-roadmap.md` | ready |
 | Demo script | `docs/submission/demo-script.md` | draft |
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
 | Demo video production plan | `docs/submission/video-production-plan.md` | ready |
@@ -57,6 +58,7 @@ Run before each milestone review:
 
 ```powershell
 python scripts/run_final_readiness_pipeline.py --json
+python scripts/verify_finals_foundation.py --json
 python scripts/verify_submission_package.py --write-manifest
 ```
 
