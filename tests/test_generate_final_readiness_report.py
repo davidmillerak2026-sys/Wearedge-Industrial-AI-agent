@@ -80,6 +80,8 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
     report = module.render_readiness_report(result)
 
     assert "Verification Commands" in report
+    assert "Finals foundation ready" in report
+    assert "Finals Foundation" in report
     assert "run_final_readiness_pipeline.py --json" in report
     assert "verify_finals_foundation.py --json" in report
     assert "generate_final_readiness_report.py --write" in report

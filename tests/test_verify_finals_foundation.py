@@ -30,7 +30,10 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["direction_coverage"]["all_cases_meet_min_required_directions"] is True
     assert result["performance"]["decision_accuracy_target_met"] is True
     assert result["performance"]["latency_target_met"] is True
+    assert result["performance"]["finals_validation_ready"] is True
+    assert result["performance"]["finals_case_count"] == 15
     assert result["hmi"]["natural_language_api_foundation"] is True
+    assert result["hmi"]["natural_language_console_foundation"] is True
     assert result["hmi"]["decision_visualization_foundation"] is True
     assert result["platform_evidence"]["fallback_warning_count"] == 3
     assert result["priority_gaps"]
@@ -46,4 +49,5 @@ def test_finals_foundation_report_states_boundary() -> None:
     assert "Finals ready: False" in report
     assert "Decision accuracy" in report
     assert "Latency" in report
+    assert "Finals validation cases: 15 / 15" in report
     assert "Foundation-ready does not mean finals-ready" in report

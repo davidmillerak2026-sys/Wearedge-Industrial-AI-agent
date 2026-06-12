@@ -28,6 +28,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        finals_validation_report_path=tmp_path / "finals-validation-report.md",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
     )
@@ -44,6 +45,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert (tmp_path / "submission-package-manifest.md").is_file()
     assert (tmp_path / "live-evidence-manifest.md").is_file()
     assert (tmp_path / "final-readiness-report.md").is_file()
+    assert (tmp_path / "finals-validation-report.md").is_file()
     assert (assets / "final-human-action-pack-manifest.json").is_file()
     assert not (assets / "legal" / "company-info-filled.md").exists()
     assert not (assets / "submission" / "01-registration-form-filled.png").exists()
@@ -57,6 +59,7 @@ def test_final_readiness_pipeline_strict_mode_blocks_when_external_files_missing
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        finals_validation_report_path=tmp_path / "finals-validation-report.md",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
         strict_final=True,
@@ -74,6 +77,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
         submission_manifest_path=tmp_path / "submission-package-manifest.md",
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
+        finals_validation_report_path=tmp_path / "finals-validation-report.md",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
     )
@@ -82,5 +86,6 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
 
     assert "repo_ready=True" in summary
     assert "finals_foundation_ready=True" in summary
+    assert "finals_validation_report=" in summary
     assert "final_missing_count=" in summary
     assert "readiness_report=" in summary

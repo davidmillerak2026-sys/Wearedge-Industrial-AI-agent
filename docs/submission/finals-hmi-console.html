@@ -1,0 +1,675 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Wearedge Finals Decision Console</title>
+  <style>
+    :root {
+      color-scheme: light;
+      --bg: #f3f6f8;
+      --panel: #ffffff;
+      --ink: #17202a;
+      --muted: #5d6875;
+      --line: #d7e0e7;
+      --blue: #155e95;
+      --green: #157a5b;
+      --amber: #9a5b00;
+      --red: #b42318;
+      --violet: #6b4bb7;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      font-family: "Segoe UI", Arial, sans-serif;
+      background: var(--bg);
+      color: var(--ink);
+    }
+    header {
+      min-height: 72px;
+      padding: 14px 22px;
+      background: #102a43;
+      color: #f8fbff;
+      display: grid;
+      grid-template-columns: minmax(0, 1fr) auto;
+      gap: 18px;
+      align-items: center;
+    }
+    h1, h2, h3, p { margin: 0; }
+    h1 {
+      font-size: 21px;
+      font-weight: 750;
+      letter-spacing: 0;
+    }
+    .sub {
+      margin-top: 4px;
+      font-size: 12px;
+      color: #cbd8e3;
+    }
+    .status-bar {
+      display: flex;
+      gap: 8px;
+      flex-wrap: wrap;
+      justify-content: flex-end;
+    }
+    .badge {
+      min-height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 10px;
+      border-radius: 6px;
+      border: 1px solid rgba(255,255,255,.34);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    main {
+      width: min(1440px, calc(100vw - 28px));
+      margin: 14px auto 28px;
+      display: grid;
+      grid-template-columns: 360px minmax(0, 1fr);
+      gap: 14px;
+    }
+    .panel {
+      background: var(--panel);
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      box-shadow: 0 1px 2px rgba(16,42,67,.05);
+    }
+    .panel-pad { padding: 14px; }
+    .section-title {
+      font-size: 14px;
+      font-weight: 750;
+      margin-bottom: 10px;
+    }
+    label {
+      display: block;
+      font-size: 12px;
+      font-weight: 650;
+      color: var(--muted);
+      margin: 12px 0 6px;
+    }
+    textarea, input, select {
+      width: 100%;
+      border: 1px solid #cbd6df;
+      border-radius: 6px;
+      background: #fbfdff;
+      color: var(--ink);
+      font: inherit;
+      font-size: 13px;
+    }
+    textarea {
+      min-height: 116px;
+      resize: vertical;
+      padding: 10px;
+      line-height: 1.45;
+    }
+    input, select {
+      height: 34px;
+      padding: 0 9px;
+    }
+    .field-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 10px;
+    }
+    .toggles {
+      display: grid;
+      gap: 8px;
+      margin-top: 4px;
+    }
+    .toggle {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: center;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      background: #fbfdff;
+      font-size: 13px;
+    }
+    .toggle input { width: 16px; height: 16px; }
+    .button-row {
+      display: grid;
+      grid-template-columns: 1fr 42px;
+      gap: 8px;
+      margin-top: 14px;
+    }
+    button {
+      min-height: 38px;
+      border: 1px solid #124d7c;
+      background: var(--blue);
+      color: white;
+      border-radius: 6px;
+      font-weight: 750;
+      cursor: pointer;
+    }
+    button.secondary {
+      border-color: #c5d0da;
+      background: #f7fafc;
+      color: var(--ink);
+      font-size: 18px;
+    }
+    .grid {
+      display: grid;
+      gap: 14px;
+    }
+    .metric-grid {
+      grid-template-columns: repeat(4, minmax(0, 1fr));
+    }
+    .metric {
+      padding: 13px;
+    }
+    .metric-label {
+      color: var(--muted);
+      font-size: 11px;
+      font-weight: 700;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    .metric-value {
+      margin-top: 7px;
+      font-size: 28px;
+      font-weight: 800;
+    }
+    .metric-note {
+      margin-top: 4px;
+      font-size: 12px;
+      color: var(--green);
+      font-weight: 700;
+    }
+    .main-grid {
+      grid-template-columns: minmax(0, 1.25fr) minmax(280px, .75fr);
+      align-items: start;
+    }
+    .decision {
+      display: grid;
+      gap: 10px;
+      border-left: 4px solid var(--blue);
+      background: #f4f9fd;
+      padding: 12px;
+      border-radius: 6px;
+    }
+    .decision h2 {
+      font-size: 18px;
+    }
+    .decision p {
+      font-size: 14px;
+      line-height: 1.45;
+    }
+    .chips {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 7px;
+    }
+    .chip {
+      border: 1px solid #c8d7e5;
+      background: #fafcff;
+      color: #24445f;
+      padding: 5px 8px;
+      border-radius: 5px;
+      font-size: 12px;
+      font-weight: 650;
+    }
+    .path {
+      display: grid;
+      grid-template-columns: repeat(5, minmax(110px, 1fr));
+      gap: 8px;
+    }
+    .node {
+      border: 1px solid var(--line);
+      background: #fbfdff;
+      border-radius: 7px;
+      min-height: 70px;
+      padding: 9px;
+      display: grid;
+      align-content: center;
+      gap: 4px;
+    }
+    .node strong {
+      font-size: 12px;
+    }
+    .node span {
+      font-size: 11px;
+      color: var(--muted);
+      line-height: 1.3;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      font-size: 13px;
+    }
+    th, td {
+      border-bottom: 1px solid var(--line);
+      padding: 8px 7px;
+      text-align: left;
+      vertical-align: top;
+    }
+    th {
+      background: #f7fafc;
+      color: var(--muted);
+      font-size: 11px;
+      text-transform: uppercase;
+      letter-spacing: 0;
+    }
+    .priority-high { color: var(--red); font-weight: 800; }
+    .priority-medium { color: var(--amber); font-weight: 800; }
+    .status {
+      display: inline-flex;
+      min-width: 74px;
+      justify-content: center;
+      padding: 3px 7px;
+      border-radius: 5px;
+      background: #e9f6f0;
+      color: var(--green);
+      font-size: 11px;
+      font-weight: 800;
+    }
+    .approval-list {
+      display: grid;
+      gap: 8px;
+    }
+    .approval {
+      display: grid;
+      grid-template-columns: 18px minmax(0, 1fr);
+      gap: 8px;
+      align-items: start;
+      border: 1px solid var(--line);
+      border-radius: 6px;
+      padding: 8px;
+      font-size: 13px;
+      background: #fbfdff;
+    }
+    .dot {
+      width: 10px;
+      height: 10px;
+      margin-top: 4px;
+      border-radius: 50%;
+      background: var(--violet);
+    }
+    .small {
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 1.45;
+    }
+    .warn {
+      color: var(--amber);
+      font-weight: 750;
+    }
+    @media (max-width: 1080px) {
+      main, .main-grid, .metric-grid { grid-template-columns: 1fr; }
+      .path { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+      header { grid-template-columns: 1fr; }
+      .status-bar { justify-content: flex-start; }
+    }
+  </style>
+</head>
+<body>
+  <header>
+    <div>
+      <h1>Wearedge Finals Decision Console</h1>
+      <p class="sub">Line-side natural-language command, multi-agent decision path, KPI evidence, and approval state.</p>
+    </div>
+    <div class="status-bar">
+      <span class="badge" id="source-badge">fallback sample</span>
+      <span class="badge">decision <= 500 ms</span>
+      <span class="badge">accuracy >= 90%</span>
+    </div>
+  </header>
+
+  <main>
+    <aside class="panel panel-pad">
+      <h2 class="section-title">Line Query</h2>
+      <label for="operator-query">Natural language</label>
+      <textarea id="operator-query">Line L3 is switching to SKU-C500. Gearbox vibration is high, first-piece inspection is clean, and the energy meter shows a small idle window. Which decision should enter Workflow Canvas?</textarea>
+
+      <div class="field-grid">
+        <div>
+          <label for="plant-id">Plant</label>
+          <input id="plant-id" value="PLANT-DEMO">
+        </div>
+        <div>
+          <label for="line-id">Line</label>
+          <input id="line-id" value="L3">
+        </div>
+      </div>
+
+      <label>Agent directions</label>
+      <div class="toggles">
+        <label class="toggle"><input type="checkbox" value="maintenance" checked>Equipment maintenance</label>
+        <label class="toggle"><input type="checkbox" value="quality" checked>Quality control</label>
+        <label class="toggle"><input type="checkbox" value="energy" checked>Energy management</label>
+        <label class="toggle"><input type="checkbox" value="flexible_production" checked>Flexible production</label>
+        <label class="toggle"><input type="checkbox" value="workflow_canvas" checked>Workflow Canvas</label>
+      </div>
+
+      <div class="field-grid">
+        <div>
+          <label for="defect-rate">Defect %</label>
+          <input id="defect-rate" type="number" value="2.2" step="0.1">
+        </div>
+        <div>
+          <label for="vibration">Vibration</label>
+          <input id="vibration" type="number" value="7.2" step="0.1">
+        </div>
+        <div>
+          <label for="idle-kw">Idle kW</label>
+          <input id="idle-kw" type="number" value="2.8" step="0.1">
+        </div>
+        <div>
+          <label for="sku">Target SKU</label>
+          <input id="sku" value="SKU-C500">
+        </div>
+      </div>
+
+      <div class="button-row">
+        <button id="run-button">Run Decision</button>
+        <button class="secondary" id="reset-button" title="Reset sample">↺</button>
+      </div>
+      <p class="small" style="margin-top:12px">Endpoint: <span id="endpoint-text">/v1/workflow-canvas/decision</span></p>
+    </aside>
+
+    <section class="grid">
+      <section class="grid metric-grid">
+        <div class="panel metric">
+          <div class="metric-label">Primary</div>
+          <div class="metric-value" id="metric-primary">maintenance</div>
+          <div class="metric-note" id="metric-priority">high priority</div>
+        </div>
+        <div class="panel metric">
+          <div class="metric-label">Accuracy</div>
+          <div class="metric-value" id="metric-accuracy">97.0%</div>
+          <div class="metric-note">target >= 90%</div>
+        </div>
+        <div class="panel metric">
+          <div class="metric-label">Latency</div>
+          <div class="metric-value" id="metric-latency">1 ms</div>
+          <div class="metric-note">target <= 500 ms</div>
+        </div>
+        <div class="panel metric">
+          <div class="metric-label">Directions</div>
+          <div class="metric-value" id="metric-directions">5</div>
+          <div class="metric-note">final target >= 3</div>
+        </div>
+      </section>
+
+      <section class="grid main-grid">
+        <div class="panel panel-pad">
+          <h2 class="section-title">Collaborative Decision</h2>
+          <div class="decision">
+            <h2 id="decision-title">maintenance</h2>
+            <p id="decision-recommendation">Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.</p>
+            <p class="small">Residual risk: <span id="residual-risk">human_confirmation_required_before_ot_control</span></p>
+          </div>
+          <h3 class="section-title" style="margin-top:14px">Decision Path</h3>
+          <div class="path" id="decision-path"></div>
+        </div>
+
+        <div class="panel panel-pad">
+          <h2 class="section-title">HumanApprovalGate</h2>
+          <div class="approval-list" id="approval-list"></div>
+          <p class="small" style="margin-top:12px"><span class="warn">Boundary:</span> no model text writes directly to PLC, robot, recipe, restart, or quality-release outputs.</p>
+        </div>
+      </section>
+
+      <section class="panel panel-pad">
+        <h2 class="section-title">Direction Evaluations</h2>
+        <table>
+          <thead>
+            <tr>
+              <th>Direction</th>
+              <th>Status</th>
+              <th>Priority</th>
+              <th>Score</th>
+              <th>Evidence</th>
+              <th>Recommendation</th>
+            </tr>
+          </thead>
+          <tbody id="evaluation-body"></tbody>
+        </table>
+      </section>
+    </section>
+  </main>
+
+  <script>
+    const samplePayload = {
+      stage: "final",
+      selected_directions: ["maintenance", "quality", "energy", "flexible_production", "workflow_canvas"],
+      context: {
+        maintenance: {
+          f1_pct: 88.0,
+          warning_lead_time_hours: 30.0,
+          root_cause_top3_pct: 92.0,
+          vibration_rms_mm_s: 7.2,
+          has_threshold_evidence: true,
+          source: "hmi_simulated_maintenance_kb_and_signal_table"
+        },
+        quality: {
+          defect_rate_pct: 2.2,
+          detection_confidence_pct: 93.0,
+          relative_improvement_pct: 6.0,
+          has_detector_evidence: true,
+          source: "hmi_simulated_visual_detector_and_quality_table"
+        },
+        energy: {
+          forecast_accuracy_pct: 96.0,
+          saving_pct: 12.0,
+          idle_kw: 2.8,
+          has_meter_baseline: true,
+          source: "hmi_simulated_meter_table"
+        },
+        production: {
+          schedule_efficiency_gain_pct: 22.0,
+          component_reuse_pct: 76.0,
+          target_sku: "SKU-C500",
+          has_released_checklist: true,
+          changeover_required: false,
+          source: "hmi_simulated_mes_order_and_released_checklist"
+        },
+        workflow_canvas: {
+          existing_component_use_pct: 72.0,
+          new_component_reuse_potential_pct: 80.0,
+          source: "hmi_simulated_workflow_canvas_blocks"
+        }
+      }
+    };
+
+    const fallbackDecision = {
+      ok: true,
+      latency_ms: 1,
+      direction_count: 5,
+      competition_metrics: {
+        decision_accuracy_pct_estimate: 97.0,
+        latency_target_met: true,
+        final_min_agent_directions_met: true
+      },
+      evaluations: [
+        {
+          direction: "maintenance",
+          status: "target_met",
+          priority: "high",
+          score: 1,
+          metrics: { f1_pct: 88.0, warning_lead_time_hours: 30.0, root_cause_top3_pct: 92.0, vibration_rms_mm_s: 7.2 },
+          evidence: { source: "hmi_simulated_maintenance_kb_and_signal_table", has_threshold_evidence: true },
+          recommendation: "Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation."
+        },
+        {
+          direction: "quality",
+          status: "target_met",
+          priority: "medium",
+          score: 1,
+          metrics: { defect_rate_pct: 2.2, detection_confidence_pct: 93.0, relative_improvement_pct: 6.0 },
+          evidence: { source: "hmi_simulated_visual_detector_and_quality_table", has_detector_evidence: true },
+          recommendation: "Continue monitored production while writing quality evidence and detector confidence into the shared dashboard."
+        },
+        {
+          direction: "energy",
+          status: "target_met",
+          priority: "medium",
+          score: 1,
+          metrics: { forecast_accuracy_pct: 96.0, saving_pct: 12.0, idle_kw: 2.8 },
+          evidence: { source: "hmi_simulated_meter_table", has_meter_baseline: true },
+          recommendation: "Keep energy monitoring active and report verified forecast accuracy and saving estimate to the competition dashboard."
+        },
+        {
+          direction: "flexible_production",
+          status: "target_met",
+          priority: "medium",
+          score: 1,
+          metrics: { schedule_efficiency_gain_pct: 22.0, component_reuse_pct: 76.0 },
+          evidence: { source: "hmi_simulated_mes_order_and_released_checklist", target_sku: "SKU-C500", has_released_checklist: true },
+          recommendation: "Use reusable Workflow Canvas changeover blocks to verify target SKU, released checklist, line clearance, and first-piece quality gate."
+        },
+        {
+          direction: "workflow_canvas",
+          status: "target_met",
+          priority: "medium",
+          score: 1,
+          metrics: { existing_component_use_pct: 72.0, new_component_reuse_potential_pct: 80.0 },
+          evidence: { source: "hmi_simulated_workflow_canvas_blocks", resource_block: "Wearedge Agent Service" },
+          recommendation: "Expose Wearedge as a Workflow Canvas resource and call bounded decision blocks from Python function blocks."
+        }
+      ],
+      collaborative_decision: {
+        primary_direction: "maintenance",
+        priority: "high",
+        recommendation: "Create a maintenance work-order recommendation with threshold evidence, Top 3 root causes, and required manual or signal confirmation.",
+        requires_human_confirmation: true,
+        residual_risk: "human_confirmation_required_before_ot_control",
+        required_confirmations: [
+          "machine identity",
+          "manual or signal evidence",
+          "maintenance engineer approval",
+          "product identity",
+          "lot or batch",
+          "quality authority",
+          "asset identity",
+          "meter baseline",
+          "production schedule",
+          "energy manager approval",
+          "target SKU",
+          "released checklist",
+          "line clearance",
+          "first-piece verification",
+          "resource binding",
+          "data table mapping",
+          "human approval block"
+        ]
+      },
+      workflow_canvas: {
+        function_blocks: [
+          "ReadEquipmentSignals",
+          "EvaluateMaintenanceThresholds",
+          "GenerateWorkOrder",
+          "EvaluateQualityRisk",
+          "ForecastEnergyLoad",
+          "VerifyFirstPiece",
+          "CallWearedgeDecisionApi",
+          "CollaborativeDecisionGate",
+          "HumanApprovalGate",
+          "UpdateDashboardDataTable"
+        ]
+      }
+    };
+
+    function buildPayload() {
+      const directions = [...document.querySelectorAll(".toggle input:checked")].map(item => item.value);
+      const payload = JSON.parse(JSON.stringify(samplePayload));
+      payload.selected_directions = directions;
+      payload.context.operator_query = document.querySelector("#operator-query").value;
+      payload.context.plant_id = document.querySelector("#plant-id").value;
+      payload.context.line_id = document.querySelector("#line-id").value;
+      payload.context.quality.defect_rate_pct = Number(document.querySelector("#defect-rate").value);
+      payload.context.maintenance.vibration_rms_mm_s = Number(document.querySelector("#vibration").value);
+      payload.context.energy.idle_kw = Number(document.querySelector("#idle-kw").value);
+      payload.context.production.target_sku = document.querySelector("#sku").value;
+      return payload;
+    }
+
+    async function runDecision() {
+      const payload = buildPayload();
+      try {
+        const response = await fetch("/v1/workflow-canvas/decision", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify(payload)
+        });
+        if (!response.ok) throw new Error(`HTTP ${response.status}`);
+        const decision = await response.json();
+        document.querySelector("#source-badge").textContent = "live local API";
+        renderDecision(decision);
+      } catch (error) {
+        document.querySelector("#source-badge").textContent = "fallback sample";
+        renderDecision(fallbackDecision);
+      }
+    }
+
+    function renderDecision(decision) {
+      const collaborative = decision.collaborative_decision || {};
+      const metrics = decision.competition_metrics || {};
+      document.querySelector("#metric-primary").textContent = collaborative.primary_direction || "-";
+      document.querySelector("#metric-priority").textContent = `${collaborative.priority || "-"} priority`;
+      document.querySelector("#metric-accuracy").textContent = `${metrics.decision_accuracy_pct_estimate || "-"}%`;
+      document.querySelector("#metric-latency").textContent = `${decision.latency_ms || "-"} ms`;
+      document.querySelector("#metric-directions").textContent = decision.direction_count || "-";
+      document.querySelector("#decision-title").textContent = collaborative.primary_direction || "-";
+      document.querySelector("#decision-recommendation").textContent = collaborative.recommendation || "-";
+      document.querySelector("#residual-risk").textContent = collaborative.residual_risk || "-";
+
+      const path = document.querySelector("#decision-path");
+      path.innerHTML = "";
+      const blocks = (decision.workflow_canvas && decision.workflow_canvas.function_blocks) || [];
+      blocks.slice(0, 10).forEach((block, index) => {
+        const node = document.createElement("div");
+        node.className = "node";
+        node.innerHTML = `<strong>${index + 1}. ${block}</strong><span>${blockHint(block)}</span>`;
+        path.appendChild(node);
+      });
+
+      const approval = document.querySelector("#approval-list");
+      approval.innerHTML = "";
+      (collaborative.required_confirmations || []).forEach(item => {
+        const row = document.createElement("div");
+        row.className = "approval";
+        row.innerHTML = `<span class="dot"></span><span>${item}</span>`;
+        approval.appendChild(row);
+      });
+
+      const body = document.querySelector("#evaluation-body");
+      body.innerHTML = "";
+      (decision.evaluations || []).forEach(item => {
+        const row = document.createElement("tr");
+        row.innerHTML = `
+          <td>${item.direction}</td>
+          <td><span class="status">${item.status}</span></td>
+          <td class="priority-${item.priority}">${item.priority}</td>
+          <td>${item.score}</td>
+          <td>${item.evidence && item.evidence.source ? item.evidence.source : "-"}</td>
+          <td>${item.recommendation}</td>
+        `;
+        body.appendChild(row);
+      });
+    }
+
+    function blockHint(block) {
+      if (block.includes("HumanApproval")) return "approval";
+      if (block.includes("Dashboard") || block.includes("DataTable")) return "writeback";
+      if (block.includes("Decision")) return "collaboration";
+      if (block.includes("Read")) return "context";
+      if (block.includes("Evaluate") || block.includes("Forecast") || block.includes("Optimize")) return "analysis";
+      return "workflow";
+    }
+
+    document.querySelector("#run-button").addEventListener("click", runDecision);
+    document.querySelector("#reset-button").addEventListener("click", () => {
+      document.querySelector("#operator-query").value = "Line L3 is switching to SKU-C500. Gearbox vibration is high, first-piece inspection is clean, and the energy meter shows a small idle window. Which decision should enter Workflow Canvas?";
+      document.querySelector("#defect-rate").value = "2.2";
+      document.querySelector("#vibration").value = "7.2";
+      document.querySelector("#idle-kw").value = "2.8";
+      document.querySelector("#sku").value = "SKU-C500";
+      renderDecision(fallbackDecision);
+    });
+    renderDecision(fallbackDecision);
+  </script>
+</body>
+</html>

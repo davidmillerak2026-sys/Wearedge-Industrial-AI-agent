@@ -16,6 +16,7 @@ DEFAULT_ASSETS_DIR = REPO_ROOT / "submission-assets" / "live-evidence"
 DEFAULT_SUBMISSION_MANIFEST = REPO_ROOT / "docs" / "submission" / "submission-package-manifest.md"
 DEFAULT_LIVE_EVIDENCE_MANIFEST = DEFAULT_ASSETS_DIR / "live-evidence-manifest.md"
 DEFAULT_READINESS_REPORT = REPO_ROOT / "docs" / "submission" / "final-readiness-report.md"
+DEFAULT_FINALS_VALIDATION_REPORT = REPO_ROOT / "docs" / "finals-validation-report.md"
 DEFAULT_BUNDLE_DIR = DEFAULT_ASSETS_DIR / "submission-bundle"
 DEFAULT_WFC_PACKAGE_DIR = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package"
 
@@ -26,6 +27,7 @@ def run_pipeline(
     submission_manifest_path: Path = DEFAULT_SUBMISSION_MANIFEST,
     live_evidence_manifest_path: Path | None = None,
     readiness_report_path: Path = DEFAULT_READINESS_REPORT,
+    finals_validation_report_path: Path = DEFAULT_FINALS_VALIDATION_REPORT,
     bundle_output_dir: Path = DEFAULT_BUNDLE_DIR,
     wfc_package_output_dir: Path = DEFAULT_WFC_PACKAGE_DIR,
     overwrite_templates: bool = False,
@@ -35,6 +37,7 @@ def run_pipeline(
     from generate_final_readiness_report import build_final_readiness, render_readiness_report
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
+    from run_finals_validation import render_finals_report, run_finals_validation
     from verify_finals_foundation import verify_finals_foundation
     from verify_live_evidence import render_manifest as render_live_manifest
     from verify_live_evidence import verify_live_evidence
@@ -44,6 +47,7 @@ def run_pipeline(
     assets_dir = _resolve_path(assets_dir)
     submission_manifest_path = _resolve_path(submission_manifest_path)
     readiness_report_path = _resolve_path(readiness_report_path)
+    finals_validation_report_path = _resolve_path(finals_validation_report_path)
     bundle_output_dir = _resolve_path(bundle_output_dir)
     wfc_package_output_dir = _resolve_path(wfc_package_output_dir)
     live_evidence_manifest_path = _resolve_path(live_evidence_manifest_path or assets_dir / "live-evidence-manifest.md")
@@ -52,6 +56,12 @@ def run_pipeline(
         assets_dir,
         overwrite=overwrite_templates,
         write_manifest=True,
+    )
+    finals_results, finals_summary = run_finals_validation()
+    finals_validation_report_path.parent.mkdir(parents=True, exist_ok=True)
+    finals_validation_report_path.write_text(
+        render_finals_report(finals_results, finals_summary),
+        encoding="utf-8",
     )
     wfc_package = package_resource_block(output_dir=wfc_package_output_dir, write_manifest=True)
     submission_package = build_final_submission_bundle(output_dir=bundle_output_dir)
@@ -95,6 +105,7 @@ def run_pipeline(
         "submission_manifest_path": str(submission_manifest_path),
         "live_evidence_manifest_path": str(live_evidence_manifest_path),
         "readiness_report_path": str(readiness_report_path),
+        "finals_validation_report_path": str(finals_validation_report_path),
         "human_action_manifest_path": human_action_pack.get("manifest_path"),
         "recommended_next_actions": readiness["recommended_next_actions"],
     }
@@ -116,6 +127,7 @@ def render_summary(result: dict[str, Any]) -> str:
         f"final_missing_count={result['final_missing_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",
         f"bundle_sha256={result['bundle_sha256']}",
+        f"finals_validation_report={result['finals_validation_report_path']}",
         f"readiness_report={result['readiness_report_path']}",
         "recommended_next_actions:",
     ]
@@ -138,6 +150,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--submission-manifest", type=Path, default=DEFAULT_SUBMISSION_MANIFEST)
     parser.add_argument("--live-evidence-manifest", type=Path, default=None)
     parser.add_argument("--readiness-report", type=Path, default=DEFAULT_READINESS_REPORT)
+    parser.add_argument("--finals-validation-report", type=Path, default=DEFAULT_FINALS_VALIDATION_REPORT)
     parser.add_argument("--bundle-output-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
     parser.add_argument("--wfc-package-output-dir", type=Path, default=DEFAULT_WFC_PACKAGE_DIR)
     parser.add_argument("--overwrite-templates", action="store_true")
@@ -154,6 +167,7 @@ def main(argv: list[str] | None = None) -> int:
         submission_manifest_path=args.submission_manifest,
         live_evidence_manifest_path=args.live_evidence_manifest,
         readiness_report_path=args.readiness_report,
+        finals_validation_report_path=args.finals_validation_report,
         bundle_output_dir=args.bundle_output_dir,
         wfc_package_output_dir=args.wfc_package_output_dir,
         overwrite_templates=args.overwrite_templates,

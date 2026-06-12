@@ -34,9 +34,9 @@ Wearedge 在端侧汇聚 MES / QMS / EMS / CMMS / 设备信号 / 视觉证据，
 | --- | --- | --- | --- |
 | 统一决策上下文 | 决赛端到端验证需要所有 Agent 使用同一个输入契约。 | `evals/competition_offline_dataset.jsonl`、`workflows/wearedge_wfc_poc_payload.json` 已存在。 | 固化 `plantId / lineId / stationId / assetId / sku / orderId / evidence_refs / metrics / constraints / approval_risk`。 |
 | Agent 输出契约 | 多智能体协同不能只靠自然语言，要能写表、审批、复盘。 | `/v1/workflow-canvas/decision` 已输出主方向、指标、确认项和 WFC blocks。 | 每个 Agent 输出 `status / confidence / evidence / action / owner / residual_risk / approval_required`。 |
-| 指标评估闭环 | 决赛明确要求延迟 <=500ms、决策准确率 >=90%。 | 离线报告显示 `decision_accuracy_pct_min=95.0%`、`latency_ms_max=1ms`，但仍是离线模拟。 | 建立更大标签集、真实平台 smoke、端侧延迟日志，并区分模型推理延迟与规则决策延迟。 |
+| 指标评估闭环 | 决赛明确要求延迟 <=500ms、决策准确率 >=90%。 | 初赛离线报告和 15 条决赛验证集均通过；决赛集五个主方向各 3 条，但仍是离线模拟。 | 继续扩大到真实/半真实标签集、真实平台 smoke、端侧延迟日志，并区分模型推理延迟与规则决策延迟。 |
 | 工易魔方执行主干 | 决赛要在 Xcelerator 或工易魔方中完成端到端/工作流验证。 | 资源块、Python Function Block、runbook、Xcelerator OpenAPI 草稿已具备；WFC 04/05/06 仍是 fallback。 | 真实 WFC 工作流跑通：数据表更新、Dashboard、run log ok=true、HumanApprovalGate。 |
-| 人机协同界面 | 决赛要求自然语言交互与决策过程可视化。 | `jetson/app.py` 有 `/v1/infer` 与简易 HTML；`dashboard-mock.html` 有可视化 mock。 | 做成正式 HMI：自然语言提问、证据引用、决策路径、指标卡、审批状态、历史审计。 |
+| 人机协同界面 | 决赛要求自然语言交互与决策过程可视化。 | `jetson/app.py` 有 `/v1/infer` 与简易 HTML；`dashboard-mock.html` 和 `finals-hmi-console.html` 提供可视化/HMI 原型。 | 做成正式 HMI：自然语言提问、证据引用、决策路径、指标卡、审批状态、历史审计。 |
 | 端侧运行证据 | Wearedge 的差异化是端侧 Agent Runtime，而不是云端 Chatbot。 | `docs/edge-agent-runtime-for-xcelerator.md`、runtime profile、Jetson 文档已具备。 | 采集 Jetson / IPC / 工控机 latency、资源占用、断网可用、数据不出厂证据。 |
 | 证据边界和审计 | 决赛答辩必须可信，不能把模拟说成真实。 | final readiness 已标注 6 个最终人工文件和 3 个 WFC fallback。 | 所有图、视频、指标、日志都有来源；模拟、平台 PoC、真实产线证据分层。 |
 
@@ -57,7 +57,7 @@ Wearedge 在端侧汇聚 MES / QMS / EMS / CMMS / 设备信号 / 视觉证据，
 ## 当前应该优先做什么
 
 1. 固化统一上下文和输出 schema。所有方向都使用同一个 `line_context`，避免后期 WFC 数据表、Dashboard 和评估脚本各写各的。
-2. 把离线数据集从 5 条 seed case 扩到更大的标签集。决赛指标至少要能解释 `accuracy>=90%` 的样本量、标签来源和失败样例。
+2. 将当前 15 条决赛验证集继续扩到真实/半真实标签集。决赛指标至少要能解释 `accuracy>=90%` 的样本量、标签来源和失败样例。
 3. 把 WFC 04/05/06 fallback 替换成真实平台执行证据。优先级高于继续润色文案。
 4. 做正式 HMI 原型。自然语言输入、决策路径、证据引用、指标卡、人工确认状态要在一个界面里出现。
 5. 建立端侧性能基线。把规则决策延迟、API 往返延迟、模型推理延迟分开测，避免被真实 VLM 图像推理延迟拖累 `<=500ms` 的协同决策指标。

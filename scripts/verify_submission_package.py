@@ -22,9 +22,13 @@ class Artifact:
 PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
     "Phase A - Offline evaluation": [
         Artifact("evals/competition_offline_dataset.jsonl", "Offline dataset"),
+        Artifact("evals/finals_validation_dataset.jsonl", "Final-round validation dataset"),
         Artifact("scripts/run_competition_eval.py", "Competition evaluator"),
+        Artifact("scripts/run_finals_validation.py", "Final-round validation evaluator"),
         Artifact("docs/competition-offline-eval-report.md", "Offline evaluation report"),
+        Artifact("docs/finals-validation-report.md", "Final-round validation report"),
         Artifact("tests/test_competition_eval.py", "Evaluator pytest coverage"),
+        Artifact("tests/test_run_finals_validation.py", "Final-round evaluator pytest coverage"),
     ],
     "Phase B - Gongyi Mofang PoC package": [
         Artifact("docs/gongyi-mofang-workflow-canvas-memory-202604.md", "Gongyi Mofang Workflow Canvas memory"),
@@ -65,6 +69,7 @@ PHASE_ARTIFACTS: dict[str, list[Artifact]] = {
         Artifact("docs/industrial-agent-solution-profile.md", "Industrial-agent solution profile"),
         Artifact("docs/submission/enterprise-winning-strategy.md", "Enterprise group winning strategy"),
         Artifact("docs/submission/finals-foundation-roadmap.md", "Final-round foundation roadmap"),
+        Artifact("docs/submission/finals-hmi-console.html", "Final-round HMI decision console"),
         Artifact("docs/submission/judging-scorecard-evidence-map.md", "Judging scorecard evidence map"),
         Artifact("docs/submission/defense-qna-playbook.md", "Defense Q&A playbook"),
         Artifact("docs/submission/business-plan.md", "Business plan draft"),

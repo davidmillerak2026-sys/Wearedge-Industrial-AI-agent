@@ -14,7 +14,8 @@ if str(REPO_ROOT) not in sys.path:
 if str(SCRIPTS_DIR) not in sys.path:
     sys.path.insert(0, str(SCRIPTS_DIR))
 
-from run_competition_eval import DEFAULT_DATASET, evaluate_cases, load_dataset
+from run_competition_eval import load_dataset
+from run_finals_validation import DEFAULT_DATASET, MIN_FINALS_CASES, run_finals_validation
 from verify_live_evidence import DEFAULT_ASSETS_DIR, verify_live_evidence
 
 
@@ -31,6 +32,7 @@ TARGET_LATENCY_MS = 500
 
 REQUIRED_FOUNDATION_FILES = {
     "decision_context": [
+        "evals/finals_validation_dataset.jsonl",
         "evals/competition_offline_dataset.jsonl",
         "workflows/wearedge_wfc_poc_payload.json",
         "docs/workflow-canvas-api-schema.md",
@@ -45,12 +47,16 @@ REQUIRED_FOUNDATION_FILES = {
     ],
     "performance_eval": [
         "scripts/run_competition_eval.py",
+        "scripts/run_finals_validation.py",
+        "docs/finals-validation-report.md",
         "docs/competition-offline-eval-report.md",
         "tests/test_competition_eval.py",
+        "tests/test_run_finals_validation.py",
     ],
     "hmi_foundation": [
         "jetson/app.py",
         "jetson/output_contract.py",
+        "docs/submission/finals-hmi-console.html",
         "docs/submission/dashboard-mock.html",
         "docs/submission/evidence/workflow-canvas-decision.json",
         "docs/submission/demo-script.md",
@@ -70,7 +76,7 @@ def verify_finals_foundation(
     repo_root: Path = REPO_ROOT,
 ) -> dict[str, Any]:
     cases = load_dataset(dataset_path)
-    _, summary = evaluate_cases(cases)
+    _, summary = run_finals_validation(dataset_path)
     coverage = _direction_coverage(cases)
     files = _verify_foundation_files(repo_root)
     platform = verify_live_evidence(assets_dir, "platform")
@@ -84,9 +90,13 @@ def verify_finals_foundation(
         "latency_target_met": summary["latency_ms_max"] <= TARGET_LATENCY_MS,
         "offline_cases_passed": summary["all_cases_passed"],
         "offline_targets_passed": summary["all_target_checks_passed"],
+        "finals_validation_ready": summary["finals_validation_ready"],
+        "finals_case_count": summary["case_count"],
+        "min_finals_cases": MIN_FINALS_CASES,
     }
     hmi = {
         "natural_language_api_foundation": (repo_root / "jetson" / "app.py").is_file(),
+        "natural_language_console_foundation": (repo_root / "docs" / "submission" / "finals-hmi-console.html").is_file(),
         "decision_visualization_foundation": (repo_root / "docs" / "submission" / "dashboard-mock.html").is_file(),
         "live_wfc_dashboard_ready": not any(
             warning["path"].startswith("gongyi-mofang/04")
@@ -107,7 +117,9 @@ def verify_finals_foundation(
             performance["latency_target_met"],
             performance["offline_cases_passed"],
             performance["offline_targets_passed"],
+            performance["finals_validation_ready"],
             hmi["natural_language_api_foundation"],
+            hmi["natural_language_console_foundation"],
             hmi["decision_visualization_foundation"],
         )
     )
@@ -147,6 +159,7 @@ def render_markdown(result: dict[str, Any]) -> str:
         f"- Selected direction count: {result['direction_coverage']['selected_direction_count']}",
         f"- Selected directions: {', '.join(result['direction_coverage']['selected_directions'])}",
         f"- All cases meet >= 3 directions: {result['direction_coverage']['all_cases_meet_min_required_directions']}",
+        f"- Finals validation cases: {result['performance']['finals_case_count']} / {result['performance']['min_finals_cases']}",
         "",
         "## Performance Foundation",
         "",
@@ -168,6 +181,7 @@ def render_markdown(result: dict[str, Any]) -> str:
         f"- Platform evidence ready: {result['platform_evidence']['platform_ready']}",
         f"- Platform fallback warnings: {result['platform_evidence']['fallback_warning_count']}",
         f"- Natural-language API foundation: {result['hmi']['natural_language_api_foundation']}",
+        f"- Natural-language console foundation: {result['hmi']['natural_language_console_foundation']}",
         f"- Decision visualization foundation: {result['hmi']['decision_visualization_foundation']}",
         f"- Live WFC dashboard ready: {result['hmi']['live_wfc_dashboard_ready']}",
         f"- Live WFC human approval ready: {result['hmi']['live_wfc_human_approval_ready']}",
@@ -250,7 +264,8 @@ def _priority_gaps(
         gaps.append("Build the natural-language HMI and decision-process visualization as first-class product surfaces.")
     if files["missing"]:
         gaps.append("Restore missing foundation files before relying on the finals roadmap.")
-    gaps.append("Expand the offline dataset from 5 seed cases to a larger labeled finals validation set before the defense.")
+    if performance["finals_case_count"] < MIN_FINALS_CASES:
+        gaps.append("Expand the offline dataset from 5 seed cases to a larger labeled finals validation set before the defense.")
     gaps.append("Add stable deployed API endpoint evidence and edge-hardware latency logs for final-round replay.")
     return gaps
 

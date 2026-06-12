@@ -51,11 +51,13 @@ def build_final_readiness(
     human_action_manifest_path: Path = DEFAULT_HUMAN_ACTION_MANIFEST,
 ) -> dict[str, Any]:
     from verify_live_evidence import verify_live_evidence
+    from verify_finals_foundation import verify_finals_foundation
     from verify_submission_package import verify_package
 
     repo = verify_package(REPO_ROOT)
     platform = verify_live_evidence(assets_dir, "platform")
     final = verify_live_evidence(assets_dir, "final")
+    finals_foundation = verify_finals_foundation(assets_dir=assets_dir)
 
     bundle_manifest = load_json(bundle_manifest_path)
     human_manifest = load_json(human_action_manifest_path)
@@ -63,6 +65,7 @@ def build_final_readiness(
 
     status = {
         "repo_controlled_ready": bool(repo["repo_ready"]),
+        "finals_foundation_ready": bool(finals_foundation["foundation_ready"]),
         "platform_evidence_ready": bool(platform["ready"]),
         "final_evidence_ready": bool(final["ready"]),
         "bundle_present": bundle_present,
@@ -71,6 +74,7 @@ def build_final_readiness(
     overall_ready = all(
         (
             status["repo_controlled_ready"],
+            status["finals_foundation_ready"],
             status["platform_evidence_ready"],
             status["final_evidence_ready"],
             status["bundle_present"],
@@ -96,6 +100,14 @@ def build_final_readiness(
             "expected_count": platform["expected_count"],
             "missing_count": platform["missing_count"],
             "warnings": platform["warnings"],
+        },
+        "finals_foundation": {
+            "ready": finals_foundation["foundation_ready"],
+            "finals_ready": finals_foundation["finals_ready"],
+            "case_count": finals_foundation["performance"]["finals_case_count"],
+            "decision_accuracy_pct_min": finals_foundation["performance"]["decision_accuracy_pct_min"],
+            "latency_ms_max": finals_foundation["performance"]["latency_ms_max"],
+            "priority_gaps": finals_foundation["priority_gaps"],
         },
         "final_evidence": {
             "ready": final["ready"],
@@ -159,6 +171,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
         "",
         f"- Official submission ready: {result['overall_ready_for_official_submission']}",
         f"- Repository-controlled package ready: {result['status']['repo_controlled_ready']}",
+        f"- Finals foundation ready: {result['status']['finals_foundation_ready']}",
         f"- Platform evidence ready: {result['status']['platform_evidence_ready']}",
         f"- Final evidence ready: {result['status']['final_evidence_ready']}",
         f"- Repo-controlled bundle present: {result['status']['bundle_present']}",
@@ -172,6 +185,11 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"| Platform evidence | {result['platform_evidence']['ready']} | "
             f"{result['platform_evidence']['present_count']} / {result['platform_evidence']['expected_count']} | "
             f"{result['platform_evidence']['missing_count']} | {len(result['platform_evidence']['warnings'])} |"
+        ),
+        (
+            f"| Finals foundation | {result['finals_foundation']['ready']} | "
+            f"{result['finals_foundation']['case_count']} cases | "
+            f"0 | {len(result['finals_foundation']['priority_gaps'])} |"
         ),
         (
             f"| Final evidence | {result['final_evidence']['ready']} | "
@@ -201,6 +219,20 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             lines.append(f"- `{warning['path']}`: {warning['warning']}")
     else:
         lines.append("- None.")
+
+    lines.extend(["", "## Finals Foundation", ""])
+    lines.extend(
+        [
+            f"- Foundation ready: {result['finals_foundation']['ready']}",
+            f"- Finals ready: {result['finals_foundation']['finals_ready']}",
+            f"- Finals validation cases: {result['finals_foundation']['case_count']}",
+            f"- Decision accuracy min: {result['finals_foundation']['decision_accuracy_pct_min']}%",
+            f"- Rule decision latency max: {result['finals_foundation']['latency_ms_max']} ms",
+            "",
+            "Priority gaps:",
+        ]
+    )
+    lines.extend(f"- {gap}" for gap in result["finals_foundation"]["priority_gaps"])
 
     lines.extend(
         [

@@ -24,6 +24,9 @@
 | Workflow Canvas payload | `workflows/wearedge_wfc_poc_payload.json` | ready |
 | Offline evaluation dataset | `evals/competition_offline_dataset.jsonl` | ready |
 | Offline evaluation script | `scripts/run_competition_eval.py` | ready |
+| Finals validation dataset | `evals/finals_validation_dataset.jsonl` | ready |
+| Finals validation report | `docs/finals-validation-report.md` | generated |
+| Finals validation script | `scripts/run_finals_validation.py` | ready |
 | Finals foundation verifier | `scripts/verify_finals_foundation.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
@@ -38,6 +41,7 @@
 | Demo video production plan | `docs/submission/video-production-plan.md` | ready |
 | Company info and compliance intake | `docs/submission/company-info-and-compliance-intake.md` | ready |
 | Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
+| Finals HMI decision console | `docs/submission/finals-hmi-console.html` | ready |
 | Capture runbook | `docs/submission/capture-runbook.md` | ready |
 | Technical architecture | `docs/technical_architecture.md` | ready |
 | Technical evidence | `docs/technical-evidence.md` | ready |
@@ -45,7 +49,8 @@
 ## Evidence Boundaries
 
 - Current offline evaluation is simulated and repository-local.
-- Finals foundation is now checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
+- Finals validation is now checked by `scripts/run_finals_validation.py --json`; it uses 15 simulated final-round cases, covers all five directions, and represents each primary direction 3 times.
+- Finals foundation is checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, `fb_main.py` saved into the live Python block, DEBUG entry, and `Workflow is ready` log-manager evidence.
 - WFC resource package zip is generated locally under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` by `scripts/package_wfc_resource_block.py`; it is a reusable prototype attachment, not proof of live platform execution.
