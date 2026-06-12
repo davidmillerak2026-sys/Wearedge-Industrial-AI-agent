@@ -79,6 +79,7 @@ INCLUDE_PATHS = (
     "scripts/smoke_solution_profile.py",
     "scripts/verify_submission_package.py",
     "scripts/verify_live_evidence.py",
+    "scripts/verify_final_external_assets.py",
     "scripts/build_final_submission_bundle.py",
     "scripts/prepare_final_human_action_pack.py",
     "scripts/generate_final_readiness_report.py",

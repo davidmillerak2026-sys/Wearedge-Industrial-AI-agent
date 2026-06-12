@@ -34,6 +34,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
     )
 
     assert result["ok"] is True
@@ -50,7 +51,9 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert result["selected_latency_resource_sample_count"] > 0
     assert result["selected_latency_process_rss_mb_max"] > 0
     assert result["final_ready"] is False
+    assert result["final_external_assets_ready"] is False
     assert result["final_missing_count"] >= 6
+    assert result["final_external_assets_failure_count"] >= 6
     assert Path(result["bundle_path"]).is_file()
     assert Path(result["wfc_package_path"]).is_file()
     assert Path(result["edge_runtime_evidence_manifest_path"]).is_file()
@@ -63,6 +66,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert (tmp_path / "finals-validation-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark-report.md").is_file()
     assert (tmp_path / "finals-latency-benchmark.json").is_file()
+    assert (tmp_path / "final-external-assets-quality-report.md").is_file()
     assert (assets / "edge-runtime" / "06-http-resource-benchmark.json").is_file()
     assert (assets / "edge-runtime" / "07-edge-runtime-evidence-manifest.md").is_file()
     assert (assets / "final-human-action-pack-manifest.json").is_file()
@@ -84,11 +88,12 @@ def test_final_readiness_pipeline_strict_mode_blocks_when_external_files_missing
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
         strict_final=True,
     )
 
     assert result["ok"] is False
-    assert result["blocking_reason"] == "Final external/human-owned evidence is incomplete."
+    assert result["blocking_reason"] == "Final external/human-owned evidence is incomplete or failed quality checks."
     assert "Fill/capture the final live-evidence files" in "\n".join(result["recommended_next_actions"])
 
 
@@ -105,6 +110,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
     )
 
     summary = module.render_summary(result)
@@ -120,5 +126,8 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "selected_latency_resource_sample_count=" in summary
     assert "selected_latency_process_rss_mb_max=" in summary
     assert "final_missing_count=" in summary
+    assert "final_external_assets_ready=False" in summary
+    assert "final_external_assets_failure_count=" in summary
     assert "readiness_report=" in summary
     assert "action_board=" in summary
+    assert "external_assets_report=" in summary

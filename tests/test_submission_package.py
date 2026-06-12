@@ -35,6 +35,10 @@ def test_submission_package_repo_controlled_items_are_ready() -> None:
         artifact["path"] == "docs/submission/first-round-submission-attachment-index.md"
         for artifact in phase_e["artifacts"]
     )
+    assert any(
+        artifact["path"] == "scripts/verify_final_external_assets.py"
+        for artifact in phase_e["artifacts"]
+    )
 
 
 def test_submission_manifest_marks_external_pending_without_repo_failure() -> None:

@@ -137,6 +137,7 @@ def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, A
     actions.extend(
         [
             "Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note \"reviewed live WFC screenshots\"` only after real WFC screenshots are in staging.",
+            "Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.",
             "Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.",
         ]
     )
@@ -208,6 +209,7 @@ def render_action_board(board: dict[str, Any]) -> str:
             "```powershell",
             "python scripts/prepare_final_human_action_pack.py --json",
             "python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note \"reviewed live WFC screenshots\"",
+            "python scripts/verify_final_external_assets.py --write-report",
             "python scripts/run_final_readiness_pipeline.py --json",
             "python scripts/verify_live_evidence.py --stage final --write-manifest",
             "python scripts/verify_submission_package.py --write-manifest",

@@ -37,6 +37,7 @@ def test_action_board_tracks_final_missing_and_wfc_fallbacks() -> None:
     )
     assert expected_latency in report
     assert "promote_wfc_live_evidence.py" in report
+    assert "verify_final_external_assets.py" in report
     assert "Do not remove `.fallback.json`" in report
 
 

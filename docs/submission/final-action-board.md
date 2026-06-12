@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-12T04:49:06+00:00
+Updated: 2026-06-12T05:03:33+00:00
 
 ## Current Gate
 
@@ -19,7 +19,8 @@ Updated: 2026-06-12T04:49:06+00:00
 1. Replace WFC 04/05/06 fallback screenshots with reviewed live WFC screenshots.
 2. Complete the six enterprise-owned legal/contact/submission evidence files.
 3. Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"` only after real WFC screenshots are in staging.
-4. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
+4. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.
+5. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
 
 ## WFC Live Replacement
 
@@ -45,6 +46,7 @@ Updated: 2026-06-12T04:49:06+00:00
 ```powershell
 python scripts/prepare_final_human_action_pack.py --json
 python scripts/promote_wfc_live_evidence.py --confirm-live-source --operator-note "reviewed live WFC screenshots"
+python scripts/verify_final_external_assets.py --write-report
 python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_live_evidence.py --stage final --write-manifest
 python scripts/verify_submission_package.py --write-manifest

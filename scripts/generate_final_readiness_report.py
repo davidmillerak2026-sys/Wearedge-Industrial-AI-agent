@@ -55,12 +55,14 @@ def build_final_readiness(
     edge_runtime_manifest_path: Path = DEFAULT_EDGE_RUNTIME_EVIDENCE_MANIFEST,
 ) -> dict[str, Any]:
     from verify_live_evidence import verify_live_evidence
+    from verify_final_external_assets import verify_final_external_assets
     from verify_finals_foundation import verify_finals_foundation
     from verify_submission_package import verify_package
 
     repo = verify_package(REPO_ROOT)
     platform = verify_live_evidence(assets_dir, "platform")
     final = verify_live_evidence(assets_dir, "final")
+    external_assets_quality = verify_final_external_assets(assets_dir)
     finals_foundation = verify_finals_foundation(assets_dir=assets_dir)
 
     bundle_manifest = load_json(bundle_manifest_path)
@@ -72,6 +74,7 @@ def build_final_readiness(
         "finals_foundation_ready": bool(finals_foundation["foundation_ready"]),
         "platform_evidence_ready": bool(platform["ready"]),
         "final_evidence_ready": bool(final["ready"]),
+        "final_external_assets_quality_ready": bool(external_assets_quality["ready"]),
         "bundle_present": bundle_present,
         "human_templates_present": bool(human_manifest),
     }
@@ -81,6 +84,7 @@ def build_final_readiness(
             status["finals_foundation_ready"],
             status["platform_evidence_ready"],
             status["final_evidence_ready"],
+            status["final_external_assets_quality_ready"],
             status["bundle_present"],
         )
     )
@@ -122,6 +126,15 @@ def build_final_readiness(
             "missing": final["missing"],
             "warnings": final["warnings"],
         },
+        "final_external_assets_quality": {
+            "ready": external_assets_quality["ready"],
+            "ready_count": external_assets_quality["ready_count"],
+            "required_count": external_assets_quality["required_count"],
+            "failure_count": external_assets_quality["failure_count"],
+            "warning_count": external_assets_quality["warning_count"],
+            "failures": external_assets_quality["failures"],
+            "warnings": external_assets_quality["warnings"],
+        },
         "bundle": {
             "present": bundle_present,
             "path": str(bundle_path),
@@ -146,13 +159,14 @@ def build_final_readiness(
             "manifest_present": edge_runtime_manifest_path.is_file(),
             "manifest_path": str(edge_runtime_manifest_path),
         },
-        "recommended_next_actions": recommended_next_actions(repo, final, bundle_present, human_manifest),
+        "recommended_next_actions": recommended_next_actions(repo, final, external_assets_quality, bundle_present, human_manifest),
     }
 
 
 def recommended_next_actions(
     repo: dict[str, Any],
     final: dict[str, Any],
+    external_assets_quality: dict[str, Any],
     bundle_present: bool,
     human_manifest: dict[str, Any] | None,
 ) -> list[str]:
@@ -165,6 +179,8 @@ def recommended_next_actions(
         actions.append("Fill/capture the final live-evidence files listed under Final Missing Items.")
     if final["warnings"]:
         actions.append("Replace fallback-marked WFC evidence before claiming live WFC closure.")
+    if not external_assets_quality["ready"]:
+        actions.append("Run python scripts/verify_final_external_assets.py --write-report and clear all final asset quality failures.")
     if not actions:
         actions.append("Final verifier is green; submit before the internal 2026-07-08 target.")
     return actions
@@ -183,6 +199,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
         f"- Finals foundation ready: {result['status']['finals_foundation_ready']}",
         f"- Platform evidence ready: {result['status']['platform_evidence_ready']}",
         f"- Final evidence ready: {result['status']['final_evidence_ready']}",
+        f"- Final external assets quality ready: {result['status']['final_external_assets_quality_ready']}",
         f"- Repo-controlled bundle present: {result['status']['bundle_present']}",
         f"- Human-action templates present: {result['status']['human_templates_present']}",
         "",
@@ -205,6 +222,11 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"{result['final_evidence']['present_count']} / {result['final_evidence']['expected_count']} | "
             f"{result['final_evidence']['missing_count']} | {len(result['final_evidence']['warnings'])} |"
         ),
+        (
+            f"| Final external asset quality | {result['final_external_assets_quality']['ready']} | "
+            f"{result['final_external_assets_quality']['ready_count']} / {result['final_external_assets_quality']['required_count']} | "
+            f"{result['final_external_assets_quality']['failure_count']} | {result['final_external_assets_quality']['warning_count']} |"
+        ),
         "",
         "## Repository Phase Status",
         "",
@@ -218,6 +240,14 @@ def render_readiness_report(result: dict[str, Any]) -> str:
     if result["final_evidence"]["missing"]:
         for item in result["final_evidence"]["missing"]:
             lines.append(f"- `{item}`")
+    else:
+        lines.append("- None.")
+
+    lines.extend(["", "## Final Asset Quality Failures", ""])
+    quality_failures = result["final_external_assets_quality"]["failures"]
+    if quality_failures:
+        for failure in quality_failures:
+            lines.append(f"- `{failure['path']}` [{failure['code']}]: {failure['message']}")
     else:
         lines.append("- None.")
 
@@ -285,6 +315,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             "Remove-Item Env:\\JETSON_SSH_PASSWORD",
             "python scripts/verify_submission_package.py --write-manifest",
             "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
+            "python scripts/verify_final_external_assets.py --allow-incomplete --write-report",
             "python scripts/build_final_submission_bundle.py --json",
             "python scripts/prepare_final_human_action_pack.py --json",
             "python scripts/generate_final_readiness_report.py --write",

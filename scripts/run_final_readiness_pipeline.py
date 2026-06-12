@@ -30,6 +30,7 @@ DEFAULT_JETSON_GATEWAY_JSON = (
 )
 DEFAULT_BUNDLE_DIR = DEFAULT_ASSETS_DIR / "submission-bundle"
 DEFAULT_WFC_PACKAGE_DIR = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package"
+DEFAULT_EXTERNAL_ASSETS_REPORT = DEFAULT_ASSETS_DIR / "final-external-assets-quality-report.md"
 
 
 def run_pipeline(
@@ -44,6 +45,7 @@ def run_pipeline(
     latency_benchmark_json_path: Path = DEFAULT_LATENCY_BENCHMARK_JSON,
     bundle_output_dir: Path = DEFAULT_BUNDLE_DIR,
     wfc_package_output_dir: Path = DEFAULT_WFC_PACKAGE_DIR,
+    external_assets_report_path: Path = DEFAULT_EXTERNAL_ASSETS_REPORT,
     overwrite_templates: bool = False,
     strict_final: bool = False,
 ) -> dict[str, Any]:
@@ -55,6 +57,8 @@ def run_pipeline(
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
     from run_finals_validation import render_finals_report, run_finals_validation
+    from verify_final_external_assets import render_report as render_external_assets_report
+    from verify_final_external_assets import verify_final_external_assets
     from verify_finals_foundation import verify_finals_foundation
     from verify_live_evidence import render_manifest as render_live_manifest
     from verify_live_evidence import verify_live_evidence
@@ -70,6 +74,7 @@ def run_pipeline(
     latency_benchmark_json_path = _resolve_path(latency_benchmark_json_path)
     bundle_output_dir = _resolve_path(bundle_output_dir)
     wfc_package_output_dir = _resolve_path(wfc_package_output_dir)
+    external_assets_report_path = _resolve_path(external_assets_report_path)
     live_evidence_manifest_path = _resolve_path(live_evidence_manifest_path or assets_dir / "live-evidence-manifest.md")
 
     human_action_pack = prepare_templates(
@@ -106,6 +111,9 @@ def run_pipeline(
     final_evidence = verify_live_evidence(assets_dir, "final")
     live_evidence_manifest_path.parent.mkdir(parents=True, exist_ok=True)
     live_evidence_manifest_path.write_text(render_live_manifest(final_evidence), encoding="utf-8")
+    external_assets_quality = verify_final_external_assets(assets_dir)
+    external_assets_report_path.parent.mkdir(parents=True, exist_ok=True)
+    external_assets_report_path.write_text(render_external_assets_report(external_assets_quality), encoding="utf-8")
     finals_foundation = verify_finals_foundation(assets_dir=assets_dir)
 
     readiness = build_final_readiness(
@@ -142,7 +150,9 @@ def run_pipeline(
         "selected_latency_resource_sample_count": finals_foundation["latency_replay"]["resource_sample_count"],
         "selected_latency_process_rss_mb_max": finals_foundation["latency_replay"]["process_rss_mb_max"],
         "final_ready": bool(final_evidence["ready"]),
+        "final_external_assets_ready": bool(external_assets_quality["ready"]),
         "final_missing_count": int(final_evidence["missing_count"]),
+        "final_external_assets_failure_count": int(external_assets_quality["failure_count"]),
         "fallback_warning_count": len(final_evidence["warnings"]),
         "bundle_sha256": submission_package.get("bundle_sha256"),
         "bundle_path": submission_package["bundle_path"],
@@ -158,10 +168,11 @@ def run_pipeline(
         "latency_benchmark_report_path": str(latency_benchmark_report_path),
         "latency_benchmark_json_path": str(latency_benchmark_json_path),
         "human_action_manifest_path": human_action_pack.get("manifest_path"),
+        "external_assets_report_path": str(external_assets_report_path),
         "recommended_next_actions": readiness["recommended_next_actions"],
     }
-    if strict_final and not final_evidence["ready"]:
-        result["blocking_reason"] = "Final external/human-owned evidence is incomplete."
+    if strict_final and (not final_evidence["ready"] or not external_assets_quality["ready"]):
+        result["blocking_reason"] = "Final external/human-owned evidence is incomplete or failed quality checks."
     return result
 
 
@@ -183,7 +194,9 @@ def render_summary(result: dict[str, Any]) -> str:
         f"selected_latency_resource_sample_count={result['selected_latency_resource_sample_count']}",
         f"selected_latency_process_rss_mb_max={result['selected_latency_process_rss_mb_max']}",
         f"final_ready={result['final_ready']}",
+        f"final_external_assets_ready={result['final_external_assets_ready']}",
         f"final_missing_count={result['final_missing_count']}",
+        f"final_external_assets_failure_count={result['final_external_assets_failure_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",
         f"bundle_sha256={result['bundle_sha256']}",
         f"edge_runtime_evidence_ok={result['edge_runtime_evidence_ok']}",
@@ -192,6 +205,7 @@ def render_summary(result: dict[str, Any]) -> str:
         f"latency_benchmark_report={result['latency_benchmark_report_path']}",
         f"readiness_report={result['readiness_report_path']}",
         f"action_board={result['action_board_path']}",
+        f"external_assets_report={result['external_assets_report_path']}",
         "recommended_next_actions:",
     ]
     lines.extend(f"- {action}" for action in result["recommended_next_actions"])
@@ -225,6 +239,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--latency-benchmark-json", type=Path, default=DEFAULT_LATENCY_BENCHMARK_JSON)
     parser.add_argument("--bundle-output-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
     parser.add_argument("--wfc-package-output-dir", type=Path, default=DEFAULT_WFC_PACKAGE_DIR)
+    parser.add_argument("--external-assets-report", type=Path, default=DEFAULT_EXTERNAL_ASSETS_REPORT)
     parser.add_argument("--overwrite-templates", action="store_true")
     parser.add_argument(
         "--strict-final",
@@ -245,6 +260,7 @@ def main(argv: list[str] | None = None) -> int:
         latency_benchmark_json_path=args.latency_benchmark_json,
         bundle_output_dir=args.bundle_output_dir,
         wfc_package_output_dir=args.wfc_package_output_dir,
+        external_assets_report_path=args.external_assets_report,
         overwrite_templates=args.overwrite_templates,
         strict_final=args.strict_final,
     )

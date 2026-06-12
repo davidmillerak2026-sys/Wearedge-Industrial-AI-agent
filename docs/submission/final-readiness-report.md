@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T04:49:06+00:00
+Updated: 2026-06-12T05:03:33+00:00
 
 ## Executive Status
 
@@ -9,6 +9,7 @@ Updated: 2026-06-12T04:49:06+00:00
 - Finals foundation ready: True
 - Platform evidence ready: True
 - Final evidence ready: False
+- Final external assets quality ready: False
 - Repo-controlled bundle present: True
 - Human-action templates present: True
 
@@ -19,6 +20,7 @@ Updated: 2026-06-12T04:49:06+00:00
 | Platform evidence | True | 25 / 25 | 0 | 3 |
 | Finals foundation | True | 15 cases | 0 | 1 |
 | Final evidence | False | 27 / 33 | 6 | 3 |
+| Final external asset quality | False | 2 / 11 | 9 | 0 |
 
 ## Repository Phase Status
 
@@ -28,7 +30,7 @@ Updated: 2026-06-12T04:49:06+00:00
 | Phase B - Gongyi Mofang PoC package | ready | 18 / 18 |
 | Phase C - Demo evidence | ready | 12 / 12 |
 | Phase D - Business and technical package | ready | 13 / 13 |
-| Phase E - Registration fields | ready | 11 / 11 |
+| Phase E - Registration fields | ready | 12 / 12 |
 
 ## Final Missing Items
 
@@ -38,6 +40,18 @@ Updated: 2026-06-12T04:49:06+00:00
 - `legal/submission-contact-confirmation.md`
 - `submission/01-registration-form-filled.png`
 - `submission/02-submission-success.png`
+
+## Final Asset Quality Failures
+
+- `legal/company-info-filled.md` [missing_or_empty]: Filled company and contact information is missing or empty.
+- `legal/ip-and-no-dispute-signed.pdf` [missing_or_empty]: Signed IP and no-dispute statement is missing or empty.
+- `legal/no-adverse-record-signed.pdf` [missing_or_empty]: Signed no-adverse-record statement is missing or empty.
+- `legal/submission-contact-confirmation.md` [missing_or_empty]: Submission contact confirmation is missing or empty.
+- `submission/01-registration-form-filled.png` [missing_or_empty]: Filled registration form screenshot is missing or empty.
+- `submission/02-submission-success.png` [missing_or_empty]: Submission success screenshot is missing or empty.
+- `gongyi-mofang/04-dashboard-decision-view.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
+- `gongyi-mofang/05-run-log-ok-true.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
+- `gongyi-mofang/06-human-approval-gate.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
 
 ## Fallback Warnings
 
@@ -66,8 +80,8 @@ Priority gaps:
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `2119ce343918010fe21f71f36232b63c74686291033b51b7ce4fc0b28bb58f46`
-- Bundle manifest file count: `78`
+- Bundle SHA256: `ec572009c125c2dca7d12221624bc866c78d60165ba1658c7695fe1556dd5d4f`
+- Bundle manifest file count: `79`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
 - Human action templates written/skipped: `0 / 7`
@@ -78,6 +92,7 @@ Priority gaps:
 
 - Fill/capture the final live-evidence files listed under Final Missing Items.
 - Replace fallback-marked WFC evidence before claiming live WFC closure.
+- Run python scripts/verify_final_external_assets.py --write-report and clear all final asset quality failures.
 
 ## Verification Commands
 
@@ -91,6 +106,7 @@ python scripts/collect_jetson_edge_evidence.py --host wearedge-pro.local --user 
 Remove-Item Env:\JETSON_SSH_PASSWORD
 python scripts/verify_submission_package.py --write-manifest
 python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest
+python scripts/verify_final_external_assets.py --allow-incomplete --write-report
 python scripts/build_final_submission_bundle.py --json
 python scripts/prepare_final_human_action_pack.py --json
 python scripts/generate_final_readiness_report.py --write

@@ -34,7 +34,9 @@ def test_final_readiness_report_shows_missing_external_items(tmp_path: Path) -> 
 
     assert result["repo"]["ready"] is True
     assert result["overall_ready_for_official_submission"] is False
+    assert result["status"]["final_external_assets_quality_ready"] is False
     assert "legal/company-info-filled.md" in report
+    assert "Final external assets quality ready: False" in report
     assert "Run python scripts/run_final_readiness_pipeline.py --json" in report
 
 
@@ -82,6 +84,8 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
 
     assert "Verification Commands" in report
     assert "Finals foundation ready" in report
+    assert "Final external asset quality" in report
+    assert "verify_final_external_assets.py" in report
     assert "Finals Foundation" in report
     assert "Workflow Canvas evidence tier" in report
     assert "final_edge_stdlib_http_gateway" in report
