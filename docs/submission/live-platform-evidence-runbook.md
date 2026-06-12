@@ -1,6 +1,6 @@
 # Live Platform Evidence Runbook
 
-更新日期：2026-06-09
+更新日期：2026-06-12
 
 目标：把真实 Xcelerator / 工易魔方平台证据采集成一套可复核素材，支撑企业组“端侧智能体 + 平台编排 + 人工确认 + 数据回写”的夺冠叙事。
 
@@ -64,6 +64,7 @@ submission-assets/live-evidence/
 3. 左侧切 `编程` -> `配置资源`，先配置 `通用工控机` / `Generic IPC` 的 Spider/SPIDR URL。该资源用于证明 WFC 可部署到端侧执行器，不等同于 Wearedge Agent Service。
 4. 在资源配置页展开 `用户设备`，拖入 `自定义资源`，命名为 `Wearedge Agent Service`，定义 `agentHost`、`agentPort` 等服务参数。
 5. 回到工作流，左侧 `编程` -> `编程语言`，拖入 Python 程序块，命名为 `CallWearedgeDecisionApi`。
+   关键操作：如果默认工作流主线上已有 `[占位]`，必须把 Python Block 拖到该占位块上完成替换；仅把 Python Block 放在画布空白处不会进入主线执行。
 6. 在 Python Block 的属性面板中编辑输入输出：`input1` 为 `Resource` 并绑定 `Wearedge Agent Service`，`input2` 为 `JSON`，输出为 `JSON`。
 7. 双击 Python Block，在代码模板的 Business Code 区域调用 `/v1/workflow-canvas/decision`。
 8. 右侧打开 `数据表`，定义 `wearedgeDecision` 或拆分字段，拖入 `更新数据表` 功能块并绑定。
@@ -82,6 +83,7 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 - 如果顶部显示 `DEBUG`，`fb_main.py` 编辑器会进入只读状态，并提示 `Cannot edit in read-only editor`。先点击调试浮条的 stop 图标，使顶部恢复 `已保存` / `play-circle`，再打开源码编辑。
 - 当前仓库提供可复制到 WFC `fb_main.py` 的 live-edit 参考源码：`workflows/wfc_call_wearedge_decision_fb_main.py`。该版本只使用标准库 `urllib.request` 调用临时 HTTPS Wearedge Agent Service，不包含平台账号、token 或密钥。
 - 粘贴保存后，截图应同时覆盖 `fb_main.py`、`/v1/workflow-canvas/decision`、`wearedge_decision_ok` 日志标识和底部 `保存` 成功状态。
+- 若 WFC 原生 log-manager 或 inline read 视图没有显示 stdout，可把 Wearedge gateway 中同一轮运行产生的外部 `POST /v1/workflow-canvas/decision` `200 OK` 作为辅助证据；这不能替代 `05-run-log-ok-true.png` 的 live WFC 原生日志要求。
 
 | 文件名 | 画面要求 | 说明 |
 | --- | --- | --- |
@@ -134,6 +136,13 @@ Dashboard 路径备注：
 | `gongyi-mofang/103-wfc-log-manager-after-python-run.png` | log-manager 页面读取到 `Workflow is ready.`。 |
 | `gongyi-mofang/104-wfc-log-manager-after-debug-trigger.png` | 调试触发后的 log-manager 辅助证据，仍未形成 `ok=true`。 |
 | `gongyi-mofang/105-wfc-debug-stopped-after-run-attempt.png` | 调试运行尝试后已停止，避免平台会话长时间挂起。 |
+| `gongyi-mofang/108-wfc-dashboard-explorer-live-20260612.png` | Dashboard Explorer live 复核，当前显示 `No Dashboard`。 |
+| `gongyi-mofang/110-wfc-data-table-fields-drawer-live-20260612.png` | WFC 数据表抽屉 live 截图，显示 8 个 Wearedge 决策字段。 |
+| `gongyi-mofang/116-wfc-drag-python-onto-placeholder-20260612.png` | 将 Python Block 拖到 `[占位]` 上完成主线替换的操作证据。 |
+| `gongyi-mofang/118-wfc-spidr-post-200-gateway-log-20260612.png` | WFC/SPIDR 调用 Wearedge API 后，gateway 端记录外部 `POST 200 OK` 的辅助证据。 |
+| `gongyi-mofang/119-wfc-connected-python-block-final-saved-20260612.png` | Python Block 已成为工作流主线节点并保存。 |
+| `gongyi-mofang/120-wfc-debug-read-state-after-live-run-20260612.png` | WFC 运行后的 DEBUG/read 状态；平台视图仍未显示 `ok=true` 文本。 |
+| `gongyi-mofang/121-wfc-programming-tab-selected-20260612.png` | WFC `编程` 页辅助截图；当前视图未展开可编辑文件树。 |
 
 ## 端侧运行证据截图
 
