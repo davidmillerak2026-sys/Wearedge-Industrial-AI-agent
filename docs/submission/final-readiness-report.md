@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-12T01:35:23+00:00
+Updated: 2026-06-12T01:51:59+00:00
 
 ## Executive Status
 
@@ -52,16 +52,19 @@ Updated: 2026-06-12T01:35:23+00:00
 - Finals validation cases: 15
 - Decision accuracy min: 95.0%
 - Rule decision latency max: 1 ms
+- Workflow Canvas replay mode: in_process
+- Workflow Canvas replay samples: 300
+- Workflow Canvas replay p95/max: 1 / 1 ms
 
 Priority gaps:
+- Replace in-process latency replay with deployed FastAPI/edge-hardware benchmark before final defense.
 - Replace fallback WFC dashboard/run-log/HumanApprovalGate assets with live WFC execution screenshots.
-- Add stable deployed API endpoint evidence and edge-hardware latency logs for final-round replay.
 
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `79c847ab0916244dce8bc916f04b049dd0003f06694cc00ab26266501ec81323`
-- Bundle manifest file count: `63`
+- Bundle SHA256: `7deec26af7decd12a9cfa96b41b8a612424aae29d1469be6a04ea97d13b79181`
+- Bundle manifest file count: `66`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
 - Human action templates written/skipped: `0 / 7`
@@ -76,6 +79,7 @@ Priority gaps:
 ```powershell
 python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_finals_foundation.py --json
+python scripts/benchmark_workflow_canvas_latency.py
 python scripts/verify_submission_package.py --write-manifest
 python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest
 python scripts/build_final_submission_bundle.py --json

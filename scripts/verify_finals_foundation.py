@@ -48,10 +48,14 @@ REQUIRED_FOUNDATION_FILES = {
     "performance_eval": [
         "scripts/run_competition_eval.py",
         "scripts/run_finals_validation.py",
+        "scripts/benchmark_workflow_canvas_latency.py",
         "docs/finals-validation-report.md",
+        "docs/finals-latency-benchmark-report.md",
         "docs/competition-offline-eval-report.md",
+        "docs/submission/evidence/finals-latency-benchmark.json",
         "tests/test_competition_eval.py",
         "tests/test_run_finals_validation.py",
+        "tests/test_benchmark_workflow_canvas_latency.py",
     ],
     "hmi_foundation": [
         "jetson/app.py",
@@ -80,6 +84,7 @@ def verify_finals_foundation(
     coverage = _direction_coverage(cases)
     files = _verify_foundation_files(repo_root)
     platform = verify_live_evidence(assets_dir, "platform")
+    latency_replay = _load_latency_replay(repo_root)
 
     performance = {
         "decision_accuracy_pct_min": summary["decision_accuracy_pct_min"],
@@ -118,6 +123,8 @@ def verify_finals_foundation(
             performance["offline_cases_passed"],
             performance["offline_targets_passed"],
             performance["finals_validation_ready"],
+            latency_replay["ready"],
+            latency_replay["target_met"],
             hmi["natural_language_api_foundation"],
             hmi["natural_language_console_foundation"],
             hmi["decision_visualization_foundation"],
@@ -141,8 +148,9 @@ def verify_finals_foundation(
             "fallback_warning_paths": [warning["path"] for warning in platform["warnings"]],
         },
         "hmi": hmi,
+        "latency_replay": latency_replay,
         "required_files": files,
-        "priority_gaps": _priority_gaps(coverage, performance, platform, hmi, files),
+        "priority_gaps": _priority_gaps(coverage, performance, platform, hmi, files, latency_replay),
     }
 
 
@@ -185,6 +193,16 @@ def render_markdown(result: dict[str, Any]) -> str:
         f"- Decision visualization foundation: {result['hmi']['decision_visualization_foundation']}",
         f"- Live WFC dashboard ready: {result['hmi']['live_wfc_dashboard_ready']}",
         f"- Live WFC human approval ready: {result['hmi']['live_wfc_human_approval_ready']}",
+        "",
+        "## Latency Replay Evidence",
+        "",
+        f"- Replay ready: {result['latency_replay']['ready']}",
+        f"- Replay mode: {result['latency_replay']['mode']}",
+        f"- Replay samples: {result['latency_replay']['sample_count']}",
+        f"- Wall latency max: {result['latency_replay']['wall_latency_ms_max']} ms",
+        f"- Wall latency p95: {result['latency_replay']['wall_latency_ms_p95']} ms",
+        f"- Target met: {result['latency_replay']['target_met']}",
+        f"- Boundary: {result['latency_replay']['boundary']}",
         "",
         "## Priority Gaps",
         "",
@@ -242,12 +260,54 @@ def _verify_foundation_files(repo_root: Path) -> dict[str, Any]:
     }
 
 
+def _load_latency_replay(repo_root: Path) -> dict[str, Any]:
+    path = repo_root / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json"
+    if not path.is_file():
+        return {
+            "ready": False,
+            "path": str(path),
+            "mode": "missing",
+            "sample_count": 0,
+            "target_met": False,
+            "wall_latency_ms_max": 0,
+            "wall_latency_ms_p95": 0,
+            "boundary": "Latency replay evidence has not been generated yet.",
+        }
+    try:
+        data = json.loads(path.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return {
+            "ready": False,
+            "path": str(path),
+            "mode": "invalid-json",
+            "sample_count": 0,
+            "target_met": False,
+            "wall_latency_ms_max": 0,
+            "wall_latency_ms_p95": 0,
+            "boundary": "Latency replay JSON could not be parsed.",
+        }
+
+    wall = data.get("wall_latency_ms", {})
+    return {
+        "ready": bool(data.get("ok")) and int(data.get("sample_count", 0)) > 0,
+        "path": str(path),
+        "mode": str(data.get("mode", "unknown")),
+        "endpoint": str(data.get("endpoint", "unknown")),
+        "sample_count": int(data.get("sample_count", 0)),
+        "target_met": bool(data.get("target_met")),
+        "wall_latency_ms_max": int(wall.get("max", 0)),
+        "wall_latency_ms_p95": int(wall.get("p95", 0)),
+        "boundary": str(data.get("boundary", "")),
+    }
+
+
 def _priority_gaps(
     coverage: dict[str, Any],
     performance: dict[str, Any],
     platform: dict[str, Any],
     hmi: dict[str, Any],
     files: dict[str, Any],
+    latency_replay: dict[str, Any],
 ) -> list[str]:
     gaps: list[str] = []
     if coverage["selected_direction_count"] < MIN_REQUIRED_DIRECTIONS:
@@ -256,6 +316,10 @@ def _priority_gaps(
         gaps.append("Optional winning upgrade: keep all five finals directions covered, not only the minimum three.")
     if not performance["decision_accuracy_target_met"] or not performance["latency_target_met"]:
         gaps.append("Strengthen the benchmark harness until decision accuracy >=90% and latency <=500ms.")
+    if not latency_replay["ready"] or not latency_replay["target_met"]:
+        gaps.append("Run the finals latency replay benchmark until the Workflow Canvas path is <=500ms.")
+    elif latency_replay["mode"] != "http":
+        gaps.append("Replace in-process latency replay with deployed FastAPI/edge-hardware benchmark before final defense.")
     if not platform["ready"]:
         gaps.append("Complete platform-stage Xcelerator/WFC evidence before treating the platform path as stable.")
     if platform["warnings"]:
@@ -266,7 +330,6 @@ def _priority_gaps(
         gaps.append("Restore missing foundation files before relying on the finals roadmap.")
     if performance["finals_case_count"] < MIN_FINALS_CASES:
         gaps.append("Expand the offline dataset from 5 seed cases to a larger labeled finals validation set before the defense.")
-    gaps.append("Add stable deployed API endpoint evidence and edge-hardware latency logs for final-round replay.")
     return gaps
 
 

@@ -107,6 +107,7 @@ def build_final_readiness(
             "case_count": finals_foundation["performance"]["finals_case_count"],
             "decision_accuracy_pct_min": finals_foundation["performance"]["decision_accuracy_pct_min"],
             "latency_ms_max": finals_foundation["performance"]["latency_ms_max"],
+            "latency_replay": finals_foundation["latency_replay"],
             "priority_gaps": finals_foundation["priority_gaps"],
         },
         "final_evidence": {
@@ -228,6 +229,9 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             f"- Finals validation cases: {result['finals_foundation']['case_count']}",
             f"- Decision accuracy min: {result['finals_foundation']['decision_accuracy_pct_min']}%",
             f"- Rule decision latency max: {result['finals_foundation']['latency_ms_max']} ms",
+            f"- Workflow Canvas replay mode: {result['finals_foundation']['latency_replay']['mode']}",
+            f"- Workflow Canvas replay samples: {result['finals_foundation']['latency_replay']['sample_count']}",
+            f"- Workflow Canvas replay p95/max: {result['finals_foundation']['latency_replay']['wall_latency_ms_p95']} / {result['finals_foundation']['latency_replay']['wall_latency_ms_max']} ms",
             "",
             "Priority gaps:",
         ]
@@ -260,6 +264,7 @@ def render_readiness_report(result: dict[str, Any]) -> str:
             "```powershell",
             "python scripts/run_final_readiness_pipeline.py --json",
             "python scripts/verify_finals_foundation.py --json",
+            "python scripts/benchmark_workflow_canvas_latency.py",
             "python scripts/verify_submission_package.py --write-manifest",
             "python scripts/verify_live_evidence.py --stage final --allow-missing --write-manifest",
             "python scripts/build_final_submission_bundle.py --json",

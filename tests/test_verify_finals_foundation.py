@@ -32,6 +32,10 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["performance"]["latency_target_met"] is True
     assert result["performance"]["finals_validation_ready"] is True
     assert result["performance"]["finals_case_count"] == 15
+    assert result["latency_replay"]["ready"] is True
+    assert result["latency_replay"]["target_met"] is True
+    assert result["latency_replay"]["mode"] == "in_process"
+    assert result["latency_replay"]["sample_count"] > 0
     assert result["hmi"]["natural_language_api_foundation"] is True
     assert result["hmi"]["natural_language_console_foundation"] is True
     assert result["hmi"]["decision_visualization_foundation"] is True
@@ -49,5 +53,7 @@ def test_finals_foundation_report_states_boundary() -> None:
     assert "Finals ready: False" in report
     assert "Decision accuracy" in report
     assert "Latency" in report
+    assert "Latency Replay Evidence" in report
+    assert "Replay mode: in_process" in report
     assert "Finals validation cases: 15 / 15" in report
     assert "Foundation-ready does not mean finals-ready" in report

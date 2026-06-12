@@ -1,6 +1,6 @@
 # PoC Evidence Index
 
-更新日期：2026-06-11
+更新日期：2026-06-12
 
 ## 当前可提交证据
 
@@ -27,6 +27,9 @@
 | Finals validation dataset | `evals/finals_validation_dataset.jsonl` | ready |
 | Finals validation report | `docs/finals-validation-report.md` | generated |
 | Finals validation script | `scripts/run_finals_validation.py` | ready |
+| Finals latency benchmark report | `docs/finals-latency-benchmark-report.md` | generated |
+| Finals latency benchmark JSON | `docs/submission/evidence/finals-latency-benchmark.json` | generated |
+| Finals latency benchmark script | `scripts/benchmark_workflow_canvas_latency.py` | ready |
 | Finals foundation verifier | `scripts/verify_finals_foundation.py` | ready |
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
@@ -50,6 +53,7 @@
 
 - Current offline evaluation is simulated and repository-local.
 - Finals validation is now checked by `scripts/run_finals_validation.py --json`; it uses 15 simulated final-round cases, covers all five directions, and represents each primary direction 3 times.
+- Finals latency replay is checked by `scripts/benchmark_workflow_canvas_latency.py`; the default `in_process` mode measures deterministic local replay of the Workflow Canvas collaborative decision path and must be upgraded with `--base-url http://<edge-host>:<port>` before claiming deployed endpoint latency.
 - Finals foundation is checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, `fb_main.py` saved into the live Python block, DEBUG entry, and `Workflow is ready` log-manager evidence.

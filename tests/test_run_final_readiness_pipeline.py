@@ -29,6 +29,8 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
+        latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
+        latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
     )
@@ -38,6 +40,9 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert result["finals_foundation_ready"] is True
     assert result["finals_ready"] is False
     assert result["finals_priority_gap_count"] > 0
+    assert result["latency_benchmark_mode"] == "in_process"
+    assert result["latency_benchmark_target_met"] is True
+    assert result["latency_benchmark_sample_count"] > 0
     assert result["final_ready"] is False
     assert result["final_missing_count"] >= 6
     assert Path(result["bundle_path"]).is_file()
@@ -46,6 +51,8 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert (tmp_path / "live-evidence-manifest.md").is_file()
     assert (tmp_path / "final-readiness-report.md").is_file()
     assert (tmp_path / "finals-validation-report.md").is_file()
+    assert (tmp_path / "finals-latency-benchmark-report.md").is_file()
+    assert (tmp_path / "finals-latency-benchmark.json").is_file()
     assert (assets / "final-human-action-pack-manifest.json").is_file()
     assert not (assets / "legal" / "company-info-filled.md").exists()
     assert not (assets / "submission" / "01-registration-form-filled.png").exists()
@@ -60,6 +67,8 @@ def test_final_readiness_pipeline_strict_mode_blocks_when_external_files_missing
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
+        latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
+        latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
         strict_final=True,
@@ -78,6 +87,8 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
         live_evidence_manifest_path=tmp_path / "live-evidence-manifest.md",
         readiness_report_path=tmp_path / "final-readiness-report.md",
         finals_validation_report_path=tmp_path / "finals-validation-report.md",
+        latency_benchmark_report_path=tmp_path / "finals-latency-benchmark-report.md",
+        latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
     )
@@ -87,5 +98,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "repo_ready=True" in summary
     assert "finals_foundation_ready=True" in summary
     assert "finals_validation_report=" in summary
+    assert "latency_benchmark_report=" in summary
+    assert "latency_benchmark_target_met=True" in summary
     assert "final_missing_count=" in summary
     assert "readiness_report=" in summary

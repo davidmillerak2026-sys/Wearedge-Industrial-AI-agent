@@ -17,6 +17,8 @@ DEFAULT_SUBMISSION_MANIFEST = REPO_ROOT / "docs" / "submission" / "submission-pa
 DEFAULT_LIVE_EVIDENCE_MANIFEST = DEFAULT_ASSETS_DIR / "live-evidence-manifest.md"
 DEFAULT_READINESS_REPORT = REPO_ROOT / "docs" / "submission" / "final-readiness-report.md"
 DEFAULT_FINALS_VALIDATION_REPORT = REPO_ROOT / "docs" / "finals-validation-report.md"
+DEFAULT_LATENCY_BENCHMARK_REPORT = REPO_ROOT / "docs" / "finals-latency-benchmark-report.md"
+DEFAULT_LATENCY_BENCHMARK_JSON = REPO_ROOT / "docs" / "submission" / "evidence" / "finals-latency-benchmark.json"
 DEFAULT_BUNDLE_DIR = DEFAULT_ASSETS_DIR / "submission-bundle"
 DEFAULT_WFC_PACKAGE_DIR = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package"
 
@@ -28,12 +30,15 @@ def run_pipeline(
     live_evidence_manifest_path: Path | None = None,
     readiness_report_path: Path = DEFAULT_READINESS_REPORT,
     finals_validation_report_path: Path = DEFAULT_FINALS_VALIDATION_REPORT,
+    latency_benchmark_report_path: Path = DEFAULT_LATENCY_BENCHMARK_REPORT,
+    latency_benchmark_json_path: Path = DEFAULT_LATENCY_BENCHMARK_JSON,
     bundle_output_dir: Path = DEFAULT_BUNDLE_DIR,
     wfc_package_output_dir: Path = DEFAULT_WFC_PACKAGE_DIR,
     overwrite_templates: bool = False,
     strict_final: bool = False,
 ) -> dict[str, Any]:
     from build_final_submission_bundle import build_final_submission_bundle
+    from benchmark_workflow_canvas_latency import run_latency_benchmark, write_outputs as write_latency_outputs
     from generate_final_readiness_report import build_final_readiness, render_readiness_report
     from package_wfc_resource_block import package_resource_block
     from prepare_final_human_action_pack import prepare_templates
@@ -48,6 +53,8 @@ def run_pipeline(
     submission_manifest_path = _resolve_path(submission_manifest_path)
     readiness_report_path = _resolve_path(readiness_report_path)
     finals_validation_report_path = _resolve_path(finals_validation_report_path)
+    latency_benchmark_report_path = _resolve_path(latency_benchmark_report_path)
+    latency_benchmark_json_path = _resolve_path(latency_benchmark_json_path)
     bundle_output_dir = _resolve_path(bundle_output_dir)
     wfc_package_output_dir = _resolve_path(wfc_package_output_dir)
     live_evidence_manifest_path = _resolve_path(live_evidence_manifest_path or assets_dir / "live-evidence-manifest.md")
@@ -62,6 +69,12 @@ def run_pipeline(
     finals_validation_report_path.write_text(
         render_finals_report(finals_results, finals_summary),
         encoding="utf-8",
+    )
+    latency_benchmark = run_latency_benchmark()
+    write_latency_outputs(
+        latency_benchmark,
+        report_path=latency_benchmark_report_path,
+        json_path=latency_benchmark_json_path,
     )
     wfc_package = package_resource_block(output_dir=wfc_package_output_dir, write_manifest=True)
     submission_package = build_final_submission_bundle(output_dir=bundle_output_dir)
@@ -96,6 +109,9 @@ def run_pipeline(
         "finals_foundation_ready": bool(finals_foundation["foundation_ready"]),
         "finals_ready": bool(finals_foundation["finals_ready"]),
         "finals_priority_gap_count": len(finals_foundation["priority_gaps"]),
+        "latency_benchmark_mode": latency_benchmark["mode"],
+        "latency_benchmark_target_met": bool(latency_benchmark["target_met"]),
+        "latency_benchmark_sample_count": int(latency_benchmark["sample_count"]),
         "final_ready": bool(final_evidence["ready"]),
         "final_missing_count": int(final_evidence["missing_count"]),
         "fallback_warning_count": len(final_evidence["warnings"]),
@@ -106,6 +122,8 @@ def run_pipeline(
         "live_evidence_manifest_path": str(live_evidence_manifest_path),
         "readiness_report_path": str(readiness_report_path),
         "finals_validation_report_path": str(finals_validation_report_path),
+        "latency_benchmark_report_path": str(latency_benchmark_report_path),
+        "latency_benchmark_json_path": str(latency_benchmark_json_path),
         "human_action_manifest_path": human_action_pack.get("manifest_path"),
         "recommended_next_actions": readiness["recommended_next_actions"],
     }
@@ -123,11 +141,15 @@ def render_summary(result: dict[str, Any]) -> str:
         f"finals_foundation_ready={result['finals_foundation_ready']}",
         f"finals_ready={result['finals_ready']}",
         f"finals_priority_gap_count={result['finals_priority_gap_count']}",
+        f"latency_benchmark_mode={result['latency_benchmark_mode']}",
+        f"latency_benchmark_target_met={result['latency_benchmark_target_met']}",
+        f"latency_benchmark_sample_count={result['latency_benchmark_sample_count']}",
         f"final_ready={result['final_ready']}",
         f"final_missing_count={result['final_missing_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",
         f"bundle_sha256={result['bundle_sha256']}",
         f"finals_validation_report={result['finals_validation_report_path']}",
+        f"latency_benchmark_report={result['latency_benchmark_report_path']}",
         f"readiness_report={result['readiness_report_path']}",
         "recommended_next_actions:",
     ]
@@ -151,6 +173,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--live-evidence-manifest", type=Path, default=None)
     parser.add_argument("--readiness-report", type=Path, default=DEFAULT_READINESS_REPORT)
     parser.add_argument("--finals-validation-report", type=Path, default=DEFAULT_FINALS_VALIDATION_REPORT)
+    parser.add_argument("--latency-benchmark-report", type=Path, default=DEFAULT_LATENCY_BENCHMARK_REPORT)
+    parser.add_argument("--latency-benchmark-json", type=Path, default=DEFAULT_LATENCY_BENCHMARK_JSON)
     parser.add_argument("--bundle-output-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
     parser.add_argument("--wfc-package-output-dir", type=Path, default=DEFAULT_WFC_PACKAGE_DIR)
     parser.add_argument("--overwrite-templates", action="store_true")
@@ -168,6 +192,8 @@ def main(argv: list[str] | None = None) -> int:
         live_evidence_manifest_path=args.live_evidence_manifest,
         readiness_report_path=args.readiness_report,
         finals_validation_report_path=args.finals_validation_report,
+        latency_benchmark_report_path=args.latency_benchmark_report,
+        latency_benchmark_json_path=args.latency_benchmark_json,
         bundle_output_dir=args.bundle_output_dir,
         wfc_package_output_dir=args.wfc_package_output_dir,
         overwrite_templates=args.overwrite_templates,

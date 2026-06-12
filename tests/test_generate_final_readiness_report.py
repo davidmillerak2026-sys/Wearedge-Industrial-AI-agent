@@ -66,6 +66,7 @@ def test_final_readiness_detects_bundle_and_human_manifest(tmp_path: Path) -> No
     assert result["bundle"]["manifest_file_count"] == 5
     assert result["human_action_pack"]["written_count"] == 7
     assert result["human_action_pack"]["template_count"] == 7
+    assert result["finals_foundation"]["latency_replay"]["ready"] is True
 
 
 def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) -> None:
@@ -82,7 +83,9 @@ def test_render_readiness_report_includes_commands_and_boundary(tmp_path: Path) 
     assert "Verification Commands" in report
     assert "Finals foundation ready" in report
     assert "Finals Foundation" in report
+    assert "Workflow Canvas replay mode" in report
     assert "run_final_readiness_pipeline.py --json" in report
     assert "verify_finals_foundation.py --json" in report
+    assert "benchmark_workflow_canvas_latency.py" in report
     assert "generate_final_readiness_report.py --write" in report
     assert "does not make external/human-owned files complete" in report
