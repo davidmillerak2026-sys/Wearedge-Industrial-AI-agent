@@ -29,6 +29,12 @@ def test_submission_package_repo_controlled_items_are_ready() -> None:
     assert len(result["phases"]) == 5
     assert result["registration_fields"]["status"] == "ready"
     assert result["evidence"]["status"] == "ready"
+    phase_e = next(phase for phase in result["phases"] if phase["name"] == "Phase E - Registration fields")
+    assert phase_e["present_count"] == phase_e["artifact_count"]
+    assert any(
+        artifact["path"] == "docs/submission/first-round-submission-attachment-index.md"
+        for artifact in phase_e["artifacts"]
+    )
 
 
 def test_submission_manifest_marks_external_pending_without_repo_failure() -> None:

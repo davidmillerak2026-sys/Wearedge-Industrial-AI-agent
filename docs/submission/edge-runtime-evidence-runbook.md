@@ -63,6 +63,8 @@ Remove-Item Env:\JETSON_SSH_PASSWORD
 The remote collector deploys the competition runtime into `~/Wearedge-Industrial-AI-agent-competition` and leaves the older `~/WearEdge-Pro` M400/VLM service untouched.
 It also refuses to use a Python interpreter or virtual environment under `~/WearEdge-Pro`. If FastAPI/Uvicorn are already available on the Jetson system Python or isolated competition `.venv`, the collector runs the FastAPI benchmark. If they are not available and the edge node has no internet, it runs `scripts/benchmark_edge_stdlib_gateway.py`, a Python standard-library HTTP gateway that calls the same Workflow Canvas decision engine and writes a report marked as `final_edge_stdlib_http_gateway`.
 
+Do not add competition files into the existing Jetson project used by the separate M400/VLM work. If a new edge-side experiment is needed, create it under `~/Wearedge-Industrial-AI-agent-competition` or a clearly named sibling competition folder, then pull only the generated evidence back into `submission-assets/live-evidence/edge-runtime/`.
+
 To explicitly allow the collector to create an isolated `.venv` and install FastAPI dependencies from the network, add:
 
 ```powershell

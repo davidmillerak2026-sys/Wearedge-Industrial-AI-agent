@@ -24,6 +24,13 @@ M400 / Web JPEG
 - 机器可读清单：[`hardware-baseline.json`](hardware-baseline.json)。
 - 硬件里程碑证据：[`hardware-milestones.md`](hardware-milestones.md)。
 
+## Jetson 工作区隔离记忆
+
+- Jetson 上已经承载其他 WearEdge / M400 项目，竞赛验证不得直接修改或复用该项目目录。
+- Wearedge 工业智能体竞赛侧默认使用独立目录：`/home/ryn/Wearedge-Industrial-AI-agent-competition`。
+- 新增端侧文件、依赖、虚拟环境、日志和证据应放入竞赛目录或本仓库忽略目录，避免两个项目运行环境互相混淆。
+- 当前远程采集脚本会拒绝部署到 `~/WearEdge-Pro`，也不会把 `~/WearEdge-Pro` 下的 Python 环境作为依赖来源。
+
 ## 已完成能力
 
 | 模块 | 当前状态 | 工程意义 |

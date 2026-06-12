@@ -44,6 +44,7 @@ INCLUDE_PATHS = (
     "docs/submission/judging-scorecard-evidence-map.md",
     "docs/submission/defense-qna-playbook.md",
     "docs/submission/registration-fields.md",
+    "docs/submission/first-round-submission-attachment-index.md",
     "docs/submission/final-checklist.md",
     "docs/submission/final-human-action-runbook.md",
     "docs/submission/final-action-board.md",

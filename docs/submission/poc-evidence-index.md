@@ -50,6 +50,7 @@
 | Final readiness pipeline | `scripts/run_final_readiness_pipeline.py` | ready |
 | Demo video production plan | `docs/submission/video-production-plan.md` | ready |
 | Company info and compliance intake | `docs/submission/company-info-and-compliance-intake.md` | ready |
+| First-round submission attachment index | `docs/submission/first-round-submission-attachment-index.md` | ready |
 | Dashboard mock | `docs/submission/dashboard-mock.html` | ready |
 | Finals HMI decision console | `docs/submission/finals-hmi-console.html` | ready |
 | Capture runbook | `docs/submission/capture-runbook.md` | ready |

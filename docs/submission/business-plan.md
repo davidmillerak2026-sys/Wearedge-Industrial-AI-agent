@@ -1,6 +1,6 @@
 # Business Plan Draft
 
-更新日期：2026-06-09
+更新日期：2026-06-12
 
 ## 项目背景
 
@@ -69,16 +69,16 @@ M400 / Camera / OPC UA / MES / QMS / EMS / CMMS / released checklist
 
 ## 成果截图与证据
 
-当前截图和视频录制清单见 `docs/submission/screenshots-checklist.md` 和 `docs/submission/demo-shot-list.md`。可提交证据索引见 `docs/submission/poc-evidence-index.md`，生成证据快照位于 `docs/submission/evidence/`。真实工易魔方平台截图待平台环境开通后补齐。
+当前截图和视频录制清单见 `docs/submission/screenshots-checklist.md` 和 `docs/submission/demo-shot-list.md`。可提交证据索引见 `docs/submission/poc-evidence-index.md`，生成证据快照位于 `docs/submission/evidence/`。当前已具备 Xcelerator API 草稿、WFC 项目/Python block/数据表等平台证据，以及 Jetson 端侧 HTTP 决策路径 latency/resource 证据；WFC Dashboard、`ok=true` run-log 和 HumanApprovalGate 仍需用真实平台执行截图替换 fallback/mock 资产。
 
 ## 开发投入
 
-- 已完成：Agent Service、Workflow Canvas decision endpoint、离线评估数据集、赛事 evaluator、工易魔方 PoC runbook、Dashboard mock、smoke test 和 pytest 基线。
+- 已完成：Agent Service、Workflow Canvas decision endpoint、离线评估数据集、赛事 evaluator、工易魔方 PoC runbook、Dashboard mock、Jetson 端侧 HTTP 决策采证、smoke test 和 pytest 基线。
 - 待投入：真实工易魔方环境复现、平台截图和演示视频、真实或仿真 SPIDR/IPC 日志接入、客户场景联合 PoC。
 
 ## 当前进度
 
-已完成可运行 Agent Service、Workflow Canvas decision endpoint、赛事指标 evaluator、离线数据集、评估脚本、PoC runbook 和共创 one-pager。真实工易魔方平台截图和客户现场数据仍待平台环境和 PoC 合作推进。
+已完成可运行 Agent Service、Workflow Canvas decision endpoint、赛事指标 evaluator、离线数据集、评估脚本、PoC runbook、共创 one-pager、Xcelerator API 草稿、工易魔方项目基础证据和 Jetson 端侧证据。客户现场数据和 WFC 04/05/06 live execution 证据仍待平台复现和联合 PoC 合作推进。
 
 ## 商业模式
 

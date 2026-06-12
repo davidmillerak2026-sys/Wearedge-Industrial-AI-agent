@@ -37,6 +37,7 @@ def test_build_final_submission_bundle_contains_repo_controlled_artifacts(tmp_pa
         names = set(archive.namelist())
         assert "SUBMISSION_BUNDLE_MANIFEST.json" in names
         assert "docs/submission/registration-fields.md" in names
+        assert "docs/submission/first-round-submission-attachment-index.md" in names
         assert "docs/submission/business-plan.md" in names
         assert "docs/submission/finals-foundation-roadmap.md" in names
         assert "docs/submission/edge-runtime-evidence-runbook.md" in names

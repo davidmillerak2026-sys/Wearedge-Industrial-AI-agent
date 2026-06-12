@@ -41,6 +41,7 @@
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | Business plan | `docs/submission/business-plan.md` | draft |
 | Technical solution | `docs/submission/technical-solution.md` | draft |
+| First-round attachment index | `docs/submission/first-round-submission-attachment-index.md` | ready |
 | Finals foundation roadmap | `docs/submission/finals-foundation-roadmap.md` | ready |
 | Demo script | `docs/submission/demo-script.md` | draft |
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
