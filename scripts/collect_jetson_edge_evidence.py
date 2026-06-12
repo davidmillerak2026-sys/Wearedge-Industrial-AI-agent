@@ -35,12 +35,7 @@ REMOTE_FILES = (
     "08-tegrastats-http-resource-benchmark.log",
 )
 
-REMOTE_PYTHON_CANDIDATES = (
-    "/home/ryn/Wearedge-Industrial-AI-agent-competition/.venv/bin/python",
-    "python3",
-    "/home/ryn/WearEdge-Pro/.venv/bin/python",
-    "/home/jetson/WearEdge-Pro/.venv/bin/python",
-)
+SYSTEM_PYTHON_CANDIDATE = "python3"
 
 EXCLUDED_DIR_NAMES = {
     ".git",
@@ -219,7 +214,41 @@ def validate_remote_dir(remote_dir: str) -> None:
         )
 
 
+def python_candidates_for_remote_dir(remote_dir: str) -> tuple[str, str]:
+    validate_remote_dir(remote_dir)
+    return (posixpath.join(posixpath.normpath(remote_dir), ".venv/bin/python"), SYSTEM_PYTHON_CANDIDATE)
+
+
+def validate_python_candidates(python_candidates: tuple[str, ...]) -> None:
+    for candidate in python_candidates:
+        normalized = posixpath.normpath(candidate)
+        if "/WearEdge-Pro/" in normalized or normalized.endswith("/WearEdge-Pro"):
+            raise ValueError(f"refusing to use Python from protected WearEdge-Pro project: {candidate}")
+
+
+def build_prepare_runtime_command(*, remote_dir: str) -> str:
+    venv_python = posixpath.join(posixpath.normpath(remote_dir), ".venv/bin/python")
+    return "\n".join(
+        [
+            "set -euo pipefail",
+            f"cd {quote(remote_dir)}",
+            f"if [ -x {quote(venv_python)} ] && {quote(venv_python)} -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
+            f"  echo 'competition_venv={venv_python}'",
+            "  echo 'competition_venv_deps_ok=true'",
+            "elif python3 -c \"import fastapi, uvicorn\" >/dev/null 2>&1; then",
+            "  echo 'system_python_deps_ok=true'",
+            "else",
+            "  if [ ! -x .venv/bin/python ]; then python3 -m venv .venv; fi",
+            "  .venv/bin/python -m pip install -r jetson/requirements.txt",
+            "  .venv/bin/python -c \"import fastapi, uvicorn; print('competition_venv_deps_ok=true')\"",
+            "fi",
+        ]
+    )
+
+
 def build_benchmark_command(*, remote_dir: str, iterations: int, python_candidates: tuple[str, ...]) -> str:
+    validate_remote_dir(remote_dir)
+    validate_python_candidates(python_candidates)
     candidates = " ".join(quote(candidate) for candidate in python_candidates)
     return "\n".join(
         [
@@ -375,12 +404,18 @@ def collect_jetson_edge_evidence(
             )
             remote_stdout += extract.stdout
 
+        runtime = exec_checked(
+            client,
+            build_prepare_runtime_command(remote_dir=remote_dir),
+            timeout=max(timeout, 300.0),
+        )
+        remote_stdout += runtime.stdout
         benchmark = exec_checked(
             client,
             build_benchmark_command(
                 remote_dir=remote_dir,
                 iterations=iterations,
-                python_candidates=REMOTE_PYTHON_CANDIDATES,
+                python_candidates=python_candidates_for_remote_dir(remote_dir),
             ),
             timeout=max(timeout, 180.0),
         )

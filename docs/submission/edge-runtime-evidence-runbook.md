@@ -60,6 +60,16 @@ Remove-Item Env:\JETSON_SSH_PASSWORD
 ```
 
 The remote collector deploys the competition runtime into `~/Wearedge-Industrial-AI-agent-competition` and leaves the older `~/WearEdge-Pro` M400/VLM service untouched.
+It also refuses to use a Python interpreter or virtual environment under `~/WearEdge-Pro`. If dependencies are not already available on the Jetson system Python, the collector prepares an isolated `.venv` inside `~/Wearedge-Industrial-AI-agent-competition`.
+
+Isolation rules:
+
+| Item | Competition evidence path |
+| --- | --- |
+| Runtime checkout | `~/Wearedge-Industrial-AI-agent-competition` |
+| Python environment | `~/Wearedge-Industrial-AI-agent-competition/.venv` or system `python3` |
+| Pulled evidence | `submission-assets/live-evidence/edge-runtime/` on this workstation |
+| Protected legacy project | `~/WearEdge-Pro` is not modified or used as a dependency source |
 
 For Windows IPC or plant server, capture Task Manager / Resource Monitor screenshots or an OS-level CSV beside the generated files.
 

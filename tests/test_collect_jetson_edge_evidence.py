@@ -21,18 +21,49 @@ def _load_module():
 
 def test_benchmark_command_marks_final_edge_without_secret() -> None:
     module = _load_module()
+    remote_dir = "/home/ryn/Wearedge-Industrial-AI-agent-competition"
 
     command = module.build_benchmark_command(
-        remote_dir="/home/ryn/Wearedge-Industrial-AI-agent",
+        remote_dir=remote_dir,
         iterations=20,
-        python_candidates=("/home/ryn/WearEdge-Pro/.venv/bin/python", "python3"),
+        python_candidates=module.python_candidates_for_remote_dir(remote_dir),
     )
 
     assert "--final-edge-node" in command
     assert "--iterations 20" in command
     assert "tegrastats" in command
+    assert "Wearedge-Industrial-AI-agent-competition/.venv/bin/python" in command
+    assert "WearEdge-Pro" not in command
     assert "JETSON_SSH_PASSWORD" not in command
     assert "password" not in command.lower()
+
+
+def test_prepare_runtime_command_uses_isolated_competition_venv() -> None:
+    module = _load_module()
+    remote_dir = "/home/ryn/Wearedge-Industrial-AI-agent-competition"
+
+    command = module.build_prepare_runtime_command(remote_dir=remote_dir)
+
+    assert "python3 -m venv .venv" in command
+    assert ".venv/bin/python -m pip install -r jetson/requirements.txt" in command
+    assert "Wearedge-Industrial-AI-agent-competition/.venv/bin/python" in command
+    assert "WearEdge-Pro" not in command
+    assert "password" not in command.lower()
+
+
+def test_python_candidate_validation_rejects_old_project_venv() -> None:
+    module = _load_module()
+
+    try:
+        module.build_benchmark_command(
+            remote_dir="/home/ryn/Wearedge-Industrial-AI-agent-competition",
+            iterations=20,
+            python_candidates=("/home/ryn/WearEdge-Pro/.venv/bin/python", "python3"),
+        )
+    except ValueError as exc:
+        assert "protected WearEdge-Pro" in str(exc)
+    else:  # pragma: no cover
+        raise AssertionError("expected protected WearEdge-Pro Python candidate to be rejected")
 
 
 def test_archive_exclusion_rules_keep_secrets_and_generated_media_out() -> None:
