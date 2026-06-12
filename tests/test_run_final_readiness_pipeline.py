@@ -34,6 +34,7 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        official_attachment_pack_output_dir=tmp_path / "official-attachment-pack",
         external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
     )
 
@@ -55,6 +56,8 @@ def test_final_readiness_pipeline_refreshes_local_manifests_without_final_target
     assert result["final_missing_count"] >= 6
     assert result["final_external_assets_failure_count"] >= 6
     assert Path(result["bundle_path"]).is_file()
+    assert Path(result["official_attachment_pack_path"]).is_file()
+    assert result["official_attachment_pack_sha256"]
     assert Path(result["wfc_package_path"]).is_file()
     assert Path(result["edge_runtime_evidence_manifest_path"]).is_file()
     assert result["edge_runtime_evidence_ok"] is True
@@ -88,6 +91,7 @@ def test_final_readiness_pipeline_strict_mode_blocks_when_external_files_missing
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        official_attachment_pack_output_dir=tmp_path / "official-attachment-pack",
         external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
         strict_final=True,
     )
@@ -110,6 +114,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
         latency_benchmark_json_path=tmp_path / "finals-latency-benchmark.json",
         bundle_output_dir=tmp_path / "bundle",
         wfc_package_output_dir=tmp_path / "wfc-resource-package",
+        official_attachment_pack_output_dir=tmp_path / "official-attachment-pack",
         external_assets_report_path=tmp_path / "final-external-assets-quality-report.md",
     )
 
@@ -120,6 +125,7 @@ def test_render_summary_includes_primary_status_fields(tmp_path: Path) -> None:
     assert "finals_validation_report=" in summary
     assert "latency_benchmark_report=" in summary
     assert "latency_benchmark_target_met=True" in summary
+    assert "official_attachment_pack_sha256=" in summary
     assert "edge_runtime_evidence_ok=True" in summary
     assert "selected_latency_evidence_tier=final_edge_stdlib_http_gateway" in summary
     assert "selected_latency_evidence_mode=http" in summary

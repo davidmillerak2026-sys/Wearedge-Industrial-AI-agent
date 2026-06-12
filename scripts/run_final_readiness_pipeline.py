@@ -30,6 +30,7 @@ DEFAULT_JETSON_GATEWAY_JSON = (
 )
 DEFAULT_BUNDLE_DIR = DEFAULT_ASSETS_DIR / "submission-bundle"
 DEFAULT_WFC_PACKAGE_DIR = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package"
+DEFAULT_OFFICIAL_ATTACHMENT_PACK_DIR = DEFAULT_ASSETS_DIR / "official-attachment-pack"
 DEFAULT_EXTERNAL_ASSETS_REPORT = DEFAULT_ASSETS_DIR / "final-external-assets-quality-report.md"
 
 
@@ -45,11 +46,13 @@ def run_pipeline(
     latency_benchmark_json_path: Path = DEFAULT_LATENCY_BENCHMARK_JSON,
     bundle_output_dir: Path = DEFAULT_BUNDLE_DIR,
     wfc_package_output_dir: Path = DEFAULT_WFC_PACKAGE_DIR,
+    official_attachment_pack_output_dir: Path = DEFAULT_OFFICIAL_ATTACHMENT_PACK_DIR,
     external_assets_report_path: Path = DEFAULT_EXTERNAL_ASSETS_REPORT,
     overwrite_templates: bool = False,
     strict_final: bool = False,
 ) -> dict[str, Any]:
     from build_final_submission_bundle import build_final_submission_bundle
+    from build_official_attachment_pack import build_official_attachment_pack
     from benchmark_workflow_canvas_latency import run_latency_benchmark, write_outputs as write_latency_outputs
     from collect_edge_runtime_evidence import collect_edge_runtime_evidence
     from generate_final_action_board import build_action_board, render_action_board
@@ -74,6 +77,7 @@ def run_pipeline(
     latency_benchmark_json_path = _resolve_path(latency_benchmark_json_path)
     bundle_output_dir = _resolve_path(bundle_output_dir)
     wfc_package_output_dir = _resolve_path(wfc_package_output_dir)
+    official_attachment_pack_output_dir = _resolve_path(official_attachment_pack_output_dir)
     external_assets_report_path = _resolve_path(external_assets_report_path)
     live_evidence_manifest_path = _resolve_path(live_evidence_manifest_path or assets_dir / "live-evidence-manifest.md")
 
@@ -128,6 +132,7 @@ def run_pipeline(
     action_board = build_action_board(assets_dir=assets_dir)
     action_board_path.parent.mkdir(parents=True, exist_ok=True)
     action_board_path.write_text(render_action_board(action_board), encoding="utf-8")
+    official_attachment_pack = build_official_attachment_pack(output_dir=official_attachment_pack_output_dir)
 
     result = {
         "ok": (
@@ -156,6 +161,8 @@ def run_pipeline(
         "fallback_warning_count": len(final_evidence["warnings"]),
         "bundle_sha256": submission_package.get("bundle_sha256"),
         "bundle_path": submission_package["bundle_path"],
+        "official_attachment_pack_sha256": official_attachment_pack.get("zip_sha256"),
+        "official_attachment_pack_path": official_attachment_pack["zip_path"],
         "wfc_package_path": wfc_package["package_path"],
         "edge_runtime_evidence_manifest_path": edge_runtime_evidence["manifest_path"],
         "edge_runtime_evidence_ok": bool(edge_runtime_evidence["ok"]),
@@ -199,6 +206,7 @@ def render_summary(result: dict[str, Any]) -> str:
         f"final_external_assets_failure_count={result['final_external_assets_failure_count']}",
         f"fallback_warning_count={result['fallback_warning_count']}",
         f"bundle_sha256={result['bundle_sha256']}",
+        f"official_attachment_pack_sha256={result['official_attachment_pack_sha256']}",
         f"edge_runtime_evidence_ok={result['edge_runtime_evidence_ok']}",
         f"edge_runtime_evidence_sample_count={result['edge_runtime_evidence_sample_count']}",
         f"finals_validation_report={result['finals_validation_report_path']}",
@@ -239,6 +247,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--latency-benchmark-json", type=Path, default=DEFAULT_LATENCY_BENCHMARK_JSON)
     parser.add_argument("--bundle-output-dir", type=Path, default=DEFAULT_BUNDLE_DIR)
     parser.add_argument("--wfc-package-output-dir", type=Path, default=DEFAULT_WFC_PACKAGE_DIR)
+    parser.add_argument("--official-attachment-pack-output-dir", type=Path, default=DEFAULT_OFFICIAL_ATTACHMENT_PACK_DIR)
     parser.add_argument("--external-assets-report", type=Path, default=DEFAULT_EXTERNAL_ASSETS_REPORT)
     parser.add_argument("--overwrite-templates", action="store_true")
     parser.add_argument(
@@ -260,6 +269,7 @@ def main(argv: list[str] | None = None) -> int:
         latency_benchmark_json_path=args.latency_benchmark_json,
         bundle_output_dir=args.bundle_output_dir,
         wfc_package_output_dir=args.wfc_package_output_dir,
+        official_attachment_pack_output_dir=args.official_attachment_pack_output_dir,
         external_assets_report_path=args.external_assets_report,
         overwrite_templates=args.overwrite_templates,
         strict_final=args.strict_final,

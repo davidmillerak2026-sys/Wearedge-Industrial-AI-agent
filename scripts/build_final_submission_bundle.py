@@ -81,6 +81,7 @@ INCLUDE_PATHS = (
     "scripts/verify_live_evidence.py",
     "scripts/verify_final_external_assets.py",
     "scripts/build_final_submission_bundle.py",
+    "scripts/build_official_attachment_pack.py",
     "scripts/prepare_final_human_action_pack.py",
     "scripts/generate_final_readiness_report.py",
     "scripts/generate_final_action_board.py",

@@ -1,6 +1,6 @@
 # Final Upload Manifest
 
-Updated: 2026-06-12T10:11:25+00:00
+Updated: 2026-06-12T11:03:06+00:00
 
 ## Gate
 
@@ -9,9 +9,10 @@ Updated: 2026-06-12T10:11:25+00:00
 - External asset quality ready: False
 - Official submission ready: False
 - Bundle present: True
-- Bundle SHA256: `d282538e1c7f9bdc21ba1a36aa0e105027433c8825e78d7e49c5e211fe3a1733`
-- Bundle file count: `79`
+- Bundle SHA256: `cd60c6f45bed3acef23229fefdcf683abbabd3592aef953d719286c05b7fa298`
+- Bundle file count: `80`
 - WFC resource package present: True
+- Official attachment pack present: True
 
 ## Upload Queue
 
@@ -20,6 +21,7 @@ Updated: 2026-06-12T10:11:25+00:00
 | P0 | ready | Business plan | `docs/submission/business-plan.md` | Official submission attachment | Convert to PDF/DOCX if the registration system requires a document format. |
 | P0 | ready | Technical solution | `docs/submission/technical-solution.md` | Official submission attachment | Convert to PDF/DOCX if the registration system requires a document format. |
 | P0 | ready | Repo-controlled submission bundle | `submission-assets/live-evidence/submission-bundle/wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip` | Official submission attachment or internal archive | Upload when attachment size allows; it excludes private live evidence by design. |
+| P0 | ready | Official attachment pack | `submission-assets/live-evidence/official-attachment-pack/wearedge-official-attachment-pack.zip` | Official submission attachment or print-to-PDF source | Use the print-ready HTML pack for business plan, technical solution, reports, and upload checklists; export to PDF/DOCX if required. |
 | P0 | ready | Final enterprise demo video | `submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4` | Official submission attachment | Use the generated 3-5 minute version; keep fallback boundaries visible. |
 | P0 | ready | Registration field copy source | `docs/submission/registration-fields.md` | Copy/paste into registration system | Use short/mid/long variants; fill only real enterprise/contact values manually. |
 | P1 | ready | Offline evaluation report | `docs/competition-offline-eval-report.md` | Supporting attachment | Use as proof of offline dataset validation and initial-round metric coverage. |

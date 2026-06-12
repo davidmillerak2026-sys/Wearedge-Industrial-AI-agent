@@ -42,7 +42,7 @@ Evidence: `docs/workflow-canvas-poc-runbook.md`, `wfc-blocks/wearedge-agent-serv
 
 ### 6. What live platform evidence do you have?
 
-We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, WFC `fb_main.py` saved evidence, debug entry, and `Workflow is ready` log-manager evidence. Dashboard, final `ok=true` WFC run log, and HumanApprovalGate are currently fallback/mock/API-smoke assets and are explicitly marked as such until live WFC replacement is captured.
+We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, live WFC `fb_main.py` source-search evidence, DEBUG entry, `Workflow is ready` log-manager evidence, and native WFC output `状态码 Good` after running `CallWearedgeDecisionApi`. Dashboard, business `ok=true` WFC stdout/data-table writeback, and HumanApprovalGate are still explicitly marked as fallback/mock/API-smoke until live WFC replacement is captured.
 
 Evidence: `docs/submission/platform-live-evidence-status-20260609.md`, `docs/submission/live-platform-evidence-runbook.md`.
 

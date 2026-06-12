@@ -58,6 +58,7 @@ def test_build_final_submission_bundle_contains_repo_controlled_artifacts(tmp_pa
         assert "wfc-blocks/wearedge-agent-service/info.json" in names
         assert "scripts/run_final_readiness_pipeline.py" in names
         assert "scripts/verify_final_external_assets.py" in names
+        assert "scripts/build_official_attachment_pack.py" in names
         assert "generated/wfc-resource-package/wearedge-agent-service-0.1.0.zip" in names
         assert not any(name.startswith("submission-assets/live-evidence/legal/") for name in names)
         saved_manifest = json.loads(archive.read("SUBMISSION_BUNDLE_MANIFEST.json").decode("utf-8"))

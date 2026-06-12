@@ -23,8 +23,12 @@ DEFAULT_SUBMISSION_BUNDLE = (
 )
 DEFAULT_SUBMISSION_BUNDLE_MANIFEST = DEFAULT_SUBMISSION_BUNDLE.with_suffix(".bundle-manifest.json")
 DEFAULT_WFC_PACKAGE = DEFAULT_ASSETS_DIR / "gongyi-mofang" / "wfc-resource-package" / "wearedge-agent-service-0.1.0.zip"
+DEFAULT_OFFICIAL_ATTACHMENT_PACK = (
+    DEFAULT_ASSETS_DIR / "official-attachment-pack" / "wearedge-official-attachment-pack.zip"
+)
 DEFAULT_SUBMISSION_BUNDLE_SOURCE = DEFAULT_SUBMISSION_BUNDLE.relative_to(REPO_ROOT).as_posix()
 DEFAULT_WFC_PACKAGE_SOURCE = DEFAULT_WFC_PACKAGE.relative_to(REPO_ROOT).as_posix()
+DEFAULT_OFFICIAL_ATTACHMENT_PACK_SOURCE = DEFAULT_OFFICIAL_ATTACHMENT_PACK.relative_to(REPO_ROOT).as_posix()
 
 
 @dataclass(frozen=True)
@@ -61,6 +65,14 @@ UPLOAD_ITEMS: tuple[UploadItem, ...] = (
         "generated_external",
         "Official submission attachment or internal archive",
         "Upload when attachment size allows; it excludes private live evidence by design.",
+    ),
+    UploadItem(
+        "P0",
+        "Official attachment pack",
+        DEFAULT_OFFICIAL_ATTACHMENT_PACK_SOURCE,
+        "generated_external",
+        "Official submission attachment or print-to-PDF source",
+        "Use the print-ready HTML pack for business plan, technical solution, reports, and upload checklists; export to PDF/DOCX if required.",
     ),
     UploadItem(
         "P0",
@@ -160,6 +172,7 @@ def build_final_upload_manifest(
     submission_bundle: Path = DEFAULT_SUBMISSION_BUNDLE,
     submission_bundle_manifest: Path = DEFAULT_SUBMISSION_BUNDLE_MANIFEST,
     wfc_package: Path = DEFAULT_WFC_PACKAGE,
+    official_attachment_pack: Path = DEFAULT_OFFICIAL_ATTACHMENT_PACK,
 ) -> dict[str, Any]:
     from verify_final_external_assets import verify_final_external_assets
     from verify_live_evidence import verify_live_evidence
@@ -169,6 +182,7 @@ def build_final_upload_manifest(
     submission_bundle = _resolve_path(submission_bundle, repo_root)
     submission_bundle_manifest = _resolve_path(submission_bundle_manifest, repo_root)
     wfc_package = _resolve_path(wfc_package, repo_root)
+    official_attachment_pack = _resolve_path(official_attachment_pack, repo_root)
 
     repo = verify_package(repo_root)
     live = verify_live_evidence(assets_dir, "final")
@@ -186,6 +200,7 @@ def build_final_upload_manifest(
             external_quality_map=external_quality_map,
             submission_bundle=submission_bundle,
             wfc_package=wfc_package,
+            official_attachment_pack=official_attachment_pack,
         )
         for item in UPLOAD_ITEMS
     ]
@@ -209,6 +224,10 @@ def build_final_upload_manifest(
             "path": str(wfc_package),
             "present": wfc_package.is_file() and wfc_package.stat().st_size > 0,
         },
+        "official_attachment_pack": {
+            "path": str(official_attachment_pack),
+            "present": official_attachment_pack.is_file() and official_attachment_pack.stat().st_size > 0,
+        },
         "status_counts": _status_counts(items),
         "blocking_items": blocking,
         "items": items,
@@ -229,6 +248,7 @@ def _status_for_item(
     external_quality_map: dict[str, dict[str, Any]],
     submission_bundle: Path,
     wfc_package: Path,
+    official_attachment_pack: Path,
 ) -> dict[str, Any]:
     source = item.source
     normalized_source = source.replace("\\", "/")
@@ -237,6 +257,9 @@ def _status_for_item(
         status = "ready" if present else "missing"
     elif source == DEFAULT_WFC_PACKAGE_SOURCE:
         present = wfc_package.is_file() and wfc_package.stat().st_size > 0
+        status = "ready" if present else "missing"
+    elif source == DEFAULT_OFFICIAL_ATTACHMENT_PACK_SOURCE:
+        present = official_attachment_pack.is_file() and official_attachment_pack.stat().st_size > 0
         status = "ready" if present else "missing"
     elif item.kind == "repo":
         path = repo_root / source
@@ -322,6 +345,7 @@ def render_upload_manifest(manifest: dict[str, Any]) -> str:
         f"- Bundle SHA256: `{manifest['bundle']['sha256']}`",
         f"- Bundle file count: `{manifest['bundle']['file_count']}`",
         f"- WFC resource package present: {manifest['wfc_package']['present']}",
+        f"- Official attachment pack present: {manifest['official_attachment_pack']['present']}",
         "",
         "## Upload Queue",
         "",
@@ -383,6 +407,7 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--submission-bundle", type=Path, default=DEFAULT_SUBMISSION_BUNDLE)
     parser.add_argument("--submission-bundle-manifest", type=Path, default=DEFAULT_SUBMISSION_BUNDLE_MANIFEST)
     parser.add_argument("--wfc-package", type=Path, default=DEFAULT_WFC_PACKAGE)
+    parser.add_argument("--official-attachment-pack", type=Path, default=DEFAULT_OFFICIAL_ATTACHMENT_PACK)
     parser.add_argument("--json", action="store_true")
     parser.add_argument("--write", action="store_true")
     args = parser.parse_args(argv)
@@ -392,6 +417,7 @@ def main(argv: list[str] | None = None) -> int:
         submission_bundle=args.submission_bundle,
         submission_bundle_manifest=args.submission_bundle_manifest,
         wfc_package=args.wfc_package,
+        official_attachment_pack=args.official_attachment_pack,
     )
     output = _resolve_path(args.output, REPO_ROOT)
     if args.write:
