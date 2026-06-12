@@ -22,6 +22,10 @@ class ParamOutput:
     def __init__(self):
         self.output1 = None
         self.status = None
+        self.ok = None
+        self.latency_ms = None
+        self.selected_direction = None
+        self.approval_status = None
 
 
 class FunctionBlock():
@@ -106,6 +110,32 @@ class FunctionBlock():
         endpoint = base_url.rstrip("/") + "/v1/workflow-canvas/decision"
         return endpoint, payload
 
+    def _build_summary(self, result):
+        collaborative = result.get("collaborative_decision") or {}
+        metrics = result.get("competition_metrics") or {}
+        workflow_canvas = result.get("workflow_canvas") or {}
+        confirmations = collaborative.get("required_confirmations") or []
+        function_blocks = workflow_canvas.get("function_blocks") or []
+        summary = {
+            "ok": bool(result.get("ok")),
+            "latency_ms": result.get("latency_ms"),
+            "selected_direction": collaborative.get("primary_direction"),
+            "priority": collaborative.get("priority"),
+            "recommended_action": collaborative.get("recommendation"),
+            "evidence_summary": "WFC/SPIDR called Wearedge decision API",
+            "competition_metrics": {
+                "decision_accuracy_pct_estimate": metrics.get("decision_accuracy_pct_estimate"),
+                "latency_target_met": metrics.get("latency_target_met"),
+                "final_min_agent_directions_met": metrics.get("final_min_agent_directions_met"),
+            },
+            "owner": "line_engineer",
+            "residual_risk": collaborative.get("residual_risk"),
+            "approval_status": "pending" if collaborative.get("requires_human_confirmation") else "not_required",
+            "required_confirmations": confirmations[:5],
+            "workflow_function_blocks": function_blocks[:8],
+        }
+        return summary
+
     def run(self):
         logging.debug("Function block start")
         try:
@@ -131,8 +161,13 @@ class FunctionBlock():
                 result.get("latency_ms"),
             )
             print("wearedge_decision_ok", result.get("ok"), "latency_ms", result.get("latency_ms"))
-            self.param_output.output1 = json.dumps(result, ensure_ascii=False)
-            self.param_output.status = "Good" if result.get("ok") else "Bad"
+            summary = self._build_summary(result)
+            self.param_output.output1 = json.dumps(summary, ensure_ascii=False)
+            self.param_output.status = "Good" if summary.get("ok") else "Bad"
+            self.param_output.ok = summary.get("ok")
+            self.param_output.latency_ms = summary.get("latency_ms")
+            self.param_output.selected_direction = summary.get("selected_direction")
+            self.param_output.approval_status = summary.get("approval_status")
         except Exception as e:
             logging.error(f"Function block failed with exception: {e}")
             self.param_output.output1 = json.dumps(
@@ -140,6 +175,7 @@ class FunctionBlock():
                 ensure_ascii=False,
             )
             self.param_output.status = "Bad"
+            self.param_output.ok = False
         finally:
             self.set_output_callback(self.param_output)
 
