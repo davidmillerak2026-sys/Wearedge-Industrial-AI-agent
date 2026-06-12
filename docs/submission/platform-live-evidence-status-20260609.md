@@ -127,6 +127,7 @@
 | `119-wfc-connected-python-block-final-saved-20260612.png` | Python Block 已替换占位块并成为工作流主线节点，页面恢复 `已保存`。 |
 | `120-wfc-debug-read-state-after-live-run-20260612.png` | 2026-06-12 WFC 运行后 DEBUG/read 状态截图；WFC 页面仍未显示 `ok=true` 文本。 |
 | `121-wfc-programming-tab-selected-20260612.png` | 2026-06-12 进入 WFC `编程` 页的辅助截图；Function Block 存在，但当前视图未展开可编辑文件树。 |
+| `122-wfc-project-canvas-status-live-20260612.png` | 2026-06-12 浏览器自动化复核 WFC 项目页；DOM 显示 `Wearedge WFC PoC`、`工作流.1`、`Language.Python - CallWearedgeDecisionApi`、顶部 `未修改` 和 `play-circle`，证明项目处于可运行且无未保存修改状态。 |
 | `04-dashboard-decision-view.png` | fallback Dashboard mock 截图，来自 `docs/submission/dashboard-mock.html`，不等同于 live WFC Dashboard。 |
 | `05-run-log-ok-true.png` | fallback API smoke 图，来自 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不等同于 live WFC `ok=true` 日志。 |
 | `06-human-approval-gate.png` | fallback Dashboard mock 图，展示 HumanApprovalGate，不等同于 live WFC 人工确认节点。 |
@@ -164,6 +165,7 @@
 - 2026-06-12 已确认：仅把 Python Block 放在画布上不会进入主线执行；必须按 WFC010 的方式把 Python Block 拖到已有 `[占位]` 上完成替换。替换后主线显示 `Language.Python - CallWearedgeDecisionApi`，WFC 运行会触发 Wearedge gateway 收到外部 `POST 200 OK`。
 - 2026-06-12 运行边界：WFC/SPIDR 到 Wearedge API 的网络调用已经被 gateway 日志证明，但 WFC 平台自己的 log-manager / read 视图仍未显示业务 stdout。因此提交材料只能表述为“已取得 live 平台调用辅助证据”，不能表述为“WFC 原生日志已显示 ok=true”。
 - 2026-06-12 已将仓库侧 `workflows/wfc_call_wearedge_decision_fb_main.py` 压缩为 120 行短版 live-edit 代码，并用 `tests/test_wfc_function_block_live_edit.py` 约束短摘要输出和文件体积。浏览器 GUI 粘贴到 live WFC 的尝试尚未形成可验证保存，平台内 `fb_main.py` 是否已替换不能声称完成；下一轮应以源码窗口可见 `_summary` / `selected_direction` 或 WFC 数据表写回作为确认依据。
+- 2026-06-12 浏览器自动化再次读取当前 WFC 页面，确认项目仍在 `Workflow Canvas`、URL 为 `project/cmq6lbb9x00bx1l6pxll7voae`，主线大纲含 `Language.Python - CallWearedgeDecisionApi`，顶部状态为 `未修改`。WFC Canvas 页面在语义点击、DOM 节点点击和坐标点击时会超时，因此本轮只新增无破坏状态截图和 DOM 复核；不声称新增了数据表写回或原生 `ok=true` 运行日志。
 
 ## 下一步建议
 

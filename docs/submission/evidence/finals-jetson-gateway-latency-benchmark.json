@@ -1,8 +1,8 @@
 {
   "ok": true,
-  "generated_at": "2026-05-22T05:23:31+00:00",
+  "generated_at": "2026-05-22T10:57:51+00:00",
   "mode": "http",
-  "endpoint": "http://127.0.0.1:55481/v1/workflow-canvas/decision",
+  "endpoint": "http://127.0.0.1:57017/v1/workflow-canvas/decision",
   "dataset_path": "/home/ryn/Wearedge-Industrial-AI-agent-competition/evals/finals_validation_dataset.jsonl",
   "case_count": 15,
   "iterations": 20,
@@ -12,7 +12,7 @@
     "min": 1,
     "p50": 2,
     "p95": 2,
-    "avg": 1.77,
+    "avg": 1.69,
     "max": 3
   },
   "decision_latency_ms": {
@@ -29,21 +29,13 @@
       "iteration": 1,
       "case_id": "final_maint_01_vibration_escalation",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 3,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 1,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
       "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
     {
       "iteration": 1,
-      "case_id": "final_maint_03_pump_anomaly",
+      "case_id": "final_maint_02_bearing_heat",
       "primary_direction": "maintenance",
       "wall_latency_ms": 2,
       "decision_latency_ms": 1,
@@ -51,9 +43,17 @@
     },
     {
       "iteration": 1,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 1,
       "case_id": "final_quality_01_lot_containment",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -61,7 +61,7 @@
       "iteration": 1,
       "case_id": "final_quality_02_first_piece_reject",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -69,7 +69,7 @@
       "iteration": 1,
       "case_id": "final_quality_03_camera_confidence",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -77,7 +77,7 @@
       "iteration": 1,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -85,7 +85,7 @@
       "iteration": 1,
       "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -93,21 +93,13 @@
       "iteration": 1,
       "case_id": "final_energy_03_auxiliary_load",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 1,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
       "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
     {
       "iteration": 1,
-      "case_id": "final_flexible_02_short_run_sku",
+      "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
       "wall_latency_ms": 1,
       "decision_latency_ms": 1,
@@ -115,6 +107,14 @@
     },
     {
       "iteration": 1,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 1,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
       "wall_latency_ms": 1,
@@ -221,7 +221,7 @@
       "iteration": 2,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -229,7 +229,7 @@
       "iteration": 2,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -237,7 +237,7 @@
       "iteration": 2,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -245,7 +245,7 @@
       "iteration": 2,
       "case_id": "final_wfc_01_dashboard_reuse",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -253,7 +253,7 @@
       "iteration": 2,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -261,7 +261,7 @@
       "iteration": 2,
       "case_id": "final_wfc_03_resource_binding_two_lines",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -269,7 +269,7 @@
       "iteration": 3,
       "case_id": "final_maint_01_vibration_escalation",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -277,7 +277,7 @@
       "iteration": 3,
       "case_id": "final_maint_02_bearing_heat",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -285,7 +285,7 @@
       "iteration": 3,
       "case_id": "final_maint_03_pump_anomaly",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -301,7 +301,7 @@
       "iteration": 3,
       "case_id": "final_quality_02_first_piece_reject",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -309,7 +309,7 @@
       "iteration": 3,
       "case_id": "final_quality_03_camera_confidence",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -317,7 +317,7 @@
       "iteration": 3,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -325,7 +325,7 @@
       "iteration": 3,
       "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -333,7 +333,7 @@
       "iteration": 3,
       "case_id": "final_energy_03_auxiliary_load",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -341,7 +341,7 @@
       "iteration": 3,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -349,7 +349,7 @@
       "iteration": 3,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -357,7 +357,7 @@
       "iteration": 3,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -365,7 +365,7 @@
       "iteration": 3,
       "case_id": "final_wfc_01_dashboard_reuse",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -373,7 +373,7 @@
       "iteration": 3,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -437,21 +437,13 @@
       "iteration": 4,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 4,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
       "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
     {
       "iteration": 4,
-      "case_id": "final_energy_03_auxiliary_load",
+      "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
       "wall_latency_ms": 2,
       "decision_latency_ms": 1,
@@ -459,6 +451,14 @@
     },
     {
       "iteration": 4,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 4,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
       "wall_latency_ms": 2,
@@ -493,7 +493,7 @@
       "iteration": 4,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -501,7 +501,7 @@
       "iteration": 4,
       "case_id": "final_wfc_03_resource_binding_two_lines",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -525,7 +525,7 @@
       "iteration": 5,
       "case_id": "final_maint_03_pump_anomaly",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -581,7 +581,7 @@
       "iteration": 5,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -645,7 +645,7 @@
       "iteration": 6,
       "case_id": "final_maint_03_pump_anomaly",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -653,7 +653,7 @@
       "iteration": 6,
       "case_id": "final_quality_01_lot_containment",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -677,7 +677,7 @@
       "iteration": 6,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -685,7 +685,7 @@
       "iteration": 6,
       "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -701,7 +701,7 @@
       "iteration": 6,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -709,7 +709,7 @@
       "iteration": 6,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -749,7 +749,7 @@
       "iteration": 7,
       "case_id": "final_maint_01_vibration_escalation",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -811,1086 +811,6 @@
     },
     {
       "iteration": 7,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 7,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 8,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 9,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 10,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 11,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 12,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 13,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 14,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_energy_03_auxiliary_load",
-      "primary_direction": "energy",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_flexible_01_order_change",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_flexible_02_short_run_sku",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_flexible_03_line_clearance",
-      "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_wfc_01_dashboard_reuse",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_wfc_02_human_gate_mapping",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 15,
-      "case_id": "final_wfc_03_resource_binding_two_lines",
-      "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_maint_01_vibration_escalation",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_maint_02_bearing_heat",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_maint_03_pump_anomaly",
-      "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_quality_01_lot_containment",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_quality_02_first_piece_reject",
-      "primary_direction": "quality",
-      "wall_latency_ms": 1,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_quality_03_camera_confidence",
-      "primary_direction": "quality",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_energy_01_peak_load_shift",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
-      "case_id": "final_energy_02_idle_compressor",
-      "primary_direction": "energy",
-      "wall_latency_ms": 2,
-      "decision_latency_ms": 1,
-      "ok": true
-    },
-    {
-      "iteration": 16,
       "case_id": "final_energy_03_auxiliary_load",
       "primary_direction": "energy",
       "wall_latency_ms": 3,
@@ -1898,7 +818,7 @@
       "ok": true
     },
     {
-      "iteration": 16,
+      "iteration": 7,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
       "wall_latency_ms": 2,
@@ -1906,14 +826,1094 @@
       "ok": true
     },
     {
-      "iteration": 16,
+      "iteration": 7,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 7,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 7,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 7,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 7,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 8,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 9,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 10,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 11,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 12,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 13,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
       "wall_latency_ms": 3,
       "decision_latency_ms": 1,
       "ok": true
     },
     {
+      "iteration": 14,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 14,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_flexible_03_line_clearance",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_wfc_01_dashboard_reuse",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_wfc_02_human_gate_mapping",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 15,
+      "case_id": "final_wfc_03_resource_binding_two_lines",
+      "primary_direction": "workflow_canvas",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_maint_01_vibration_escalation",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_maint_02_bearing_heat",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_maint_03_pump_anomaly",
+      "primary_direction": "maintenance",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_quality_01_lot_containment",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_quality_02_first_piece_reject",
+      "primary_direction": "quality",
+      "wall_latency_ms": 1,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_quality_03_camera_confidence",
+      "primary_direction": "quality",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_energy_01_peak_load_shift",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_energy_02_idle_compressor",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_energy_03_auxiliary_load",
+      "primary_direction": "energy",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_flexible_01_order_change",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
+      "iteration": 16,
+      "case_id": "final_flexible_02_short_run_sku",
+      "primary_direction": "flexible_production",
+      "wall_latency_ms": 2,
+      "decision_latency_ms": 1,
+      "ok": true
+    },
+    {
       "iteration": 16,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
@@ -1925,7 +1925,7 @@
       "iteration": 16,
       "case_id": "final_wfc_01_dashboard_reuse",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -1933,7 +1933,7 @@
       "iteration": 16,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -1941,7 +1941,7 @@
       "iteration": 16,
       "case_id": "final_wfc_03_resource_binding_two_lines",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -1965,7 +1965,7 @@
       "iteration": 17,
       "case_id": "final_maint_03_pump_anomaly",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2005,7 +2005,7 @@
       "iteration": 17,
       "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2021,7 +2021,7 @@
       "iteration": 17,
       "case_id": "final_flexible_01_order_change",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2029,7 +2029,7 @@
       "iteration": 17,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2037,7 +2037,7 @@
       "iteration": 17,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2045,7 +2045,7 @@
       "iteration": 17,
       "case_id": "final_wfc_01_dashboard_reuse",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2053,7 +2053,7 @@
       "iteration": 17,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2077,7 +2077,7 @@
       "iteration": 18,
       "case_id": "final_maint_02_bearing_heat",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2085,7 +2085,7 @@
       "iteration": 18,
       "case_id": "final_maint_03_pump_anomaly",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2093,7 +2093,7 @@
       "iteration": 18,
       "case_id": "final_quality_01_lot_containment",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2109,7 +2109,7 @@
       "iteration": 18,
       "case_id": "final_quality_03_camera_confidence",
       "primary_direction": "quality",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2117,7 +2117,7 @@
       "iteration": 18,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2189,7 +2189,7 @@
       "iteration": 19,
       "case_id": "final_maint_01_vibration_escalation",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2197,7 +2197,7 @@
       "iteration": 19,
       "case_id": "final_maint_02_bearing_heat",
       "primary_direction": "maintenance",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2213,7 +2213,7 @@
       "iteration": 19,
       "case_id": "final_quality_01_lot_containment",
       "primary_direction": "quality",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2221,7 +2221,7 @@
       "iteration": 19,
       "case_id": "final_quality_02_first_piece_reject",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2237,7 +2237,7 @@
       "iteration": 19,
       "case_id": "final_energy_01_peak_load_shift",
       "primary_direction": "energy",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2245,7 +2245,7 @@
       "iteration": 19,
       "case_id": "final_energy_02_idle_compressor",
       "primary_direction": "energy",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2269,7 +2269,7 @@
       "iteration": 19,
       "case_id": "final_flexible_02_short_run_sku",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2293,7 +2293,7 @@
       "iteration": 19,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2341,7 +2341,7 @@
       "iteration": 20,
       "case_id": "final_quality_02_first_piece_reject",
       "primary_direction": "quality",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2397,7 +2397,7 @@
       "iteration": 20,
       "case_id": "final_flexible_03_line_clearance",
       "primary_direction": "flexible_production",
-      "wall_latency_ms": 2,
+      "wall_latency_ms": 1,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2413,7 +2413,7 @@
       "iteration": 20,
       "case_id": "final_wfc_02_human_gate_mapping",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     },
@@ -2421,7 +2421,7 @@
       "iteration": 20,
       "case_id": "final_wfc_03_resource_binding_two_lines",
       "primary_direction": "workflow_canvas",
-      "wall_latency_ms": 1,
+      "wall_latency_ms": 2,
       "decision_latency_ms": 1,
       "ok": true
     }
@@ -2429,12 +2429,12 @@
   "evidence_tier": "final_edge_stdlib_http_gateway",
   "gateway": {
     "app": "scripts.benchmark_edge_stdlib_gateway:StdlibWorkflowCanvasGateway",
-    "base_url": "http://127.0.0.1:55481",
+    "base_url": "http://127.0.0.1:57017",
     "healthz_ok": true,
     "deployment_mode": "jetson_edge_stdlib_http_gateway_benchmark",
     "edge_node_id": "jetson-orin-nano-8gb",
     "process_started": true,
-    "pid": 3919,
+    "pid": 4834,
     "dependency_profile": "python_stdlib_no_fastapi_uvicorn",
     "workflow_endpoint": "/v1/workflow-canvas/decision",
     "runtime_profile_endpoint": "/v1/edge/runtime-profile"
@@ -2456,94 +2456,94 @@
     },
     "process_cpu_percent": {
       "min": 0.0,
-      "p50": 95.24,
-      "p95": 110.0,
-      "avg": 82.41,
-      "max": 110.0
+      "p50": 96.77,
+      "p95": 100.0,
+      "avg": 82.59,
+      "max": 100.0
     },
     "process_rss_mb": {
-      "min": 21.05,
-      "p50": 21.37,
-      "p95": 21.46,
-      "avg": 21.34,
-      "max": 21.46
+      "min": 21.07,
+      "p50": 21.35,
+      "p95": 21.43,
+      "avg": 21.3,
+      "max": 21.43
     },
     "process_vms_mb": {
       "min": 180.11,
-      "p50": 252.17,
-      "p95": 252.17,
-      "avg": 241.88,
-      "max": 252.17
+      "p50": 324.23,
+      "p95": 324.23,
+      "avg": 283.05,
+      "max": 324.23
     },
     "system_memory_percent": {
-      "min": 62.06,
-      "p50": 62.1,
-      "p95": 62.11,
-      "avg": 62.1,
-      "max": 62.11
+      "min": 62.33,
+      "p50": 62.34,
+      "p95": 62.35,
+      "avg": 62.34,
+      "max": 62.35
     },
     "samples": [
       {
-        "elapsed_ms": 4,
+        "elapsed_ms": 3,
         "process_cpu_percent": 0.0,
-        "process_rss_mb": 21.05,
+        "process_rss_mb": 21.07,
         "process_vms_mb": 180.11,
-        "system_memory_percent": 62.06,
-        "system_available_mb": 2891.24
+        "system_memory_percent": 62.34,
+        "system_available_mb": 2869.6
       },
       {
-        "elapsed_ms": 107,
-        "process_cpu_percent": 85.71,
-        "process_rss_mb": 21.32,
+        "elapsed_ms": 108,
+        "process_cpu_percent": 96.77,
+        "process_rss_mb": 21.23,
         "process_vms_mb": 252.17,
-        "system_memory_percent": 62.1,
-        "system_available_mb": 2887.63
+        "system_memory_percent": 62.35,
+        "system_available_mb": 2868.64
       },
       {
         "elapsed_ms": 211,
-        "process_cpu_percent": 95.24,
-        "process_rss_mb": 21.34,
+        "process_cpu_percent": 98.36,
+        "process_rss_mb": 21.26,
         "process_vms_mb": 252.17,
-        "system_memory_percent": 62.11,
-        "system_available_mb": 2887.33
+        "system_memory_percent": 62.33,
+        "system_available_mb": 2870.18
       },
       {
-        "elapsed_ms": 314,
-        "process_cpu_percent": 96.77,
-        "process_rss_mb": 21.37,
-        "process_vms_mb": 252.17,
-        "system_memory_percent": 62.1,
-        "system_available_mb": 2887.77
+        "elapsed_ms": 315,
+        "process_cpu_percent": 93.75,
+        "process_rss_mb": 21.35,
+        "process_vms_mb": 324.23,
+        "system_memory_percent": 62.34,
+        "system_available_mb": 2869.93
       },
       {
-        "elapsed_ms": 419,
-        "process_cpu_percent": 104.76,
-        "process_rss_mb": 21.41,
-        "process_vms_mb": 252.17,
-        "system_memory_percent": 62.11,
-        "system_available_mb": 2887.36
+        "elapsed_ms": 420,
+        "process_cpu_percent": 100.0,
+        "process_rss_mb": 21.38,
+        "process_vms_mb": 324.23,
+        "system_memory_percent": 62.34,
+        "system_available_mb": 2869.44
       },
       {
-        "elapsed_ms": 523,
-        "process_cpu_percent": 84.38,
+        "elapsed_ms": 525,
+        "process_cpu_percent": 90.91,
+        "process_rss_mb": 21.4,
+        "process_vms_mb": 324.23,
+        "system_memory_percent": 62.34,
+        "system_available_mb": 2869.44
+      },
+      {
+        "elapsed_ms": 629,
+        "process_cpu_percent": 98.36,
         "process_rss_mb": 21.43,
-        "process_vms_mb": 252.17,
-        "system_memory_percent": 62.1,
-        "system_available_mb": 2887.69
-      },
-      {
-        "elapsed_ms": 627,
-        "process_cpu_percent": 110.0,
-        "process_rss_mb": 21.46,
-        "process_vms_mb": 252.17,
-        "system_memory_percent": 62.1,
-        "system_available_mb": 2887.64
+        "process_vms_mb": 324.23,
+        "system_memory_percent": 62.34,
+        "system_available_mb": 2869.55
       }
     ],
     "boundary": "Resource samples describe the benchmark gateway process on the node that runs this script. On Jetson, keep this profile together with tegrastats for final-round defense."
   },
   "collection_context": {
-    "workstation_collected_at_utc": "2026-06-12T04:13:44+00:00",
+    "workstation_collected_at_utc": "2026-06-12T09:48:01+00:00",
     "host": "192.168.55.1",
     "remote_dir": "/home/ryn/Wearedge-Industrial-AI-agent-competition",
     "timestamp_note": "Benchmark generated_at and tegrastats timestamps come from the Jetson system clock."
