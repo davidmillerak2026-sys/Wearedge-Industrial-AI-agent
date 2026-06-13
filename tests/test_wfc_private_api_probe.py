@@ -31,6 +31,9 @@ def test_build_probe_requests_includes_known_wfc_paths() -> None:
 
     urls = {request.name: request.url for request in requests}
     assert urls["project-files"].endswith("/api/persistence/files/projects/cmq6lbb9x00bx1l6pxll7voae")
+    assert urls["workflow-api"].endswith(
+        "/api/persistence/workflow?projectId=cmq6lbb9x00bx1l6pxll7voae&workflowId=workflow1"
+    )
     assert urls["workflow-json"].endswith("/uploads/projects/cmq6lbb9x00bx1l6pxll7voae/workflow.json")
     assert urls["global-data-table"].endswith(
         "/uploads/projects/cmq6lbb9x00bx1l6pxll7voae/globalDataTable.json"

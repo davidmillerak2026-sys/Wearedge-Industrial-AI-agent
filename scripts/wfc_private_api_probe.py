@@ -25,6 +25,7 @@ DEFAULT_OUTPUT_DIR = (
 
 ALL_PROBES = (
     "project-files",
+    "workflow-api",
     "workflow-json",
     "global-data-table",
     "project-files-dir",
@@ -108,7 +109,14 @@ def build_probe_requests(
             method="GET",
             url=f"{base}/uploads/projects/{quote_path(project_id)}/workflow.json",
             output_name="workflow.json",
-            note="Read the project workflow JSON for backup/diagnosis only.",
+            note="Legacy guessed workflow JSON path; keep for diagnosis only.",
+        ),
+        "workflow-api": ProbeRequest(
+            name="workflow-api",
+            method="GET",
+            url=f"{base}/api/persistence/workflow?{urllib.parse.urlencode({'projectId': project_id, 'workflowId': 'workflow1'})}",
+            output_name="workflow-api.json",
+            note="Read the frontend-observed workflow persistence API for backup/diagnosis only.",
         ),
         "global-data-table": ProbeRequest(
             name="global-data-table",

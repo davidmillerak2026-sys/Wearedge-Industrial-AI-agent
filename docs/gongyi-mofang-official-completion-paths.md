@@ -116,6 +116,7 @@ Earlier frontend inspection suggests WFC uses internal endpoints such as:
 ```text
 GET  /uploads/{path}
 GET  /api/persistence/files/{path}
+GET  /api/persistence/workflow?projectId={projectId}&workflowId=workflow1
 POST /api/persistence/upload/{path}
 POST /api/persistence/diff-update
 GET  /api/projects/dashboard-explorer
@@ -142,6 +143,14 @@ $env:WFC_COOKIE="<paste current session cookie locally; do not commit>"
 python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae --probe workflow-json --json
 Remove-Item Env:WFC_COOKIE
 ```
+
+2026-06-13 browser asset inventory observed the current project page loading:
+
+```text
+GET /api/persistence/workflow?projectId=cmq6lbb9x00bx1l6pxll7voae&workflowId=workflow1
+```
+
+Use `--probe workflow-api` first when diagnosing the current project JSON. Keep `workflow-json` only as a legacy path check.
 
 ## Immediate Next Actions
 
