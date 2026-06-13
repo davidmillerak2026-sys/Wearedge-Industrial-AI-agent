@@ -33,6 +33,7 @@ Operational scripts for Jetson setup, model service startup, smoke tests, and Po
 | [`verify_submission_package.py`](verify_submission_package.py) | Check Phase A-E repository deliverables, generated evidence, registration fields, and deadline markers. |
 | [`verify_live_evidence.py`](verify_live_evidence.py) | Initialize and check ignored Xcelerator, Gongyi Mofang, edge runtime, video, legal, and submission evidence assets. |
 | [`wfc_private_api_probe.py`](wfc_private_api_probe.py) | Read-only Gongyi Mofang private API probe for project-file, workflow JSON, data-table, Dashboard Explorer, and log-manager diagnosis; requires credentials through local environment variables and redacts them from output. |
+| [`analyze_wfc_workflow_bindings.py`](analyze_wfc_workflow_bindings.py) | Analyze a local WFC `workflow.json` or project export and report whether `CallWearedgeDecisionApi` has a confirmed `输出1` data connection into `更新数据表.1`; read-only and offline. |
 | [`capture_dashboard_mock.py`](capture_dashboard_mock.py) | Capture the Dashboard mock to a local ignored screenshot under `submission-assets/screenshots/`. |
 | [`capture_submission_screenshots.py`](capture_submission_screenshots.py) | Batch-render README, reports, payloads, CLI outputs, and the Dashboard mock into local ignored screenshots. |
 | [`generate_enterprise_demo_video.py`](generate_enterprise_demo_video.py) | Generate the 3-5 minute enterprise-group demo MP4 and final narration under ignored `submission-assets/live-evidence/video/`. |

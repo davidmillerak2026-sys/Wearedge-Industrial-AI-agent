@@ -100,6 +100,7 @@ Allowed and useful:
 - Run `scripts/wfc_private_api_probe.py --dry-run` to inspect planned read-only WFC project probes.
 - Run `scripts/wfc_private_api_probe.py` with a locally supplied `WFC_COOKIE` only when we need authenticated read-only diagnosis; the script never prints credential values.
 - Back up non-secret project JSON if the platform exposes readable project files.
+- Run `scripts/analyze_wfc_workflow_bindings.py <workflow.json>` on any exported WFC project JSON to verify whether `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` is actually present.
 
 Not allowed or not suitable:
 

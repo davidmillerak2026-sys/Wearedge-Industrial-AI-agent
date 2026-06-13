@@ -19,6 +19,7 @@
 | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready |
 | WFC resource block prototype | `wfc-blocks/wearedge-agent-service/` | ready |
 | WFC resource block package builder | `scripts/package_wfc_resource_block.py` | ready |
+| WFC workflow binding analyzer | `scripts/analyze_wfc_workflow_bindings.py` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
 | Workflow Canvas API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Workflow Canvas PoC runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
@@ -73,6 +74,7 @@
 - Finals foundation is checked by `scripts/verify_finals_foundation.py --json`; it verifies direction coverage, decision accuracy, latency, platform skeleton, and HMI baseline while explicitly keeping finals completion separate from foundation readiness.
 - Current Xcelerator integration has live draft evidence: Wearedge app group, app draft, API service draft, current application home, current API detail, and current 4-endpoint API list are captured under `submission-assets/live-evidence/xcelerator/`.
 - Current WFC integration has real Gongyi Mofang project evidence: authenticated project page, `Wearedge WFC PoC` project, Python function block, data-table fields, live `fb_main.py` source search showing Wearedge `_summary` fields, DEBUG entry, `Workflow is ready` log-manager evidence, 2026-06-12 WFC/SPIDR -> Wearedge gateway `POST /v1/workflow-canvas/decision` `200 OK` auxiliary live-call evidence, 2026-06-12 native WFC run-state screenshots showing `CallWearedgeDecisionApi` with output `状态码 Good`, live `更新数据表.1` binding screenshots showing `selected_direction`, `priority`, `recommended_action`, and `approval_status` mapped into the WFC global data-table update block, and 2026-06-13 WFC native `更新数据表.1` static input evidence where `selected_direction=maintenance`, `priority=P1`, `recommended_action=Inspect bearing vibration...`, and `approval_status=pending_human_approval` are visible and locked during DEBUG.
+- `scripts/analyze_wfc_workflow_bindings.py` is now the offline gate for exported WFC `workflow.json`: it reports whether `CallWearedgeDecisionApi` has a confirmed `输出1` data connection into `更新数据表.1`, without calling or modifying the platform.
 - WFC resource package zip is generated locally under ignored `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/` by `scripts/package_wfc_resource_block.py`; it is a reusable prototype attachment, not proof of live platform execution.
 - Repo-controlled final submission bundle is generated locally under ignored `submission-assets/live-evidence/submission-bundle/` by `scripts/build_final_submission_bundle.py`; it excludes live screenshots, signed legal files, company identifiers, and final registration screenshots by default.
 - Final human-owned templates are generated locally under ignored `submission-assets/live-evidence/` by `scripts/prepare_final_human_action_pack.py`; they use `.template.*` names and do not satisfy final verifier targets until signed/filled/captured files are created.
