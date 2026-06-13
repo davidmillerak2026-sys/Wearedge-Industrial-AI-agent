@@ -184,21 +184,21 @@ WFC008/WFC009 可用于决赛增强，不阻塞当前初赛提交。
 - `System.UpdateDataTable - 更新数据表.1` 已被创建。
 - `更新数据表.1` 已绑定 `selected_direction`、`priority`、`recommended_action`、`approval_status` 等字段。
 - DEBUG 状态下可看到 WFC 运行工具条、SPIDR URL、`更新数据表` 属性面板和运行日志窗口。
+- 2026-06-13 live WFC 原生运行日志已显示 `CallWearedgeDecisionApi.output` 业务 JSON，开头包含 `"ok": true`。
 
 仍不能夸大为：
 
 - Python 输出已经原生写回数据表。
-- WFC 原生日志已经显示 `ok=true`、`latency_ms` 或业务 JSON。
 - Dashboard 已经完成 Wearedge 数据绑定。
 - 真实 OT 设备已经被 Wearedge 自动控制。
 
 下一步 GUI 取证优先级：
 
 1. 在 WFC 画布中稳定建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表 输入` 虚线数据连接。
-2. 运行 DEBUG，打开运行日志，争取看到 Python 输出或 API 摘要。
+2. 运行 DEBUG，打开运行日志，复核 live `ok=true` 和输出 `Good`。
 3. 切到 `数据表`，截取运行后字段值。
 4. 保持工作流运行，进入 ui-builder/Dashboard，绑定数据源并预览。
-5. 形成 `05-run-log-ok-true.png`、`04-dashboard-decision-view.png`、`06-human-approval-gate.png` 的真实替代证据。
+5. 形成 `04-dashboard-decision-view.png`、`06-human-approval-gate.png` 的真实替代证据，并把 `05-run-log-ok-true.png` 作为 live run-log 基线继续复核。
 
 ## 夺冠叙事强化
 

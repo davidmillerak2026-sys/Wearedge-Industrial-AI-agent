@@ -144,7 +144,7 @@ UPLOAD_ITEMS: tuple[UploadItem, ...] = (
         "submission-assets/live-evidence/gongyi-mofang/",
         "external_private",
         "Supporting evidence",
-        "Replace WFC 04/05/06 fallback assets before claiming live WFC closure.",
+        "Replace remaining WFC fallback assets before claiming live WFC closure.",
     ),
     UploadItem(
         "P2",
@@ -252,6 +252,7 @@ def _status_for_item(
 ) -> dict[str, Any]:
     source = item.source
     normalized_source = source.replace("\\", "/")
+    action = item.action
     if source == DEFAULT_SUBMISSION_BUNDLE_SOURCE:
         present = submission_bundle.is_file() and submission_bundle.stat().st_size > 0
         status = "ready" if present else "missing"
@@ -274,6 +275,16 @@ def _status_for_item(
             has_fallback = any(group_item["fallback"] for group_item in group_items)
             has_missing = any(not group_item["present"] for group_item in group_items)
             status = "fallback" if has_fallback else ("partial" if has_missing else ("ready" if present else "missing"))
+            if item.title == "Gongyi Mofang screenshot pack":
+                fallback_paths = sorted(group_item["path"] for group_item in group_items if group_item["fallback"])
+                if fallback_paths:
+                    action = (
+                        "Replace remaining WFC fallback assets before claiming live WFC closure: "
+                        + ", ".join(fallback_paths)
+                        + "."
+                    )
+                else:
+                    action = "Use the reviewed live WFC screenshot pack; avoid AppID/AppSecret and private contact details."
         else:
             live_item = live_item_map.get(relative)
             quality_item = external_quality_map.get(relative)
@@ -299,7 +310,7 @@ def _status_for_item(
         "audience": item.audience,
         "status": status,
         "present": present,
-        "action": item.action,
+        "action": action,
     }
 
 

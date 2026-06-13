@@ -362,7 +362,7 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 | Python 源码参考 | live WFC `fb_main.py` 已复核为 Wearedge 摘要版本 | `workflows/wfc_call_wearedge_decision_fb_main.py`，调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥；2026-06-12 平台源码搜索截图 `103-wfc-python-fb-main-search-state.png` 可见 `_summary`、`selected_direction`、`approval_status`。 |
 | 数据表 | 右侧 `数据表` tab 可进入；2026-06-12 已在真实 WFC 项目 `编辑数据表 -> 自定义数据` 中复核 8 个 Wearedge 决策字段。 | `03-global-data-table-decision-fields.png` 已显示主方向、优先级、建议动作、证据摘要、指标、责任人、残余风险、人工确认状态。 |
 | Dashboard | 已进入 `/dashboard-explorer` | `71-wfc-dashboard-explorer-entry-native.png` 只是入口图，不是 Wearedge Dashboard 完成图。 |
-| 运行日志 | 2026-06-11 已进入 `DEBUG` 状态，执行器显示 `https://spidr.wfc.bd-iiot.com`；运行日志 iframe 可打开并读取到 `Workflow is ready.`。 | `95-wfc-debug-state-spidr-open.png`、`96-wfc-run-log-workflow-ready.png/json` 是辅助证据；还不能命名为 `05-run-log-ok-true.png`，因为 Python Block 尚未形成 `ok=true` API 调用日志。 |
+| 运行日志 | 2026-06-13 已恢复 `quick-cats-study.loca.lt` tunnel 和本机 Wearedge gateway，并在 WFC 原生运行日志中截到 `CallWearedgeDecisionApi.output` JSON 开头 `"ok": true`。 | `05-run-log-ok-true.png` 已升级为 live WFC `ok=true` 日志；动态数据表写回仍需单独证明。 |
 | 截图方法 | 默认 Browser 截图在 WFC canvas 页面可能超时或只截左侧画布；右侧弹窗字段可通过实时 DOM 核验。 | 最终材料优先使用清晰平台图；若截图工具裁剪，使用明确标注的 DOM verified evidence，不伪装为原生截图。 |
 
 2026-06-11 Dashboard Explorer 路由分析：
@@ -371,7 +371,7 @@ WFC 很多核心元素是 canvas 绘制，DOM 里不一定能看到块名、端�
 
 - WFC 处于 `DEBUG` 时 `fb_main.py` 编辑器为只读，会提示 `Cannot edit in read-only editor`。
 - 需要先点击调试浮条 stop 图标，使顶部恢复 `已保存` / `play-circle` 状态，再打开源码编辑器粘贴保存。
-- 若需要平台内业务 `ok=true` 运行日志或数据表写回，下一步应在现有 `CallWearedgeDecisionApi` 后增加/绑定 `更新数据表` 或打开 read 输出，让 `ok`、`latency_ms`、`selected_direction`、`approval_status` 可见；当前已取得 WFC 原生 `状态码 Good` 运行态。
+- 平台内业务 `ok=true` 运行日志已经取得；下一步应在现有 `CallWearedgeDecisionApi` 后稳定绑定 `更新数据表`，让原生数据表值或导出工作流证明 `latency_ms`、`selected_direction`、`approval_status` 等字段来自 Python 动态输出。
 
 2026-06-12 `更新数据表` live 绑定进展：
 

@@ -52,7 +52,7 @@ Use this as the main route for the submission screenshots.
 | 3 | WFC005/WFC006 custom resources | Finish `Wearedge Agent Service` with `agentHost`, `agentPort`, `apiKeyRef`, `deploymentMode`, `plantId`, `lineId`. | `01-resource-block-wearedge-agent-service.png`. |
 | 4 | WFC001 Python/function blocks | Verify `CallWearedgeDecisionApi` Python block input/output and saved `fb_main.py`. | `02-python-function-block-call-api.png`, `102-wfc-python-fb-main-saved.png`. |
 | 5 | WFC007 data persistence | Add `更新数据表`, bind Wearedge fields, and prove the target data fields can hold decision values. | `03-global-data-table-decision-fields.png`, binding screenshots, `192-wfc-update-data-table-fields-complete-20260613.png`, `193-wfc-debug-running-fields-locked-20260613.png`. |
-| 6 | WFC010 debug/deploy/logs | Run workflow on SPIDR/IPC, capture log-manager output and browser/runtime logs. | `05-run-log-ok-true.png` only after WFC-native `wearedge_decision_ok=True`; interim live evidence is `125-wfc-run-log-workflow-ready-status-good-20260612.png` and `195-wfc-browser-debug-log-20260613.json`. |
+| 6 | WFC010 debug/deploy/logs | Run workflow on SPIDR/IPC, capture log-manager output and browser/runtime logs. | `05-run-log-ok-true.png` now contains live WFC-native `CallWearedgeDecisionApi.output` with `"ok": true`; keep `125-wfc-run-log-workflow-ready-status-good-20260612.png` and `195-wfc-browser-debug-log-20260613.json` as supporting history. |
 | 7 | WFC007 ui-builder/Dashboard | Create/preview Dashboard from live data table or data stream. | `04-dashboard-decision-view.png`. |
 | 8 | Safety boundary from runbook | Show approval state for high-risk recommendation. | `06-human-approval-gate.png` or live approval-state panel. |
 
@@ -158,7 +158,7 @@ Use `--probe workflow-api` first when diagnosing the current project JSON. Keep 
 2. Finish `Wearedge Agent Service` parameters in WFC.
 3. Keep `CallWearedgeDecisionApi` block inputs/outputs and saved `fb_main.py` aligned with `workflows/wfc_call_wearedge_decision_fb_main.py`.
 4. Replace the current `更新数据表.1` static example values with a confirmed Python `输出1` -> data-table update binding once the WFC data-port gesture is stable.
-5. Run the workflow and capture log-manager evidence containing `wearedge_decision_ok` or equivalent `ok=true` output.
+5. Extend the live WFC evidence from `ok=true` run-log proof to confirmed data-table writeback proof.
 6. Build the Dashboard/ui-builder view from workflow data, not from an empty `/dashboard-explorer` page.
 7. If GUI remains slow, implement only a read-only private API probe first; do not use private write calls until project JSON paths are backed up and verified.
 

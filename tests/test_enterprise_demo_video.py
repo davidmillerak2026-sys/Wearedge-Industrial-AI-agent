@@ -30,5 +30,6 @@ def test_enterprise_demo_narration_has_submission_boundaries(tmp_path: Path) -> 
     assert result["fallback_scenes"] >= 1
     assert "Xcelerator" in script
     assert "工易魔方" in script
-    assert "fallback/mock/API-smoke" in script
-    assert "不能声称已完成 live WFC `ok=true`" in script
+    assert "fallback/mock" in script
+    assert "`ok=true` run-log 来自真实平台" in script
+    assert "Dashboard/HumanApprovalGate live 替换仍是下一步" in script

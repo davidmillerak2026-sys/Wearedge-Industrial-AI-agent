@@ -431,7 +431,8 @@ def _priority_gaps(
     if not platform["ready"]:
         gaps.append("Complete platform-stage Xcelerator/WFC evidence before treating the platform path as stable.")
     if platform["warnings"]:
-        gaps.append("Replace fallback WFC dashboard/run-log/HumanApprovalGate assets with live WFC execution screenshots.")
+        warning_paths = ", ".join(sorted(warning["path"] for warning in platform["warnings"]))
+        gaps.append(f"Replace remaining fallback WFC assets with live WFC execution screenshots: {warning_paths}.")
     if (
         not hmi["natural_language_api_foundation"]
         or not hmi["decision_visualization_foundation"]

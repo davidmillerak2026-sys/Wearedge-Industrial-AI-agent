@@ -1,6 +1,6 @@
 # Final Upload Manifest
 
-Updated: 2026-06-12T11:03:06+00:00
+Updated: 2026-06-13T13:07:54+00:00
 
 ## Gate
 
@@ -9,7 +9,7 @@ Updated: 2026-06-12T11:03:06+00:00
 - External asset quality ready: False
 - Official submission ready: False
 - Bundle present: True
-- Bundle SHA256: `cd60c6f45bed3acef23229fefdcf683abbabd3592aef953d719286c05b7fa298`
+- Bundle SHA256: `66649ce1f0a690b7d18be47fe03d38bc979de1cf572d79806a7abf389a1738b8`
 - Bundle file count: `80`
 - WFC resource package present: True
 - Official attachment pack present: True
@@ -30,7 +30,7 @@ Updated: 2026-06-12T11:03:06+00:00
 | P1 | ready | Xcelerator OpenAPI import spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | Technical appendix | Attach if the platform reviewer wants to reproduce API World import. |
 | P1 | ready | Gongyi Mofang WFC resource package | `submission-assets/live-evidence/gongyi-mofang/wfc-resource-package/wearedge-agent-service-0.1.0.zip` | Technical appendix | Attach as reusable component prototype; do not describe it as live WFC run proof. |
 | P1 | ready | Xcelerator screenshot pack | `submission-assets/live-evidence/xcelerator/` | Supporting evidence | Use reviewed screenshots; avoid AppID/AppSecret and private contact details. |
-| P1 | fallback | Gongyi Mofang screenshot pack | `submission-assets/live-evidence/gongyi-mofang/` | Supporting evidence | Replace WFC 04/05/06 fallback assets before claiming live WFC closure. |
+| P1 | fallback | Gongyi Mofang screenshot pack | `submission-assets/live-evidence/gongyi-mofang/` | Supporting evidence | Replace remaining WFC fallback assets before claiming live WFC closure: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png. |
 | P2 | blocked | Signed IP/no-dispute statement | `submission-assets/live-evidence/legal/ip-and-no-dispute-signed.pdf` | Official submission attachment when required | Upload only to the official registration system or approved internal archive. |
 | P2 | blocked | Signed no-adverse-record statement | `submission-assets/live-evidence/legal/no-adverse-record-signed.pdf` | Official submission attachment when required | Upload only to the official registration system or approved internal archive. |
 
@@ -43,7 +43,6 @@ Updated: 2026-06-12T11:03:06+00:00
 - `submission/01-registration-form-filled.png`: missing final live-evidence file
 - `submission/02-submission-success.png`: missing final live-evidence file
 - `gongyi-mofang/04-dashboard-decision-view.png`: fallback marker still present
-- `gongyi-mofang/05-run-log-ok-true.png`: fallback marker still present
 - `gongyi-mofang/06-human-approval-gate.png`: fallback marker still present
 - `legal/company-info-filled.md`: quality failure: missing_or_empty
 - `legal/ip-and-no-dispute-signed.pdf`: quality failure: missing_or_empty
@@ -52,7 +51,6 @@ Updated: 2026-06-12T11:03:06+00:00
 - `submission/01-registration-form-filled.png`: quality failure: missing_or_empty
 - `submission/02-submission-success.png`: quality failure: missing_or_empty
 - `gongyi-mofang/04-dashboard-decision-view.png`: quality failure: fallback_marker_present
-- `gongyi-mofang/05-run-log-ok-true.png`: quality failure: fallback_marker_present
 - `gongyi-mofang/06-human-approval-gate.png`: quality failure: fallback_marker_present
 
 ## Privacy Boundary

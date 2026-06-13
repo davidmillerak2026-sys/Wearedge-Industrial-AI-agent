@@ -28,7 +28,7 @@
 | --- | --- | --- |
 | Xcelerator API World | `submission-assets/live-evidence/xcelerator/` | 可描述为真实平台草稿/导入证据；未发布上架。 |
 | Gongyi Mofang project, Python block, data table | `submission-assets/live-evidence/gongyi-mofang/` | 可描述为真实 WFC 项目和配置证据。 |
-| Gongyi Mofang Dashboard/run-log/HumanApprovalGate 04/05/06 | `submission-assets/live-evidence/gongyi-mofang/04-06*` | 当前仍是 fallback/mock/API-smoke，不能描述为 live WFC `ok=true`。 |
+| Gongyi Mofang Dashboard/run-log/HumanApprovalGate 04/05/06 | `submission-assets/live-evidence/gongyi-mofang/04-06*` | `05-run-log-ok-true.png` 已替换为 live WFC `ok=true` 原生日志；`04` Dashboard 和 `06` HumanApprovalGate 仍是 fallback/mock，不能描述为 live WFC Dashboard/审批节点。 |
 | Edge runtime | `submission-assets/live-evidence/edge-runtime/` | 可描述为 Jetson/端侧 HTTP 决策路径证据；stdlib fallback gateway 已明确标注。 |
 | Submission screenshots | `submission-assets/live-evidence/submission/` | 最终填报/提交成功后补齐。 |
 | Legal/company files | `submission-assets/live-evidence/legal/` | 企业负责人补齐；不提交 Git。 |
@@ -71,7 +71,7 @@
 
 不可说：
 
-- 不说 WFC 04/05/06 fallback 图已经是 live WFC `ok=true` 成功运行。
+- 不说 WFC Dashboard 或 HumanApprovalGate fallback 图已经是 live 平台闭环；`05-run-log-ok-true.png` 可以描述为 live WFC `ok=true` 原生日志。
 - 不说已经有真实客户生产数据或量产部署，除非后续有客户授权日志。
 - 不说 Gemma 4 E2B 或任何基础模型是自研。
 - 不说模型直接控制 PLC、机器人、停线、放行或能耗切换。

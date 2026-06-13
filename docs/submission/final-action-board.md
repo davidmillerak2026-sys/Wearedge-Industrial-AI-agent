@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-13T12:14:57+00:00
+Updated: 2026-06-13T13:11:07+00:00
 
 ## Current Gate
 
@@ -9,14 +9,14 @@ Updated: 2026-06-13T12:14:57+00:00
 - Finals ready: False
 - Final external evidence ready: False
 - Final missing files: 6
-- Fallback warnings: 3
+- Fallback warnings: 2
 - Edge latency evidence tier: final_edge_stdlib_http_gateway
 - Edge HTTP samples: 300
 - Edge HTTP p95/max latency: 2 / 3 ms
 
 ## Do Next
 
-1. Replace WFC 04/05/06 fallback screenshots with reviewed live WFC screenshots.
+1. Replace remaining WFC fallback screenshots with reviewed live WFC screenshots: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
 2. Complete the six enterprise-owned legal/contact/submission evidence files.
 3. Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"` only after real WFC screenshots and review sidecars are in staging.
 4. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.
@@ -27,7 +27,7 @@ Updated: 2026-06-13T12:14:57+00:00
 | Status | Target | Owner | Action | Acceptance |
 | --- | --- | --- | --- | --- |
 | fallback | `gongyi-mofang/04-dashboard-decision-view.png` | WFC operator | Create or preview the real WFC Dashboard/ui-builder view. | Shows Wearedge metric cards, decision path, approval items, and workflow state from live WFC context. |
-| fallback | `gongyi-mofang/05-run-log-ok-true.png` | WFC operator | Run/debug the workflow and capture log-manager or run panel. | Shows ok=true, wearedge_decision_ok=True, latency, function-block output, or successful table writeback. |
+| present | `gongyi-mofang/05-run-log-ok-true.png` | WFC operator | Keep the reviewed live WFC run-log screenshot; recapture only if workflow code changes. | Shows WFC-native CallWearedgeDecisionApi.output JSON beginning with ok=true; data-table writeback is tracked separately. |
 | fallback | `gongyi-mofang/06-human-approval-gate.png` | WFC operator | Show HumanApprovalGate or approval-state panel for a high-risk recommendation. | Shows pending/approved/rejected human confirmation; model is not directly controlling OT. |
 
 ## Human-Owned Final Files

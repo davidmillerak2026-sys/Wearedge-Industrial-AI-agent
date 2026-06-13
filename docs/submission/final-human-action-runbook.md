@@ -27,7 +27,7 @@ The action board at `docs/submission/final-action-board.md` is regenerated from 
 
 ## WFC Fallback Replacement
 
-Current platform evidence is enough for platform-stage readiness, but final judging language must stay honest while `04/05/06` Gongyi Mofang assets are fallback-marked.
+Current platform evidence is enough for platform-stage readiness, and `05-run-log-ok-true.png` is now live WFC run-log evidence. Final judging language must stay honest while the `04` Dashboard and `06` HumanApprovalGate Gongyi Mofang assets remain fallback-marked.
 
 Replace these when live WFC execution is reproduced:
 

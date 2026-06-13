@@ -42,7 +42,7 @@ Evidence: `docs/workflow-canvas-poc-runbook.md`, `wfc-blocks/wearedge-agent-serv
 
 ### 6. What live platform evidence do you have?
 
-We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, live WFC `fb_main.py` source-search evidence, DEBUG entry, `Workflow is ready` log-manager evidence, and native WFC output `状态码 Good` after running `CallWearedgeDecisionApi`. Dashboard, business `ok=true` WFC stdout/data-table writeback, and HumanApprovalGate are still explicitly marked as fallback/mock/API-smoke until live WFC replacement is captured.
+We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, live WFC `fb_main.py` source-search evidence, DEBUG entry, `Workflow is ready` log-manager evidence, native WFC output `状态码 Good`, and a live WFC run-log screenshot where `CallWearedgeDecisionApi.output` begins with `ok=true`. Dashboard, data-table dynamic writeback, and HumanApprovalGate are still explicitly marked as fallback/mock or open items until live WFC replacement is captured.
 
 Evidence: `docs/submission/platform-live-evidence-status-20260609.md`, `docs/submission/live-platform-evidence-runbook.md`.
 
@@ -66,7 +66,7 @@ Evidence: `docs/submission/business-plan.md`, `docs/siemens-xcelerator-co-creati
 
 ### 10. What is already completed and what remains?
 
-Completed repository-controlled assets include API endpoints, OpenAPI, WFC resource package, offline evaluator, generated submission evidence, demo video generator, final submission bundle builder, and human-action templates. Remaining final work is enterprise-owned: company/contact information, signed IP/no-dispute and no-adverse-record statements, final registration screenshots, and replacing fallback WFC `04/05/06` evidence with real live WFC closure when available.
+Completed repository-controlled assets include API endpoints, OpenAPI, WFC resource package, offline evaluator, generated submission evidence, demo video generator, final submission bundle builder, human-action templates, and live WFC `ok=true` run-log evidence. Remaining final work is enterprise-owned company/contact information, signed IP/no-dispute and no-adverse-record statements, final registration screenshots, and replacing the remaining WFC Dashboard/HumanApprovalGate fallback evidence with real live WFC closure when available.
 
 Evidence: `docs/submission/submission-package-manifest.md`, `scripts/verify_submission_package.py`, `scripts/verify_live_evidence.py`.
 

@@ -83,7 +83,7 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 - 如果顶部显示 `DEBUG`，`fb_main.py` 编辑器会进入只读状态，并提示 `Cannot edit in read-only editor`。先点击调试浮条的 stop 图标，使顶部恢复 `已保存` / `play-circle`，再打开源码编辑。
 - 当前仓库提供可复制到 WFC `fb_main.py` 的 live-edit 参考源码：`workflows/wfc_call_wearedge_decision_fb_main.py`。该版本只使用标准库 `urllib.request` 调用临时 HTTPS Wearedge Agent Service，不包含平台账号、token 或密钥。
 - 粘贴保存后，截图应同时覆盖 `fb_main.py`、`/v1/workflow-canvas/decision`、`wearedge_decision_ok` 日志标识和底部 `保存` 成功状态。
-- 若 WFC 原生 log-manager 或 inline read 视图没有显示 stdout，可把 Wearedge gateway 中同一轮运行产生的外部 `POST /v1/workflow-canvas/decision` `200 OK` 作为辅助证据；这不能替代 `05-run-log-ok-true.png` 的 live WFC 原生日志要求。
+- 若 WFC 原生 log-manager 或 inline read 视图没有显示 stdout，可把 Wearedge gateway 中同一轮运行产生的外部 `POST /v1/workflow-canvas/decision` `200 OK` 作为辅助证据；2026-06-13 已进一步取得 WFC 原生日志 `CallWearedgeDecisionApi.output` JSON 开头 `"ok": true`，并替换 `05-run-log-ok-true.png`。
 - 2026-06-12 以后优先复制仓库中的短版 `workflows/wfc_call_wearedge_decision_fb_main.py`。该版本保持 `ok`、`latency_ms`、`selected_direction`、`approval_status` 和短 `competition_metrics` 输出，避免完整 API 响应导致 WFC 编辑器或输出面板过重。保存后必须复核源码窗口可见 `_summary` / `selected_direction`，或运行后数据表/日志出现这些字段，才能认定 live WFC 已使用短版。
 
 | 文件名 | 画面要求 | 说明 |
@@ -93,7 +93,7 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 | `gongyi-mofang/02-python-function-block-call-api.png` | Python Function Block 编辑页 | 展示 `CallWearedgeDecisionApi` 调用 `/v1/workflow-canvas/decision`。 |
 | `gongyi-mofang/03-global-data-table-decision-fields.png` | 全局数据表字段 | 展示主方向、优先级、建议动作、证据、指标、责任人、残余风险、人工确认状态。 |
 | `gongyi-mofang/04-dashboard-decision-view.png` | Dashboard | 首选真实 WFC Dashboard/ui-builder；若使用 `docs/submission/dashboard-mock.html` 截图，必须标注为 fallback mock。 |
-| `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 首选真实 WFC log-manager 中的 `ok=true`、function blocks、latency 或写表记录；当前 fallback 图来自本地 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不能声称为 live WFC 成功日志。 |
+| `gongyi-mofang/05-run-log-ok-true.png` | 运行日志 | 已替换为 2026-06-13 live WFC 原生运行日志：`CallWearedgeDecisionApi.output` JSON 开头包含 `"ok": true`，配套 `05-run-log-ok-true.review.json`。 |
 | `gongyi-mofang/06-human-approval-gate.png` | 人工确认节点 | 首选真实 WFC 人工确认节点/Dashboard 确认项；若使用 Dashboard mock 截图，必须标注为 fallback mock。 |
 
 真实截图替换流程：

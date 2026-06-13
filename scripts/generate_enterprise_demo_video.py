@@ -119,7 +119,7 @@ SCENES: tuple[Scene, ...] = (
             "gongyi-mofang/102-wfc-python-fb-main-saved.png",
             "gongyi-mofang/103-wfc-log-manager-after-python-run.png",
         ),
-        narration="展示真实工易魔方项目证据：Python Block、全局数据表、fb_main.py 保存和 log-manager ready。说明 live ok=true 仍待最终 WFC 运行复现。",
+        narration="展示真实工易魔方项目证据：Python Block、全局数据表、fb_main.py 保存和 log-manager ready。说明 live ok=true 已由 WFC 原生日志捕获，数据表动态写回仍需继续复现。",
         badge="LIVE WFC",
     ),
     Scene(
@@ -128,13 +128,13 @@ SCENES: tuple[Scene, ...] = (
         bullets=(
             "scripts/smoke_workflow_canvas_decision.py 已返回 ok=True",
             "输出 collaborative_decision、competition_metrics 和 WFC function_blocks",
-            "当前 run-log 图为 fallback API smoke，不冒充 live WFC 日志",
+            "05-run-log-ok-true.png 已替换为 live WFC 原生日志",
         ),
         duration=24,
         assets=("edge-runtime/03-workflow-canvas-decision-smoke.png", "gongyi-mofang/05-run-log-ok-true.png"),
-        narration="展示可复验 API 结果：本地 Wearedge 决策链路可跑通，但 WFC live ok=true 证据仍作为下一步复现目标。",
-        badge="FALLBACK MARKED",
-        fallback=True,
+        narration="展示可复验 API 结果和 WFC 原生运行日志：Wearedge 决策链路返回 ok=True，WFC run log 已捕获 live ok=true 输出。",
+        badge="LIVE WFC LOG",
+        fallback=False,
     ),
     Scene(
         title="Dashboard 与人工确认演示",
@@ -167,7 +167,7 @@ SCENES: tuple[Scene, ...] = (
         title="下一步：把 fallback 替换为 live proof",
         subtitle="提交前目标：7月8日前完成可复制字段、视频、截图和企业承诺材料",
         bullets=(
-            "复现 WFC live ok=true 日志和数据表回写",
+            "补齐 WFC 数据表动态写回、Dashboard 和 HumanApprovalGate live 证据",
             "补真实 WFC Dashboard / HumanApprovalGate 截图",
             "负责人补企业主体、联系人、IP 承诺和最终报名成功截图",
         ),
@@ -335,7 +335,7 @@ def render_narration() -> str:
         "",
         "用途：提交前 3-5 分钟视频脚本，与 `submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4` 对齐。",
         "",
-        "证据边界：Xcelerator 和 WFC 部分素材来自真实平台；Dashboard、HumanApprovalGate、`ok=true` run-log 当前有 fallback/mock/API-smoke 资产，必须按画面和 metadata 标注，不能声称已完成 live WFC `ok=true`。",
+        "证据边界：Xcelerator、WFC 部分素材和 `ok=true` run-log 来自真实平台；Dashboard、HumanApprovalGate 当前仍有 fallback/mock 资产，必须按画面和 metadata 标注。",
         "",
         "## Timeline",
         "",
@@ -359,7 +359,7 @@ def render_narration() -> str:
             lines.extend(f"- `submission-assets/live-evidence/{asset}`" for asset in scene.assets)
         if scene.fallback:
             lines.append("")
-            lines.append("边界标注：本段包含 fallback/mock 证据，提交讲述时必须说明 live WFC 复现仍是下一步。")
+            lines.append("边界标注：本段包含 fallback/mock 证据，提交讲述时必须说明 Dashboard/HumanApprovalGate live 替换仍是下一步。")
         lines.append("")
         elapsed = end
     return "\n".join(lines)

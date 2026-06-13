@@ -43,8 +43,8 @@ ACTION_DETAIL = {
     },
     "gongyi-mofang/05-run-log-ok-true.png": {
         "owner": "WFC operator",
-        "action": "Run/debug the workflow and capture log-manager or run panel.",
-        "acceptance": "Shows ok=true, wearedge_decision_ok=True, latency, function-block output, or successful table writeback.",
+        "action": "Keep the reviewed live WFC run-log screenshot; recapture only if workflow code changes.",
+        "acceptance": "Shows WFC-native CallWearedgeDecisionApi.output JSON beginning with ok=true; data-table writeback is tracked separately.",
     },
     "gongyi-mofang/06-human-approval-gate.png": {
         "owner": "WFC operator",
@@ -130,8 +130,13 @@ def _action_row(path: str, item_map: dict[str, dict[str, Any]]) -> dict[str, Any
 
 def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, Any]]) -> list[str]:
     actions: list[str] = []
-    if any(item["fallback"] for item in wfc_items):
-        actions.append("Replace WFC 04/05/06 fallback screenshots with reviewed live WFC screenshots.")
+    fallback_paths = [item["path"] for item in wfc_items if item["fallback"]]
+    if fallback_paths:
+        actions.append(
+            "Replace remaining WFC fallback screenshots with reviewed live WFC screenshots: "
+            + ", ".join(fallback_paths)
+            + "."
+        )
     if any(item["status"] == "missing" for item in human_items):
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
     actions.extend(

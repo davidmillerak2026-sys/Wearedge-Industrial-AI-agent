@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-13T12:14:57+00:00
+Updated: 2026-06-13T13:11:07+00:00
 
 ## Executive Status
 
@@ -17,10 +17,10 @@ Updated: 2026-06-13T12:14:57+00:00
 
 | Area | Ready | Present / Expected | Missing | Warnings |
 | --- | --- | ---: | ---: | ---: |
-| Platform evidence | True | 25 / 25 | 0 | 3 |
+| Platform evidence | True | 25 / 25 | 0 | 2 |
 | Finals foundation | True | 15 cases | 0 | 1 |
-| Final evidence | False | 27 / 33 | 6 | 3 |
-| Final external asset quality | False | 2 / 11 | 9 | 0 |
+| Final evidence | False | 27 / 33 | 6 | 2 |
+| Final external asset quality | False | 3 / 11 | 8 | 0 |
 
 ## Repository Phase Status
 
@@ -50,13 +50,11 @@ Updated: 2026-06-13T12:14:57+00:00
 - `submission/01-registration-form-filled.png` [missing_or_empty]: Filled registration form screenshot is missing or empty.
 - `submission/02-submission-success.png` [missing_or_empty]: Submission success screenshot is missing or empty.
 - `gongyi-mofang/04-dashboard-decision-view.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
-- `gongyi-mofang/05-run-log-ok-true.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
 - `gongyi-mofang/06-human-approval-gate.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
 
 ## Fallback Warnings
 
 - `gongyi-mofang/04-dashboard-decision-view.png`: Fallback evidence is present; do not describe it as live platform proof.
-- `gongyi-mofang/05-run-log-ok-true.png`: Fallback evidence is present; do not describe it as live platform proof.
 - `gongyi-mofang/06-human-approval-gate.png`: Fallback evidence is present; do not describe it as live platform proof.
 
 ## Finals Foundation
@@ -75,12 +73,12 @@ Updated: 2026-06-13T12:14:57+00:00
 - Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-jetson-gateway-latency-benchmark.json`
 
 Priority gaps:
-- Replace fallback WFC dashboard/run-log/HumanApprovalGate assets with live WFC execution screenshots.
+- Replace remaining fallback WFC assets with live WFC execution screenshots: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
 
 ## Generated Local Assets
 
 - Submission bundle: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\submission-bundle\wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip`
-- Bundle SHA256: `d71a07f063a78dd2fa15416f09af5ec69925a29951504b416d83d6458891b015`
+- Bundle SHA256: `89735323e64f159d91ba20951e606a0eca4a5abd3bb0e97d19dd06d7fe88832d`
 - Bundle manifest file count: `80`
 - Human action manifest: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\submission-assets\live-evidence\final-human-action-pack-manifest.json`
 - Human action template count: `7`
@@ -91,7 +89,7 @@ Priority gaps:
 ## Recommended Next Actions
 
 - Fill/capture the final live-evidence files listed under Final Missing Items.
-- Replace fallback-marked WFC evidence before claiming live WFC closure.
+- Replace remaining fallback-marked WFC evidence before claiming live WFC closure: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
 - Run python scripts/verify_final_external_assets.py --write-report and clear all final asset quality failures.
 
 ## Verification Commands

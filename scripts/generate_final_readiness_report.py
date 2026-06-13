@@ -178,7 +178,8 @@ def recommended_next_actions(
     if final["missing"]:
         actions.append("Fill/capture the final live-evidence files listed under Final Missing Items.")
     if final["warnings"]:
-        actions.append("Replace fallback-marked WFC evidence before claiming live WFC closure.")
+        warning_paths = ", ".join(sorted(warning["path"] for warning in final["warnings"]))
+        actions.append(f"Replace remaining fallback-marked WFC evidence before claiming live WFC closure: {warning_paths}.")
     if not external_assets_quality["ready"]:
         actions.append("Run python scripts/verify_final_external_assets.py --write-report and clear all final asset quality failures.")
     if not actions:
