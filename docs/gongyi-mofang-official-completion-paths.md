@@ -1,6 +1,6 @@
 # Gongyi Mofang Official Completion Paths
 
-Updated: 2026-06-11
+Updated: 2026-06-13
 
 This note turns the reviewed Gongyi Mofang / Workflow Canvas official manuals and the Xcelerator API World guide into an execution decision for Wearedge. It is intentionally written as an operational memory card so the next platform session does not drift into blind clicking.
 
@@ -51,8 +51,8 @@ Use this as the main route for the submission screenshots.
 | 2 | WFC002/WFC003 Spider/IPC execution | Configure `通用工控机` / SPIDR / IPC executor. | Executor URL, connection state, debug/deploy state. |
 | 3 | WFC005/WFC006 custom resources | Finish `Wearedge Agent Service` with `agentHost`, `agentPort`, `apiKeyRef`, `deploymentMode`, `plantId`, `lineId`. | `01-resource-block-wearedge-agent-service.png`. |
 | 4 | WFC001 Python/function blocks | Verify `CallWearedgeDecisionApi` Python block input/output and saved `fb_main.py`. | `02-python-function-block-call-api.png`, `102-wfc-python-fb-main-saved.png`. |
-| 5 | WFC007 data persistence | Add `更新数据表` and bind Wearedge JSON output to custom data fields. | `03-global-data-table-decision-fields.png` plus binding screenshot. |
-| 6 | WFC010 debug/deploy/logs | Run workflow on SPIDR/IPC, capture log-manager output. | `05-run-log-ok-true.png` with `wearedge_decision_ok=True` or equivalent. |
+| 5 | WFC007 data persistence | Add `更新数据表`, bind Wearedge fields, and prove the target data fields can hold decision values. | `03-global-data-table-decision-fields.png`, binding screenshots, `192-wfc-update-data-table-fields-complete-20260613.png`, `193-wfc-debug-running-fields-locked-20260613.png`. |
+| 6 | WFC010 debug/deploy/logs | Run workflow on SPIDR/IPC, capture log-manager output and browser/runtime logs. | `05-run-log-ok-true.png` only after WFC-native `wearedge_decision_ok=True`; interim live evidence is `125-wfc-run-log-workflow-ready-status-good-20260612.png` and `195-wfc-browser-debug-log-20260613.json`. |
 | 7 | WFC007 ui-builder/Dashboard | Create/preview Dashboard from live data table or data stream. | `04-dashboard-decision-view.png`. |
 | 8 | Safety boundary from runbook | Show approval state for high-risk recommendation. | `06-human-approval-gate.png` or live approval-state panel. |
 
@@ -146,8 +146,8 @@ Remove-Item Env:WFC_COOKIE
 
 1. Stop any active WFC debug session before editing.
 2. Finish `Wearedge Agent Service` parameters in WFC.
-3. Verify `CallWearedgeDecisionApi` block inputs/outputs and saved `fb_main.py`.
-4. Add `更新数据表` block and bind the saved Wearedge data fields.
+3. Keep `CallWearedgeDecisionApi` block inputs/outputs and saved `fb_main.py` aligned with `workflows/wfc_call_wearedge_decision_fb_main.py`.
+4. Replace the current `更新数据表.1` static example values with a confirmed Python `输出1` -> data-table update binding once the WFC data-port gesture is stable.
 5. Run the workflow and capture log-manager evidence containing `wearedge_decision_ok` or equivalent `ok=true` output.
 6. Build the Dashboard/ui-builder view from workflow data, not from an empty `/dashboard-explorer` page.
 7. If GUI remains slow, implement only a read-only private API probe first; do not use private write calls until project JSON paths are backed up and verified.
@@ -158,4 +158,10 @@ For judging language:
 
 ```text
 Official WFC documents support Wearedge as a resource/function-block based Workflow Canvas integration, deployed through Spider/SPIDR or IPC and visualized through global data tables and ui-builder. CLI and private API probes are engineering accelerators only; live platform screenshots and logs remain the primary proof.
+```
+
+2026-06-13 live boundary:
+
+```text
+The live WFC project now shows `更新数据表.1` carrying four Wearedge decision fields and static example values in DEBUG. Browser runtime logs include `update data table`. This proves the WFC data-table target and execution state, but it is not yet proof that Python `输出1` dynamically wrote those values.
 ```

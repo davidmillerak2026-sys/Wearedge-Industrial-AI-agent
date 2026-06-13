@@ -1,6 +1,6 @@
 # Screenshots Checklist
 
-更新日期：2026-06-12
+更新日期：2026-06-13
 
 | 截图 | 必需 | 状态 | 说明 |
 | --- | --- | --- | --- |
@@ -20,11 +20,11 @@
 | Dashboard mock 截图 | yes | captured locally | 使用 `docs/submission/dashboard-mock.html`，本地素材路径 `submission-assets/screenshots/06-dashboard-mock.png`。 |
 | Finals HMI console 截图 | yes | captured locally | 使用 `docs/submission/finals-hmi-console.html`，本地素材路径 `submission-assets/screenshots/17-finals-hmi-console.png`，展示自然语言输入、决策路径、证据引用、审计轨迹和 HumanApprovalGate。 |
 | 工易魔方数据表字段截图 | when available | captured | `03-global-data-table-decision-fields.png` 已在 live WFC `编辑数据表 -> 自定义数据` 中显示 8 个 Wearedge 决策字段；`110-wfc-data-table-fields-drawer-live-20260612.png` 作为同类早期 live 抽屉证据保留。 |
-| 工易魔方 `更新数据表` 绑定截图 | when available | captured live | `129-wfc-update-data-table-field-options-20260612.png` 显示真实 WFC 字段下拉；`141-wfc-update-data-table-binding-confirmed-20260612.png` 显示 `更新数据表.1` 已绑定 `selected_direction`、`priority`、`recommended_action`、`approval_status`；`147-wfc-update-table-panel-scrolled-for-status-20260612.png` 显示 DEBUG 运行态下右侧输入字段。原生写回值仍需补。 |
+| 工易魔方 `更新数据表` 绑定截图 | when available | captured live | `129-wfc-update-data-table-field-options-20260612.png` 显示真实 WFC 字段下拉；`141-wfc-update-data-table-binding-confirmed-20260612.png` 显示 `更新数据表.1` 已绑定 `selected_direction`、`priority`、`recommended_action`、`approval_status`；`192-wfc-update-data-table-fields-complete-20260613.png` 显示四个字段已填入示例值；`193-wfc-debug-running-fields-locked-20260613.png` 显示 DEBUG 运行态下字段锁定。当前 2026-06-13 证据是 WFC 原生静态输入/调试态证据，不能写成 Python `输出1` 动态回写已完成。 |
 | 工易魔方 Dashboard 截图 | when available | partial | `71-wfc-dashboard-explorer-entry-native.png` 仅为 Dashboard Explorer 入口；最终 `04-dashboard-decision-view.png` 仍需展示 Wearedge 指标卡、决策路径和人工确认项。 |
 | 工易魔方原生运行状态截图 | when available | captured | `124-wfc-debug-status-good-fullpage-20260612.png` 与 `125-wfc-run-log-workflow-ready-status-good-20260612.png` 已显示 DEBUG、SPIDR、`CallWearedgeDecisionApi` 和原生输出 `状态码 Good`；业务 stdout `ok=true` / 数据表写回仍待补。 |
-| 工易魔方运行日志截图 | when available | partial | `125-wfc-run-log-workflow-ready-status-good-20260612.png` 显示 WFC 原生运行日志 `Workflow is ready.` 和 `状态码 Good`；`147-wfc-update-table-panel-scrolled-for-status-20260612.png` 显示 `更新数据表.1` 在 DEBUG 态的四字段输入绑定；最终仍需让原生日志或数据表写回直接显示 `ok=true`、latency 和 selected direction。 |
-| 工易魔方人工确认截图 | when available | pending | 最终 `06-human-approval-gate.png` 需展示高风险 OT 动作进入人工确认。 |
+| 工易魔方运行日志截图 | when available | partial | `125-wfc-run-log-workflow-ready-status-good-20260612.png` 显示 WFC 原生运行日志 `Workflow is ready.` 和 `状态码 Good`；`195-wfc-browser-debug-log-20260613.json` 保存浏览器运行期日志，包含 `makeWorkflowReadOnly`、`update workflow state` 和 `update data table`。最终仍需让原生日志或数据表写回直接显示 `ok=true`、latency 和 selected direction。 |
+| 工易魔方人工确认截图 | when available | partial | `192-wfc-update-data-table-fields-complete-20260613.png` 和 `193-wfc-debug-running-fields-locked-20260613.png` 中的 `approval_status=pending_human_approval` 证明 WFC 数据表字段已能承载人工确认状态；最终 `06-human-approval-gate.png` 仍需替换为真实 WFC Dashboard 或确认节点画面。 |
 | API schema | yes | captured locally | `submission-assets/screenshots/07-api-schema.png`，展示工易魔方 Python Function Block 调用方式。 |
 | Submission verifier | yes | captured locally | `submission-assets/screenshots/08-submission-verifier.png`，展示仓库侧 ready。 |
 | pytest output | yes | captured locally | `submission-assets/screenshots/09-pytest-output.png`，展示完整测试通过。 |

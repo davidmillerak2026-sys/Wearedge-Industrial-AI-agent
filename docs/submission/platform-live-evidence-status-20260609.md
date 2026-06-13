@@ -1,6 +1,6 @@
 # Xcelerator / 工易魔方实时平台证据状态
 
-更新日期：2026-06-12
+更新日期：2026-06-13
 
 ## 本次已完成的真实平台动作
 
@@ -24,7 +24,8 @@
 | WFC `fb_main.py` live 保存 | 已完成并复核 | 2026-06-12 已在 live WFC 源码窗口搜索 `wearedge`，可见 `_summary` 输出中的 `ok`、`latency_ms`、`selected_direction`、`recommended_action`、`evidence_summary`、`approval_status` 等字段；截图见 `103-wfc-python-fb-main-search-state.png`。 |
 | WFC 数据表字段 | 已完成 live 截图与 DOM 证据 | 2026-06-12 已在真实 WFC 项目右侧 `数据表 -> 编辑数据表` 中复核 8 个 Wearedge 决策字段：`selected_direction`、`priority`、`recommended_action`、`evidence_summary`、`competition_metrics`、`owner`、`residual_risk`、`approval_status`；截图见 `03-global-data-table-decision-fields.png` 和 `110-wfc-data-table-fields-drawer-live-20260612.png`。 |
 | WFC Dashboard 入口 | live 已复核入口，Dashboard 未创建 | 2026-06-12 已进入 Dashboard Explorer，页面显示 `No Dashboard`，说明当前账号/项目下尚无可预览 Dashboard；当前 `04-dashboard-decision-view.png` 仍来自 `docs/submission/dashboard-mock.html`，只能作为带标注的备用演示证据。 |
-| WFC 运行/日志入口 | 已完成 WFC 原生 `Good` 运行态，业务 stdout `ok=true` 待补 | 2026-06-12 已从 WFC `play-circle` 进入 DEBUG 并执行。最新截图显示 `https://spidr.wfc.bd-iiot.com`、运行日志 `Workflow is ready.`、主线 `CallWearedgeDecisionApi` 和右侧输出 `状态码 Good` 同屏；截图见 `124-wfc-debug-status-good-fullpage-20260612.png`、`125-wfc-run-log-workflow-ready-status-good-20260612.png`。WFC log-manager 仍未显示 `wearedge_decision_ok` / `ok=true` 业务 stdout，因此当前 `05-run-log-ok-true.png` 仍是本地 API smoke fallback，不能提升为 live WFC `ok=true` 日志。 |
+| WFC 运行/日志入口 | 已完成 WFC 原生 `Good` 运行态和浏览器运行期 `update data table` 日志，业务 stdout `ok=true` 待补 | 2026-06-12 已从 WFC `play-circle` 进入 DEBUG 并执行。截图显示 `https://spidr.wfc.bd-iiot.com`、运行日志 `Workflow is ready.`、主线 `CallWearedgeDecisionApi` 和右侧输出 `状态码 Good` 同屏；截图见 `124-wfc-debug-status-good-fullpage-20260612.png`、`125-wfc-run-log-workflow-ready-status-good-20260612.png`。2026-06-13 浏览器运行期日志补充保存 `makeWorkflowReadOnly`、`update workflow state`、`update data table`；见 `195-wfc-browser-debug-log-20260613.json`。WFC log-manager 仍未显示 `wearedge_decision_ok` / `ok=true` 业务 stdout，因此当前 `05-run-log-ok-true.png` 仍是本地 API smoke fallback，不能提升为 live WFC `ok=true` 日志。 |
+| WFC `更新数据表.1` 静态字段值 | 已完成 live 截图，动态 Python 输出待补 | 2026-06-13 已在真实 WFC 项目中为 `更新数据表.1` 四个输入填入示例值：`selected_direction=maintenance`、`priority=P1`、`recommended_action=Inspect bearing vibration; schedule maintenance; require human approval`、`approval_status=pending_human_approval`。截图见 `192-wfc-update-data-table-fields-complete-20260613.png`，DEBUG 运行态字段锁定截图见 `193-wfc-debug-running-fields-locked-20260613.png`，数据表面板入口见 `194-wfc-debug-data-table-panel-entry-20260613.png`。这证明 WFC 原生数据表更新块可承载 Wearedge 决策字段，但不能表述为 Python `输出1` 动态回写已经完成。 |
 | WFC HumanApprovalGate | live 待复现，fallback 已生成 | 当前 `06-human-approval-gate.png` 来自 Dashboard mock，展示 HumanApprovalGate 和人工确认边界；真实 WFC 人工确认节点/确认项仍待平台流程复现。 |
 | Xcelerator 应用主页复核 | 已完成 | 2026-06-11 已重新进入 `https://developers.siemens-x.com.cn/client`，可见 `Wearedge 工业智能体 PoC` 分组和 `Wearedge 工业智能体服务` 应用卡片。 |
 | Xcelerator API 详情复核 | 已完成 | 2026-06-11 已进入 API 服务编辑详情，确认服务名、版本、`未发布`、所属应用、可见范围 `租户内`。 |
@@ -133,6 +134,10 @@
 | `123-wfc-debug-status-good-after-run-20260612.png` | 2026-06-12 WFC `play-circle` 后进入 DEBUG，主线 Python Block 运行；配套 `.dom.json` 记录 WFC 原生属性 `状态码 Good`。 |
 | `124-wfc-debug-status-good-fullpage-20260612.png` | 2026-06-12 full-page live 截图，显示 `DEBUG`、SPIDR 地址、`CallWearedgeDecisionApi` 和右侧输出 `状态码 Good`。 |
 | `125-wfc-run-log-workflow-ready-status-good-20260612.png` | 2026-06-12 live WFC 运行日志与属性面板组合截图，显示 `Workflow is ready.` 和 `状态码 Good`；仍未显示业务 stdout `ok=true`。 |
+| `192-wfc-update-data-table-fields-complete-20260613.png` | 2026-06-13 live WFC `更新数据表.1` 属性面板，四个 Wearedge 决策字段已填入静态示例值。 |
+| `193-wfc-debug-running-fields-locked-20260613.png` | 2026-06-13 WFC DEBUG 运行态截图，`更新数据表.1` 字段锁定，显示平台进入调试运行状态。 |
+| `194-wfc-debug-data-table-panel-entry-20260613.png` | 2026-06-13 DEBUG 状态下切换到右侧 `数据表` 面板，显示数据选择入口。 |
+| `195-wfc-browser-debug-log-20260613.json` | 2026-06-13 浏览器运行期日志 JSON，包含 `makeWorkflowReadOnly`、`update workflow state` 和 `update data table` 记录；不包含账号、密码、token 或密钥。 |
 | `04-dashboard-decision-view.png` | fallback Dashboard mock 截图，来自 `docs/submission/dashboard-mock.html`，不等同于 live WFC Dashboard。 |
 | `05-run-log-ok-true.png` | fallback API smoke 图，来自 `scripts/smoke_workflow_canvas_decision.py`，配套 `05-run-log-ok-true.fallback.json`，不等同于 live WFC `ok=true` 日志。 |
 | `06-human-approval-gate.png` | fallback Dashboard mock 图，展示 HumanApprovalGate，不等同于 live WFC 人工确认节点。 |
@@ -152,7 +157,7 @@
 | --- | --- |
 | `Wearedge Agent Service` 自定义资源参数补齐 | 已创建项目和 `agentHost` 参数；参数编辑器二次添加未稳定成功。下一步补 `agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`，并重新保存资源截图。 |
 | Dashboard live 截图 | fallback 已有；live 仍需从 WFC 工作流运行实例和 ui-builder 创建路径获得。 |
-| 运行日志 live `ok=true` / 数据表写回 | 已有 WFC 原生 `状态码 Good`、`Workflow is ready.`、本地 API fallback `ok=True`、2026-06-12 WFC/SPIDR -> Wearedge gateway `POST 200 OK` live 调用证据，以及真实 WFC `更新数据表.1` 四字段绑定证据；仍需让 WFC 原生 log-manager、inline read 视图或数据表写回画面直接显示 `ok=true`、latency、selected direction、function blocks 或写表成功记录。 |
+| 运行日志 live `ok=true` / 数据表写回 | 已有 WFC 原生 `状态码 Good`、`Workflow is ready.`、本地 API fallback `ok=True`、2026-06-12 WFC/SPIDR -> Wearedge gateway `POST 200 OK` live 调用证据、真实 WFC `更新数据表.1` 四字段绑定证据，以及 2026-06-13 `update data table` 浏览器运行期日志；仍需让 WFC 原生 log-manager、inline read 视图或数据表写回画面直接显示 `ok=true`、latency、selected direction、function blocks 或 Python 动态写表成功记录。 |
 | 人工确认 live 截图 | fallback 已有；仍需在真实 WFC 中添加高风险动作确认/人工确认节点或 Dashboard 确认项。 |
 | 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
@@ -174,10 +179,11 @@
 - 2026-06-12 浏览器 GUI 继续操作真实 WFC 页面，已从 `通用 -> 更新数据表` 拖入 `System.UpdateDataTable.1` / `更新数据表.1`，并在输入弹窗中绑定四个全局数据表字段：`selected_direction`、`priority`、`recommended_action`、`approval_status`。证据图包括 `129-wfc-update-data-table-field-options-20260612.png`、`141-wfc-update-data-table-binding-confirmed-20260612.png`、`147-wfc-update-table-panel-scrolled-for-status-20260612.png` 和 `148-wfc-debug-stopped-after-update-table-evidence-20260612.png`。
 - 2026-06-12 当前 WFC 数据表写回边界：`更新数据表.1` 字段绑定和 DEBUG 运行态输入面板已取得真实平台截图；但画布上 Python 输出到 `更新数据表.1` 的数据线仍需进一步精修，且原生数据表值或 log-manager 还没有可见的 `ok=true`/latency/selected direction 写回结果。
 - 2026-06-12 已按 WFC001/WFC007 进一步验证 GUI 路径：功能块右键菜单可删除左/右连接，旧主线删除失败后已用撤销恢复，最终稳定状态仍保持 `开始 -> CallWearedgeDecisionApi -> 结束`。下一次应优先完成 `输出1` JSON 类型确认和 `输出1 -> 更新数据表输入` 虚线数据端口连接，而不是再次只移动控制流黄线。
+- 2026-06-13 浏览器 GUI 继续操作真实 WFC 页面，确认 `更新数据表.1` 右侧输入可直接承载四个 Wearedge 决策字段示例值：`maintenance`、`P1`、`Inspect bearing vibration; schedule maintenance; require human approval`、`pending_human_approval`。进入 DEBUG 后这些字段锁定，浏览器运行期日志出现 `makeWorkflowReadOnly`、`update workflow state`、`update data table`。该证据用于证明 WFC 原生数据表目标、人工确认状态字段和调试运行态，不得表述为 Python `输出1` 已动态写入。
 
 ## 下一步建议
 
-1. 精修 Python `输出1` JSON 类型和 `输出1 -> 更新数据表输入` 虚线数据端口连接，并让原生数据表值或 log-manager 显示 `ok=true`、latency、selected direction。
+1. 精修 Python `输出1` JSON 类型和 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值或 log-manager 显示 `ok=true`、latency、selected direction。
 2. 创建 Wearedge Dashboard/ui-builder 视图，展示指标卡、决策路径、确认项和工作流状态。
 3. 补 WFC 原生 read/log 或数据表写回画面，让业务摘要不只停留在 `状态码 Good`。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
