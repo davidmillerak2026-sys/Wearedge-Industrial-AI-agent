@@ -11,10 +11,10 @@
 | P0 | Business plan | `docs/submission/business-plan.md` | repo-ready draft | 初赛商业计划书主体，可转 DOCX/PDF/PPT。 |
 | P0 | Technical solution | `docs/submission/technical-solution.md` | repo-ready draft | 技术方案主体，说明多智能体、端侧、Xcelerator/WFC 接入和安全边界。 |
 | P0 | Repo-controlled submission bundle | `submission-assets/live-evidence/submission-bundle/wearedge-industrial-ai-agent-repo-controlled-submission-bundle.zip` | generated local asset | 一次性上传/留档的代码、文档、OpenAPI、WFC 原型、评估证据包。 |
-| P0 | Demo video | `submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4` | generated local asset | 3-5 分钟演示视频；画面中已标注 fallback/mock 边界。 |
+| P0 | Demo video | `submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4` | generated local asset | 3-5 分钟演示视频；画面中已标注离线/平台 PoC/人工材料边界。 |
 | P0 | Registration fields | `docs/submission/registration-fields.md` | ready | 报名系统文本字段复制源。 |
 | P1 | Siemens co-creation one-pager | `docs/siemens-xcelerator-co-creation-onepager.md` | ready | 共创思路、目标客户、商业模式的短材料。 |
-| P1 | Edge runtime evidence | `docs/finals-jetson-gateway-latency-benchmark-report.md` and `docs/submission/evidence/finals-jetson-gateway-latency-benchmark.json` | generated | 证明 Jetson 端侧 HTTP 决策路径、300 样本、p95/max 延迟和资源 profile。 |
+| P1 | Edge runtime evidence | `docs/finals-jetson-gateway-latency-benchmark-report.md` and `docs/submission/evidence/finals-jetson-gateway-latency-benchmark.json` | generated | 证明 Jetson 端侧 FastAPI HTTP 决策路径、300 iterations / 4500 samples、p95/max 延迟和资源 profile。 |
 | P1 | Offline evaluation report | `docs/competition-offline-eval-report.md` | ready | 初赛“通过离线数据集验证”的指标表与边界说明。 |
 | P1 | Finals foundation report | `docs/finals-validation-report.md` | generated | 决赛方向覆盖、>=90% 决策准确率、<=500ms 延迟基础。 |
 | P1 | Xcelerator OpenAPI spec | `openapi/wearedge-xcelerator-apiworld.openapi.json` | ready | API World 导入/复现材料。 |
@@ -28,8 +28,8 @@
 | --- | --- | --- |
 | Xcelerator API World | `submission-assets/live-evidence/xcelerator/` | 可描述为真实平台草稿/导入证据；未发布上架。 |
 | Gongyi Mofang project, Python block, data table | `submission-assets/live-evidence/gongyi-mofang/` | 可描述为真实 WFC 项目和配置证据。 |
-| Gongyi Mofang Dashboard/run-log/HumanApprovalGate 04/05/06 | `submission-assets/live-evidence/gongyi-mofang/04-06*` | `05-run-log-ok-true.png` 已替换为 live WFC `ok=true` 原生日志；`04` Dashboard 和 `06` HumanApprovalGate 仍是 fallback/mock，不能描述为 live WFC Dashboard/审批节点。 |
-| Edge runtime | `submission-assets/live-evidence/edge-runtime-fastapi/` | 可描述为 Jetson/端侧 FastAPI HTTP 决策路径证据；stdlib gateway 只作为 fallback 历史证据。 |
+| Gongyi Mofang Dashboard/run-log/HumanApprovalGate 04/05/06 | `submission-assets/live-evidence/gongyi-mofang/04-06*` | `04` Dashboard、`05` run-log `ok=true`、`06` HumanApprovalGate 均已作为 live WFC 证据保留；若界面变化需重新截图复核。 |
+| Edge runtime | `submission-assets/live-evidence/edge-runtime/` | 可描述为 Jetson/端侧 FastAPI HTTP 决策路径证据；stdlib gateway 只作为 fallback 历史证据。 |
 | Submission screenshots | `submission-assets/live-evidence/submission/` | 最终填报/提交成功后补齐。 |
 | Legal/company files | `submission-assets/live-evidence/legal/` | 企业负责人补齐；不提交 Git。 |
 
@@ -71,7 +71,7 @@
 
 不可说：
 
-- 不说 WFC Dashboard 或 HumanApprovalGate fallback 图已经是 live 平台闭环；`05-run-log-ok-true.png` 可以描述为 live WFC `ok=true` 原生日志。
+- 不把本地 mock 或 smoke test 截图说成 live 平台闭环；当前 `04/05/06` WFC 证据可按 live evidence manifest 的状态描述。
 - 不说已经有真实客户生产数据或量产部署，除非后续有客户授权日志。
 - 不说 Gemma 4 E2B 或任何基础模型是自研。
 - 不说模型直接控制 PLC、机器人、停线、放行或能耗切换。

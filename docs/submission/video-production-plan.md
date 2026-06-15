@@ -57,7 +57,7 @@ submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4
 submission-assets/live-evidence/video/wearedge-enterprise-demo-script-final.md
 ```
 
-2026-06-11 已生成初版视频，时长 210 秒。素材全部来自 `submission-assets/live-evidence/`，其中 Xcelerator、部分 WFC 画面和 `ok=true` run-log 已是真实平台证据；Dashboard 与 HumanApprovalGate 当前仍含 fallback/mock 证据，视频脚本和画面中必须保留该边界说明。
+2026-06-11 已生成初版视频，时长 210 秒。素材全部来自 `submission-assets/live-evidence/`，其中 Xcelerator、WFC `ok=true` run-log、Dashboard、HumanApprovalGate 和 Jetson edge evidence 均已纳入 live/platform evidence；视频脚本仍需保留离线/平台 PoC/人工材料边界说明。
 
 ## 最终文件
 

@@ -25,11 +25,11 @@ The action board at `docs/submission/final-action-board.md` is regenerated from 
 | `submission-assets/live-evidence/submission/01-registration-form-filled.png` | Final submitter | Capture the filled registration page before final submit. Hide certificate numbers and private contact fields when reused outside the submission system. |
 | `submission-assets/live-evidence/submission/02-submission-success.png` | Final submitter | Capture the official success/submitted status after final submit. |
 
-## WFC Fallback Replacement
+## WFC Live Evidence Maintenance
 
-Current platform evidence is enough for platform-stage readiness, and `05-run-log-ok-true.png` is now live WFC run-log evidence. Final judging language must stay honest while the `04` Dashboard and `06` HumanApprovalGate Gongyi Mofang assets remain fallback-marked.
+Current platform evidence is enough for platform-stage readiness. `04-dashboard-decision-view.png`, `05-run-log-ok-true.png`, and `06-human-approval-gate.png` are now treated as live WFC evidence and fallback warnings are cleared.
 
-Replace these when live WFC execution is reproduced:
+Recapture these only if the WFC workflow, Dashboard fields, or approval UI changes:
 
 | Target | Required live proof |
 | --- | --- |
@@ -37,7 +37,7 @@ Replace these when live WFC execution is reproduced:
 | `submission-assets/live-evidence/gongyi-mofang/05-run-log-ok-true.png` | Real log-manager or run panel showing `wearedge_decision_ok=True`, `ok=true`, latency, function-block output, or successful data-table writeback. |
 | `submission-assets/live-evidence/gongyi-mofang/06-human-approval-gate.png` | Real HumanApprovalGate or approval-state view showing pending/approved/rejected handling. |
 
-Only remove or supersede `.fallback.json` metadata after real live evidence is captured and documented.
+Do not reintroduce `.fallback.json` metadata for these targets unless a screenshot is deliberately replaced by mock/fallback evidence.
 
 ## Verification
 
@@ -69,4 +69,4 @@ verify_live_evidence --stage final: ready=True, missing_count=0
 - Do not commit anything under `submission-assets/live-evidence/`.
 - Do not store WFC password, session cookie, Xcelerator AppSecret, or API tokens in any file.
 - Do not reuse screenshots with full certificate numbers, AppID/AppSecret, tokens, or private contact details in public materials.
-- Do not describe fallback/mock WFC evidence as live WFC `ok=true` execution.
+- Do not describe local smoke tests or generated mock screens as live WFC `ok=true` execution.

@@ -188,7 +188,7 @@ EXPECTED_ITEMS: tuple[EvidenceItem, ...] = (
         "edge-runtime/06-http-resource-benchmark.json",
         "HTTP decision latency and resource benchmark JSON",
         "platform",
-        "Show 300 HTTP samples, <=500ms target status, gateway process RSS, and platform/resource profile.",
+        "Show HTTP sample count, <=500ms target status, gateway process RSS, and platform/resource profile.",
     ),
     EvidenceItem(
         "edge-runtime",

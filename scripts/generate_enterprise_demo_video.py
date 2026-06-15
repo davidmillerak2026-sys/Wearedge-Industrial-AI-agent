@@ -303,7 +303,7 @@ def draw_scene(scene: Scene, index: int, total_duration: int, elapsed: int, widt
 
     if scene.fallback:
         draw.rounded_rectangle((60, height - 150, 650, height - 92), radius=9, fill=(46, 34, 20), outline=AMBER, width=2)
-        draw.text((78, height - 134), "边界说明：此页含 fallback/mock 证据，不能表述为 live WFC 成功日志。", font=font(20, True), fill=AMBER)
+        draw.text((78, height - 134), "边界说明：此页含 fallback/mock 证据，不能表述为 live platform proof。", font=font(20, True), fill=AMBER)
 
     if scene.assets:
         panel_area_x = 660
@@ -369,7 +369,7 @@ def render_narration() -> str:
             lines.extend(f"- `submission-assets/live-evidence/{asset}`" for asset in scene.assets)
         if scene.fallback:
             lines.append("")
-            lines.append("边界标注：本段包含 fallback/mock 证据，提交讲述时必须说明 Dashboard/HumanApprovalGate live 替换仍是下一步。")
+            lines.append("边界标注：本段包含 fallback/mock 证据，提交讲述时必须说明它不是 live platform proof。")
         lines.append("")
         elapsed = end
     return "\n".join(lines)

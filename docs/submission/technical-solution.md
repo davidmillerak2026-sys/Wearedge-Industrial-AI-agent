@@ -53,8 +53,9 @@ Current runtime supports local Python/FastAPI deployment and Jetson deployment e
 
 Current Jetson decision-path evidence:
 
-- 300 HTTP samples on `Linux 5.15.148-tegra aarch64`.
-- p95/max wall latency: 6 / 8 ms for `/v1/workflow-canvas/decision` through the FastAPI gateway.
+- 300 iterations / 4500 HTTP samples on `Linux 5.15.148-tegra aarch64`.
+- p95/max wall latency: 6 / 33 ms for `/v1/workflow-canvas/decision` through the FastAPI gateway.
+- Gateway RSS max: 32.33 MB with 239 resource samples.
 - Evidence files: `docs/finals-jetson-gateway-latency-benchmark-report.md` and `docs/submission/evidence/finals-jetson-gateway-latency-benchmark.json`.
 
 ## Safety And Compliance

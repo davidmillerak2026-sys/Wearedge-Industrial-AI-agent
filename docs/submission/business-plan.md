@@ -69,7 +69,7 @@ M400 / Camera / OPC UA / MES / QMS / EMS / CMMS / released checklist
 
 ## 成果截图与证据
 
-当前截图和视频录制清单见 `docs/submission/screenshots-checklist.md` 和 `docs/submission/demo-shot-list.md`。可提交证据索引见 `docs/submission/poc-evidence-index.md`，生成证据快照位于 `docs/submission/evidence/`。当前已具备 Xcelerator API 草稿、WFC 项目/Python block/数据表、live WFC `ok=true` 原生运行日志，以及 Jetson 端侧 HTTP 决策路径 latency/resource 证据；WFC Dashboard 和 HumanApprovalGate 仍需用真实平台执行截图替换 fallback/mock 资产。
+当前截图和视频录制清单见 `docs/submission/screenshots-checklist.md` 和 `docs/submission/demo-shot-list.md`。可提交证据索引见 `docs/submission/poc-evidence-index.md`，生成证据快照位于 `docs/submission/evidence/`。当前已具备 Xcelerator API 草稿、WFC 项目/Python block/数据表、live WFC `ok=true` 原生运行日志、live WFC Dashboard / HumanApprovalGate 证据，以及 Jetson 端侧 FastAPI HTTP 决策路径 latency/resource 证据。
 
 ## 开发投入
 

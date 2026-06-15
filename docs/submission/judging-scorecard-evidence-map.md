@@ -8,7 +8,7 @@ Purpose: map the enterprise-group judging criteria to Wearedge's exact claims, r
 
 | Judging dimension | Weight | Wearedge winning claim | Strongest evidence | Current status |
 | --- | ---: | --- | --- | --- |
-| Innovation | 30% | Edge-side industrial agent runtime, not a cloud chatbot; Xcelerator/Gongyi Mofang orchestrates safe workflow closure. | `docs/edge-agent-runtime-for-xcelerator.md`, `/v1/edge/runtime-profile`, WFC resource package, enterprise demo video. | Strong repo and platform draft evidence; live WFC final closure still partly fallback. |
+| Innovation | 30% | Edge-side industrial agent runtime, not a cloud chatbot; Xcelerator/Gongyi Mofang orchestrates safe workflow closure. | `docs/edge-agent-runtime-for-xcelerator.md`, `/v1/edge/runtime-profile`, WFC resource package, enterprise demo video. | Strong repo, edge, and platform evidence; final human-owned files remain. |
 | Technical level | 30% | Verifiable API, deterministic KPI evaluator, WFC resource/function block, OpenAPI import, tests and smoke scripts. | `openapi/wearedge-xcelerator-apiworld.openapi.json`, `scripts/run_competition_eval.py`, `scripts/smoke_workflow_canvas_decision.py`, `wfc-blocks/wearedge-agent-service/`. | Strong; repo verifier passes. |
 | Application prospect | 20% | Multi-SKU manufacturing customers can reduce downtime, defects, energy waste, and changeover coordination cost. | `docs/submission/business-plan.md`, `docs/submission/registration-fields.md`, `docs/competition-offline-eval-report.md`. | Strong narrative; real customer ROI remains PoC-stage. |
 | Team ability | 10% | Enterprise-group delivery plan, IT/OT roles, IP/compliance boundary, Siemens co-creation path. | `docs/submission/team-and-company-info-template.md`, `docs/submission/company-info-and-compliance-intake.md`, `docs/submission/final-human-action-runbook.md`. | Requires final enterprise owner information and signed commitments. |
@@ -20,7 +20,7 @@ Purpose: map the enterprise-group judging criteria to Wearedge's exact claims, r
 | --- | --- | --- |
 | Wearedge can run on edge compute such as Jetson / IPC / local industrial PC. | `docs/edge-agent-runtime-for-xcelerator.md`, edge runtime screenshots, `/v1/edge/runtime-profile`. | Current evidence proves PoC/runtime readiness; production deployment needs site-specific hardening and customer validation. |
 | Wearedge integrates with Xcelerator API World. | Xcelerator app/API draft screenshots, 4-endpoint OpenAPI import, `docs/xcelerator-apiworld-onboarding.md`. | Service remains unpublished/tenant-only unless explicitly approved for publication. |
-| Wearedge integrates with Gongyi Mofang WFC. | WFC project screenshots, Python block saved as `CallWearedgeDecisionApi`, data-table fields, WFC resource package zip, live WFC `ok=true` run-log screenshot. | Dashboard, data-table dynamic writeback, and HumanApprovalGate must be described as fallback/open until live replacement is captured. |
+| Wearedge integrates with Gongyi Mofang WFC. | WFC project screenshots, Python block saved as `CallWearedgeDecisionApi`, data-table fields, WFC resource package zip, live WFC `ok=true` run-log screenshot, live Dashboard, and live HumanApprovalGate evidence. | Dynamic data-table writeback should be described as a strengthening item until final native value-change proof is captured. |
 | Decisions are not model-only. | `jetson.competition.build_competition_decision()`, offline eval report, tests, technical solution. | Model explains and structures evidence; deterministic evaluator and HumanApprovalGate control action boundaries. |
 | Wearedge covers at least three industrial-agent directions. | Workflow Canvas decision JSON, offline dataset, eval report, registration fields. | Current coverage is offline/simulated PoC until joint platform PoC data is collected. |
 | High-risk OT actions remain safe. | `HumanApprovalGate` language in API response, dashboard mock, technical solution, business plan. | Never claim direct PLC/robot/quality release control by the model. |
@@ -34,7 +34,7 @@ Purpose: map the enterprise-group judging criteria to Wearedge's exact claims, r
 
 ## Must-Not-Say Phrases
 
-- Do not say the WFC fallback Dashboard/log/HumanApprovalGate images are live WFC execution.
+- Do not describe any future fallback/mock WFC image as live WFC execution.
 - Do not say Wearedge has been deployed to a real customer production line unless customer-authorized logs exist.
 - Do not say Gemma 4 E2B or any foundation model is self-developed.
 - Do not say the model directly controls PLC, robot, stop-line, or quality release decisions.

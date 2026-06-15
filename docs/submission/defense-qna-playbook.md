@@ -42,7 +42,7 @@ Evidence: `docs/workflow-canvas-poc-runbook.md`, `wfc-blocks/wearedge-agent-serv
 
 ### 6. What live platform evidence do you have?
 
-We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, live WFC `fb_main.py` source-search evidence, DEBUG entry, `Workflow is ready` log-manager evidence, native WFC output `状态码 Good`, and a live WFC run-log screenshot where `CallWearedgeDecisionApi.output` begins with `ok=true`. Dashboard, data-table dynamic writeback, and HumanApprovalGate are still explicitly marked as fallback/mock or open items until live WFC replacement is captured.
+We have Xcelerator draft application/API service evidence, OpenAPI import evidence, WFC project evidence, Python block evidence, data-table field evidence, live WFC `fb_main.py` source-search evidence, DEBUG entry, `Workflow is ready` log-manager evidence, native WFC output `状态码 Good`, a live WFC run-log screenshot where `CallWearedgeDecisionApi.output` begins with `ok=true`, plus live Dashboard and HumanApprovalGate evidence. Dynamic data-table writeback remains a strengthening item unless a native value-change capture is shown in the final demo.
 
 Evidence: `docs/submission/platform-live-evidence-status-20260609.md`, `docs/submission/live-platform-evidence-runbook.md`.
 
@@ -66,7 +66,7 @@ Evidence: `docs/submission/business-plan.md`, `docs/siemens-xcelerator-co-creati
 
 ### 10. What is already completed and what remains?
 
-Completed repository-controlled assets include API endpoints, OpenAPI, WFC resource package, offline evaluator, generated submission evidence, demo video generator, final submission bundle builder, human-action templates, and live WFC `ok=true` run-log evidence. Remaining final work is enterprise-owned company/contact information, signed IP/no-dispute and no-adverse-record statements, final registration screenshots, and replacing the remaining WFC Dashboard/HumanApprovalGate fallback evidence with real live WFC closure when available.
+Completed repository-controlled assets include API endpoints, OpenAPI, WFC resource package, offline evaluator, generated submission evidence, demo video generator, final submission bundle builder, human-action templates, live WFC `ok=true` run-log evidence, live Dashboard evidence, live HumanApprovalGate evidence, and refreshed Jetson FastAPI latency/resource evidence. Remaining final work is enterprise-owned company/contact information, signed IP/no-dispute and no-adverse-record statements, final registration screenshots, and optional live data-table writeback strengthening.
 
 Evidence: `docs/submission/submission-package-manifest.md`, `scripts/verify_submission_package.py`, `scripts/verify_live_evidence.py`.
 
@@ -78,11 +78,11 @@ No. Current metrics are offline/simulated engineering validation for first-round
 
 ### Why should judges trust the PoC?
 
-Because the evidence is reproducible: scripts, datasets, OpenAPI, WFC resource package, smoke tests, generated evidence, and submission bundle are in the repository. We separate live evidence from fallback/mock evidence and do not overclaim production deployment.
+Because the evidence is reproducible: scripts, datasets, OpenAPI, WFC resource package, smoke tests, generated evidence, and submission bundle are in the repository. We separate offline, platform PoC, edge-hardware, and final human-owned evidence and do not overclaim production deployment.
 
 ### What if Gongyi Mofang live execution fails during the demo?
 
-We use a dual-path demo. Path A is the live platform route. Path B is local API smoke, generated Dashboard mock, recorded video, Xcelerator API draft, WFC project screenshots, and the repo-controlled submission bundle. The fallback is clearly labeled and does not claim live WFC success.
+We use a dual-path demo. Path A is the live platform route. Path B is local API smoke, recorded video, Xcelerator API draft, WFC project screenshots, Jetson edge evidence, and the repo-controlled submission bundle. Any fallback path is clearly labeled and does not claim production deployment.
 
 ### Why Siemens?
 

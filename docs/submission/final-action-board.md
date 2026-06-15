@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-15T07:17:02+00:00
+Updated: 2026-06-15T08:35:45+00:00
 
 ## Current Gate
 
@@ -11,8 +11,8 @@ Updated: 2026-06-15T07:17:02+00:00
 - Final missing files: 6
 - Fallback warnings: 0
 - Edge latency evidence tier: final_edge_fastapi_http_gateway
-- Edge HTTP samples: 300
-- Edge HTTP p95/max latency: 6 / 8 ms
+- Edge HTTP samples: 4500
+- Edge HTTP p95/max latency: 6 / 33 ms
 
 ## Do Next
 

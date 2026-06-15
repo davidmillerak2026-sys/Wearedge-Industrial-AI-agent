@@ -1,10 +1,10 @@
 # Finals Latency Benchmark Report
 
-Generated: 2026-05-23T18:38:08+00:00
+Generated: 2026-05-24T00:06:56+00:00
 
 ## Collection Context
 
-- Workstation collected at: 2026-06-15T03:02:12+00:00
+- Workstation collected at: 2026-06-15T08:30:35+00:00
 - SSH host: `wearedge-pro.local`
 - Remote competition directory: `/home/ryn/Wearedge-Industrial-AI-agent-fastapi-competition`
 - Timestamp note: benchmark `generated_at` and `tegrastats` timestamps come from the Jetson system clock.
@@ -17,24 +17,24 @@ This benchmark starts the Wearedge FastAPI gateway on the final Jetson/IPC/plant
 
 - Evidence tier: final_edge_fastapi_http_gateway
 - Mode: http
-- Endpoint: `http://127.0.0.1:58173/v1/workflow-canvas/decision`
+- Endpoint: `http://127.0.0.1:55551/v1/workflow-canvas/decision`
 - Dataset cases: 15
-- Iterations: 20
-- Samples: 300
+- Iterations: 300
+- Samples: 4500
 - Target latency: <= 500 ms
 - Target met: True
 
 ## Gateway
 
 - App: `jetson.app:app`
-- Base URL: `http://127.0.0.1:58173`
+- Base URL: `http://127.0.0.1:55551`
 - Healthz OK: True
 - Deployment mode: `jetson_edge_http_gateway_benchmark`
 
 ## Resource Profile
 
 - Available: True
-- Sample count: 15
+- Sample count: 239
 - Sample interval: 0.1 s
 - Platform: Linux 5.15.148-tegra aarch64
 - CPU logical/physical: 6 / None
@@ -42,9 +42,9 @@ This benchmark starts the Wearedge FastAPI gateway on the final Jetson/IPC/plant
 
 | Resource | P50 | P95 | Avg | Max |
 | --- | ---: | ---: | ---: | ---: |
-| Gateway process CPU | 88.52% | 98.36% | 83.03% | 100.0% |
-| Gateway RSS | 32.47 MB | 32.47 MB | 32.45 MB | 32.47 MB |
-| System memory | 73.01% | 73.01% | 73.01% | 73.01% |
+| Gateway process CPU | 85.71% | 91.53% | 83.83% | 100.0% |
+| Gateway RSS | 32.33 MB | 32.33 MB | 32.33 MB | 32.33 MB |
+| System memory | 71.87% | 71.88% | 71.87% | 71.88% |
 
 Resource samples describe the benchmark gateway process on the node that runs this script. On Jetson, keep this profile together with tegrastats for final-round defense.
 
@@ -52,28 +52,28 @@ Resource samples describe the benchmark gateway process on the node that runs th
 
 | Metric | Min | P50 | P95 | Avg | Max |
 | --- | ---: | ---: | ---: | ---: | ---: |
-| Wall-clock replay latency | 4 ms | 4 ms | 6 ms | 4.32 ms | 8 ms |
+| Wall-clock replay latency | 4 ms | 5 ms | 6 ms | 4.79 ms | 33 ms |
 | Decision-reported latency | 1 ms | 1 ms | 1 ms | 1.0 ms | 1 ms |
 
 ## Sample Coverage
 
 | Case | Samples | Max Wall Latency |
 | --- | ---: | ---: |
-| final_energy_01_peak_load_shift | 20 | 8 ms |
-| final_energy_02_idle_compressor | 20 | 7 ms |
-| final_energy_03_auxiliary_load | 20 | 8 ms |
-| final_flexible_01_order_change | 20 | 7 ms |
-| final_flexible_02_short_run_sku | 20 | 7 ms |
-| final_flexible_03_line_clearance | 20 | 7 ms |
-| final_maint_01_vibration_escalation | 20 | 7 ms |
-| final_maint_02_bearing_heat | 20 | 6 ms |
-| final_maint_03_pump_anomaly | 20 | 7 ms |
-| final_quality_01_lot_containment | 20 | 7 ms |
-| final_quality_02_first_piece_reject | 20 | 8 ms |
-| final_quality_03_camera_confidence | 20 | 8 ms |
-| final_wfc_01_dashboard_reuse | 20 | 7 ms |
-| final_wfc_02_human_gate_mapping | 20 | 6 ms |
-| final_wfc_03_resource_binding_two_lines | 20 | 7 ms |
+| final_energy_01_peak_load_shift | 300 | 8 ms |
+| final_energy_02_idle_compressor | 300 | 7 ms |
+| final_energy_03_auxiliary_load | 300 | 8 ms |
+| final_flexible_01_order_change | 300 | 7 ms |
+| final_flexible_02_short_run_sku | 300 | 7 ms |
+| final_flexible_03_line_clearance | 300 | 7 ms |
+| final_maint_01_vibration_escalation | 300 | 33 ms |
+| final_maint_02_bearing_heat | 300 | 7 ms |
+| final_maint_03_pump_anomaly | 300 | 6 ms |
+| final_quality_01_lot_containment | 300 | 7 ms |
+| final_quality_02_first_piece_reject | 300 | 8 ms |
+| final_quality_03_camera_confidence | 300 | 8 ms |
+| final_wfc_01_dashboard_reuse | 300 | 7 ms |
+| final_wfc_02_human_gate_mapping | 300 | 6 ms |
+| final_wfc_03_resource_binding_two_lines | 300 | 6 ms |
 
 ## Next Evidence Upgrade
 

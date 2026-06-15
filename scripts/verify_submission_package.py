@@ -144,7 +144,7 @@ SOLUTION_PROFILE_REQUIRED_TOP_LEVEL_FIELDS = (
 
 EXTERNAL_PENDING_ITEMS = (
     "按 docs/submission/company-info-and-compliance-intake.md 补齐企业名称、统一社会信用代码、联系人、电话、邮箱等真实主体信息",
-    "用真实 WFC Dashboard / HumanApprovalGate 截图替换当前 fallback 标记的 04/06 Gongyi Mofang 证据；05-run-log-ok-true.png 已是 live WFC 原生日志",
+    "保持当前 WFC Dashboard / run-log / HumanApprovalGate live 证据；若 WFC 工作流、Dashboard 字段或审批界面变化，则重新截图并复跑 verifier",
     "将临时 PoC HTTPS 地址替换为稳定可复现地址，并在 Xcelerator / WFC 材料中同步更新",
     "企业负责人最终签署的知识产权、无产权纠纷、无不良记录承诺",
     "报名系统字段填报截图，隐藏证件号等敏感字段后存入 submission-assets/live-evidence/submission/",
@@ -177,7 +177,7 @@ def verify_package(repo_root: Path = REPO_ROOT) -> dict[str, Any]:
         "timeline": timeline,
         "external_pending_items": list(EXTERNAL_PENDING_ITEMS),
         "recommended_next_action": (
-            "Replace fallback WFC evidence and fill human-owned registration fields."
+            "Keep WFC live evidence current and fill human-owned registration fields."
             if not repo_failures
             else "Fix repository-controlled failures before capture/submission."
         ),

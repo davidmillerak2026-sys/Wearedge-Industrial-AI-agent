@@ -201,14 +201,14 @@ submission-assets/live-evidence/gongyi-mofang/05-run-log-ok-true.png
 submission-assets/live-evidence/gongyi-mofang/06-human-approval-gate.png
 ```
 
-Use these only after real WFC evidence replaces fallback/mock evidence.
+Use these to maintain reviewed live WFC evidence. Recapture only if the workflow, Dashboard fields, or approval UI changes.
 
 Required proof:
 
 - Dashboard/ui-builder view showing Wearedge metric cards, decision path, approval items, and workflow state.
 - log-manager or run panel showing `wearedge_decision_ok=True`, `ok=true`, latency, function-block output, or successful table writeback.
 - HumanApprovalGate or approval-state view showing pending/approved/rejected handling for high-risk actions.
-- Remove or supersede `.fallback.json` metadata only when real live evidence is captured and documented.
+- Do not add `.fallback.json` metadata to these targets unless a screenshot is deliberately replaced by mock/fallback evidence.
 """,
     ),
 )
