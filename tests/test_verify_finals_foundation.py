@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = REPO_ROOT / "scripts" / "verify_finals_foundation.py"
+LIVE_EVIDENCE_SCRIPT_PATH = REPO_ROOT / "scripts" / "verify_live_evidence.py"
 
 
 def _load_module():
@@ -19,10 +20,27 @@ def _load_module():
     return module
 
 
-def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() -> None:
-    module = _load_module()
+def _seed_platform_evidence(assets_dir: Path) -> None:
+    spec = importlib.util.spec_from_file_location("verify_live_evidence_for_test", LIVE_EVIDENCE_SCRIPT_PATH)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    for item in module.EXPECTED_ITEMS:
+        if item.stage != "platform":
+            continue
+        path = assets_dir / item.path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"reviewed live evidence")
 
-    result = module.verify_finals_foundation()
+
+def test_finals_foundation_verifier_tracks_direction_and_performance_baseline(tmp_path: Path) -> None:
+    module = _load_module()
+    assets_dir = tmp_path / "live-evidence"
+    _seed_platform_evidence(assets_dir)
+
+    result = module.verify_finals_foundation(assets_dir=assets_dir)
 
     assert result["foundation_ready"] is True
     assert result["finals_ready"] is False
@@ -53,9 +71,11 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["priority_gaps"] == []
 
 
-def test_finals_foundation_report_states_boundary() -> None:
+def test_finals_foundation_report_states_boundary(tmp_path: Path) -> None:
     module = _load_module()
-    result = module.verify_finals_foundation()
+    assets_dir = tmp_path / "live-evidence"
+    _seed_platform_evidence(assets_dir)
+    result = module.verify_finals_foundation(assets_dir=assets_dir)
 
     report = module.render_markdown(result)
 

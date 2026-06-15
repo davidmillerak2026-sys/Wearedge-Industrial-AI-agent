@@ -7,6 +7,7 @@ from pathlib import Path
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
 SCRIPT_PATH = REPO_ROOT / "scripts" / "generate_final_action_board.py"
+LIVE_EVIDENCE_SCRIPT_PATH = REPO_ROOT / "scripts" / "verify_live_evidence.py"
 
 
 def _load_module():
@@ -19,10 +20,27 @@ def _load_module():
     return module
 
 
-def test_action_board_tracks_final_missing_and_live_wfc_completion() -> None:
-    module = _load_module()
+def _seed_platform_evidence(assets_dir: Path) -> None:
+    spec = importlib.util.spec_from_file_location("verify_live_evidence_for_test", LIVE_EVIDENCE_SCRIPT_PATH)
+    assert spec is not None
+    assert spec.loader is not None
+    module = importlib.util.module_from_spec(spec)
+    sys.modules[spec.name] = module
+    spec.loader.exec_module(module)
+    for item in module.EXPECTED_ITEMS:
+        if item.stage != "platform":
+            continue
+        path = assets_dir / item.path
+        path.parent.mkdir(parents=True, exist_ok=True)
+        path.write_bytes(b"reviewed live evidence")
 
-    board = module.build_action_board()
+
+def test_action_board_tracks_final_missing_and_live_wfc_completion(tmp_path: Path) -> None:
+    module = _load_module()
+    assets_dir = tmp_path / "live-evidence"
+    _seed_platform_evidence(assets_dir)
+
+    board = module.build_action_board(assets_dir=assets_dir)
     report = module.render_action_board(board)
 
     assert board["repo_ready"] is True

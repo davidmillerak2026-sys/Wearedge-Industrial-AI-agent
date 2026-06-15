@@ -7,9 +7,19 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any
 
-import cv2
-import numpy as np
-from PIL import Image, ImageDraw, ImageFont
+try:  # Optional: script-only mode should work in lightweight CI without video codecs.
+    import cv2
+except ModuleNotFoundError:  # pragma: no cover - exercised by CI import behavior.
+    cv2 = None
+
+try:
+    import numpy as np
+    from PIL import Image, ImageDraw, ImageFont
+except ModuleNotFoundError:  # pragma: no cover - exercised when rendering deps are absent.
+    np = None
+    Image = None
+    ImageDraw = None
+    ImageFont = None
 
 
 REPO_ROOT = Path(__file__).resolve().parents[1]
@@ -137,18 +147,18 @@ SCENES: tuple[Scene, ...] = (
         fallback=False,
     ),
     Scene(
-        title="Dashboard 与人工确认演示",
-        subtitle="当前为 fallback mock，最终替换为真实 WFC Dashboard / HumanApprovalGate",
+        title="Dashboard 与人工确认 live 演示",
+        subtitle="真实 WFC Dashboard / HumanApprovalGate 已替换 fallback 证据",
         bullets=(
             "指标卡展示维护、质量、能源、调度和延迟目标",
             "HumanApprovalGate 表示高风险动作需要人工确认",
-            "fallback metadata 会阻止材料误写成 live platform proof",
+            "证据清单中 fallback warnings 已清零，保留 reviewed live 截图边界",
         ),
         duration=24,
         assets=("gongyi-mofang/04-dashboard-decision-view.png", "gongyi-mofang/06-human-approval-gate.png"),
-        narration="展示演示用 Dashboard 和 HumanApprovalGate 画面，同时明确这是备用演示素材，最终需要真实平台截图替换。",
-        badge="FALLBACK MOCK",
-        fallback=True,
+        narration="展示真实 WFC Dashboard 和 HumanApprovalGate 画面，说明模型不会直接控制 OT，高风险建议需要人工确认后进入后续动作。",
+        badge="LIVE WFC",
+        fallback=False,
     ),
     Scene(
         title="商业落地与西门子共创价值",
@@ -164,12 +174,12 @@ SCENES: tuple[Scene, ...] = (
         badge="BUSINESS",
     ),
     Scene(
-        title="下一步：把 fallback 替换为 live proof",
+        title="下一步：提交前最终封装",
         subtitle="提交前目标：7月8日前完成可复制字段、视频、截图和企业承诺材料",
         bullets=(
-            "补齐 WFC 数据表动态写回、Dashboard 和 HumanApprovalGate live 证据",
-            "补真实 WFC Dashboard / HumanApprovalGate 截图",
-            "负责人补企业主体、联系人、IP 承诺和最终报名成功截图",
+            "保持 WFC live evidence set，工作流变化时才重新截图",
+            "补齐企业主体、联系人、IP 承诺和最终报名成功截图",
+            "复跑 final readiness，确认只剩人工提交闭环",
         ),
         duration=20,
         assets=("gongyi-mofang/105-wfc-debug-stopped-after-run-attempt.png",),
@@ -335,7 +345,7 @@ def render_narration() -> str:
         "",
         "用途：提交前 3-5 分钟视频脚本，与 `submission-assets/live-evidence/video/wearedge-enterprise-demo-3-5min.mp4` 对齐。",
         "",
-        "证据边界：Xcelerator、WFC 部分素材和 `ok=true` run-log 来自真实平台；Dashboard、HumanApprovalGate 当前仍有 fallback/mock 资产，必须按画面和 metadata 标注。",
+        "证据边界：Xcelerator、WFC `ok=true` run-log、Dashboard 和 HumanApprovalGate 均已纳入 live evidence；企业主体、签署承诺和最终报名截图仍为人工外部材料。",
         "",
         "## Timeline",
         "",
@@ -366,6 +376,7 @@ def render_narration() -> str:
 
 
 def render_video(output_dir: Path, fps: int, width: int, height: int) -> dict[str, Any]:
+    _require_video_dependencies()
     output_dir.mkdir(parents=True, exist_ok=True)
     video_path = output_dir / DEFAULT_VIDEO
     script_path = output_dir / DEFAULT_SCRIPT
@@ -420,6 +431,22 @@ def script_only(output_dir: Path) -> dict[str, Any]:
         "scene_count": len(SCENES),
         "fallback_scenes": sum(1 for scene in SCENES if scene.fallback),
     }
+
+
+def _require_video_dependencies() -> None:
+    missing = []
+    if cv2 is None:
+        missing.append("opencv-python or opencv-python-headless")
+    if np is None:
+        missing.append("numpy")
+    if Image is None or ImageDraw is None or ImageFont is None:
+        missing.append("Pillow")
+    if missing:
+        raise RuntimeError(
+            "Video rendering requires optional packages: "
+            + ", ".join(missing)
+            + ". Use --script-only or install the video rendering dependencies."
+        )
 
 
 def main(argv: list[str] | None = None) -> int:

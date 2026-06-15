@@ -27,9 +27,9 @@ def test_enterprise_demo_narration_has_submission_boundaries(tmp_path: Path) -> 
 
     assert result["ok"] is True
     assert 180 <= result["duration_seconds"] <= 300
-    assert result["fallback_scenes"] >= 1
+    assert result["fallback_scenes"] == 0
     assert "Xcelerator" in script
     assert "工易魔方" in script
-    assert "fallback/mock" in script
-    assert "`ok=true` run-log 来自真实平台" in script
-    assert "Dashboard/HumanApprovalGate live 替换仍是下一步" in script
+    assert "`ok=true` run-log、Dashboard 和 HumanApprovalGate 均已纳入 live evidence" in script
+    assert "企业主体、签署承诺和最终报名截图仍为人工外部材料" in script
+    assert "fallback/mock" not in script
