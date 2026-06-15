@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-15T03:22:25+00:00
+Updated: 2026-06-15T07:17:02+00:00
 
 ## Current Gate
 
@@ -9,27 +9,25 @@ Updated: 2026-06-15T03:22:25+00:00
 - Finals ready: False
 - Final external evidence ready: False
 - Final missing files: 6
-- Fallback warnings: 2
+- Fallback warnings: 0
 - Edge latency evidence tier: final_edge_fastapi_http_gateway
 - Edge HTTP samples: 300
 - Edge HTTP p95/max latency: 6 / 8 ms
 
 ## Do Next
 
-1. Replace remaining WFC fallback screenshots with reviewed live WFC screenshots: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
+1. Keep the current WFC live evidence set; recapture only if workflow code, dashboard fields, or approval UI changes.
 2. Complete the six enterprise-owned legal/contact/submission evidence files.
-3. Run `python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url "https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae" --operator-note "reviewed live WFC screenshots"` after placing real WFC 04/06 PNGs in `submission-assets/live-evidence/gongyi-mofang-live-source/`.
-4. Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"` only after real WFC screenshots and review sidecars are in staging.
-5. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.
-6. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
+3. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.
+4. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
 
 ## WFC Live Replacement
 
 | Status | Target | Owner | Action | Acceptance |
 | --- | --- | --- | --- | --- |
-| fallback | `gongyi-mofang/04-dashboard-decision-view.png` | WFC operator | Create or preview the real WFC Dashboard/ui-builder view. | Shows Wearedge metric cards, decision path, approval items, and workflow state from live WFC context. |
+| present | `gongyi-mofang/04-dashboard-decision-view.png` | WFC operator | Create or preview the real WFC Dashboard/ui-builder view. | Shows Wearedge metric cards, decision path, approval items, and workflow state from live WFC context. |
 | present | `gongyi-mofang/05-run-log-ok-true.png` | WFC operator | Keep the reviewed live WFC run-log screenshot; recapture only if workflow code changes. | Shows WFC-native CallWearedgeDecisionApi.output JSON beginning with ok=true; data-table writeback is tracked separately. |
-| fallback | `gongyi-mofang/06-human-approval-gate.png` | WFC operator | Show HumanApprovalGate or approval-state panel for a high-risk recommendation. | Shows pending/approved/rejected human confirmation; model is not directly controlling OT. |
+| present | `gongyi-mofang/06-human-approval-gate.png` | WFC operator | Show HumanApprovalGate or approval-state panel for a high-risk recommendation. | Shows pending/approved/rejected human confirmation; model is not directly controlling OT. |
 
 ## Human-Owned Final Files
 
@@ -46,8 +44,6 @@ Updated: 2026-06-15T03:22:25+00:00
 
 ```powershell
 python scripts/prepare_final_human_action_pack.py --json
-python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url "https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae" --operator-note "reviewed live WFC screenshots"
-python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"
 python scripts/verify_final_external_assets.py --write-report
 python scripts/run_final_readiness_pipeline.py --json
 python scripts/verify_live_evidence.py --stage final --write-manifest
@@ -57,7 +53,7 @@ python scripts/verify_submission_package.py --write-manifest
 ## Boundary
 
 - Do not commit files under `submission-assets/live-evidence/`.
-- Do not remove `.fallback.json` metadata until the corresponding screenshot is real WFC live evidence.
+- Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC only when the workflow changes.
 - For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.
 - Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.
 - Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.

@@ -131,19 +131,33 @@ def _action_row(path: str, item_map: dict[str, dict[str, Any]]) -> dict[str, Any
 def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, Any]]) -> list[str]:
     actions: list[str] = []
     fallback_paths = [item["path"] for item in wfc_items if item["fallback"]]
+    missing_wfc_paths = [item["path"] for item in wfc_items if not item["present"]]
     if fallback_paths:
         actions.append(
             "Replace remaining WFC fallback screenshots with reviewed live WFC screenshots: "
             + ", ".join(fallback_paths)
             + "."
         )
+    elif missing_wfc_paths:
+        actions.append(
+            "Capture missing WFC live evidence screenshots: "
+            + ", ".join(missing_wfc_paths)
+            + "."
+        )
+    else:
+        actions.append("Keep the current WFC live evidence set; recapture only if workflow code, dashboard fields, or approval UI changes.")
     if any(item["status"] == "missing" for item in human_items):
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
+    if fallback_paths or missing_wfc_paths:
+        actions.extend(
+            [
+                "Run `python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"` after placing real WFC 04/06 PNGs in `submission-assets/live-evidence/gongyi-mofang-live-source/`.",
+                "Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"` only after real WFC screenshots and review sidecars are in staging.",
+            ]
+        )
     actions.extend(
         [
-            "Run `python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"` after placing real WFC 04/06 PNGs in `submission-assets/live-evidence/gongyi-mofang-live-source/`.",
-            "Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"` only after real WFC screenshots and review sidecars are in staging.",
-            "Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.",
+            "Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.",
             "Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.",
         ]
     )
@@ -207,25 +221,38 @@ def render_action_board(board: dict[str, Any]) -> str:
             f"{item['action']} | {item['acceptance']} |"
         )
 
+    commands = [
+        "python scripts/prepare_final_human_action_pack.py --json",
+    ]
+    if any(item["status"] != "present" for item in board["wfc_replacement_items"]):
+        commands.extend(
+            [
+                "python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"",
+                "python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"",
+            ]
+        )
+    commands.extend(
+        [
+            "python scripts/verify_final_external_assets.py --write-report",
+            "python scripts/run_final_readiness_pipeline.py --json",
+            "python scripts/verify_live_evidence.py --stage final --write-manifest",
+            "python scripts/verify_submission_package.py --write-manifest",
+        ]
+    )
+
     lines.extend(
         [
             "",
             "## Command Sequence",
             "",
             "```powershell",
-            "python scripts/prepare_final_human_action_pack.py --json",
-            "python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"",
-            "python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"",
-            "python scripts/verify_final_external_assets.py --write-report",
-            "python scripts/run_final_readiness_pipeline.py --json",
-            "python scripts/verify_live_evidence.py --stage final --write-manifest",
-            "python scripts/verify_submission_package.py --write-manifest",
+            *commands,
             "```",
             "",
             "## Boundary",
             "",
             "- Do not commit files under `submission-assets/live-evidence/`.",
-            "- Do not remove `.fallback.json` metadata until the corresponding screenshot is real WFC live evidence.",
+            "- Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC only when the workflow changes.",
             "- For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.",
             "- Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.",
             "- Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.",

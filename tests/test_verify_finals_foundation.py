@@ -47,8 +47,10 @@ def test_finals_foundation_verifier_tracks_direction_and_performance_baseline() 
     assert result["hmi"]["capabilities"]["capabilities"]["natural_language_query"] is True
     assert result["hmi"]["capabilities"]["capabilities"]["evidence_references"] is True
     assert result["hmi"]["capabilities"]["capabilities"]["audit_trail"] is True
-    assert result["platform_evidence"]["fallback_warning_count"] == 2
-    assert result["priority_gaps"]
+    assert result["platform_evidence"]["fallback_warning_count"] == 0
+    assert result["hmi"]["live_wfc_dashboard_ready"] is True
+    assert result["hmi"]["live_wfc_human_approval_ready"] is True
+    assert result["priority_gaps"] == []
 
 
 def test_finals_foundation_report_states_boundary() -> None:

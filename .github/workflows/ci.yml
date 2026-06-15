@@ -26,4 +26,4 @@ jobs:
           python -m pip install -e industrial-rag-agent
 
       - name: Run tests
-        run: python -m pytest tests industrial-rag-agent/tests
+        run: python -m pytest tests industrial-rag-agent/tests --basetemp .pytest-tmp

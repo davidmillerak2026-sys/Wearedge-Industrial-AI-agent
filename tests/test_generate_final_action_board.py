@@ -19,7 +19,7 @@ def _load_module():
     return module
 
 
-def test_action_board_tracks_final_missing_and_wfc_fallbacks() -> None:
+def test_action_board_tracks_final_missing_and_live_wfc_completion() -> None:
     module = _load_module()
 
     board = module.build_action_board()
@@ -29,16 +29,17 @@ def test_action_board_tracks_final_missing_and_wfc_fallbacks() -> None:
     assert board["foundation_ready"] is True
     assert "legal/company-info-filled.md" in board["final_missing"]
     assert "submission/02-submission-success.png" in board["final_missing"]
-    assert any(item["status"] == "fallback" for item in board["wfc_replacement_items"])
+    assert all(item["status"] == "present" for item in board["wfc_replacement_items"])
+    assert board["fallback_warnings"] == []
     assert "final_edge_fastapi_http_gateway" in report
     expected_latency = (
         f"Edge HTTP p95/max latency: {board['latency_replay']['wall_latency_ms_p95']} / "
         f"{board['latency_replay']['wall_latency_ms_max']} ms"
     )
     assert expected_latency in report
-    assert "promote_wfc_live_evidence.py" in report
+    assert "Keep the current WFC live evidence set" in report
     assert "verify_final_external_assets.py" in report
-    assert "Do not remove `.fallback.json`" in report
+    assert "Current WFC replacement targets should have no fallback metadata" in report
 
 
 def test_action_board_can_render_with_temp_missing_assets(tmp_path: Path) -> None:

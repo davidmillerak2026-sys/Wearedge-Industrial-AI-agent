@@ -1,6 +1,6 @@
 # Final Readiness Report
 
-Updated: 2026-06-15T03:22:25+00:00
+Updated: 2026-06-15T06:35:21+00:00
 
 ## Executive Status
 
@@ -17,10 +17,10 @@ Updated: 2026-06-15T03:22:25+00:00
 
 | Area | Ready | Present / Expected | Missing | Warnings |
 | --- | --- | ---: | ---: | ---: |
-| Platform evidence | True | 25 / 25 | 0 | 2 |
-| Finals foundation | True | 15 cases | 0 | 1 |
-| Final evidence | False | 27 / 33 | 6 | 2 |
-| Final external asset quality | False | 3 / 11 | 8 | 0 |
+| Platform evidence | True | 25 / 25 | 0 | 0 |
+| Finals foundation | True | 15 cases | 0 | 0 |
+| Final evidence | False | 27 / 33 | 6 | 0 |
+| Final external asset quality | False | 5 / 11 | 6 | 0 |
 
 ## Repository Phase Status
 
@@ -49,13 +49,10 @@ Updated: 2026-06-15T03:22:25+00:00
 - `legal/submission-contact-confirmation.md` [missing_or_empty]: Submission contact confirmation is missing or empty.
 - `submission/01-registration-form-filled.png` [missing_or_empty]: Filled registration form screenshot is missing or empty.
 - `submission/02-submission-success.png` [missing_or_empty]: Submission success screenshot is missing or empty.
-- `gongyi-mofang/04-dashboard-decision-view.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
-- `gongyi-mofang/06-human-approval-gate.png` [fallback_marker_present]: Fallback metadata is still present; replace with reviewed live WFC evidence first.
 
 ## Fallback Warnings
 
-- `gongyi-mofang/04-dashboard-decision-view.png`: Fallback evidence is present; do not describe it as live platform proof.
-- `gongyi-mofang/06-human-approval-gate.png`: Fallback evidence is present; do not describe it as live platform proof.
+- None.
 
 ## Finals Foundation
 
@@ -73,7 +70,6 @@ Updated: 2026-06-15T03:22:25+00:00
 - Workflow Canvas evidence path: `C:\Users\ryan hui\Documents\Wearedge-Industrial AI agent\docs\submission\evidence\finals-jetson-gateway-latency-benchmark.json`
 
 Priority gaps:
-- Replace remaining fallback WFC assets with live WFC execution screenshots: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
 
 ## Generated Local Assets
 
@@ -89,7 +85,6 @@ Priority gaps:
 ## Recommended Next Actions
 
 - Fill/capture the final live-evidence files listed under Final Missing Items.
-- Replace remaining fallback-marked WFC evidence before claiming live WFC closure: gongyi-mofang/04-dashboard-decision-view.png, gongyi-mofang/06-human-approval-gate.png.
 - Run python scripts/verify_final_external_assets.py --write-report and clear all final asset quality failures.
 
 ## Verification Commands
