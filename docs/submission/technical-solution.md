@@ -49,12 +49,12 @@ The first PoC uses simulated MES, quality, energy, maintenance, and WFC context 
 
 ## Edge Deployment
 
-Current runtime supports local Python/FastAPI deployment and Jetson deployment evidence. For competition PoC, run local API first; then bind WFC Python Function Block to the API host and port. The current Jetson evidence uses a dependency-light Python stdlib HTTP gateway because FastAPI/Uvicorn were not available on the edge node; it still calls the same `jetson.competition.build_competition_decision()` entry point and is marked as `final_edge_stdlib_http_gateway` rather than full production FastAPI evidence. For enterprise-group differentiation, keep the edge profile, Jetson latency/resource report, and M400/visual evidence separate.
+Current runtime supports local Python/FastAPI deployment and Jetson deployment evidence. For competition PoC, run local API first; then bind WFC Python Function Block to the API host and port. The current primary Jetson evidence runs the Wearedge FastAPI gateway in an isolated competition directory, calls `/v1/workflow-canvas/decision` over real HTTP, and is marked as `final_edge_fastapi_http_gateway`. A separate dependency-light stdlib HTTP gateway remains available only as fallback evidence for edge nodes without FastAPI/Uvicorn. For enterprise-group differentiation, keep the edge profile, Jetson latency/resource report, and M400/visual evidence separate.
 
 Current Jetson decision-path evidence:
 
 - 300 HTTP samples on `Linux 5.15.148-tegra aarch64`.
-- p95/max wall latency: 2 / 3 ms for `/v1/workflow-canvas/decision`.
+- p95/max wall latency: 6 / 8 ms for `/v1/workflow-canvas/decision` through the FastAPI gateway.
 - Evidence files: `docs/finals-jetson-gateway-latency-benchmark-report.md` and `docs/submission/evidence/finals-jetson-gateway-latency-benchmark.json`.
 
 ## Safety And Compliance

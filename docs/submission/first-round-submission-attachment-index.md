@@ -29,7 +29,7 @@
 | Xcelerator API World | `submission-assets/live-evidence/xcelerator/` | 可描述为真实平台草稿/导入证据；未发布上架。 |
 | Gongyi Mofang project, Python block, data table | `submission-assets/live-evidence/gongyi-mofang/` | 可描述为真实 WFC 项目和配置证据。 |
 | Gongyi Mofang Dashboard/run-log/HumanApprovalGate 04/05/06 | `submission-assets/live-evidence/gongyi-mofang/04-06*` | `05-run-log-ok-true.png` 已替换为 live WFC `ok=true` 原生日志；`04` Dashboard 和 `06` HumanApprovalGate 仍是 fallback/mock，不能描述为 live WFC Dashboard/审批节点。 |
-| Edge runtime | `submission-assets/live-evidence/edge-runtime/` | 可描述为 Jetson/端侧 HTTP 决策路径证据；stdlib fallback gateway 已明确标注。 |
+| Edge runtime | `submission-assets/live-evidence/edge-runtime-fastapi/` | 可描述为 Jetson/端侧 FastAPI HTTP 决策路径证据；stdlib gateway 只作为 fallback 历史证据。 |
 | Submission screenshots | `submission-assets/live-evidence/submission/` | 最终填报/提交成功后补齐。 |
 | Legal/company files | `submission-assets/live-evidence/legal/` | 企业负责人补齐；不提交 Git。 |
 
@@ -66,7 +66,7 @@
 可说：
 
 - Wearedge 已具备可运行的端侧工业智能体 runtime，可在 Jetson/IPC/本地工控机形态部署。
-- `/v1/workflow-canvas/decision` 已有离线评估、HTTP smoke、Jetson 端侧 latency/resource 证据。
+- `/v1/workflow-canvas/decision` 已有离线评估、HTTP smoke、Jetson FastAPI 端侧 latency/resource 证据。
 - Xcelerator API World 和 Gongyi Mofang WFC 已形成平台接入草稿、资源块、Python block、数据表和演示闭环基础。
 
 不可说：

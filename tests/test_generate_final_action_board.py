@@ -30,7 +30,7 @@ def test_action_board_tracks_final_missing_and_wfc_fallbacks() -> None:
     assert "legal/company-info-filled.md" in board["final_missing"]
     assert "submission/02-submission-success.png" in board["final_missing"]
     assert any(item["status"] == "fallback" for item in board["wfc_replacement_items"])
-    assert "final_edge_stdlib_http_gateway" in report
+    assert "final_edge_fastapi_http_gateway" in report
     expected_latency = (
         f"Edge HTTP p95/max latency: {board['latency_replay']['wall_latency_ms_p95']} / "
         f"{board['latency_replay']['wall_latency_ms_max']} ms"
