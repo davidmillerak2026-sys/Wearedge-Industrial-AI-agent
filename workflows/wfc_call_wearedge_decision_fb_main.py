@@ -1,6 +1,3 @@
-"""
-WFC Python Function Block: call Wearedge decision API and return compact fields.
-"""
 import json
 import logging
 import ssl
@@ -51,13 +48,7 @@ class FunctionBlock():
     def _payload(self):
         return {
             "stage": "wfc_live_debug",
-            "selected_directions": [
-                "maintenance",
-                "quality",
-                "energy",
-                "flexible_production",
-                "workflow_canvas",
-            ],
+            "selected_directions": ["maintenance", "quality", "energy", "flexible_production", "workflow_canvas"],
             "context": {
                 "maintenance": {"f1_pct": 88, "warning_lead_time_hours": 30, "root_cause_top3_pct": 92},
                 "quality": {"detection_confidence_pct": 93, "relative_improvement_pct": 6},
@@ -67,12 +58,27 @@ class FunctionBlock():
             },
         }
 
+    def _base_url(self, resource):
+        base_url = resource.get("baseUrl") or resource.get("agentUrl")
+        if base_url:
+            return str(base_url).strip().rstrip("/")
+        host = str(resource.get("agentHost") or resource.get("host") or "").strip()
+        if not host:
+            raise ValueError("missing Wearedge Agent Service baseUrl or agentHost")
+        if not host.startswith(("http://", "https://")):
+            host = "http://" + host
+        authority = host.split("//", 1)[-1].split("/", 1)[0]
+        port = str(resource.get("agentPort") or "").strip()
+        if port and ":" not in authority:
+            host = host.rstrip("/") + ":" + port
+        return host.rstrip("/")
+
     def _request(self):
         resource = self._json(self.param_input.input1)
         payload = self._json(self.param_input.input2) or self._payload()
         if not payload.get("selected_directions"):
             payload = self._payload()
-        base_url = resource.get("baseUrl") or resource.get("agentUrl") or "https://quick-cats-study.loca.lt"
+        base_url = self._base_url(resource)
         return base_url.rstrip("/") + "/v1/workflow-canvas/decision", payload
 
     def _summary(self, result):
@@ -127,6 +133,3 @@ class FunctionBlock():
             self.param_output.ok = False
         finally:
             self.set_output_callback(self.param_output)
-
-    def on_destroy(self):
-        logging.debug("Function block on destroy")

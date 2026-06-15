@@ -182,6 +182,7 @@
 - 2026-06-13 浏览器 GUI 继续操作真实 WFC 页面，确认 `更新数据表.1` 右侧输入可直接承载四个 Wearedge 决策字段示例值：`maintenance`、`P1`、`Inspect bearing vibration; schedule maintenance; require human approval`、`pending_human_approval`。进入 DEBUG 后这些字段锁定，浏览器运行期日志出现 `makeWorkflowReadOnly`、`update workflow state`、`update data table`。该证据用于证明 WFC 原生数据表目标、人工确认状态字段和调试运行态，不得表述为 Python `输出1` 已动态写入。
 - 2026-06-13 晚间重新启动本机 Wearedge gateway 和 `https://quick-cats-study.loca.lt` tunnel 后，WFC/SPIDR 再次触发外部 `POST /v1/workflow-canvas/decision` `200 OK`，WFC 原生运行日志窗口显示 `CallWearedgeDecisionApi.output` JSON，开头可见 `"ok": true`，底部可见输出状态 `Good`。证据已写入 `05-run-log-ok-true.png`，并通过 `python scripts/verify_live_evidence.py --stage platform --write-manifest` 检查。
 - 2026-06-13 同步尝试了两次端口拖拽建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 虚线数据连接；两次均只移动了功能块，未形成清晰虚线，已立即撤销，最终项目保持 `已保存` 干净状态。当前不得声称 Python 动态写表已完成。
+- 2026-06-15 重新尝试 WFC GUI 取证：本机 `Invoke-WebRequest https://wfc.bd-iiot.com/projects` 返回 200，说明站点网络可达；但当前 in-app browser 自动化新建标签无法离开 `about:blank`，Chrome extension 控制入口也不可用。因此没有把 04/06 fallback 替换为 live。已新增 `scripts/prepare_wfc_live_review_sidecars.py`，后续只需把真实 WFC `04-dashboard-decision-view.png` 和 `06-human-approval-gate.png` 放入 `submission-assets/live-evidence/gongyi-mofang-live-source/`，再生成 `.review.json` 并运行推广脚本即可。
 
 ## 下一步建议
 

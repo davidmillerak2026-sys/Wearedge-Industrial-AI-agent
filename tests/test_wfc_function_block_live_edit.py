@@ -107,7 +107,30 @@ def test_wfc_function_block_outputs_compact_summary(monkeypatch):
     assert "evaluations" not in summary
 
 
+def test_wfc_function_block_builds_url_from_agent_host_and_port():
+    module = load_wfc_fb_module()
+    block = module.FunctionBlock(
+        {"input1": {}, "input2": {}},
+        lambda *_args, **_kwargs: None,
+        lambda *_args, **_kwargs: None,
+        lambda *_args, **_kwargs: None,
+        lambda *_args, **_kwargs: None,
+    )
+    block.param_input = module.ParamInput(
+        {
+            "input1": json.dumps({"agentHost": "wearedge-agent.local", "agentPort": 8081}),
+            "input2": json.dumps({"selected_directions": ["maintenance"]}),
+        }
+    )
+
+    endpoint, payload = block._request()
+
+    assert endpoint == "http://wearedge-agent.local:8081/v1/workflow-canvas/decision"
+    assert payload["selected_directions"] == ["maintenance"]
+
+
 def test_wfc_function_block_file_stays_live_editor_friendly():
     source = WFC_FB_PATH.read_text(encoding="utf-8")
     assert len(source) < 6000
     assert source.count("\n") < 140
+    assert "quick-cats-study" not in source

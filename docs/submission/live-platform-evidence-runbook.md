@@ -134,7 +134,21 @@ python scripts/wfc_private_api_probe.py --project-id cmq6lbb9x00bx1l6pxll7voae -
 | Run log | 至少包含 `ok=true`、`wearedge_decision_ok`、`latency`、`function_block_output`、`table_writeback` 之一。 |
 | HumanApprovalGate | 至少包含 `pending`、`approved`、`rejected`、`human_confirmation`、`approval_status` 之一。 |
 
-6. 人工复核画面确实来自 live WFC 后运行：
+6. 截图放入 `gongyi-mofang-live-source/` 后，先生成并复核 sidecar：
+
+```powershell
+python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url "https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae" --operator-note "reviewed live WFC screenshots"
+```
+
+若还没有截图，只需要生成不可推广模板：
+
+```powershell
+python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url "https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae" --template-only
+```
+
+模板文件写为 `.review.template.json`，不会被推广脚本接受；只有真实 PNG 存在且 `live_wfc_source=true` 的 `.review.json` 才能进入下一步。
+
+7. 人工复核画面确实来自 live WFC 后运行：
 
 ```powershell
 python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note "reviewed live WFC screenshots"

@@ -141,6 +141,7 @@ def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, A
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
     actions.extend(
         [
+            "Run `python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"` after placing real WFC 04/06 PNGs in `submission-assets/live-evidence/gongyi-mofang-live-source/`.",
             "Run `python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"` only after real WFC screenshots and review sidecars are in staging.",
             "Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC replacements are in place.",
             "Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.",
@@ -213,6 +214,7 @@ def render_action_board(board: dict[str, Any]) -> str:
             "",
             "```powershell",
             "python scripts/prepare_final_human_action_pack.py --json",
+            "python scripts/prepare_wfc_live_review_sidecars.py --target dashboard --target human-approval --source-url \"https://wfc.bd-iiot.com/project/cmq6lbb9x00bx1l6pxll7voae\" --operator-note \"reviewed live WFC screenshots\"",
             "python scripts/promote_wfc_live_evidence.py --confirm-live-source --require-review-sidecars --operator-note \"reviewed live WFC screenshots\"",
             "python scripts/verify_final_external_assets.py --write-report",
             "python scripts/run_final_readiness_pipeline.py --json",
