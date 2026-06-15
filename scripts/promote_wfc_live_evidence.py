@@ -56,6 +56,7 @@ TARGETS: tuple[WfcLiveEvidenceTarget, ...] = (
 
 ALLOWED_WFC_SOURCE_PREFIXES = (
     "https://wfc.bd-iiot.com/",
+    "https://sitescope.wfc.bd-iiot.com/",
     "https://spidr.wfc.bd-iiot.com/",
 )
 
