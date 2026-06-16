@@ -7,7 +7,7 @@
 这两项都是夺冠级增强，不是当前初赛提交的硬阻塞项：
 
 - WFC 动态数据表写回：当前已有 live WFC `ok=true` 运行日志、数据表字段、`更新数据表.1` 静态字段和调试态截图；2026-06-16 已补到新版 `CallWearedgeDecisionApi.output` 显示 `ok=true`、`状态码 Good`、`wfc_writeback.method=wfc_output1_to_update_data_table` 的 live 证据。还差“输出1 数据线驱动原生数据表值变化”的最终截图或导出 workflow 绑定证明。
-- 稳定 API / 平台复现地址：当前已有 Xcelerator OpenAPI 草稿和临时 HTTPS PoC 证据；还差稳定 HTTPS endpoint 或平台代理可复现地址。
+- 稳定 API / 平台复现地址：当前已完成 Google Cloud Run 稳定 HTTPS endpoint，地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`，verifier 结果 `ready=True`；还差把该地址回填 Xcelerator API 服务草稿并补 live debug/test 截图。
 
 ## A. WFC 动态数据表写回
 
@@ -169,17 +169,38 @@ Cloud Run 版本定位为稳定 HTTPS PoC 后端，只承载赛事验证所需�
 
 ```text
 GET  /healthz
+GET  /v1/healthz
 GET  /v1/edge/runtime-profile
 POST /v1/workflow-canvas/decision
 ```
 
-该版本设置 `WEAREDGE_DEPLOYMENT_MODE=cloud_proxy`，不声称替代 Jetson/IPC 端侧推理证据；Jetson 仍是端侧智能体运行时和低延迟证据主线。部署后需要执行：
+该版本设置 `WEAREDGE_DEPLOYMENT_MODE=cloud_proxy`，不声称替代 Jetson/IPC 端侧推理证据；Jetson 仍是端侧智能体运行时和低延迟证据主线。已完成部署：
 
-```powershell
-python scripts/verify_stable_wearedge_endpoint.py --base-url https://<run-app-host> --write-evidence
+```text
+Cloud Run service: wearedge-agent-service
+Region: asia-east1
+Revision: wearedge-agent-service-00002-n77
+Build ID: 438fd867-5cb6-4e17-bf1b-69aa3ab6402f
+URL: https://wearedge-agent-service-863888677331.asia-east1.run.app
 ```
 
-验证通过后，将 Xcelerator API 服务草稿的后端服务器地址从占位 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `*.run.app` 地址，再补 Xcelerator live debug/test 截图。
+已执行：
+
+```powershell
+python scripts/verify_stable_wearedge_endpoint.py --base-url https://wearedge-agent-service-863888677331.asia-east1.run.app --write-evidence
+```
+
+验证结果：
+
+```text
+Ready: True
+Evidence tier: stable_https
+Health: /v1/healthz -> 200
+Runtime profile: /v1/edge/runtime-profile -> 200
+Workflow decision: /v1/workflow-canvas/decision -> 200
+```
+
+下一步将 Xcelerator API 服务草稿的后端服务器地址从占位 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `*.run.app` 地址，再补 Xcelerator live debug/test 截图。
 
 ## C. Xcelerator 调试调用截图
 
@@ -209,5 +230,5 @@ Wearedge 已完成 Xcelerator / 工易魔方接入路径和 live WFC ok=true 运
 稳定 endpoint 建议这样写：
 
 ```text
-当前已完成 OpenAPI 草稿、端侧 Jetson FastAPI 证据和临时 HTTPS PoC 外部可达验证。正式联合 PoC 阶段将切换为稳定 HTTPS endpoint 或 Xcelerator API World 代理地址，并用 endpoint verifier 输出可复验证据。
+当前已完成 OpenAPI 草稿、端侧 Jetson FastAPI 证据、临时 HTTPS PoC 外部可达验证，以及 Google Cloud Run 稳定 HTTPS endpoint。Cloud Run endpoint 已通过 endpoint verifier，可作为 Xcelerator / 工易魔方联合 PoC 的稳定后端；下一步回填 Xcelerator API 服务草稿并补 live 调试截图。
 ```

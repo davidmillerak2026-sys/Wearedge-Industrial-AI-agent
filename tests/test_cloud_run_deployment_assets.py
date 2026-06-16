@@ -20,6 +20,7 @@ def test_cloud_run_runbook_matches_stable_endpoint_verifier_contract() -> None:
     runbook = (REPO_ROOT / "deploy" / "cloud-run" / "README.md").read_text(encoding="utf-8")
 
     assert "/healthz" in runbook
+    assert "/v1/healthz" in runbook
     assert "/v1/edge/runtime-profile" in runbook
     assert "/v1/workflow-canvas/decision" in runbook
     assert "verify_stable_wearedge_endpoint.py" in runbook

@@ -17,8 +17,8 @@ Updated: 2026-06-16T15:10:00+08:00
 ## Do Next
 
 1. Finish the high-value WFC writeback proof by exporting workflow JSON for binding analysis or manually connecting `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`.
-2. Deploy the Cloud Run stable endpoint from `deploy/cloud-run/`, then run `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<run-app-host> --write-evidence`; local/temporary tunnel preflight is not final evidence.
-3. Re-login to Xcelerator and capture live debug/test calls for `/v1/edge/runtime-profile` and `/v1/workflow-canvas/decision`.
+2. Re-login to Xcelerator and replace the API service backend placeholder with Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`, then capture live debug/test calls for `/v1/edge/runtime-profile` and `/v1/workflow-canvas/decision`.
+3. Keep the Cloud Run stable endpoint evidence current with `python scripts/verify_stable_wearedge_endpoint.py --base-url https://wearedge-agent-service-863888677331.asia-east1.run.app --write-evidence` before final upload.
 4. Complete the six enterprise-owned legal/contact/submission evidence files.
 5. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.
 6. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
@@ -39,7 +39,7 @@ These items improve finals-readiness and credibility, but they do not change the
 | --- | --- | --- | --- | --- |
 | present | `gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png` | WFC operator | After pasting the updated WFC Function Block code, capture the live output JSON. | Shows ok=true plus wfc_writeback.method=wfc_output1_to_update_data_table and fields_ready values. |
 | optional_pending | `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png` | WFC operator | Export workflow JSON for binding analysis or manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG. | Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object. |
-| needs_stable_endpoint | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Primary route is now Google Cloud Run via `deploy/cloud-run/cloud-shell-deploy.sh`; fallback routes remain `deploy/stable-endpoint/`. After deployment, run the stable endpoint verifier. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
+| present | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Cloud Run stable endpoint is deployed at `https://wearedge-agent-service-863888677331.asia-east1.run.app`; verifier passed with `ready=True`. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
 
 ## Human-Owned Final Files
 
@@ -66,7 +66,7 @@ python scripts/verify_submission_package.py --write-manifest
 
 - Do not commit files under `submission-assets/live-evidence/`.
 - Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC when the updated Function Block is promoted into the platform.
-- WFC dynamic data-table writeback and stable HTTPS endpoint evidence are high-value strengthening items until captured from the live platform.
+- WFC dynamic data-table writeback is still a high-value strengthening item; stable HTTPS endpoint evidence is now captured via Cloud Run, pending Xcelerator backend replacement and live debug screenshots.
 - For the next manual capture session, use `docs/submission/live-enhancement-capture-runbook-20260616.md`.
 - For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.
 - Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.

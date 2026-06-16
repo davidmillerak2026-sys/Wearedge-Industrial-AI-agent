@@ -34,6 +34,24 @@
         }
       }
     },
+    "/v1/healthz": {
+      "get": {
+        "summary": "Versioned gateway health endpoint for cloud proxy deployments",
+        "operationId": "getWearedgeVersionedHealth",
+        "responses": {
+          "200": {
+            "description": "Gateway is healthy. This path mirrors /healthz and is preferred for Cloud Run/Xcelerator proxy validation when /healthz is intercepted by platform routing.",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/HealthResponse"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
     "/v1/edge/runtime-profile": {
       "get": {
         "summary": "Describe the Wearedge edge Agent Runtime profile",

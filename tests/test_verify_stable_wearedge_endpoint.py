@@ -78,6 +78,37 @@ def test_verify_passes_stable_https_contract(monkeypatch, tmp_path: Path) -> Non
     assert [call[0] for call in calls] == ["GET", "GET", "POST"]
 
 
+def test_verify_uses_versioned_health_fallback(monkeypatch, tmp_path: Path) -> None:
+    module = _load_module()
+    payload_path = tmp_path / "payload.json"
+    payload_path.write_text(json.dumps({"selected_directions": ["maintenance"]}), encoding="utf-8")
+
+    def fake_urlopen(request, timeout):
+        if request.full_url.endswith("/v1/healthz"):
+            return FakeResponse(200, {"ok": True})
+        if request.full_url.endswith("/healthz"):
+            raise module.urllib.error.HTTPError(
+                request.full_url,
+                404,
+                "Not Found",
+                {},
+                None,
+            )
+        if request.full_url.endswith("/v1/edge/runtime-profile"):
+            return FakeResponse(200, {"workflow_canvas_ready": True})
+        if request.full_url.endswith("/v1/workflow-canvas/decision"):
+            return FakeResponse(200, {"ok": True, "competition_metrics": {"latency_target_met": True}})
+        raise AssertionError(request.full_url)
+
+    monkeypatch.setattr(module.urllib.request, "urlopen", fake_urlopen)
+
+    result = module.verify("https://wearedge.example.com", payload_path)
+
+    assert result["ready"] is True
+    assert result["checks"]["healthz"]["path"] == "/v1/healthz"
+    assert result["checks"]["healthz"]["fallback_from"] == "/healthz"
+
+
 def test_verify_flags_temporary_endpoint_even_when_api_contract_passes(monkeypatch, tmp_path: Path) -> None:
     module = _load_module()
     payload_path = tmp_path / "payload.json"

@@ -71,15 +71,27 @@ def verify(base_url: str, payload_path: Path, token: str | None = None) -> dict[
     base_url = normalize_base_url(base_url)
     endpoint = classify_endpoint(base_url)
     payload = load_payload(payload_path)
-    checks = {
-        "healthz": call_json("GET", f"{base_url}/healthz", token=token),
-        "runtime_profile": call_json("GET", f"{base_url}/v1/edge/runtime-profile", token=token),
-        "workflow_canvas_decision": call_json(
+    healthz = call_json("GET", f"{base_url}/healthz", token=token)
+    healthz["path"] = "/healthz"
+    if not healthz.get("ok"):
+        alternate_healthz = call_json("GET", f"{base_url}/v1/healthz", token=token)
+        alternate_healthz["path"] = "/v1/healthz"
+        alternate_healthz["fallback_from"] = "/healthz"
+        if alternate_healthz.get("ok"):
+            healthz = alternate_healthz
+    runtime_profile = call_json("GET", f"{base_url}/v1/edge/runtime-profile", token=token)
+    runtime_profile["path"] = "/v1/edge/runtime-profile"
+    workflow_canvas_decision = call_json(
             "POST",
             f"{base_url}/v1/workflow-canvas/decision",
             payload=payload,
             token=token,
-        ),
+    )
+    workflow_canvas_decision["path"] = "/v1/workflow-canvas/decision"
+    checks = {
+        "healthz": healthz,
+        "runtime_profile": runtime_profile,
+        "workflow_canvas_decision": workflow_canvas_decision,
     }
     failures = []
     for name, result in checks.items():
@@ -123,11 +135,11 @@ def render_report(result: dict[str, Any]) -> str:
         "",
         "## Checks",
         "",
-        "| Check | OK | HTTP Status |",
-        "| --- | --- | ---: |",
+        "| Check | Path | OK | HTTP Status |",
+        "| --- | --- | --- | ---: |",
     ]
     for name, check in result["checks"].items():
-        lines.append(f"| {name} | {check.get('ok')} | {check.get('status')} |")
+        lines.append(f"| {name} | `{check.get('path', '')}` | {check.get('ok')} | {check.get('status')} |")
     lines += ["", "## Failures", ""]
     lines += [f"- {failure}" for failure in result["failures"]] or ["- None"]
     lines += ["", "## Boundary", "", result["boundary"], ""]

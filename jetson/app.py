@@ -42,6 +42,7 @@ def demo_page() -> str:
 
 
 @app.get("/healthz")
+@app.get("/v1/healthz")
 def healthz() -> dict[str, object]:
     return {
         "ok": True,
@@ -556,6 +557,7 @@ def _build_edge_runtime_profile() -> dict[str, object]:
             "workflow_decision_api": "/v1/workflow-canvas/decision",
             "wearable_infer_api": "/v1/infer",
             "health_api": "/healthz",
+            "cloud_proxy_health_api": "/v1/healthz",
             "audit_log_enabled": config.event_log_path is not None,
             "upload_persistence_enabled": config.upload_dir is not None,
             "auth_enabled": config.auth_enabled,

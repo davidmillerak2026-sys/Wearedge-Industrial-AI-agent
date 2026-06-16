@@ -17,6 +17,7 @@ This Cloud Run service is a **stable HTTPS proxy/runtime for platform PoC valida
 
 ```text
 GET  /healthz
+GET  /v1/healthz
 GET  /v1/edge/runtime-profile
 POST /v1/workflow-canvas/decision
 ```
