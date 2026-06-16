@@ -32,7 +32,7 @@
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
 | WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 | WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
-| 稳定 HTTPS endpoint 部署包 | 已入库，待固定域名或平台代理 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。`scripts/verify_stable_wearedge_endpoint.py` 已可校验 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，并会拒绝 localhost/临时 tunnel 作为最终稳定证据。 |
+| 稳定 HTTPS endpoint 部署包 | 已入库，Cloud Run 路线待部署 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。2026-06-16 进一步新增 Google Cloud Run 部署包 `Dockerfile.cloudrun`、`deploy/cloud-run/cloudbuild.yaml`、`deploy/cloud-run/cloud-shell-deploy.sh` 和 runbook，可远端构建轻量 Wearedge PoC API 并获得 `*.run.app` 稳定 HTTPS 地址。`scripts/verify_stable_wearedge_endpoint.py` 已可校验 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，并会拒绝 localhost/临时 tunnel 作为最终稳定证据。 |
 | Xcelerator 调试调用截图 | 待重新登录后补 | 2026-06-16 重新打开 Xcelerator Console 时页面回到登录态；未绕过登录、未保存密钥。已生成本地 API 预检响应 `submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcelerator.json`，只能作为调试素材，不能替代 live Console 调用截图。 |
 | Xcelerator 稳定代理路径 | 已确认平台代理入口，后端稳定服务待补 | 2026-06-16 用户重新登录后，API 详情页显示服务 `未发布`、代理基址 `https://apig.developers.siemens-x.com.cn`、系统生成代理路径 `/scps4pw78kj6B2PFEmZX`、可见范围 `租户内`。当前后端服务器地址仍显示占位 `https://wearedge-agent-service.example.com`，因此尚不能通过 stable endpoint verifier。结构化证据见 ignored 文件 `submission-assets/live-evidence/xcelerator/44-xcelerator-api-detail-proxy-path-live-20260616.dom.json`。 |
 
@@ -167,7 +167,7 @@
 | Dashboard 原生可编辑截图 | SiteScope live 展示图已可用于 required gate；如要进一步增强，可从 WFC Dashboard Explorer / ui-builder 创建原生可编辑仪表盘截图。 |
 | 数据表动态写回 | 运行日志 live `ok=true` 和新版 Python 输出 `wfc_writeback.fields_ready` 已完成；仍需把 `CallWearedgeDecisionApi` 的 JSON 输出稳定连到 `更新数据表.1` 输入端口，或通过官方导出/只读 API 证明该数据线存在，并让 WFC 原生数据表值显示 selected direction、latency、approval status 等字段。 |
 | 人工确认原生节点截图 | SiteScope live HumanApprovalGate 已可用于 required gate；如要进一步增强，可在真实 WFC 中添加高风险动作确认/人工确认节点并截图。 |
-| 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
+| 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；当前首选路线改为 Google Cloud Run 生成稳定 `*.run.app` 后端，再回填 Xcelerator API 服务草稿。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
 | Xcelerator 当前登录态 | 2026-06-16 重新打开 Console 时进入登录页；下一次需要负责人重新登录后再补 live debug/test screenshot。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
@@ -202,7 +202,7 @@
 
 1. 通过导出 workflow JSON 或人工精确连线，完成 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
 2. 重新登录 Xcelerator 后，在 API 服务草稿/调试面板补 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` live 调用截图。
-3. 选择一条稳定 endpoint 路线：企业 HTTPS 网关、Cloudflare Named Tunnel 绑定域名，或 Xcelerator API World Proxy，并运行 `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-host> --write-evidence`。
+3. 优先执行 `deploy/cloud-run/cloud-shell-deploy.sh` 获取 `*.run.app` 稳定 HTTPS 地址，随后运行 `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<run-app-host> --write-evidence`，再把该地址回填 Xcelerator API 服务后端；Cloudflare Named Tunnel / 企业 HTTPS 网关 / Xcelerator Proxy 作为备用路线。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
 5. 如有平台时间，继续升级 WFC 原生 Dashboard Explorer / ui-builder 可编辑仪表盘截图。
 6. 将 2026-06-12/13/16 WFC live 调用证据纳入演示视频素材和 PoC 证据索引，同时保留 live/fallback 边界。

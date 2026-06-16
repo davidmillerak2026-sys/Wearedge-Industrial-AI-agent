@@ -1,0 +1,30 @@
+apiVersion: serving.knative.dev/v1
+kind: Service
+metadata:
+  name: wearedge-agent-service
+  annotations:
+    run.googleapis.com/description: "Wearedge Industrial AI Agent stable HTTPS PoC backend for Xcelerator/WFC"
+spec:
+  template:
+    metadata:
+      annotations:
+        autoscaling.knative.dev/minScale: "0"
+        autoscaling.knative.dev/maxScale: "3"
+    spec:
+      containerConcurrency: 20
+      timeoutSeconds: 30
+      containers:
+        - image: REGION-docker.pkg.dev/PROJECT_ID/REPOSITORY/wearedge-agent-service:TAG
+          ports:
+            - containerPort: 8080
+          env:
+            - name: WEAREDGE_AUTH_DISABLED
+              value: "true"
+            - name: WEAREDGE_DEPLOYMENT_MODE
+              value: "cloud_proxy"
+            - name: WEAREDGE_EDGE_NODE_ID
+              value: "wearedge-cloud-run-poc"
+            - name: LLAMA_MODEL
+              value: "wearedge-competition-decision-runtime"
+            - name: WEAREDGE_MODEL_VARIANT
+              value: "deterministic-competition-runtime"

@@ -1,0 +1,24 @@
+FROM python:3.11-slim
+
+ENV PYTHONDONTWRITEBYTECODE=1 \
+    PYTHONUNBUFFERED=1 \
+    WEAREDGE_AUTH_DISABLED=true \
+    WEAREDGE_DEPLOYMENT_MODE=cloud_proxy \
+    WEAREDGE_EDGE_NODE_ID=wearedge-cloud-run-poc \
+    WEAREDGE_MODEL_VARIANT=deterministic-competition-runtime \
+    LLAMA_MODEL=wearedge-competition-decision-runtime
+
+WORKDIR /app
+
+COPY jetson/requirements.txt /tmp/requirements.txt
+RUN pip install --no-cache-dir -r /tmp/requirements.txt
+
+COPY jetson ./jetson
+COPY workflows ./workflows
+COPY openapi ./openapi
+COPY docs/workflow-canvas-api-schema.md ./docs/workflow-canvas-api-schema.md
+COPY docs/workflow-canvas-poc-runbook.md ./docs/workflow-canvas-poc-runbook.md
+
+EXPOSE 8080
+
+CMD ["sh", "-c", "uvicorn jetson.app:app --host 0.0.0.0 --port ${PORT:-8080}"]

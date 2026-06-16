@@ -154,6 +154,33 @@ endpoint is not stable HTTPS; use only as temporary PoC evidence
 
 因此当前结论是：代码和 API 合同已经准备好，稳定复现证据还需要固定 HTTPS 域名、Cloudflare Named Tunnel 绑定域名，或 Xcelerator API World 代理地址。
 
+### 2026-06-16 Cloud Run 路线补强
+
+当前 Google Cloud 项目 `project-0fb33b45-8118-49ed-b8c` 的 Compute Engine VM 实例列表为空，因此优先采用 Cloud Run 而不是新建虚拟机。已新增：
+
+```text
+Dockerfile.cloudrun
+deploy/cloud-run/README.md
+deploy/cloud-run/cloudbuild.yaml
+deploy/cloud-run/cloud-shell-deploy.sh
+```
+
+Cloud Run 版本定位为稳定 HTTPS PoC 后端，只承载赛事验证所需的轻量确定性接口：
+
+```text
+GET  /healthz
+GET  /v1/edge/runtime-profile
+POST /v1/workflow-canvas/decision
+```
+
+该版本设置 `WEAREDGE_DEPLOYMENT_MODE=cloud_proxy`，不声称替代 Jetson/IPC 端侧推理证据；Jetson 仍是端侧智能体运行时和低延迟证据主线。部署后需要执行：
+
+```powershell
+python scripts/verify_stable_wearedge_endpoint.py --base-url https://<run-app-host> --write-evidence
+```
+
+验证通过后，将 Xcelerator API 服务草稿的后端服务器地址从占位 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `*.run.app` 地址，再补 Xcelerator live debug/test 截图。
+
 ## C. Xcelerator 调试调用截图
 
 当前已存在 Xcelerator 应用草稿、API 服务草稿和 4 个接口导入截图。2026-06-16 重新打开 `https://developers.siemens-x.com.cn/integration/api` 时页面回到登录态，因此本次没有继续进行 Console 内 live 调试调用，也没有保存任何账号、密钥或 AppSecret。

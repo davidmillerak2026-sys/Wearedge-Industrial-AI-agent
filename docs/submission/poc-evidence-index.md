@@ -25,6 +25,7 @@
 | WFC dynamic writeback closure plan | `docs/submission/wfc-writeback-and-stable-endpoint-closure.md` | ready |
 | Stable endpoint verifier | `scripts/verify_stable_wearedge_endpoint.py` | ready |
 | Stable endpoint deployment pack | `deploy/stable-endpoint/` | ready |
+| Google Cloud Run deployment pack | `Dockerfile.cloudrun`, `deploy/cloud-run/` | ready |
 | Competition requirements and optimization direction | `docs/赛事要求与Wearedge智能体优化方向.md` | ready |
 | Workflow Canvas API schema | `docs/workflow-canvas-api-schema.md` | ready |
 | Workflow Canvas PoC runbook | `docs/workflow-canvas-poc-runbook.md` | ready |
@@ -89,7 +90,7 @@
 - Final external asset quality is checked by `scripts/verify_final_external_assets.py --write-report`; it validates formats, empty/template fields, WFC fallback markers, and video presence without printing private company/contact values.
 - Dashboard, run-log, and HumanApprovalGate evidence under `submission-assets/live-evidence/gongyi-mofang/04*`, `05*`, and `06*` are now treated as live WFC evidence with fallback warnings cleared. `05-run-log-ok-true.png` is a reviewed live WFC native run-log screenshot showing `CallWearedgeDecisionApi.output` with `"ok": true`.
 - Dynamic Python-output-to-`更新数据表.1` writeback has one live output proof: 2026-06-16 WFC DEBUG output shows `ok=true`, `状态码 Good`, `wfc_writeback.method=wfc_output1_to_update_data_table`, and `fields_ready`; the remaining strengthening gap is a clear data-port line, exported workflow binding, or native data-table value proof showing `更新数据表.1` values changed from Python output. 2026-06-16 live debugging also showed direct Python callback writeback can hang the WFC DEBUG run, so the official WFC007 route remains `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入`.
-- Stable API endpoint evidence remains a strengthening item until an approved fixed HTTPS endpoint or Xcelerator proxy URL is available. `scripts/verify_stable_wearedge_endpoint.py` now checks `/healthz`, `/v1/edge/runtime-profile`, and `/v1/workflow-canvas/decision` and rejects temporary/local tunnel hosts as final stable evidence.
+- Stable API endpoint evidence remains a strengthening item until an approved fixed HTTPS endpoint or Xcelerator proxy URL is available. `scripts/verify_stable_wearedge_endpoint.py` now checks `/healthz`, `/v1/edge/runtime-profile`, and `/v1/workflow-canvas/decision` and rejects temporary/local tunnel hosts as final stable evidence. The primary deployment route is now Google Cloud Run: `Dockerfile.cloudrun` packages the lightweight deterministic API, and `deploy/cloud-run/cloud-shell-deploy.sh` builds/deploys it through Cloud Build and prints the `*.run.app` URL for verification and Xcelerator backend configuration.
 - Stable endpoint deployment paths are documented in `deploy/stable-endpoint/`: enterprise HTTPS gateway, Cloudflare Named Tunnel with a bound domain, and Xcelerator API World Proxy. A localhost preflight may prove API contract only; it is not final endpoint evidence.
 - The official competition page review is captured in `docs/submission/siemens-track-official-review-20260616.md`; it confirms Wearedge is aligned to the Siemens track and lists current omissions against the official page.
 - Current edge runtime profile is API-ready and can be captured locally through `GET /v1/edge/runtime-profile`.
