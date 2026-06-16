@@ -26,6 +26,12 @@ WFC_REPLACEMENT_TARGETS = (
     "gongyi-mofang/06-human-approval-gate.png",
 )
 
+STRENGTHENING_TARGETS = (
+    "gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png",
+    "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png",
+    "stable-endpoint/stable-endpoint-evidence.md",
+)
+
 HUMAN_FINAL_TARGETS = (
     "legal/company-info-filled.md",
     "legal/ip-and-no-dispute-signed.pdf",
@@ -43,13 +49,28 @@ ACTION_DETAIL = {
     },
     "gongyi-mofang/05-run-log-ok-true.png": {
         "owner": "WFC operator",
-        "action": "Keep the reviewed live WFC run-log screenshot; recapture only if workflow code changes.",
-        "acceptance": "Shows WFC-native CallWearedgeDecisionApi.output JSON beginning with ok=true; data-table writeback is tracked separately.",
+        "action": "Keep the reviewed live WFC run-log screenshot for the required gate; after pasting the updated live-edit package, recapture the run log.",
+        "acceptance": "Shows WFC-native CallWearedgeDecisionApi.output JSON beginning with ok=true; preferred recapture also shows wfc_writeback.method=wfc_output1_to_update_data_table.",
     },
     "gongyi-mofang/06-human-approval-gate.png": {
         "owner": "WFC operator",
         "action": "Show HumanApprovalGate or approval-state panel for a high-risk recommendation.",
         "acceptance": "Shows pending/approved/rejected human confirmation; model is not directly controlling OT.",
+    },
+    "gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png": {
+        "owner": "WFC operator",
+        "action": "After pasting the updated WFC Function Block code, capture the live output JSON.",
+        "acceptance": "Shows ok=true plus wfc_writeback.method=wfc_output1_to_update_data_table and fields_ready values.",
+    },
+    "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png": {
+        "owner": "WFC operator",
+        "action": "Capture the native WFC data table after connecting output1 to UpdateDataTable and running DEBUG.",
+        "acceptance": "Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object.",
+    },
+    "stable-endpoint/stable-endpoint-evidence.md": {
+        "owner": "Platform operator",
+        "action": "Run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists.",
+        "acceptance": "Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host.",
     },
     "legal/company-info-filled.md": {
         "owner": "Enterprise owner",
@@ -91,6 +112,7 @@ def build_action_board(*, assets_dir: Path = DEFAULT_ASSETS_DIR, repo_root: Path
     repo = verify_package(repo_root)
     item_map = {item["path"]: item for item in live["items"]}
     wfc_items = [_action_row(path, item_map) for path in WFC_REPLACEMENT_TARGETS]
+    strengthening_items = [_optional_action_row(path, assets_dir) for path in STRENGTHENING_TARGETS]
     human_items = [_action_row(path, item_map) for path in HUMAN_FINAL_TARGETS]
     return {
         "ok": bool(repo["repo_ready"]) and bool(foundation["foundation_ready"]),
@@ -105,8 +127,9 @@ def build_action_board(*, assets_dir: Path = DEFAULT_ASSETS_DIR, repo_root: Path
         "latency_replay": foundation["latency_replay"],
         "priority_gaps": list(foundation["priority_gaps"]),
         "wfc_replacement_items": wfc_items,
+        "strengthening_items": strengthening_items,
         "human_final_items": human_items,
-        "next_actions": _next_actions(wfc_items, human_items),
+        "next_actions": _next_actions(wfc_items, human_items, strengthening_items),
     }
 
 
@@ -128,10 +151,49 @@ def _action_row(path: str, item_map: dict[str, dict[str, Any]]) -> dict[str, Any
     }
 
 
-def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, Any]]) -> list[str]:
+def _optional_action_row(path: str, assets_dir: Path) -> dict[str, Any]:
+    detail = ACTION_DETAIL[path]
+    full_path = assets_dir / path
+    present = _optional_target_ready(path, full_path, assets_dir)
+    status = "present" if present else "optional_pending"
+    if path == "stable-endpoint/stable-endpoint-evidence.md" and full_path.exists() and not present:
+        status = "needs_stable_endpoint"
+    return {
+        "path": path,
+        "status": status,
+        "present": present,
+        "fallback": False,
+        "title": path,
+        "owner": detail["owner"],
+        "action": detail["action"],
+        "acceptance": detail["acceptance"],
+    }
+
+
+def _optional_target_ready(path: str, full_path: Path, assets_dir: Path) -> bool:
+    if not full_path.exists() or not full_path.is_file() or full_path.stat().st_size == 0:
+        return False
+    if path != "stable-endpoint/stable-endpoint-evidence.md":
+        return True
+    evidence_json = assets_dir / "stable-endpoint" / "stable-endpoint-evidence.json"
+    if not evidence_json.exists():
+        return False
+    try:
+        data = json.loads(evidence_json.read_text(encoding="utf-8"))
+    except json.JSONDecodeError:
+        return False
+    return bool(data.get("ready")) and (data.get("endpoint") or {}).get("evidence_tier") == "stable_https"
+
+
+def _next_actions(
+    wfc_items: list[dict[str, Any]],
+    human_items: list[dict[str, Any]],
+    strengthening_items: list[dict[str, Any]],
+) -> list[str]:
     actions: list[str] = []
     fallback_paths = [item["path"] for item in wfc_items if item["fallback"]]
     missing_wfc_paths = [item["path"] for item in wfc_items if not item["present"]]
+    optional_pending = [item["path"] for item in strengthening_items if not item["present"]]
     if fallback_paths:
         actions.append(
             "Replace remaining WFC fallback screenshots with reviewed live WFC screenshots: "
@@ -145,7 +207,15 @@ def _next_actions(wfc_items: list[dict[str, Any]], human_items: list[dict[str, A
             + "."
         )
     else:
-        actions.append("Keep the current WFC live evidence set; recapture only if workflow code, dashboard fields, or approval UI changes.")
+        actions.append(
+            "Keep the current WFC live evidence set for the required gate; use the live-edit package to recapture run-log/writeback proof when promoting the updated Function Block into WFC."
+        )
+    if optional_pending:
+        actions.append(
+            "Upgrade high-value proof when platform time is available: "
+            + ", ".join(optional_pending)
+            + "."
+        )
     if any(item["status"] == "missing" for item in human_items):
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
     if fallback_paths or missing_wfc_paths:
@@ -209,6 +279,23 @@ def render_action_board(board: dict[str, Any]) -> str:
     lines.extend(
         [
             "",
+            "## High-Value Strengthening",
+            "",
+            "These items improve finals-readiness and credibility, but they do not change the six human-owned final blockers.",
+            "",
+            "| Status | Target | Owner | Action | Acceptance |",
+            "| --- | --- | --- | --- | --- |",
+        ]
+    )
+    for item in board["strengthening_items"]:
+        lines.append(
+            f"| {item['status']} | `{item['path']}` | {item['owner']} | "
+            f"{item['action']} | {item['acceptance']} |"
+        )
+
+    lines.extend(
+        [
+            "",
             "## Human-Owned Final Files",
             "",
             "| Status | Target | Owner | Action | Acceptance |",
@@ -252,7 +339,8 @@ def render_action_board(board: dict[str, Any]) -> str:
             "## Boundary",
             "",
             "- Do not commit files under `submission-assets/live-evidence/`.",
-            "- Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC only when the workflow changes.",
+            "- Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC when the updated Function Block is promoted into the platform.",
+            "- WFC dynamic data-table writeback and stable HTTPS endpoint evidence are high-value strengthening items until captured from the live platform.",
             "- For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.",
             "- Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.",
             "- Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.",

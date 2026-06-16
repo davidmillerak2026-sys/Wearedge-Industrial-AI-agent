@@ -1,6 +1,7 @@
 from __future__ import annotations
 
 import importlib.util
+import json
 import sys
 from pathlib import Path
 
@@ -50,6 +51,10 @@ def test_action_board_tracks_final_missing_and_live_wfc_completion(tmp_path: Pat
     assert all(item["status"] == "present" for item in board["wfc_replacement_items"])
     assert board["fallback_warnings"] == []
     assert "final_edge_fastapi_http_gateway" in report
+    assert len(board["strengthening_items"]) == 3
+    assert "High-Value Strengthening" in report
+    assert "wfc_writeback.method=wfc_output1_to_update_data_table" in report
+    assert "stable-endpoint/stable-endpoint-evidence.md" in report
     expected_latency = (
         f"Edge HTTP p95/max latency: {board['latency_replay']['wall_latency_ms_p95']} / "
         f"{board['latency_replay']['wall_latency_ms_max']} ms"
@@ -70,4 +75,31 @@ def test_action_board_can_render_with_temp_missing_assets(tmp_path: Path) -> Non
     assert len(board["human_final_items"]) == 6
     assert all(item["status"] == "missing" for item in board["human_final_items"])
     assert "| missing | `gongyi-mofang/04-dashboard-decision-view.png`" in report
+    assert "| optional_pending | `gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png`" in report
     assert "Complete the six enterprise-owned legal/contact/submission evidence files." in report
+
+
+def test_action_board_does_not_count_temporary_endpoint_report_as_ready(tmp_path: Path) -> None:
+    module = _load_module()
+    assets_dir = tmp_path / "live-evidence"
+    _seed_platform_evidence(assets_dir)
+    stable_dir = assets_dir / "stable-endpoint"
+    stable_dir.mkdir(parents=True)
+    (stable_dir / "stable-endpoint-evidence.md").write_text("# temporary", encoding="utf-8")
+    (stable_dir / "stable-endpoint-evidence.json").write_text(
+        json.dumps(
+            {
+                "ready": False,
+                "endpoint": {"evidence_tier": "temporary_or_local"},
+            }
+        ),
+        encoding="utf-8",
+    )
+
+    board = module.build_action_board(assets_dir=assets_dir)
+
+    stable_item = [
+        item for item in board["strengthening_items"] if item["path"] == "stable-endpoint/stable-endpoint-evidence.md"
+    ][0]
+    assert stable_item["present"] is False
+    assert stable_item["status"] == "needs_stable_endpoint"

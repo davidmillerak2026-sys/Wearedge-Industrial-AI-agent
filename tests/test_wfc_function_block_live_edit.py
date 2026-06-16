@@ -104,6 +104,16 @@ def test_wfc_function_block_outputs_compact_summary(monkeypatch):
         "CallWearedgeDecisionApi",
         "HumanApprovalGate",
     ]
+    assert summary["wfc_writeback"]["attempted"] is False
+    assert summary["wfc_writeback"]["method"] == "wfc_output1_to_update_data_table"
+    assert summary["wfc_writeback"]["target_block"] == "System.UpdateDataTable.1"
+    assert summary["wfc_writeback"]["fields_ready"] == {
+        "selected_direction": "maintenance",
+        "priority": "high",
+        "recommended_action": "Create maintenance work order and confirm bearing signal.",
+        "approval_status": "pending",
+        "latency_ms": 12,
+    }
     assert "evaluations" not in summary
 
 
