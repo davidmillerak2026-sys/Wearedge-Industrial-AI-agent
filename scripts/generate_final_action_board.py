@@ -29,7 +29,9 @@ WFC_REPLACEMENT_TARGETS = (
 STRENGTHENING_TARGETS = (
     "gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png",
     "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png",
+    "gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw",
     "stable-endpoint/stable-endpoint-evidence.md",
+    "xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png",
 )
 
 HUMAN_FINAL_TARGETS = (
@@ -64,13 +66,23 @@ ACTION_DETAIL = {
     },
     "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png": {
         "owner": "WFC operator",
-        "action": "Export workflow JSON for binding analysis or manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG.",
+        "action": "If WFC can export readable JSON, run binding analysis; otherwise manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG.",
         "acceptance": "Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object.",
+    },
+    "gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw": {
+        "owner": "WFC operator",
+        "action": "Keep the live WFC workflow and deployment-data exports archived under ignored evidence.",
+        "acceptance": "Shows project assets can be exported/archived; .wfcw/.wfcd are proprietary binary exports and do not replace JSON binding analysis or live data-table proof.",
     },
     "stable-endpoint/stable-endpoint-evidence.md": {
         "owner": "Platform operator",
-        "action": "Choose a stable route from deploy/stable-endpoint, then run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists.",
+        "action": "Cloud Run stable endpoint is deployed; rerun the stable endpoint verifier before final upload.",
         "acceptance": "Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host.",
+    },
+    "xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png": {
+        "owner": "Platform operator",
+        "action": "Keep the Xcelerator API service backend replacement screenshot and continue selector/path binding.",
+        "acceptance": "Shows Cloud Run URL in the live Xcelerator draft; proxy selector still needs verification until it returns Wearedge ok=true.",
     },
     "legal/company-info-filled.md": {
         "owner": "Enterprise owner",
@@ -173,6 +185,9 @@ def _optional_action_row(path: str, assets_dir: Path) -> dict[str, Any]:
 def _optional_target_ready(path: str, full_path: Path, assets_dir: Path) -> bool:
     if not full_path.exists() or not full_path.is_file() or full_path.stat().st_size == 0:
         return False
+    if path == "gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw":
+        deployment_export = assets_dir / "gongyi-mofang" / "workflow-export" / "200-wfc-deployment-data-export-20260616.wfcd"
+        return deployment_export.exists() and deployment_export.is_file() and deployment_export.stat().st_size > 0
     if path != "stable-endpoint/stable-endpoint-evidence.md":
         return True
     evidence_json = assets_dir / "stable-endpoint" / "stable-endpoint-evidence.json"
@@ -208,7 +223,7 @@ def _next_actions(
         )
     else:
         actions.append(
-            "Finish the high-value WFC writeback proof by exporting workflow JSON for binding analysis or manually connecting `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`."
+            "Finish the high-value WFC writeback proof: if WFC can provide readable JSON export, run binding analysis; otherwise manually connect `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`."
         )
     stable_endpoint_item = next(
         (item for item in strengthening_items if item["path"] == "stable-endpoint/stable-endpoint-evidence.md"),
@@ -217,6 +232,10 @@ def _next_actions(
     if stable_endpoint_item and not stable_endpoint_item["present"]:
         actions.append(
             "Choose a stable endpoint route from `deploy/stable-endpoint/` and run `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-host> --write-evidence`; local/temporary tunnel preflight is not final evidence."
+        )
+    elif stable_endpoint_item and stable_endpoint_item["present"]:
+        actions.append(
+            "Keep the Cloud Run stable endpoint evidence current with `python scripts/verify_stable_wearedge_endpoint.py --base-url https://wearedge-agent-service-863888677331.asia-east1.run.app --write-evidence` before final upload."
         )
     remaining_optional = [
         path
@@ -234,7 +253,7 @@ def _next_actions(
             + "."
         )
     actions.append(
-        "Re-login to Xcelerator and capture live debug/test calls for `/v1/edge/runtime-profile` and `/v1/workflow-canvas/decision`."
+        "Finish Xcelerator API selector/path binding: backend has been filled with Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`, but the tenant proxy currently returns code `-107`; use `python scripts/verify_xcelerator_proxy.py --write-evidence` after each platform change until proxy returns Wearedge `ok=true`."
     )
     if any(item["status"] == "missing" for item in human_items):
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
@@ -360,7 +379,8 @@ def render_action_board(board: dict[str, Any]) -> str:
             "",
             "- Do not commit files under `submission-assets/live-evidence/`.",
             "- Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC when the updated Function Block is promoted into the platform.",
-            "- WFC dynamic data-table writeback and stable HTTPS endpoint evidence are high-value strengthening items until captured from the live platform.",
+            "- WFC dynamic data-table writeback is still a high-value strengthening item; stable HTTPS endpoint evidence is now captured via Cloud Run, and Xcelerator backend replacement is partially evidenced. Xcelerator live debug screenshots remain pending because the tenant proxy currently returns selector error code `-107`.",
+            "- For the next manual capture session, use `docs/submission/live-enhancement-capture-runbook-20260616.md`.",
             "- For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.",
             "- Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.",
             "- Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.",

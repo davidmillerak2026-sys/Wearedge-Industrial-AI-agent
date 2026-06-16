@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-16T15:10:00+08:00
+Updated: 2026-06-16T11:37:09+00:00
 
 ## Current Gate
 
@@ -16,9 +16,9 @@ Updated: 2026-06-16T15:10:00+08:00
 
 ## Do Next
 
-1. Finish the high-value WFC writeback proof by exporting workflow JSON for binding analysis or manually connecting `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`.
-2. Finish Xcelerator API selector/path binding: backend has been filled with Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`, but the tenant proxy currently returns code `-107`; use `python scripts/verify_xcelerator_proxy.py --write-evidence` after each platform change until proxy returns Wearedge `ok=true`.
-3. Keep the Cloud Run stable endpoint evidence current with `python scripts/verify_stable_wearedge_endpoint.py --base-url https://wearedge-agent-service-863888677331.asia-east1.run.app --write-evidence` before final upload.
+1. Finish the high-value WFC writeback proof: if WFC can provide readable JSON export, run binding analysis; otherwise manually connect `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`.
+2. Keep the Cloud Run stable endpoint evidence current with `python scripts/verify_stable_wearedge_endpoint.py --base-url https://wearedge-agent-service-863888677331.asia-east1.run.app --write-evidence` before final upload.
+3. Finish Xcelerator API selector/path binding: backend has been filled with Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`, but the tenant proxy currently returns code `-107`; use `python scripts/verify_xcelerator_proxy.py --write-evidence` after each platform change until proxy returns Wearedge `ok=true`.
 4. Complete the six enterprise-owned legal/contact/submission evidence files.
 5. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.
 6. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
@@ -38,10 +38,10 @@ These items improve finals-readiness and credibility, but they do not change the
 | Status | Target | Owner | Action | Acceptance |
 | --- | --- | --- | --- | --- |
 | present | `gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png` | WFC operator | After pasting the updated WFC Function Block code, capture the live output JSON. | Shows ok=true plus wfc_writeback.method=wfc_output1_to_update_data_table and fields_ready values. |
-| optional_pending | `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png` | WFC operator | Export workflow JSON for binding analysis or manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG. | Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object. |
-| partial | `gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw` and `200-wfc-deployment-data-export-20260616.wfcd` | WFC operator | Live WFC export succeeded for workflow and deployment data. | Proves project assets can be exported/archived; files are proprietary binary, so they do not replace JSON binding analysis or live data-table screenshot. |
-| present | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Cloud Run stable endpoint is deployed at `https://wearedge-agent-service-863888677331.asia-east1.run.app`; verifier passed with `ready=True`. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
-| partial | `xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png` | Platform operator | Xcelerator API service backend has been filled with the Cloud Run endpoint and server path `/`. | Shows Cloud Run URL in the live Xcelerator draft; proxy selector still needs verification because current proxy calls return code `-107`. |
+| optional_pending | `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png` | WFC operator | If WFC can export readable JSON, run binding analysis; otherwise manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG. | Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object. |
+| present | `gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw` | WFC operator | Keep the live WFC workflow and deployment-data exports archived under ignored evidence. | Shows project assets can be exported/archived; .wfcw/.wfcd are proprietary binary exports and do not replace JSON binding analysis or live data-table proof. |
+| present | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Cloud Run stable endpoint is deployed; rerun the stable endpoint verifier before final upload. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
+| present | `xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png` | Platform operator | Keep the Xcelerator API service backend replacement screenshot and continue selector/path binding. | Shows Cloud Run URL in the live Xcelerator draft; proxy selector still needs verification until it returns Wearedge ok=true. |
 
 ## Human-Owned Final Files
 

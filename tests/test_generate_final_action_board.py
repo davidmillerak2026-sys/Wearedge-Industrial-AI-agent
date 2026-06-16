@@ -51,10 +51,12 @@ def test_action_board_tracks_final_missing_and_live_wfc_completion(tmp_path: Pat
     assert all(item["status"] == "present" for item in board["wfc_replacement_items"])
     assert board["fallback_warnings"] == []
     assert "final_edge_fastapi_http_gateway" in report
-    assert len(board["strengthening_items"]) == 3
+    assert len(board["strengthening_items"]) == 5
     assert "High-Value Strengthening" in report
     assert "wfc_writeback.method=wfc_output1_to_update_data_table" in report
     assert "stable-endpoint/stable-endpoint-evidence.md" in report
+    assert "workflow-export/199-wfc-workflow-export-20260616.wfcw" in report
+    assert "xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png" in report
     expected_latency = (
         f"Edge HTTP p95/max latency: {board['latency_replay']['wall_latency_ms_p95']} / "
         f"{board['latency_replay']['wall_latency_ms_max']} ms"
@@ -62,7 +64,7 @@ def test_action_board_tracks_final_missing_and_live_wfc_completion(tmp_path: Pat
     assert expected_latency in report
     assert "Finish the high-value WFC writeback proof" in report
     assert "deploy/stable-endpoint/" in report
-    assert "Re-login to Xcelerator" in report
+    assert "Finish Xcelerator API selector/path binding" in report
     assert "verify_final_external_assets.py" in report
     assert "Current WFC replacement targets should have no fallback metadata" in report
 
@@ -105,3 +107,22 @@ def test_action_board_does_not_count_temporary_endpoint_report_as_ready(tmp_path
     ][0]
     assert stable_item["present"] is False
     assert stable_item["status"] == "needs_stable_endpoint"
+
+
+def test_action_board_requires_both_wfc_export_files(tmp_path: Path) -> None:
+    module = _load_module()
+    assets_dir = tmp_path / "live-evidence"
+    _seed_platform_evidence(assets_dir)
+    export_dir = assets_dir / "gongyi-mofang" / "workflow-export"
+    export_dir.mkdir(parents=True)
+    (export_dir / "199-wfc-workflow-export-20260616.wfcw").write_bytes(b"binary")
+
+    board = module.build_action_board(assets_dir=assets_dir)
+
+    export_item = [
+        item
+        for item in board["strengthening_items"]
+        if item["path"] == "gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw"
+    ][0]
+    assert export_item["present"] is False
+    assert export_item["status"] == "optional_pending"
