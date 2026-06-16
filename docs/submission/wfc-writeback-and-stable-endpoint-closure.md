@@ -63,6 +63,23 @@ submission-assets/live-evidence/gongyi-mofang/
 198-wfc-output1-to-update-table-data-wire-20260616.png
 ```
 
+### 2026-06-16 GUI 继续执行结果
+
+本次继续按 live WFC 页面尝试建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据端口连接。浏览器画布中可以看到 `CallWearedgeDecisionApi` 和 `更新数据表.1`，但端口坐标仍不稳定：一次拖拽没有形成清晰虚线数据连接，而是移动了 Python Function Block。已立即执行撤销，后续截图确认画布恢复到原位置且保持 `已保存` 状态。
+
+本次不把 WFC 原生动态写表记为完成。当前完成级别仍是：
+
+- live WFC `CallWearedgeDecisionApi.output` 返回 `ok=true`。
+- 输出 JSON 包含 `wfc_writeback.method=wfc_output1_to_update_data_table`。
+- 输出 JSON 包含 `fields_ready`，说明 Python 侧已经准备好写表字段。
+- `更新数据表.1` 可承载 Wearedge 决策字段，并已在真实 WFC DEBUG 中证明字段锁定和数据表目标存在。
+
+下一次最短闭环路线：
+
+1. 从 WFC 导出 workflow/project JSON，运行 `scripts/analyze_wfc_workflow_bindings.py <workflow.json> --require-confirmed`，用结构化文件确认数据线。
+2. 或人工在 WFC GUI 中精确建立 `输出1 -> 更新数据表.1` 虚线数据连接后，截图 `198-wfc-output1-to-update-table-data-wire-20260616.png`。
+3. 再运行 DEBUG，截图 `197-wfc-data-table-values-after-python-writeback-20260616.png`，证明原生数据表值与 `fields_ready` 一致。
+
 ## B. 稳定 API / 平台复现地址
 
 ### 什么算稳定
@@ -99,6 +116,7 @@ python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-hos
 - `workflow_canvas_ready=True`
 - 决策 `ok=True`
 - `competition_metrics.latency_target_met=True`
+- 兼容 `/v1/edge/runtime-profile` 中顶层 `workflow_canvas_ready=True` 或嵌套 `edge_capabilities.workflow_canvas_ready=True`。
 
 证据输出：
 
@@ -113,6 +131,45 @@ submission-assets/live-evidence/stable-endpoint/stable-endpoint-evidence.md
 - 未经负责人确认，不自动公开本地服务或启动长期公网 tunnel。
 - Xcelerator 服务若仍为草稿/租户内，不写成“已公开上架”。
 - 临时 HTTPS PoC 可写为“外部可达验证”，不可写为“稳定平台复现地址”。
+
+### 2026-06-16 稳定 endpoint 执行结果
+
+本次已新增稳定 endpoint 部署包：
+
+```text
+deploy/stable-endpoint/
+```
+
+其中包括：
+
+- `README.md`：企业 HTTPS 网关、Cloudflare Named Tunnel、Xcelerator API World Proxy 三条路线。
+- `nginx-wearedge.conf.template`：面向固定域名和 TLS 证书的反向代理模板。
+- `cloudflared-config.yml.template`：面向 Cloudflare Named Tunnel 的稳定域名模板。
+
+同时已用本地 `http://127.0.0.1:8081` 跑通 API 合同预检：`/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision` 均可返回有效结果。由于该地址不是非临时 HTTPS，verifier 会按预期保留唯一失败项：
+
+```text
+endpoint is not stable HTTPS; use only as temporary PoC evidence
+```
+
+因此当前结论是：代码和 API 合同已经准备好，稳定复现证据还需要固定 HTTPS 域名、Cloudflare Named Tunnel 绑定域名，或 Xcelerator API World 代理地址。
+
+## C. Xcelerator 调试调用截图
+
+当前已存在 Xcelerator 应用草稿、API 服务草稿和 4 个接口导入截图。2026-06-16 重新打开 `https://developers.siemens-x.com.cn/integration/api` 时页面回到登录态，因此本次没有继续进行 Console 内 live 调试调用，也没有保存任何账号、密钥或 AppSecret。
+
+本次已生成可用于 Xcelerator 调试前核对的本地 API 预检响应，存放在 ignored live-evidence 目录：
+
+```text
+submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcelerator.json
+```
+
+该文件只能作为“待放入 Xcelerator 调试面板的 API 预检素材”，不能替代 Xcelerator Console live 调用截图。正式证据仍需在重新登录后完成：
+
+1. 打开 API 服务草稿。
+2. 使用稳定 HTTPS host 或 Xcelerator proxy 调用 `/v1/edge/runtime-profile`。
+3. 调用 `/v1/workflow-canvas/decision`。
+4. 截图保存到 `submission-assets/live-evidence/xcelerator/`，并在材料中标注服务仍为草稿/租户内或已授权范围。
 
 ## 提交口径
 

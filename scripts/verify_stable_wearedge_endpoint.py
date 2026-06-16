@@ -91,7 +91,10 @@ def verify(base_url: str, payload_path: Path, token: str | None = None) -> dict[
         failures.append("workflow decision ok must be true")
     if (decision.get("competition_metrics") or {}).get("latency_target_met") is not True:
         failures.append("workflow decision latency target must be met")
-    if profile.get("workflow_canvas_ready") is not True:
+    workflow_canvas_ready = profile.get("workflow_canvas_ready") is True or (
+        (profile.get("edge_capabilities") or {}).get("workflow_canvas_ready") is True
+    )
+    if not workflow_canvas_ready:
         failures.append("runtime profile workflow_canvas_ready must be true")
     if endpoint["evidence_tier"] != "stable_https":
         failures.append("endpoint is not stable HTTPS; use only as temporary PoC evidence")

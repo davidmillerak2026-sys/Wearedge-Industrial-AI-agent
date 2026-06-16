@@ -56,7 +56,7 @@ def test_verify_passes_stable_https_contract(monkeypatch, tmp_path: Path) -> Non
         if request.full_url.endswith("/healthz"):
             return FakeResponse(200, {"ok": True})
         if request.full_url.endswith("/v1/edge/runtime-profile"):
-            return FakeResponse(200, {"ok": True, "workflow_canvas_ready": True})
+            return FakeResponse(200, {"ok": True, "edge_capabilities": {"workflow_canvas_ready": True}})
         if request.full_url.endswith("/v1/workflow-canvas/decision"):
             return FakeResponse(
                 200,

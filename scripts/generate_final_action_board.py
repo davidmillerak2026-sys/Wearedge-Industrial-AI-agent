@@ -64,12 +64,12 @@ ACTION_DETAIL = {
     },
     "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png": {
         "owner": "WFC operator",
-        "action": "Capture the native WFC data table after connecting output1 to UpdateDataTable and running DEBUG.",
+        "action": "Export workflow JSON for binding analysis or manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG.",
         "acceptance": "Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object.",
     },
     "stable-endpoint/stable-endpoint-evidence.md": {
         "owner": "Platform operator",
-        "action": "Run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists.",
+        "action": "Choose a stable route from deploy/stable-endpoint, then run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists.",
         "acceptance": "Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host.",
     },
     "legal/company-info-filled.md": {
@@ -208,14 +208,34 @@ def _next_actions(
         )
     else:
         actions.append(
-            "Keep the current WFC live evidence set for the required gate; use the live-edit package to recapture run-log/writeback proof when promoting the updated Function Block into WFC."
+            "Finish the high-value WFC writeback proof by exporting workflow JSON for binding analysis or manually connecting `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`."
         )
-    if optional_pending:
+    stable_endpoint_item = next(
+        (item for item in strengthening_items if item["path"] == "stable-endpoint/stable-endpoint-evidence.md"),
+        None,
+    )
+    if stable_endpoint_item and not stable_endpoint_item["present"]:
+        actions.append(
+            "Choose a stable endpoint route from `deploy/stable-endpoint/` and run `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-host> --write-evidence`; local/temporary tunnel preflight is not final evidence."
+        )
+    remaining_optional = [
+        path
+        for path in optional_pending
+        if path
+        not in {
+            "gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png",
+            "stable-endpoint/stable-endpoint-evidence.md",
+        }
+    ]
+    if remaining_optional:
         actions.append(
             "Upgrade high-value proof when platform time is available: "
-            + ", ".join(optional_pending)
+            + ", ".join(remaining_optional)
             + "."
         )
+    actions.append(
+        "Re-login to Xcelerator and capture live debug/test calls for `/v1/edge/runtime-profile` and `/v1/workflow-canvas/decision`."
+    )
     if any(item["status"] == "missing" for item in human_items):
         actions.append("Complete the six enterprise-owned legal/contact/submission evidence files.")
     if fallback_paths or missing_wfc_paths:

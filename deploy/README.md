@@ -6,6 +6,7 @@ Deployment templates for running WearEdge Pro services on the Jetson edge node.
 | --- | --- |
 | [`systemd/wearedge-llama.service`](systemd/wearedge-llama.service) | Starts the local llama.cpp multimodal model server. |
 | [`systemd/wearedge-gateway.service`](systemd/wearedge-gateway.service) | Starts the FastAPI gateway that M400 and other clients call. |
+| [`stable-endpoint/`](stable-endpoint/) | Templates for exposing the Wearedge gateway through a stable HTTPS endpoint for Xcelerator/WFC evidence. |
 
 ## Notes
 

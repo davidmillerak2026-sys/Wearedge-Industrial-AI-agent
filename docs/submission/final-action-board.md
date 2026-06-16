@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-16T04:31:12+00:00
+Updated: 2026-06-16T04:59:40+00:00
 
 ## Current Gate
 
@@ -16,11 +16,12 @@ Updated: 2026-06-16T04:31:12+00:00
 
 ## Do Next
 
-1. Keep the current WFC live evidence set for the required gate; use the live-edit package to recapture run-log/writeback proof when promoting the updated Function Block into WFC.
-2. Upgrade high-value proof when platform time is available: gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png, stable-endpoint/stable-endpoint-evidence.md.
-3. Complete the six enterprise-owned legal/contact/submission evidence files.
-4. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.
-5. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
+1. Finish the high-value WFC writeback proof by exporting workflow JSON for binding analysis or manually connecting `输出1 -> 更新数据表.1`, then capture `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png`.
+2. Choose a stable endpoint route from `deploy/stable-endpoint/` and run `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-host> --write-evidence`; local/temporary tunnel preflight is not final evidence.
+3. Re-login to Xcelerator and capture live debug/test calls for `/v1/edge/runtime-profile` and `/v1/workflow-canvas/decision`.
+4. Complete the six enterprise-owned legal/contact/submission evidence files.
+5. Run `python scripts/verify_final_external_assets.py --write-report` after signed PDFs, final screenshots, video, and live WFC evidence are in place.
+6. Run `python scripts/run_final_readiness_pipeline.py --json` and `python scripts/verify_live_evidence.py --stage final --write-manifest` before final upload.
 
 ## WFC Live Replacement
 
@@ -37,8 +38,8 @@ These items improve finals-readiness and credibility, but they do not change the
 | Status | Target | Owner | Action | Acceptance |
 | --- | --- | --- | --- | --- |
 | present | `gongyi-mofang/196-wfc-dynamic-writeback-output-ok-20260616.png` | WFC operator | After pasting the updated WFC Function Block code, capture the live output JSON. | Shows ok=true plus wfc_writeback.method=wfc_output1_to_update_data_table and fields_ready values. |
-| optional_pending | `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png` | WFC operator | Capture the native WFC data table after connecting output1 to UpdateDataTable and running DEBUG. | Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object. |
-| needs_stable_endpoint | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
+| optional_pending | `gongyi-mofang/197-wfc-data-table-values-after-python-writeback-20260616.png` | WFC operator | Export workflow JSON for binding analysis or manually connect output1 to UpdateDataTable, then capture the native WFC data table after DEBUG. | Shows selected_direction, approval_status, recommended_action, and latency_ms values matching the Python output fields_ready object. |
+| needs_stable_endpoint | `stable-endpoint/stable-endpoint-evidence.md` | Platform operator | Choose a stable route from deploy/stable-endpoint, then run the stable endpoint verifier once an approved fixed HTTPS endpoint or Xcelerator proxy URL exists. | Shows healthz, runtime-profile, and workflow-canvas decision checks passing on a non-temporary HTTPS host. |
 
 ## Human-Owned Final Files
 

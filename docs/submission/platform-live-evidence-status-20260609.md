@@ -32,6 +32,8 @@
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
 | WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 | WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
+| 稳定 HTTPS endpoint 部署包 | 已入库，待固定域名或平台代理 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。`scripts/verify_stable_wearedge_endpoint.py` 已可校验 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，并会拒绝 localhost/临时 tunnel 作为最终稳定证据。 |
+| Xcelerator 调试调用截图 | 待重新登录后补 | 2026-06-16 重新打开 Xcelerator Console 时页面回到登录态；未绕过登录、未保存密钥。已生成本地 API 预检响应 `submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcelerator.json`，只能作为调试素材，不能替代 live Console 调用截图。 |
 
 已导入接口：
 
@@ -83,6 +85,7 @@
 | `41-xcelerator-client-app-home-refresh.png` | 2026-06-11 用户重新登录/进入应用后的应用主页刷新截图。 |
 | `42-xcelerator-api-detail-refresh.png` | 2026-06-11 API 详情刷新截图，确认服务仍为未发布、租户内草稿。 |
 | `43-xcelerator-api-interface-list-refresh-four-endpoints.png` | 2026-06-11 接口信息刷新截图，确认 4 个接口仍在草稿中且未启用。 |
+| `41-local-api-debug-response-for-xcelerator.json` | 2026-06-16 本地 API 预检响应，供重新登录 Xcelerator 后在调试面板复核字段；不是 Xcelerator live 调用证据。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -164,6 +167,7 @@
 | 人工确认原生节点截图 | SiteScope live HumanApprovalGate 已可用于 required gate；如要进一步增强，可在真实 WFC 中添加高风险动作确认/人工确认节点并截图。 |
 | 真实 HTTPS Wearedge Agent Service | 已用临时 HTTPS PoC 网关完成一次 `/v1/edge/runtime-profile` 外部可达验证；正式提交前仍需稳定域名或平台侧可复现地址。 |
 | Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
+| Xcelerator 当前登录态 | 2026-06-16 重新打开 Console 时进入登录页；下一次需要负责人重新登录后再补 live debug/test screenshot。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
 | 企业主体/联系人/IP 承诺 | 由负责人补齐真实公司信息、联系人、承诺材料。 |
 
@@ -187,12 +191,14 @@
 - 2026-06-13 同步尝试了两次端口拖拽建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 虚线数据连接；两次均只移动了功能块，未形成清晰虚线，已立即撤销，最终项目保持 `已保存` 干净状态。当前不得声称 Python 动态写表已完成。
 - 2026-06-15 已将 `04-dashboard-decision-view.png` 和 `06-human-approval-gate.png` 更新为 Wearedge WFC PoC / SiteScope 来源的 live 展示图，fallback sidecar 已移除，`verify_live_evidence.py --stage final` 不再给出 04/06 fallback warning。
 - 2026-06-16 重新进入当前 WFC 项目，停止旧 DEBUG 后打开 `fb_main.py`，粘贴新版 Function Block。仓库版 `DEFAULT_BASE_URL` 保持空值，live 平台内临时填入当前 PoC endpoint 以绕过资源参数未传递的问题；未把临时 endpoint、账号、密码、token 或密钥写入 Git。DEBUG 运行后 WFC 真实触发 `/v1/workflow-canvas/decision`，属性面板 `输出1` 返回 `ok=true`，`状态码 Good`，完整 DOM 输出包含 `wfc_writeback.method=wfc_output1_to_update_data_table` 和 `fields_ready`。
+- 2026-06-16 继续尝试在 WFC canvas 中建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据连接；一次 GUI 拖拽未形成虚线数据线，只移动了功能块，已立即撤销并确认项目保持 `已保存`。当前不得声称原生动态数据表写回已完成；下一步优先导出 workflow JSON 用 `scripts/analyze_wfc_workflow_bindings.py` 验证绑定，或人工精确连线后截图。
+- 2026-06-16 本地启动 Wearedge API 并用 `scripts/verify_stable_wearedge_endpoint.py --base-url http://127.0.0.1:8081` 做稳定 endpoint 预检：API 合同通过，但 verifier 正确拒绝 localhost 作为稳定 HTTPS 证据。已新增 `deploy/stable-endpoint/` 三路线部署模板。
 
 ## 下一步建议
 
-1. 精修 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
-2. 创建 Wearedge Dashboard/ui-builder 视图，展示指标卡、决策路径、确认项和工作流状态。
-3. 补 WFC 原生数据表运行后动态值画面，让 `fields_ready` 不只停留在 `输出1` JSON。
+1. 通过导出 workflow JSON 或人工精确连线，完成 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
+2. 重新登录 Xcelerator 后，在 API 服务草稿/调试面板补 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` live 调用截图。
+3. 选择一条稳定 endpoint 路线：企业 HTTPS 网关、Cloudflare Named Tunnel 绑定域名，或 Xcelerator API World Proxy，并运行 `python scripts/verify_stable_wearedge_endpoint.py --base-url https://<stable-host> --write-evidence`。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
-5. 在 Xcelerator API 服务草稿中替换为稳定 HTTPS Wearedge Agent Service 地址，并执行平台调试调用截图。
-6. 将 2026-06-12 WFC live 调用证据纳入演示视频素材和 PoC 证据索引，同时保留 live/fallback 边界。
+5. 如有平台时间，继续升级 WFC 原生 Dashboard Explorer / ui-builder 可编辑仪表盘截图。
+6. 将 2026-06-12/13/16 WFC live 调用证据纳入演示视频素材和 PoC 证据索引，同时保留 live/fallback 边界。

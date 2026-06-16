@@ -60,7 +60,9 @@ def test_action_board_tracks_final_missing_and_live_wfc_completion(tmp_path: Pat
         f"{board['latency_replay']['wall_latency_ms_max']} ms"
     )
     assert expected_latency in report
-    assert "Keep the current WFC live evidence set" in report
+    assert "Finish the high-value WFC writeback proof" in report
+    assert "deploy/stable-endpoint/" in report
+    assert "Re-login to Xcelerator" in report
     assert "verify_final_external_assets.py" in report
     assert "Current WFC replacement targets should have no fallback metadata" in report
 
