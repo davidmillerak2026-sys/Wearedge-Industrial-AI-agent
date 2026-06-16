@@ -200,11 +200,11 @@ Runtime profile: /v1/edge/runtime-profile -> 200
 Workflow decision: /v1/workflow-canvas/decision -> 200
 ```
 
-下一步将 Xcelerator API 服务草稿的后端服务器地址从占位 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `*.run.app` 地址，再补 Xcelerator live debug/test 截图。
+2026-06-16 已在 Xcelerator API 服务草稿页将后端服务器地址从占位 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `*.run.app` 地址，并将服务器路径调整为 `/`。已截图保存为 `submission-assets/live-evidence/xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png` 与 `46-xcelerator-api-backend-cloud-run-after-save-20260616.png`。当前 Xcelerator 代理 URL 仍返回 selector 配置错误，下一步需要在接口信息/调试页完成 API path selector 绑定后再补 live debug/test 截图。
 
 ## C. Xcelerator 调试调用截图
 
-当前已存在 Xcelerator 应用草稿、API 服务草稿和 4 个接口导入截图。2026-06-16 重新打开 `https://developers.siemens-x.com.cn/integration/api` 时页面回到登录态，因此本次没有继续进行 Console 内 live 调试调用，也没有保存任何账号、密钥或 AppSecret。
+当前已存在 Xcelerator 应用草稿、API 服务草稿和 4 个接口导入截图。2026-06-16 用户重新登录后，已进入 API 服务草稿编辑页，完成 Cloud Run 后端回填截图；全程未发布上架、未保存任何账号、密钥或 AppSecret。
 
 本次已生成可用于 Xcelerator 调试前核对的本地 API 预检响应，存放在 ignored live-evidence 目录：
 
@@ -214,8 +214,22 @@ submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcele
 
 该文件只能作为“待放入 Xcelerator 调试面板的 API 预检素材”，不能替代 Xcelerator Console live 调用截图。正式证据仍需在重新登录后完成：
 
-1. 打开 API 服务草稿。
-2. 使用稳定 HTTPS host 或 Xcelerator proxy 调用 `/v1/edge/runtime-profile`。
+新增 Xcelerator proxy verifier：
+
+```powershell
+python scripts/verify_xcelerator_proxy.py --write-evidence
+```
+
+当前代理调用结果为：
+
+```json
+{"code": -107, "msg": "divide:Can not find selector, please check your configuration!"}
+```
+
+解释：Cloud Run 后端已稳定可达，Xcelerator 草稿后端已回填，但代理 selector/API path 绑定还未调通。正式证据仍需完成：
+
+1. 打开 API 服务草稿的接口信息页，确认 selector/API path 与 OpenAPI `/v1/...` 路径一致。
+2. 使用 Console 调试面板调用 `/v1/edge/runtime-profile`。
 3. 调用 `/v1/workflow-canvas/decision`。
 4. 截图保存到 `submission-assets/live-evidence/xcelerator/`，并在材料中标注服务仍为草稿/租户内或已授权范围。
 

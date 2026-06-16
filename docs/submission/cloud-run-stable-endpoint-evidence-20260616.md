@@ -59,3 +59,5 @@ For Xcelerator API service backend configuration, use:
 Server address: https://wearedge-agent-service-863888677331.asia-east1.run.app
 Server path: /
 ```
+
+2026-06-16 update: this backend address has been filled into the Xcelerator API service draft and screenshots were captured under `submission-assets/live-evidence/xcelerator/45-xcelerator-api-backend-cloud-run-filled-20260616.png` and `46-xcelerator-api-backend-cloud-run-after-save-20260616.png`. The tenant proxy is not yet an end-to-end proof: `scripts/verify_xcelerator_proxy.py --write-evidence` currently returns platform code `-107` (`Can not find selector`), so selector/API path binding remains pending.

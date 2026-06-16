@@ -33,8 +33,8 @@
 | WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 | WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
 | 稳定 HTTPS endpoint 部署包 | 已完成 Cloud Run 稳定 HTTPS 证据 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。2026-06-16 进一步新增 Google Cloud Run 部署包 `Dockerfile.cloudrun`、`deploy/cloud-run/cloudbuild.yaml`、`deploy/cloud-run/cloud-shell-deploy.sh` 和 runbook。当前已通过 Cloud Build `438fd867-5cb6-4e17-bf1b-69aa3ab6402f` 部署 Cloud Run service `wearedge-agent-service`，稳定地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`；`scripts/verify_stable_wearedge_endpoint.py` 已验证 `/v1/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，结果 `ready=True`。 |
-| Xcelerator 调试调用截图 | 待重新登录后补 | 2026-06-16 重新打开 Xcelerator Console 时页面回到登录态；未绕过登录、未保存密钥。已生成本地 API 预检响应 `submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcelerator.json`，只能作为调试素材，不能替代 live Console 调用截图。 |
-| Xcelerator 稳定代理路径 | 已确认平台代理入口，待回填 Cloud Run 后端 | 2026-06-16 用户重新登录后，API 详情页显示服务 `未发布`、代理基址 `https://apig.developers.siemens-x.com.cn`、系统生成代理路径 `/scps4pw78kj6B2PFEmZX`、可见范围 `租户内`。当前 Cloud Run 稳定后端已完成，下一步应把服务器地址从占位 `https://wearedge-agent-service.example.com` 改为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`，再补 Xcelerator live debug/test 截图。 |
+| Xcelerator 调试调用截图 | 待 selector/path 调通后补 | 2026-06-16 用户重新登录后已进入 API 服务草稿页，并将服务器地址回填为 Cloud Run 稳定后端、服务器路径设为 `/`。直接调用租户代理仍返回 code `-107` selector 配置错误，因此 Console live 调试截图仍未完成。 |
+| Xcelerator 稳定代理路径 | 平台入口已确认，后端已回填，selector 待配置 | 2026-06-16 API 详情页显示服务 `未发布`、代理基址 `https://apig.developers.siemens-x.com.cn`、系统生成代理路径 `/scps4pw78kj6B2PFEmZX`、可见范围 `租户内`；服务器地址已从占位改为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`，服务器路径为 `/`。新增 `scripts/verify_xcelerator_proxy.py` 记录代理当前仍返回 `divide:Can not find selector`。 |
 
 已导入接口：
 
@@ -86,8 +86,11 @@
 | `41-xcelerator-client-app-home-refresh.png` | 2026-06-11 用户重新登录/进入应用后的应用主页刷新截图。 |
 | `42-xcelerator-api-detail-refresh.png` | 2026-06-11 API 详情刷新截图，确认服务仍为未发布、租户内草稿。 |
 | `43-xcelerator-api-interface-list-refresh-four-endpoints.png` | 2026-06-11 接口信息刷新截图，确认 4 个接口仍在草稿中且未启用。 |
-| `41-local-api-debug-response-for-xcelerator.json` | 2026-06-16 本地 API 预检响应，供重新登录 Xcelerator 后在调试面板复核字段；不是 Xcelerator live 调用证据。 |
+| `41-local-api-debug-response-for-xcelerator.json` | 2026-06-16 本地 API 预检响应，供 Xcelerator 调试面板复核字段；不是 Xcelerator live 调用证据。 |
 | `44-xcelerator-api-detail-proxy-path-live-20260616.dom.json` | 2026-06-16 Xcelerator API 详情页 DOM 证据，确认平台代理基址和服务代理路径；不含密钥。 |
+| `45-xcelerator-api-backend-cloud-run-filled-20260616.png` | 2026-06-16 Xcelerator API 服务草稿页截图，显示服务器地址已替换为 Cloud Run `*.run.app`，服务器路径为 `/`。 |
+| `46-xcelerator-api-backend-cloud-run-after-save-20260616.png` | 2026-06-16 保存动作后的 Xcelerator API 服务草稿页截图；仍为未发布/租户内配置。 |
+| `xcelerator-proxy-verification.json` | 新增脚本 `scripts/verify_xcelerator_proxy.py --write-evidence` 输出；当前代理返回 code `-107` selector 配置错误。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -167,9 +170,9 @@
 | Dashboard 原生可编辑截图 | SiteScope live 展示图已可用于 required gate；如要进一步增强，可从 WFC Dashboard Explorer / ui-builder 创建原生可编辑仪表盘截图。 |
 | 数据表动态写回 | 运行日志 live `ok=true` 和新版 Python 输出 `wfc_writeback.fields_ready` 已完成；仍需把 `CallWearedgeDecisionApi` 的 JSON 输出稳定连到 `更新数据表.1` 输入端口，或通过官方导出/只读 API 证明该数据线存在，并让 WFC 原生数据表值显示 selected direction、latency、approval status 等字段。 |
 | 人工确认原生节点截图 | SiteScope live HumanApprovalGate 已可用于 required gate；如要进一步增强，可在真实 WFC 中添加高风险动作确认/人工确认节点并截图。 |
-| 真实 HTTPS Wearedge Agent Service | Cloud Run 稳定 HTTPS 后端已部署并通过 verifier；地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`。下一步回填 Xcelerator API 服务草稿并截图。 |
-| Xcelerator 调试调用截图 | 已完成临时 HTTPS 网关调用证据；尚未完成 Xcelerator 发布代理路径调用。服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
-| Xcelerator 当前登录态 | 2026-06-16 重新打开 Console 时进入登录页；下一次需要负责人重新登录后再补 live debug/test screenshot。 |
+| 真实 HTTPS Wearedge Agent Service | Cloud Run 稳定 HTTPS 后端已部署并通过 verifier；地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`。 |
+| Xcelerator 调试调用截图 | 已完成 Cloud Run 后端回填截图；尚未完成 Xcelerator 代理路径 `ok=true` 调用。当前代理返回 code `-107` selector 配置错误，服务仍保持未发布草稿，不能声称已上架或已通过公开代理调用。 |
+| Xcelerator selector/API path 配置 | 需要在接口信息页确认 selector/API path 与 OpenAPI `/v1/...` 路径绑定，必要时调整服务器路径或导入路径；用 `scripts/verify_xcelerator_proxy.py --write-evidence` 复验。 |
 | X 认证联调 | 需要由负责人安全保管 AppSecret，不写入仓库；本项目仅保留配置说明。 |
 | 企业主体/联系人/IP 承诺 | 由负责人补齐真实公司信息、联系人、承诺材料。 |
 
@@ -196,13 +199,13 @@
 - 2026-06-16 继续尝试在 WFC canvas 中建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据连接；一次 GUI 拖拽未形成虚线数据线，只移动了功能块，已立即撤销并确认项目保持 `已保存`。当前不得声称原生动态数据表写回已完成；下一步优先导出 workflow JSON 用 `scripts/analyze_wfc_workflow_bindings.py` 验证绑定，或人工精确连线后截图。
 - 2026-06-16 本地启动 Wearedge API 并用 `scripts/verify_stable_wearedge_endpoint.py --base-url http://127.0.0.1:8081` 做稳定 endpoint 预检：API 合同通过，但 verifier 正确拒绝 localhost 作为稳定 HTTPS 证据。已新增 `deploy/stable-endpoint/` 三路线部署模板。
 - 2026-06-16 继续推进三项增强时确认：当前本机未安装 `cloudflared` 或 `ngrok`，只有 `npx`；临时 tunnel 不能作为稳定 endpoint。in-app browser 自动化通道未能接管真实登录页，Xcelerator/WFC 后续应按 `docs/submission/live-enhancement-capture-runbook-20260616.md` 手动截图或提供可控浏览器会话后再自动化。
-- 2026-06-16 用户重新登录后，Chrome live 页面成功进入 Xcelerator API 服务详情，确认系统生成代理基址 `https://apig.developers.siemens-x.com.cn` 与代理路径 `/scps4pw78kj6B2PFEmZX`。这证明平台稳定入口存在；但后端服务器地址仍是 `https://wearedge-agent-service.example.com` 占位，不能声称 Wearedge 稳定 HTTPS 后端已完成。
+- 2026-06-16 用户重新登录后，Chrome live 页面成功进入 Xcelerator API 服务详情，确认系统生成代理基址 `https://apig.developers.siemens-x.com.cn` 与代理路径 `/scps4pw78kj6B2PFEmZX`。随后已将后端服务器地址从 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`，服务器路径设为 `/`，并截图保存。代理直接调用仍返回 code `-107` selector 配置错误，说明下一步重点是接口 selector/path 绑定。
 
 ## 下一步建议
 
 1. 通过导出 workflow JSON 或人工精确连线，完成 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
-2. 重新登录 Xcelerator 后，在 API 服务草稿/调试面板补 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` live 调用截图。
-3. 将 Cloud Run 地址 `https://wearedge-agent-service-863888677331.asia-east1.run.app` 回填 Xcelerator API 服务后端，重新调试 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` 并截图。
+2. 在 Xcelerator API 服务草稿的接口信息页确认 selector/API path 绑定，解决代理 code `-107`。
+3. 每次调整后运行 `python scripts/verify_xcelerator_proxy.py --write-evidence`；通过后再在调试面板补 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` live 调用截图。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。
 5. 如有平台时间，继续升级 WFC 原生 Dashboard Explorer / ui-builder 可编辑仪表盘截图。
 6. 将 2026-06-12/13/16 WFC live 调用证据纳入演示视频素材和 PoC 证据索引，同时保留 live/fallback 边界。

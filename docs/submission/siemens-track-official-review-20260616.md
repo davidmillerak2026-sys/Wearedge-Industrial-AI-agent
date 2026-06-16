@@ -76,11 +76,11 @@ Wearedge 当前按 **企业组** 参加 **场景赛赛题一：西门子（中�
 ## 下一步三项执行结论
 
 1. **WFC 动态数据表写回证据**：已尝试继续建立 `输出1 -> 更新数据表.1` 数据端口连接，GUI 坐标拖拽没有形成清晰数据线，已撤销，项目保持未污染。下一次优先走导出 workflow JSON + `scripts/analyze_wfc_workflow_bindings.py` 验证，或由人工精确连接端口后截图 `197/198`。
-2. **稳定 API / 平台复现地址**：已新增 `deploy/stable-endpoint/` 部署包，并修正 verifier 对嵌套 `edge_capabilities.workflow_canvas_ready` 的识别。当前本地 API 合同预检通过，但由于 `127.0.0.1` 不是稳定 HTTPS，不能算最终证据。
-3. **Xcelerator 调试调用截图**：当前 Console 会话已退回登录页；未绕过登录。已生成本地 API 调试预检 JSON 作为待上传/待调试素材，正式 live 截图需要重新登录 Xcelerator 后执行。
+2. **稳定 API / 平台复现地址**：已完成 Google Cloud Run 稳定 HTTPS 后端，地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`，并通过 `scripts/verify_stable_wearedge_endpoint.py` 验证 `ready=True`。该 Cloud Run endpoint 可作为当前稳定 PoC 后端；Jetson/IPC 端侧运行证据仍作为边缘部署主线。
+3. **Xcelerator 调试调用截图**：用户重新登录后已进入 Xcelerator API 服务草稿，并将后端服务器地址替换为 Cloud Run 地址、服务器路径设为 `/`；服务仍为未发布/租户内。当前代理调用返回 code `-107` selector 配置错误，正式 live debug/test 截图需要在接口 selector/API path 绑定调通后补。
 
 ## 提交口径建议
 
 ```text
-Wearedge 选择西门子赛题一，面向质量、能源、设备运维、柔性生产与工易魔方开发智能体五个方向，构建端侧工业智能体运行时与 Xcelerator/工易魔方工作流编排结合的联合解决方案。当前已完成离线指标验证、端侧 Jetson FastAPI 证据、Xcelerator OpenAPI 草稿、WFC live ok=true 运行证据、Dashboard/HumanApprovalGate 展示和初赛附件包；后续重点补齐 WFC 原生动态数据表写回、稳定 HTTPS endpoint 或 Xcelerator 代理地址，以及企业主体/IP 承诺等人工材料。
+Wearedge 选择西门子赛题一，面向质量、能源、设备运维、柔性生产与工易魔方开发智能体五个方向，构建端侧工业智能体运行时与 Xcelerator/工易魔方工作流编排结合的联合解决方案。当前已完成离线指标验证、端侧 Jetson FastAPI 证据、Cloud Run 稳定 HTTPS 后端、Xcelerator OpenAPI 草稿与后端回填截图、WFC live ok=true 运行证据、Dashboard/HumanApprovalGate 展示和初赛附件包；后续重点补齐 WFC 原生动态数据表写回、Xcelerator selector/API path 代理调通截图，以及企业主体/IP 承诺等人工材料。
 ```
