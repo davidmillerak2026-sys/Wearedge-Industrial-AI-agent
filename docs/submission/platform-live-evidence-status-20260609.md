@@ -34,6 +34,7 @@
 | WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
 | 稳定 HTTPS endpoint 部署包 | 已入库，待固定域名或平台代理 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。`scripts/verify_stable_wearedge_endpoint.py` 已可校验 `/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，并会拒绝 localhost/临时 tunnel 作为最终稳定证据。 |
 | Xcelerator 调试调用截图 | 待重新登录后补 | 2026-06-16 重新打开 Xcelerator Console 时页面回到登录态；未绕过登录、未保存密钥。已生成本地 API 预检响应 `submission-assets/live-evidence/xcelerator/41-local-api-debug-response-for-xcelerator.json`，只能作为调试素材，不能替代 live Console 调用截图。 |
+| Xcelerator 稳定代理路径 | 已确认平台代理入口，后端稳定服务待补 | 2026-06-16 用户重新登录后，API 详情页显示服务 `未发布`、代理基址 `https://apig.developers.siemens-x.com.cn`、系统生成代理路径 `/scps4pw78kj6B2PFEmZX`、可见范围 `租户内`。当前后端服务器地址仍显示占位 `https://wearedge-agent-service.example.com`，因此尚不能通过 stable endpoint verifier。结构化证据见 ignored 文件 `submission-assets/live-evidence/xcelerator/44-xcelerator-api-detail-proxy-path-live-20260616.dom.json`。 |
 
 已导入接口：
 
@@ -86,6 +87,7 @@
 | `42-xcelerator-api-detail-refresh.png` | 2026-06-11 API 详情刷新截图，确认服务仍为未发布、租户内草稿。 |
 | `43-xcelerator-api-interface-list-refresh-four-endpoints.png` | 2026-06-11 接口信息刷新截图，确认 4 个接口仍在草稿中且未启用。 |
 | `41-local-api-debug-response-for-xcelerator.json` | 2026-06-16 本地 API 预检响应，供重新登录 Xcelerator 后在调试面板复核字段；不是 Xcelerator live 调用证据。 |
+| `44-xcelerator-api-detail-proxy-path-live-20260616.dom.json` | 2026-06-16 Xcelerator API 详情页 DOM 证据，确认平台代理基址和服务代理路径；不含密钥。 |
 
 以下文件位于 `submission-assets/live-evidence/gongyi-mofang/`，该目录默认不进入 Git：
 
@@ -193,6 +195,8 @@
 - 2026-06-16 重新进入当前 WFC 项目，停止旧 DEBUG 后打开 `fb_main.py`，粘贴新版 Function Block。仓库版 `DEFAULT_BASE_URL` 保持空值，live 平台内临时填入当前 PoC endpoint 以绕过资源参数未传递的问题；未把临时 endpoint、账号、密码、token 或密钥写入 Git。DEBUG 运行后 WFC 真实触发 `/v1/workflow-canvas/decision`，属性面板 `输出1` 返回 `ok=true`，`状态码 Good`，完整 DOM 输出包含 `wfc_writeback.method=wfc_output1_to_update_data_table` 和 `fields_ready`。
 - 2026-06-16 继续尝试在 WFC canvas 中建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据连接；一次 GUI 拖拽未形成虚线数据线，只移动了功能块，已立即撤销并确认项目保持 `已保存`。当前不得声称原生动态数据表写回已完成；下一步优先导出 workflow JSON 用 `scripts/analyze_wfc_workflow_bindings.py` 验证绑定，或人工精确连线后截图。
 - 2026-06-16 本地启动 Wearedge API 并用 `scripts/verify_stable_wearedge_endpoint.py --base-url http://127.0.0.1:8081` 做稳定 endpoint 预检：API 合同通过，但 verifier 正确拒绝 localhost 作为稳定 HTTPS 证据。已新增 `deploy/stable-endpoint/` 三路线部署模板。
+- 2026-06-16 继续推进三项增强时确认：当前本机未安装 `cloudflared` 或 `ngrok`，只有 `npx`；临时 tunnel 不能作为稳定 endpoint。in-app browser 自动化通道未能接管真实登录页，Xcelerator/WFC 后续应按 `docs/submission/live-enhancement-capture-runbook-20260616.md` 手动截图或提供可控浏览器会话后再自动化。
+- 2026-06-16 用户重新登录后，Chrome live 页面成功进入 Xcelerator API 服务详情，确认系统生成代理基址 `https://apig.developers.siemens-x.com.cn` 与代理路径 `/scps4pw78kj6B2PFEmZX`。这证明平台稳定入口存在；但后端服务器地址仍是 `https://wearedge-agent-service.example.com` 占位，不能声称 Wearedge 稳定 HTTPS 后端已完成。
 
 ## 下一步建议
 

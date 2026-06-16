@@ -49,6 +49,7 @@
 | Workflow Canvas smoke script | `scripts/smoke_workflow_canvas_decision.py` | ready |
 | Submission evidence snapshots | `docs/submission/evidence/` | ready |
 | Live platform evidence runbook | `docs/submission/live-platform-evidence-runbook.md` | ready |
+| Live enhancement manual capture runbook | `docs/submission/live-enhancement-capture-runbook-20260616.md` | ready |
 | Xcelerator live evidence status | `docs/submission/platform-live-evidence-status-20260609.md` | ready |
 | Live evidence verifier | `scripts/verify_live_evidence.py` | ready |
 | Final external assets quality verifier | `scripts/verify_final_external_assets.py` | ready |

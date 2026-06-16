@@ -1,6 +1,6 @@
 # Final Action Board
 
-Updated: 2026-06-16T04:59:40+00:00
+Updated: 2026-06-16T15:10:00+08:00
 
 ## Current Gate
 
@@ -67,6 +67,7 @@ python scripts/verify_submission_package.py --write-manifest
 - Do not commit files under `submission-assets/live-evidence/`.
 - Current WFC replacement targets should have no fallback metadata; preserve reviewed live evidence sidecars and recapture from WFC when the updated Function Block is promoted into the platform.
 - WFC dynamic data-table writeback and stable HTTPS endpoint evidence are high-value strengthening items until captured from the live platform.
+- For the next manual capture session, use `docs/submission/live-enhancement-capture-runbook-20260616.md`.
 - For final promotion, keep a `.review.json` sidecar beside each staged WFC screenshot and use `--require-review-sidecars`.
 - Do not describe local smoke tests, generated dashboards, or fallback images as live WFC `ok=true` execution.
 - Signed legal files, company identifiers, private contacts, and final registration screenshots remain human-owned external evidence.
