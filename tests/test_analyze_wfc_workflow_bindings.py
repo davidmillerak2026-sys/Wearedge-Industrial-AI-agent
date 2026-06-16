@@ -110,3 +110,17 @@ def test_cli_json_output(tmp_path: Path, capsys) -> None:
     assert exit_code == 0
     assert result["ok"] is True
     assert result["confirmed_python_output_to_update_table"] is False
+
+
+def test_load_json_rejects_wfc_binary_export(tmp_path: Path) -> None:
+    module = _load_module()
+    workflow_export = tmp_path / "workflow.wfcw"
+    workflow_export.write_bytes(b"\x00\x01binary-wfc-export")
+
+    try:
+        module.load_json(workflow_export)
+    except ValueError as exc:
+        assert "proprietary export file" in str(exc)
+        assert "live screenshots" in str(exc)
+    else:
+        raise AssertionError("expected ValueError")

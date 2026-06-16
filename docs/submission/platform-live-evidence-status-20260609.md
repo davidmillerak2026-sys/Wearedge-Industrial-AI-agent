@@ -32,6 +32,7 @@
 | Xcelerator 接口列表复核 | 已完成 | 2026-06-11 已在 `接口信息` 步骤复核 4 个接口：`/healthz`、`/v1/edge/runtime-profile`、`/v1/industrial-agent/solution-profile`、`/v1/workflow-canvas/decision`。 |
 | WFC `fb_main.py` live-edit 参考源码 | 已入库 | 已新增 `workflows/wfc_call_wearedge_decision_fb_main.py`，用于复制到 WFC Python Function Block；源码调用 `/v1/workflow-canvas/decision`，记录 `wearedge_decision_ok`，不包含账号、token 或密钥。 |
 | WFC 私有 API 只读探测工具 | 已入库 | 已新增 `scripts/wfc_private_api_probe.py`，用于 dry-run 或本地临时 `WFC_COOKIE` 下的项目文件、Dashboard Explorer、log-manager 路径诊断；不保存、不打印平台凭据，不替代 live WFC 证据。 |
+| WFC workflow/deployment 导出 | 已完成导出，拓扑解析待平台 JSON 或截图 | 2026-06-16 已从真实 WFC 项目导出 `工作流.1.wfcw` 和 `workflow1.wfcd`，归档到 ignored `submission-assets/live-evidence/gongyi-mofang/workflow-export/`；两者是平台专有高熵二进制，不是 JSON，因此不能直接证明 `输出1 -> 更新数据表.1` 数据线。 |
 | 稳定 HTTPS endpoint 部署包 | 已完成 Cloud Run 稳定 HTTPS 证据 | 2026-06-16 已新增 `deploy/stable-endpoint/`，包含企业 Nginx 反向代理、Cloudflare Named Tunnel 和 Xcelerator API World Proxy 三条路线。2026-06-16 进一步新增 Google Cloud Run 部署包 `Dockerfile.cloudrun`、`deploy/cloud-run/cloudbuild.yaml`、`deploy/cloud-run/cloud-shell-deploy.sh` 和 runbook。当前已通过 Cloud Build `438fd867-5cb6-4e17-bf1b-69aa3ab6402f` 部署 Cloud Run service `wearedge-agent-service`，稳定地址为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`；`scripts/verify_stable_wearedge_endpoint.py` 已验证 `/v1/healthz`、`/v1/edge/runtime-profile`、`/v1/workflow-canvas/decision`，结果 `ready=True`。 |
 | Xcelerator 调试调用截图 | 待 selector/path 调通后补 | 2026-06-16 用户重新登录后已进入 API 服务草稿页，并将服务器地址回填为 Cloud Run 稳定后端、服务器路径设为 `/`。直接调用租户代理仍返回 code `-107` selector 配置错误，因此 Console live 调试截图仍未完成。 |
 | Xcelerator 稳定代理路径 | 平台入口已确认，后端已回填，selector 待配置 | 2026-06-16 API 详情页显示服务 `未发布`、代理基址 `https://apig.developers.siemens-x.com.cn`、系统生成代理路径 `/scps4pw78kj6B2PFEmZX`、可见范围 `租户内`；服务器地址已从占位改为 `https://wearedge-agent-service-863888677331.asia-east1.run.app`，服务器路径为 `/`。新增 `scripts/verify_xcelerator_proxy.py` 记录代理当前仍返回 `divide:Can not find selector`。 |
@@ -149,6 +150,8 @@
 | `196-wfc-dynamic-writeback-output-ok-20260616.png` | 2026-06-16 live WFC DEBUG 属性面板截图，显示新版 `CallWearedgeDecisionApi.output` 开头 `ok=true` 且 `状态码 Good`。 |
 | `196-wfc-dynamic-output-ok-dom-20260616.json` | 2026-06-16 从 WFC 页面字段读取的完整输出 JSON，包含 `wfc_writeback.method=wfc_output1_to_update_data_table`、`fields_ready`、`latency_ms`、`selected_direction` 和 `approval_status`；保存在 ignored live-evidence 目录，不提交 Git。 |
 | `196-wfc-dynamic-output-tunnel-log-20260616.txt` | 2026-06-16 临时 HTTPS PoC gateway 日志，显示 WFC DEBUG 触发新的 `POST /v1/workflow-canvas/decision`。 |
+| `workflow-export/199-wfc-workflow-export-20260616.wfcw` | 2026-06-16 从真实 WFC 项目 `File -> Export workflow` 导出的专有二进制工作流文件；证明项目资产可导出，不直接证明连接拓扑。 |
+| `workflow-export/200-wfc-deployment-data-export-20260616.wfcd` | 2026-06-16 从真实 WFC 项目 `File -> Export deployment data` 导出的专有二进制部署数据；证明部署数据可导出，不直接证明连接拓扑。 |
 | `04-dashboard-decision-view.png` | Wearedge WFC PoC / SiteScope live dashboard 展示图，包含指标卡、决策路径、HumanApprovalGate 和 workflow state。 |
 | `05-run-log-ok-true.png` | 2026-06-13 live WFC 原生运行日志截图，显示 `CallWearedgeDecisionApi.output` JSON 开头 `"ok": true`；配套 `05-run-log-ok-true.review.json`，原 fallback sidecar 已移除。 |
 | `06-human-approval-gate.png` | Wearedge WFC PoC / SiteScope live HumanApprovalGate 裁剪图，展示 pending approval、残余风险、证据和确认按钮。 |
@@ -197,13 +200,14 @@
 - 2026-06-15 已将 `04-dashboard-decision-view.png` 和 `06-human-approval-gate.png` 更新为 Wearedge WFC PoC / SiteScope 来源的 live 展示图，fallback sidecar 已移除，`verify_live_evidence.py --stage final` 不再给出 04/06 fallback warning。
 - 2026-06-16 重新进入当前 WFC 项目，停止旧 DEBUG 后打开 `fb_main.py`，粘贴新版 Function Block。仓库版 `DEFAULT_BASE_URL` 保持空值，live 平台内临时填入当前 PoC endpoint 以绕过资源参数未传递的问题；未把临时 endpoint、账号、密码、token 或密钥写入 Git。DEBUG 运行后 WFC 真实触发 `/v1/workflow-canvas/decision`，属性面板 `输出1` 返回 `ok=true`，`状态码 Good`，完整 DOM 输出包含 `wfc_writeback.method=wfc_output1_to_update_data_table` 和 `fields_ready`。
 - 2026-06-16 继续尝试在 WFC canvas 中建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据连接；一次 GUI 拖拽未形成虚线数据线，只移动了功能块，已立即撤销并确认项目保持 `已保存`。当前不得声称原生动态数据表写回已完成；下一步优先导出 workflow JSON 用 `scripts/analyze_wfc_workflow_bindings.py` 验证绑定，或人工精确连线后截图。
+- 2026-06-16 后续已成功从 WFC `File` 菜单导出 workflow `.wfcw` 与 deployment data `.wfcd`，并归档到 ignored evidence 目录。两者均为平台专有高熵二进制，不是 JSON，不能由仓库 analyzer 直接解析拓扑；当前只能作为项目资产导出/归档证据。
 - 2026-06-16 本地启动 Wearedge API 并用 `scripts/verify_stable_wearedge_endpoint.py --base-url http://127.0.0.1:8081` 做稳定 endpoint 预检：API 合同通过，但 verifier 正确拒绝 localhost 作为稳定 HTTPS 证据。已新增 `deploy/stable-endpoint/` 三路线部署模板。
 - 2026-06-16 继续推进三项增强时确认：当前本机未安装 `cloudflared` 或 `ngrok`，只有 `npx`；临时 tunnel 不能作为稳定 endpoint。in-app browser 自动化通道未能接管真实登录页，Xcelerator/WFC 后续应按 `docs/submission/live-enhancement-capture-runbook-20260616.md` 手动截图或提供可控浏览器会话后再自动化。
 - 2026-06-16 用户重新登录后，Chrome live 页面成功进入 Xcelerator API 服务详情，确认系统生成代理基址 `https://apig.developers.siemens-x.com.cn` 与代理路径 `/scps4pw78kj6B2PFEmZX`。随后已将后端服务器地址从 `https://wearedge-agent-service.example.com` 替换为 Cloud Run `https://wearedge-agent-service-863888677331.asia-east1.run.app`，服务器路径设为 `/`，并截图保存。代理直接调用仍返回 code `-107` selector 配置错误，说明下一步重点是接口 selector/path 绑定。
 
 ## 下一步建议
 
-1. 通过导出 workflow JSON 或人工精确连线，完成 `输出1 -> 更新数据表输入` 虚线数据端口连接，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
+1. 若平台可提供 JSON workflow/project 导出，用 `scripts/analyze_wfc_workflow_bindings.py` 确认 `输出1 -> 更新数据表输入` 虚线数据端口连接；若只有 `.wfcw/.wfcd` 专有二进制导出，则需要人工精确连线并截图，把 2026-06-13 静态 `更新数据表.1` 示例值升级为 Python 动态输出写入，并让原生数据表值显示 latency、selected direction、approval status。
 2. 在 Xcelerator API 服务草稿的接口信息页确认 selector/API path 绑定，解决代理 code `-107`。
 3. 每次调整后运行 `python scripts/verify_xcelerator_proxy.py --write-evidence`；通过后再在调试面板补 `/v1/edge/runtime-profile` 和 `/v1/workflow-canvas/decision` live 调用截图。
 4. 补齐 `Wearedge Agent Service` 自定义资源参数：`agentPort`、`apiKeyRef`、`deploymentMode`、`plantId`、`lineId`。

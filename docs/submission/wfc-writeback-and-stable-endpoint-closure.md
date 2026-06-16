@@ -67,6 +67,15 @@ submission-assets/live-evidence/gongyi-mofang/
 
 本次继续按 live WFC 页面尝试建立 `CallWearedgeDecisionApi 输出1 -> 更新数据表.1 输入` 数据端口连接。浏览器画布中可以看到 `CallWearedgeDecisionApi` 和 `更新数据表.1`，但端口坐标仍不稳定：一次拖拽没有形成清晰虚线数据连接，而是移动了 Python Function Block。已立即执行撤销，后续截图确认画布恢复到原位置且保持 `已保存` 状态。
 
+2026-06-16 后续继续执行时，已从真实 WFC 项目完成两类导出：
+
+```text
+submission-assets/live-evidence/gongyi-mofang/workflow-export/199-wfc-workflow-export-20260616.wfcw
+submission-assets/live-evidence/gongyi-mofang/workflow-export/200-wfc-deployment-data-export-20260616.wfcd
+```
+
+导出文件证明 WFC 项目资产可归档，但 `.wfcw/.wfcd` 为平台专有高熵二进制格式，不是 JSON，当前不能用仓库内 analyzer 直接确认数据线拓扑。已新增 `docs/submission/wfc-export-evidence-20260616.md` 记录 SHA256 与边界。
+
 本次不把 WFC 原生动态写表记为完成。当前完成级别仍是：
 
 - live WFC `CallWearedgeDecisionApi.output` 返回 `ok=true`。

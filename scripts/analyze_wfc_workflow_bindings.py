@@ -42,6 +42,11 @@ ID_KEY_HINTS = ("id", "uuid", "key", "name", "displayname", "fbid", "blockid", "
 
 
 def load_json(path: Path) -> Any:
+    if path.suffix.lower() in {".wfcw", ".wfcd"}:
+        raise ValueError(
+            f"{path} is a Gongyi Mofang proprietary export file, not a readable workflow JSON. "
+            "Use a JSON workflow export if available, or confirm the binding through WFC live screenshots."
+        )
     try:
         return json.loads(path.read_text(encoding="utf-8"))
     except json.JSONDecodeError as exc:
